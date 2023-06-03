@@ -60,7 +60,7 @@
 	
 	<script>
 	
-			date
+			
 	
 	
 	
@@ -73,7 +73,8 @@
 			const labels = [];
 				
 			const data = {
-				labels: ['January', 'February', 'March',  'April',  'May',  'June',] /* x축을 선언하는 파트. - 위에서 선언한 labels 로 대체할 수 있다.*/
+				labels: req
+				['January', 'February', 'March',  'April',  'May',  'June',] /* x축을 선언하는 파트. - 위에서 선언한 labels 로 대체할 수 있다.*/
 			    
 			    datasets: [  					/* 그려질 그래프의 정보를 입력하는 부분이다. 그래프의 배경색, 테두리색, data 값들이 입력된다. */
 			    	{

@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.javalec.bbs.command.MCommand;
+import com.javalec.bbs.command.aHomeCommand_kkg;
+
 
 /**
  * Servlet implementation class MController
@@ -69,6 +71,24 @@ public class MController extends HttpServlet {
 			viewPage = "login.jsp";
 			break;
 			
+		case("/home.do"):
+			//command = new LMCommand();
+			//command.execute(request, response);
+			String username = (String)session.getAttribute("cid");
+			System.out.println(username);
+			viewPage = "home.jsp";
+			break;
+			
+		case("/logout.do"):
+			session.invalidate();
+			viewPage = "home.jsp";
+			break;
+			
+		case("/join.do"):
+			viewPage = "join.jsp";
+			break;
+		
+			
 			/* PART I 종료. 킹갓더제너럴 강대규팀장님 part 입니다. 일동 기립. 경례. 쉬어.*/
 		    //*************************************************************//
 			
@@ -94,15 +114,30 @@ public class MController extends HttpServlet {
 			/* PART IV 종료. 세상Cool 남자 김민성군의 Part 입니다. 평균연령 낮춰줘서 고맙다 민성아.*/
 		    //*************************************************************//
 
+			
+			
+			
+			
 			/* PART V 시작. 나 강경구 파트다. 돈트 터치 디스 에어리어. 디스 이즈 사유지. ㅋㅋㅋㅋㅋㅋㅋ */
+		
+		case("/adminHome.do"):
+			System.out.println("adminHome.do 로 들어옴");
+
+			command = new aHomeCommand_kkg();
+			command.execute(request, response);
+			System.out.println("adminCommand_kkg 실행완료");
+			
+			viewPage = "adminHome.jsp";
+			System.out.println("viewPage 입력되었음");
+			
+		break;
+		
 			/* PART V 종료. 나 강경구 파트다. 돈트 터치 디스 에어리어. 디스 이즈 사유지. ㅋㅋㅋㅋㅋㅋㅋ */
 		    //*************************************************************//
-
-			
+	
 		}//switch 구문 끝 
 		
-		
-		
+
 		
 		
 		
