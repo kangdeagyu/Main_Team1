@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,6 +83,7 @@ function kakaoLogin() {
           url: '/v2/user/me',
           success: function (response) {
         	  console.log(response)
+        	  
           },
           fail: function (error) {
             console.log(error)
@@ -97,66 +99,6 @@ function kakaoLogin() {
   
 </script>
 
- 
-
-
-<div class="container">
- <div class="row my-2"></div>
- <div class="row">
- 	<div class="col-3">
-		<ul class="nav">
-		  <li class="nav-item">
-		    <a class="nav-link active" href="#">
-		      <!-- <img src="image/so7.png" alt="" width="80" height="40"> -->
-		      <h3 class="text-dark">Little and Precious</h3>
-		    </a>
-		  </li>
-		 </ul>
-	 </div>
-	 <div class="col-6">
-		<ul class="nav justify-content-center">
-			  <li class="nav-item">
-			    <a class="nav-link active" aria-current="page" href="home.jsp"><p class="text-dark">HOME</p></a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" href="#"><p class="text-dark">LIFESTYLE</p></a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" href="#"><p class="text-dark">FURNITURE</p></a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" href="#"><p class="text-dark">STATIONERTY</p></a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" href="#"><p class="text-dark">Q&A</p></a>
-			  </li>
-		
-		</ul>
-		
-	</div>
-	<div class="col-3">
-		<ul class="nav justify-content-end">
-			<li class="nav-item">
-			    <a class="nav-link" href="#">
-			   	 <img src="image/so5.png" alt="" width="30" height="24">
-			    </a>
-		    </li>
-			<li class="nav-item">
-			    <a class="nav-link" href="#">
-			   	 <img src="image/so6.png" alt="" width="30" height="24">
-			    </a>
-		    </li>
-		    <li class="nav-item">
-		    	 <a class="nav-link" href="#">
-			   	  <img src="image/so4.png" alt="" width="30" height="24">
-			     </a>  
-		    </li>
-		</ul>
-	</div>
-</div>
-
-  
-<hr/>
 
 
 <!-- <main>
@@ -176,14 +118,14 @@ function kakaoLogin() {
 </main> -->
 <div class="container">
 	<main class="form-signin w-100 m-auto">
-		<div class="container">
+	<div class="container">
 		<figure class="text-center">
 			<h3 class="text-dark">Little and Precious</h3>
 		</figure>
 		<hr/>
 		</div>
 	<div id="app">	
-	  <form @submit.prevent="login" method="post">
+	  <form id="login-form" @submit.prevent="login" method="post">
 	    <h6 class="h6 mb-3 fw-normal">*가입하신 이메일 주소로 로그인 해주세요</h6>
 	
 	    <div class="form-floating">
@@ -205,8 +147,12 @@ function kakaoLogin() {
 	  </form>
 <hr/>
 	<div class="d-flex justify-content-between">
-	  <div>회원가입</div>
-	  <div>아이디/비밀번호 찾기</div>
+	  <div>
+	 	 <a href="join.do" class="text-dark">회원가입</a>
+	  </div>
+	  <div>
+	  	<a href="#" class="text-dark">아이디/비밀번호 찾기</a>
+	  </div>
 	</div>
 <hr/>
 	<a href="javascript:void(0)" onclick="kakaoLogin();">
@@ -253,6 +199,10 @@ function kakaoLogin() {
     		  .then(response => {
     		    // 로그인 성공 시 처리
     		    console.log(response.data);
+    		    alert("로그인 성공")
+    		    window.location.href = 'home.do';
+    	         
+    	      
     		  })
     		  .catch(error => {
     		    // 로그인 실패 시 처리

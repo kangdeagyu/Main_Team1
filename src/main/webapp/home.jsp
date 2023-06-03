@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="header.jsp" %>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -15,69 +16,34 @@
 	    height: 500px;
 	    object-fit: fill;
 	  }
+	  	html,
+		body {
+		  height: 100%;
+		}
+		
+		body {
+		  display: flex;
+		  padding-top: 40px;
+		  padding-bottom: 40px;
+		}
+		
+		.form-signin {
+		  max-width: 400px;
+		  padding: 15px;
+		}
+			.form-control {
+		  border: none;
+		  border-bottom: 1px solid #ced4da;
+		  border-radius: 0;
+		}
 	</style>
-    
+
+
 </head>
 <body>
 
    <!-- 네버바 --> 
-<div class="container">
- <div class="row my-2"></div>
- <div class="row">
- 	<div class="col-3">
-		<ul class="nav">
-		  <li class="nav-item">
-		    <a class="nav-link active" href="#">
-		      <!-- <img src="image/so7.png" alt="" width="80" height="40"> -->
-		      <h3 class="text-dark">Little and Precious</h3>
-		    </a>
-		  </li>
-		 </ul>
-	 </div>
-	 <div class="col-6">
-		<ul class="nav justify-content-center">
-			  <li class="nav-item">
-			    <a class="nav-link active" aria-current="page" href="home.jsp"><p class="text-dark">HOME</p></a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" href="#"><p class="text-dark">LIFESTYLE</p></a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" href="#"><p class="text-dark">FURNITURE</p></a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" href="#"><p class="text-dark">STATIONERTY</p></a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" href="#"><p class="text-dark">Q&A</p></a>
-			  </li>
-		
-		</ul>
-		
-	</div>
-	<div class="col-3">
-		<ul class="nav justify-content-end">
-			<li class="nav-item">
-			    <a class="nav-link" href="login.jsp">
-			   	 <img src="image/so5.png" alt="" width="30" height="24">
-			    </a>
-		    </li>
-			<li class="nav-item">
-			    <a class="nav-link" href="#">
-			   	 <img src="image/so6.png" alt="" width="30" height="24">
-			    </a>
-		    </li>
-		    <li class="nav-item">
-		    	 <a class="nav-link" href="#">
-			   	  <img src="image/so4.png" alt="" width="30" height="24">
-			     </a>  
-		    </li>
-		</ul>
-	</div>
-</div>
 
-  
-<hr/>
 <main>
 
 <!-- 배너부분  -->
@@ -135,19 +101,9 @@
 </main>
 <hr/>
 <!-- 하단  -->
-	<footer class="text-muted py-5">
-	  <div class="container">
-	    <p class="float-end mb-1">
-	      <a href="#">Back to top</a>
-	    </p>
-	    <p class="mb-2">안녕하세요</p>
-	    <p class="mb-1">반갑습니다</p>
-	    <p class="mb-0">감사합니다</p>
-	
-	  </div>
-	</footer>
-</div>
+<%@ include file="bottom.jsp" %>
 
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
       
 </body>
