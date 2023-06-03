@@ -153,3 +153,4 @@ $RECLECLE.BIN/
 *.lnk
 
 # 끝 https://www.toptal.com/developers/gitignore/api/java,macos,windows,eclipse
+/build/
