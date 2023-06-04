@@ -13,7 +13,7 @@
 <link href="join.css" rel="stylesheet">
 
 </head>
-<body>
+<body onload="initializePage()">
 
 <div class="container">
 	<main class="form-signin w-100 m-auto">
@@ -25,42 +25,43 @@
 			
 		</div>
 		
-		<div id="app">	
-			<form id="join-form" method="post">
+		
+			<form id="join-form" name="join" action="joinDB.do" method="post">
 				<label>아이디</label>
 				<div class="input-group">
-					<input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-					<input type="button" value="중복확인" name="emailcheak">
+					<input type="email" class="form-control" name="cid" id="cid" placeholder="name@example.com">
+					<input type="button" value="중복확인" name="emailcheak" onclick="checkDuplicate()">
 				</div> 
 				<label>비밀번호</label>
-					<input type="password" class="form-control" name="password" id="password" placeholder="비밀번호">
+					<input type="password" class="form-control" name="cpassword" id="cpassword" placeholder="비밀번호">
 					<input type="password" class="form-control" name="passwordcheak" id="passwordcheak" placeholder="비밀번호 확인">
 				<p class="text-end" id="passwordMatchMessage"style="color: red" ></p>
 				<label>이름</label>
-					<input type="text" class="form-control" name="name" placeholder="이름">
+					<input type="text" class="form-control" name="cname" id="cname" placeholder="이름">
 				<label>전화번호</label>
-					<input type="text" class="form-control" name="phone" placeholder="휴대폰 번호 입력('-'포함해서 입력해주세요)">
+					<input type="text" class="form-control" name="cphone" id="cphone" placeholder="휴대폰 번호 입력('-'포함해서 입력해주세요)">
 				<label>성별</label><br/>
-					<input type="radio" name="jender" value="1"> 남자<br/>
-					<input type="radio" name="jender" value="2"> 여자<br/>
+					  <input type="radio" name="cgender" value="male"> 남자<br/>
+					  <input type="radio" name="cgender" value="female"> 여자<br/>
 				<label>주소</label>
 				<div class="input-group">
-					<input type="text" class="form-control" id="sample6_postcode" placeholder="우편번호">
+					<input type="text" class="form-control" name="cpostnum" id="sample6_postcode" placeholder="우편번호" readonly>
 					<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
 				</div>
 				<br>
-					<input type="text" class="form-control" id="sample6_address" placeholder="주소"><br>
-					<input type="text" class="form-control" id="sample6_detailAddress" placeholder="상세주소">
+					<input type="text" class="form-control" name="caddress1" id="sample6_address" placeholder="주소" readonly><br>
+					<input type="text" class="form-control" name="caddress2" id="sample6_detailAddress" placeholder="상세주소">
 					<input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
-				<label for="birthdate">생년월일</label>
+				<label>생년월일</label>
 					<div class="input-group">
 					  <select class="form-control" id="birthYear" name="birthYear"></select>
 					  <select class="form-control" id="birthMonth" name="birthMonth"></select>
 					  <select class="form-control" id="birthDay" name="birthDay"></select>
 					</div><br/>
-				<button class="w-100 btn btn-lg btn-primary" type="submit">회원가입</button>
+					<button class="w-100 btn btn-lg btn-primary" type="submit" onclick="checkForm()" >회원가입</button>
+			
 			</form>
-		</div>
+	
 	</main>
 </div>
 <%@ include file="bottom.jsp" %>
@@ -71,7 +72,7 @@
 <script>
 	// 비밀번호 입력란과 비밀번호 확인 입력란의 값을 실시간으로 비교하여 일치 여부를 체크하는 함수
 	function checkPasswordMatch() {
-		var password = document.getElementById("password").value;
+		var password = document.getElementById("cpassword").value;
 		var passwordcheak = document.getElementById("passwordcheak").value;
 		var messageElement = document.getElementById("passwordMatchMessage");
 
@@ -141,33 +142,186 @@
 <!-- 생년월일 -->
 <script>
   // 연도 옵션 생성
-  var currentYear = new Date().getFullYear();
-  var startYear = currentYear - 100; // 시작 연도 설정
-  var yearSelect = document.getElementById("birthYear");
-  for (var i = startYear; i <= currentYear; i++) {
-    var option = document.createElement("option");
-    option.value = i;
-    option.text = i + "년";
-    yearSelect.appendChild(option);
-  }
+	  var currentYear = new Date().getFullYear();
+	  var startYear = currentYear - 100; // 시작 연도 설정
+	  var yearSelect = document.getElementById("birthYear");
+	  for (var i = currentYear; i >= startYear; i--) {
+		  var option = document.createElement("option");
+		  option.value = i;
+		  option.text = i + "년";
+		  yearSelect.appendChild(option);
+		}
+	
+	  // 월 옵션 생성
+	  var monthSelect = document.getElementById("birthMonth");
+	  for (var j = 1; j <= 12; j++) {
+	    var option = document.createElement("option");
+	    option.value = j;
+	    option.text = j + "월";
+	    monthSelect.appendChild(option);
+	  }
+	
+	  // 일 옵션 생성
+	  var daySelect = document.getElementById("birthDay");
+	  for (var k = 1; k <= 31; k++) {
+	    var option = document.createElement("option");
+	    option.value = k;
+	    option.text = k + "일";
+	    daySelect.appendChild(option);
+	  }
+</script>
 
-  // 월 옵션 생성
-  var monthSelect = document.getElementById("birthMonth");
-  for (var j = 1; j <= 12; j++) {
-    var option = document.createElement("option");
-    option.value = j;
-    option.text = j + "월";
-    monthSelect.appendChild(option);
-  }
+<!-- 이메일 중복체크 -->
+<script type="text/javascript">
 
-  // 일 옵션 생성
-  var daySelect = document.getElementById("birthDay");
-  for (var k = 1; k <= 31; k++) {
-    var option = document.createElement("option");
-    option.value = k;
-    option.text = k + "일";
-    daySelect.appendChild(option);
+	function checkDuplicate() {
+	  // 중복 체크를 수행할 이메일 값을 가져옵니다
+	  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	  const form = document.join
+	  const email = form.cid.value
+	  if (!emailPattern.test(email)) {
+		    alert("유효한 이메일 주소를 입력해주세요.");
+		    return false;
+		  }
+	  // Ajax 요청을 보냅니다
+	  var xhr = new XMLHttpRequest();
+	  xhr.open("POST", "Email.ch", true); // 중복 체크를 수행할 URL을 지정합니다
+	  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	  xhr.onreadystatechange = function () {
+	    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+	      // Ajax 요청이 성공적으로 완료되었을 때 수행할 동작을 작성합니다
+	      var response = xhr.responseText;
+	      // 중복 체크 결과에 따라 동작을 수행합니다
+	      if (response === "duplicate") {
+	        alert("중복된 이메일입니다.");      
+	        form.cid.focus();
+	      } else {
+	    	  alert("사용 가능한 이메일입니다.");
+	      }
+	    }
+	  };
+	  xhr.send("email=" + encodeURIComponent(email)); // 이메일 값을 요청에 포함시킵니다
+	  
+	}
+
+<!-- 정규식 검사 -->
+	function checkForm() {
+		  // 이메일 정규식 패턴
+		  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+		  
+		  // 비밀번호 정규식 패턴
+		  const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+		  // 이름 정규식 패턴
+		  const namePattern = /^[가-힣]{2,}$/;
+
+		  // 전화번호 정규식 패턴
+		  const phonePattern = /^\d{3}-\d{3,4}-\d{4}$/;
+
+		  // 우편번호 정규식 패턴
+		  const postcodePattern = /^\d{5}$/;
+
+
+		  // 폼 내용 가져오기
+		  const form = document.join
+		  const email = form.cid.value
+		  const password = form.cpassword.value
+		  const passwordcheak = form.passwordcheak.value
+		  const name = form.cname.value
+		  const phone = form.cphone.value
+		  const cpostnum = form.cpostnum.value
+		  const birthYear = form.birthYear.value
+		  const birthMonth = form.birthMonth.value
+		  const birthDay = form.birthDay.value
+		  
+		  
+		  // 이메일 입력값 검사
+		  if (email.length == 0) {
+		    alert("이메일 주소를 입력해주세요.");
+		    return;
+		  }
+		  if (!emailPattern.test(email)) {
+		    alert("유효한 이메일 주소를 입력해주세요.");
+		    return;
+		  }
+	  
+		  
+		  // 비밀번호 입력값 검사
+		  if (password.length == 0) {
+		    alert("비밀번호를 입력해주세요.");
+		    return;
+		  }
+		  if (!passwordPattern.test(password)) {
+		    alert("비밀번호는 영문자, 숫자를 포함하여 8자 이상으로 설정해주세요.");
+		    return;
+		  }
+
+		  // 비밀번호 확인 검사
+		  if (passwordcheak.length == 0) {
+		    alert("비밀번호 확인란을 입력해주세요.");
+		    return false;
+		  }
+
+		  
+		  // 이름 입력값 검사
+		  if (name.length == 0) {
+		    alert("이름을 입력해주세요.");
+		    return ;
+		  }
+		  if (!namePattern.test(name)) {
+		    alert("유효한 이름을 입력해주세요.");
+		    return ;
+		  } 
+
+		  // 전화번호 입력값 검사
+		  if (phone.length == 0) {
+		    alert("전화번호를 입력해주세요.");
+		    return ;
+		  }
+		  if (!phonePattern.test(phone)) {
+		    alert("유효한 전화번호를 입력해주세요. (예: 010-1234-5678)");
+		    return ;
+		  }
+
+		  // 우편번호 입력값 검사
+		  if (cpostnum.length == 0) {
+		    alert("우편번호를 입력해주세요.");
+		    return ;
+		  }
+		  if (!postcodePattern.test(postcode)) {
+		    alert("유효한 우편번호를 입력해주세요.");
+		    return ;
+		  }
+
+		  // 생년월일 검사
+		  if (birthYear.length == 0 || birthMonth.length == 0 || birthDay.length == 0) {
+		    alert("생년월일을 선택해주세요.");
+		    return ;
+		  }
+		  document.getElementById("join-form").submit();
+	}
+
+</script>
+
+<script type="text/javascript">
+function initializePage() {
+    var result = '${join}';
+	
+    if(result == 1){
+    	alert("회원가입을 축하드립니다. 로그인을 해주세요!");
+    	window.location.href = "login.jsp";
+    }
+    if(result == 2){
+    	result = 0;
+    	alert("회원가입 오류");
+    	document.join.cid.select();
+    }
+    
+    
   }
 </script>
+
+
+
 </body>
 </html>

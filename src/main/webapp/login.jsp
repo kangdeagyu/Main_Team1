@@ -207,6 +207,7 @@ function kakaoLogin() {
     		  .catch(error => {
     		    // 로그인 실패 시 처리
     		    this.errorMessage = error.response.data.message;
+    		    alert("아이디와 비밀번호를 확인해주세요!")
     		  });
     		}
         

@@ -10,17 +10,19 @@ import javax.servlet.http.HttpSession;
 
 import com.javalec.bbs.dao.MDao;
 
+
+
 /**
- * Servlet implementation class LoginCommand
+ * Servlet implementation class EmailCommand
  */
-@WebServlet("*.go")
-public class LoginCommand extends HttpServlet {
+@WebServlet("*.ch")
+public class EmailCommand extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginCommand() {
+    public EmailCommand() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,7 +32,7 @@ public class LoginCommand extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		actionGo(request, response);
+		actionCh(request, response);
 	}
 
 	/**
@@ -38,35 +40,19 @@ public class LoginCommand extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		actionGo(request, response);
+		actionCh(request, response);
 	}
-    
-	private void actionGo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void actionCh(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
-		HttpSession session = request.getSession(true);
 		
-	    String username = request.getParameter("username").trim();
-	    String password = request.getParameter("password").trim();
-	    System.out.println(username);
-	    // DAO를 사용하여 유저 정보 검증 등의 작업 수행
-	    MDao dao = new MDao();
-	    String isAuthenticated = dao.authenticate(username, password);
-	    System.out.println(isAuthenticated);
-	    if (isAuthenticated != null) {
-	      // 로그인 성공
-	    	response.setStatus(HttpServletResponse.SC_OK);
-	    	response.getWriter().print("success");
-	    	session.setAttribute("cid", username);
-	    	session.setAttribute("name", isAuthenticated);
-	    } else {
-	      // 로그인 실패
-	      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-	      response.getWriter().print("Login failed");
-	    }
-	    
-	}	
-	
-	
+		String email = request.getParameter("email");
 
+	    MDao dao = new MDao();
+	    String result = dao.emailcheak(email);
+	    
+	    response.getWriter().write(result);
+	    
+
+	}
 }
