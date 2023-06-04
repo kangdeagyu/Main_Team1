@@ -109,19 +109,8 @@ public class MDao {
 			String caddress1, String caddress2) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		// cbirthdate를 java.util.Date 객체로 변환
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		java.util.Date birthdate = null;
-		try {
-			birthdate = dateFormat.parse(cbirthdate);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// java.util.Date 객체를 java.sql.Date로 변환
-		java.sql.Date sqlBirthdate = new java.sql.Date(birthdate.getTime());
-		int result = 2;
+		
+		int result;
 		try {
 			connection = dataSource.getConnection(); // sql 연결
 			String query = "insert into customer (cid, cpassword, cname, cphone, cbirthdate, cgender, cpostnum, caddress1, caddress2, cinsertdate) values (?,?,?,?,?,?,?,?,?,now())";
@@ -130,7 +119,7 @@ public class MDao {
 			preparedStatement.setString(2, cpassword);
 			preparedStatement.setString(3, cname);
 			preparedStatement.setString(4, cphone);
-			preparedStatement.setDate(5, sqlBirthdate);
+			preparedStatement.setString(5, cbirthdate);
 			preparedStatement.setInt(6, cgender);
 			preparedStatement.setString(7, cpostnum);
 			preparedStatement.setString(8, caddress1);
@@ -140,7 +129,7 @@ public class MDao {
 			result = 1;
 
 		}catch (Exception e) {
-			result = 2;
+			result = 0;
 		}finally {
 			try {
 				if(preparedStatement != null) preparedStatement.close();
