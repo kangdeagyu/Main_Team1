@@ -34,9 +34,10 @@
 	
 
 	
-	</div>
-
-
+	</div> <br/>
+	
+	<p>매출 : ${request.dailySale}</p>
+	<p>날짜 :${request.dailyDate}</p>
 
 
 
@@ -73,25 +74,15 @@
 			const labels = [];
 				
 			const data = {
-				labels: req
-				['January', 'February', 'March',  'April',  'May',  'June',] /* x축을 선언하는 파트. - 위에서 선언한 labels 로 대체할 수 있다.*/
+				labels: ${request.dailyDate}   /* x축을 선언하는 파트. - 위에서 선언한 labels 로 대체할 수 있다.*/
 			    
 			    datasets: [  					/* 그려질 그래프의 정보를 입력하는 부분이다. 그래프의 배경색, 테두리색, data 값들이 입력된다. */
 			    	{
-			      label: 'My First dataset',   /* 그래프(차트)의 제목이다.*/ 
+			      label: '일일 매출 현황',   /* 그래프(차트)의 제목이다.*/ 
 			      backgroundColor: 'rgb(255, 99, 132)',
 			      borderColor: 'rgb(255, 99, 132)',
-			      data: [0, 10, 5, 2, 20, 30, 25],      /* 리스트 형식으로 data들은 [ ] 안에 입력된 값들로 줘야한다. */
-			    },
-			    
-			   	{
-			      label: 'My Second dataset',
-			      backgroundColor: 'rgb(120, 100, 100)',
-			      borderColor: 'rgb(120, 100, 100)',
-			      data: [5, 20, 15, 2, 12, 30, 15],
+			      data: ${request.dailySale}      /* 리스트 형식으로 data들은 [ ] 안에 입력된 값들로 줘야한다. */
 			    }
-		
-			    ]
 			  };
 			
 		

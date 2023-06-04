@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.javalec.bbs.command.JoinCommand;
 import com.javalec.bbs.command.MCommand;
 import com.javalec.bbs.command.aHomeCommand_kkg;
 

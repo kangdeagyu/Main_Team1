@@ -59,12 +59,7 @@ public class aHomeCommand_kkg implements MCommand {
         	}
         		
    
-        	
-        	
-        	
-        	
-        	
-        	
+
         	
 //        	calendar.setTime(dateList.get(j));
 //            calendar.add(Calendar.DAY_OF_YEAR, -1);
@@ -75,10 +70,13 @@ public class aHomeCommand_kkg implements MCommand {
         	
         }
 
-        
-		request.setAttribute("dailyData", ddrs);
+        request.setAttribute("dailySale", saleList);
+		request.setAttribute("dailyDate", dateList);
 
 	}
+	
+	
+	// ------------------- function -------------------
 	
 	private static List<Date> getDateList(Timestamp startday, Timestamp endday) {
         List<Date> dateList = new ArrayList<>();
