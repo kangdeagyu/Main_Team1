@@ -16,8 +16,8 @@ public class aExtraDto_kkg {
 	Timestamp timestamp ;
 	int sales ;
 	Date date;
-	
-	
+	int ordercount;
+	String month;
 	
 	//constructor
 	
@@ -30,6 +30,26 @@ public class aExtraDto_kkg {
 	}
 
 
+	
+	public aExtraDto_kkg(Date date, int sales, int ordercount) {
+		super();
+		this.date = date;
+		this.sales = sales;
+		this.ordercount = ordercount;
+	}
+	
+	
+	
+	public aExtraDto_kkg(String month, int sales, int ordercount) {
+		super();
+		this.month = month;
+		this.sales = sales;
+		this.ordercount = ordercount;
+	}
+
+	
+	
+	
 
 	
 	//getter & setter
@@ -68,6 +88,32 @@ public class aExtraDto_kkg {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+
+
+
+	public int getOrdercount() {
+		return ordercount;
+	}
+
+
+
+
+	public void setOrdercount(int ordercount) {
+		this.ordercount = ordercount;
+	}
+
+
+
+	public String getMonth() {
+		return month;
+	}
+
+
+
+	public void setMonth(String month) {
+		this.month = month;
 	}
 	
 	

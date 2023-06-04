@@ -14,7 +14,12 @@ import com.javalec.bbs.command.IdCommand;
 import com.javalec.bbs.command.JoinCommand;
 import com.javalec.bbs.command.MCommand;
 import com.javalec.bbs.command.PwCommand;
+import com.javalec.bbs.command.aDeleteProductCommand_pjh;
 import com.javalec.bbs.command.aHomeCommand_kkg;
+import com.javalec.bbs.command.aModifyProductCommand_pjh;
+import com.javalec.bbs.command.aProductAddCommand_pjh;
+import com.javalec.bbs.command.aProductListCommand_pjh;
+import com.javalec.bbs.command.aProductSearchCommand_pjh;
 
 
 /**
@@ -115,7 +120,41 @@ public class MController extends HttpServlet {
 			
 			
 			/* PART III 시작. 스윗남자 박지환 서윗남 part 입니다. 일용할 스윗함에 고마움을 :).*/
+			case("/APlist.do") :
+			command = new aProductListCommand_pjh();
+			command.execute(request, response);
+			viewPage = "Admin_ProductList_pjh.jsp";
+			break;
+				
+			//상품관리에서 상품등록하는 페이지로 이동	
+			case("/uploadAction.do") :
+			viewPage = "Admin_ProductAdd_pjh.jsp";
+			break;
+			//상품등록 페이지에서 업로드 버튼
+			case("/AProductInsert.do") :
+			command = new aProductAddCommand_pjh();
 			
+			command.execute(request, response);
+			viewPage = "APlist.do";
+			break;
+			//상품관리 페이지에서 상품 삭제
+			case ("/deleteProduct.do"):
+			command = new aDeleteProductCommand_pjh();
+			command.execute(request, response);
+			viewPage = "APlist.do";
+			break;
+			//상품 관리 페이지에서 상품 변경 버튼 눌렀을 때		
+			case ("/editProduct.do"):	
+			command = new aModifyProductCommand_pjh();	
+			command.execute(request, response);	
+			viewPage = "APlist.do";	
+			break;
+			//상품 검색		
+			case ("/productQuery.do"):		
+			command = new aProductSearchCommand_pjh();
+			command.execute(request, response);
+			viewPage = "Admin_ProductList_pjh.jsp";
+			break;
 			
 			/* PART III 종. 스윗남자 박지환 서윗남 part 입니다. 일동 .일용할 스윗함에 고마움을 :)*/
 		    //*************************************************************//

@@ -42,13 +42,15 @@
 
 
 <body>
-	<jsp:include page="admin_01_header.jsp" />
+
+<!-- 헤더부분이랑 사이드바 부분은 일단 주석 처리 해두겠습니다.  -->
+ 	<jsp:include page="admin_01_header.jsp" />
 
 
 	<div class="container">
-		<div class="sidebar">
+		<%-- <div class="sidebar">
 			<jsp:include page="admin_01_sidebar.jsp" />
-		</div>
+		</div> --%> 
 
 
 
@@ -73,13 +75,13 @@
 	</div>
 	<br />
 
-	<p>매출 :${requestScope.dailySale}</p>
 	<p>날짜 :${requestScope.dailyDate}</p>
-
-
-
-
-
+	<p>주문 :${requestScope.dailyOrder}</p>
+	<p>매출 :${requestScope.dailySale}</p>
+	
+	<p>월별 :${requestScope.monthlyMonth}</p>
+	<p>주문 :${requestScope.monthlyOrder}</p>
+	<p>매출 :${requestScope.monthlySale}</p>
 
 
 
@@ -89,15 +91,10 @@
 	<script>
 		var context = document.getElementById('SaleChart_daily');
 
-		var xlabels = $
-		{
-			requestScope.dailyDate
-		};
+		var xlabels = ${requestScope.dailyDate};
 
-		var ydatas_01 = $
-		{
-			requestScope.dailySale
-		};
+		var ydatas_01 = ${requestScope.dailySale};
+		var ydatas_02 = ${requestScope.dailyOrder};
 
 		const datas = {
 			labels : xlabels, /* x축을 선언하는 파트. - 위에서 선언한 labels 로 대체할 수 있다.*/
@@ -108,9 +105,23 @@
 				fill : false,
 				backgroundColor : 'rgb(255, 0, 0)',
 				borderColor : 'rgb(255, 0, 0)',
-				data : ydatas_01
-			/* 리스트 형식으로 data들은 [ ] 안에 입력된 값들로 줘야한다. */
-			} ]
+				data : ydatas_01,
+				yAxisID: 'y-axis-1'
+		
+			}, //첫번째 data 셋 입력 끝.(매출액 데이터))
+			
+				{
+				label : '일일 주문건수 현황', /* 그래프(차트)의 제목이다.*/
+				fill : false,
+				backgroundColor : 'rgb(0, 0, 255)',
+				borderColor : 'rgb(0, 0, 255)',
+				data : ydatas_02,
+				yAxisID: 'y-axis-2'
+		
+			}
+	
+			
+			] //dataset 끝
 		};
 
 		/* 차트 발생 코드에 넣을 값들을 하단에 몰아 넣는다면  여기에는 이 코드가 들어가야 한다.
@@ -128,12 +139,34 @@
 				maintainAspectRatio : false, /*  가로세로 비율 무시하기*/
 
 				scales : {
+					yAxes: [
+						{
+							id: 'y-axis-1',
+							position: 'left',
+							ticks: {
+								fontSize: 8,
+								fontColor : 'rgb(255,0,0)'
+							}
+						},
+						{
+							id: 'y-axis-2',
+							position: 'right',
+							ticks: {
+								fontSize: 8,
+								fontColor : 'rgb(0,0,255)',
+								max : 15
+							}
+						}
+					],
+					
+					
 					xAxes : [ {
 						ticks : {
 							fontSize : 8, // x축 레이블의 글씨 크기를 10으로 설정 (원하는 크기로 조정)
 						}
 					} ]
-				},/* scale 끝 */
+				},//scale 끝
+				
 				layout : {
 					padding : {
 						top : 0,
@@ -142,7 +175,7 @@
 						left : 0
 					}
 
-				},/*  layout 끝*/
+				},//layout 끝
 
 				legend : {
 					display : true,
@@ -156,15 +189,151 @@
 						}
 					}
 
-				}
-			//legend 끝 
+				}//legend 끝 
 
-			}
-		/* option 끝 */
-		};
+			}//option 끝
+		};//config 끝
 
 		const SaleChart_daily = new Chart(context, config);
 	</script>
+
+
+
+
+
+
+
+
+	<!-- SaleChart_monthly 그리기   -->
+
+	<script>
+		var context_m = document.getElementById('SaleChart_month');
+
+		var xlabels_m = ${requestScope.monthlyMonth};
+
+		var ydatas_m01 = ${requestScope.monthlySale};
+		var ydatas_m02 = ${requestScope.monthlyOrder};
+
+		const datas_m = {
+			labels : xlabels_m, /* x축을 선언하는 파트. - 위에서 선언한 labels 로 대체할 수 있다.*/
+
+			datasets : [ /* 그려질 그래프의 정보를 입력하는 부분이다. 그래프의 배경색, 테두리색, data 값들이 입력된다. */
+			{
+				label : '월 매출 현황', /* 그래프(차트)의 제목이다.*/
+				fill : false,
+				backgroundColor : 'rgb(255, 0, 0)',
+				borderColor : 'rgb(255, 0, 0)',
+				data : ydatas_m01,
+				yAxisID: 'y-axis-1'
+		
+			}, //첫번째 data 셋 입력 끝.(매출액 데이터))
+			
+				{
+				label : '월 주문수 현황', /* 그래프(차트)의 제목이다.*/
+				fill : false,
+				backgroundColor : 'rgb(0, 0, 255)',
+				borderColor : 'rgb(0, 0, 255)',
+				data : ydatas_m02,
+				yAxisID: 'y-axis-2'
+		
+			}
+	
+			
+			] //dataset 끝
+		};
+
+		/* 차트 발생 코드에 넣을 값들을 하단에 몰아 넣는다면  여기에는 이 코드가 들어가야 한다.
+		
+		var context = document      
+		  .getElementById('myChart') 
+		  .getContext('2d');	
+		
+		 */
+
+		const config_m = {
+			type : 'line',
+			data : datas_m,
+			options : {
+				maintainAspectRatio : false, /*  가로세로 비율 무시하기*/
+
+				scales : {
+					yAxes: [
+						{
+							id: 'y-axis-1',
+							position: 'left',
+							ticks: {
+								fontSize: 8,
+								fontColor : 'rgb(255,0,0)'
+							}
+						},
+						{
+							id: 'y-axis-2',
+							position: 'right',
+							ticks: {
+								fontSize: 8,
+								fontColor : 'rgb(0,0,255)',
+								max : 300
+							}
+						}
+					],
+					
+					
+					xAxes : [ {
+						ticks : {
+							fontSize : 8, // x축 레이블의 글씨 크기를 10으로 설정 (원하는 크기로 조정)
+						}
+					} ]
+				},//scale 끝
+				
+				layout : {
+					padding : {
+						top : 0,
+						right : 0,
+						bottom : 20,
+						left : 0
+					}
+
+				},//layout 끝
+
+				legend : {
+					display : true,
+					labels : {
+						fontSize : 8,
+						boxWidth : 5,// 범례의 글씨 크기 설정
+					},
+					elements : {
+						line : {
+							borderWidth : 1, // 선의 두께 설정 (기본값: 3)
+						}
+					}
+
+				}//legend 끝 
+
+			}//option 끝
+		};//config 끝
+
+		const SaleChart_monthly = new Chart(context_m, config_m);
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

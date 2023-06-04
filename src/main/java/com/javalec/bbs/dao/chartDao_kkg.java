@@ -47,12 +47,11 @@ public class chartDao_kkg {
 			System.out.println("마지막 날짜 : " + enddate);
 		long oneday = 24*60*60*1000;
 		
-		Date enddatePlusOneday = new Date(enddate.getTime()+oneday);
 		
 		//가져오는 값들 int bid,  int sale, 
 		try {
 			connection =dataSource.getConnection();
-			String sql_select = "select ROW_NUMBER() OVER (ORDER BY Date(odate)) AS No, sum(oprice) as sale, Date(odate) as date ";
+			String sql_select = "select ROW_NUMBER() OVER (ORDER BY Date(odate)) AS No, sum(oprice) as sale, count(*) as ocount, Date(odate) as date ";
 			String sql_from =	" from ordering";
 			String sql_where = 	" where odate >= ? AND odate < ? group by date(odate);";
 			String sql_group = "";
@@ -70,10 +69,11 @@ public class chartDao_kkg {
 					//System.out.println("i값 : "+ i);
 					//System.out.println("더하는 날짜 : "+oneday/(60*60*24*1000) );
 				int dailySales = resultSet.getInt("sale");
+				int dailyOrders = resultSet.getInt("ocount");
 				Date date = new Date(startdate.getTime()+dayplus);
 					//System.out.println("날짜 : " +date);
 					//System.out.println("매출 : "+ dailySales);
-				aExtraDto_kkg dto = new aExtraDto_kkg (date, dailySales);
+				aExtraDto_kkg dto = new aExtraDto_kkg (date, dailySales,dailyOrders);
 				dtos.add(dto);
 				
 			System.out.println("완료된 date : "+date);
@@ -90,5 +90,105 @@ public class chartDao_kkg {
 		
 		return dtos;
 	}
+	
+	
+	
+	
+	
+	public ArrayList<aExtraDto_kkg> monthlyGraph(Timestamp startday, Timestamp endday){
+		
+		ArrayList<aExtraDto_kkg> dtos= new ArrayList<aExtraDto_kkg>();
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+
+		Date startdate = new Date(startday.getTime()); 
+			System.out.println("시작 날짜 : "+startdate);
+		Date enddate = new Date(endday.getTime()); 
+			System.out.println("마지막 날짜 : " + enddate);
+		long oneday = 24*60*60*1000;
+		
+		
+		
+		
+		//가져오는 값들 int bid,  int sale, 
+				try {
+					connection =dataSource.getConnection();
+					String sql_select = "select ROW_NUMBER() OVER (ORDER BY Date_format(odate,'%Y-%m')) AS No, sum(oprice) as sale, count(*) as ocount, Date_format(odate,'%Y-%m') as month ";
+					String sql_from =	" from ordering";
+					String sql_where = 	" where odate >= ? AND odate < ? group by Date_format(odate,'%Y-%m')";
+					String sql_group = "";
+					String sql = sql_select + sql_from + sql_where+sql_group;
+					preparedStatement = connection.prepareStatement(sql);
+					preparedStatement.setTimestamp(1, startday);
+					preparedStatement.setTimestamp(2, endday);
+					
+					System.out.println(sql);
+					resultSet = preparedStatement.executeQuery();
+					int i = 0;
+					while(resultSet.next()) {
+						
+						long dayplus = oneday *i;
+						int monthlySales = resultSet.getInt("sale");
+						int monthlyOrders = resultSet.getInt("ocount");
+						String month = resultSet.getString("month");
+						
+							//System.out.println("날짜 : " +date);
+							//System.out.println("매출 : "+ dailySales);
+						aExtraDto_kkg dto = new aExtraDto_kkg (month, monthlySales,monthlyOrders);
+						dtos.add(dto);
+						
+					System.out.println("완료된 month : "+month);
+					System.out.println("완료된 월의 sale : "+ monthlySales);
+					i++;
+					}
+				} catch (Exception e) {
+						// TODO: handle exception
+					System.out.println("실패");
+
+						e.printStackTrace();
+					}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		return dtos;
+	}
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
