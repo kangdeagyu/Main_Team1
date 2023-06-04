@@ -67,4 +67,45 @@ public class Admin_QnA_Dao {
 		} // list
 		
 		
+		
+		public int saveQnA(String pname, String pprice, String pstock, String pcontent, String pcategory, String filename, String fileRealName, String filepath) {
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+
+			try{
+				connection = datasource.getConnection();
+				String query = "INSERT INTO forum (pname, pprice, pstock, pfilename, pcategory, pcontent, pinsertdate) VALUES (?, ?, ?, ?, ?, ?, now())";
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setString(1, pname);
+				preparedStatement.setString(2, pprice);
+				preparedStatement.setString(3, pstock);
+				preparedStatement.setString(4, filename);
+				preparedStatement.setString(5, pcategory);
+				preparedStatement.setString(6, pcontent);
+				return preparedStatement.executeUpdate();
+			}catch (Exception e) {
+				e.printStackTrace();
+			 } finally {
+			        // 리소스 해제 코드
+			        if (preparedStatement != null) {
+			            try {
+			                preparedStatement.close();
+			            } catch (Exception e) {
+			                e.printStackTrace();
+			            }
+			        }
+			        if (connection != null) {
+			            try {
+			                connection.close();
+			            } catch (Exception e) {
+			                e.printStackTrace();
+			            }
+			        }
+			    }
+			    return -1;
+			}
+		
+		
+		
+		
 }

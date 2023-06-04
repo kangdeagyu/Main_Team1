@@ -14,7 +14,7 @@
 </head>
 <body>
 <h3>Q&A</h3>
-<form action="AProductInsert.do" method="post" enctype="multipart/form-data">
+<form action="AQnA.do" method="post" enctype="multipart/form-data">
     <table>
     	<tr>
     	<td>카테고리</td>
@@ -49,7 +49,7 @@
         </tr>
         <tr>
             <td>내용</td>
-   <td><textarea id="content" name="pcontent"></textarea>
+   <td><textarea id="content" name="content"></textarea>
     <script type="text/javascript">
 $(document).ready(function() {
     $('#content').summernote({
@@ -87,8 +87,8 @@ $(document).ready(function() {
             <td><input type="file" name="file"></td>
         </tr>
     </table>
-            <input type="submit" value="업로드">
-            <input type="submit" value="재작성">
+            <input type="submit" name=action value="업로드">
+            <input type="submit" name=action value="재작성">
     
 		</form>
 		<form action="Admin_QnA_List.do" method="post">
