@@ -1,7 +1,9 @@
 package com.javalec.bbs.command;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,7 +13,7 @@ import com.javalec.bbs.dto.Admin_Product_Dto;
 public class aProductListCommand_pjh implements MCommand {
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		// TODO Auto-generated method stub
 		
 		int total = 0;
@@ -19,16 +21,17 @@ public class aProductListCommand_pjh implements MCommand {
 		
 		Admin_Product_Dao dao = new Admin_Product_Dao();
 		ArrayList<Admin_Product_Dto>dtos = dao.list();
-		request.setAttribute("list", dtos);
 		
-		
+		String uploadPath = "C:\\Users\\xdrag\\OneDrive\\Documents\\ji hwan\\Main_Team1\\src\\main\\webapp\\image\\";
 		for (Admin_Product_Dto dto : dtos) {
+			String fileName = dto.getPfilename();
+			String imagePath = uploadPath + fileName;
+			dto.setPfilename(imagePath);
+			String pfilename = dto.getPfilename();
 			int price = dto.getPprice();
-			total +=price;
+			total += price;
 		}		
+		request.setAttribute("list", dtos);
 		request.setAttribute("total", total);
 	}
-
-	
-
 }
