@@ -174,7 +174,8 @@
 
 <!-- 이메일 중복체크 -->
 <script type="text/javascript">
-
+	var isEmailChecked = false;
+	
 	function checkDuplicate() {
 	  // 중복 체크를 수행할 이메일 값을 가져옵니다
 	  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -194,10 +195,12 @@
 	      var response = xhr.responseText;
 	      // 중복 체크 결과에 따라 동작을 수행합니다
 	      if (response === "duplicate") {
-	        alert("중복된 이메일입니다.");      
+	        alert("중복된 이메일입니다.");   
+	        isEmailChecked = false;
 	        form.cid.focus();
 	      } else {
 	    	  alert("사용 가능한 이메일입니다.");
+	    	  isEmailChecked = true;
 	      }
 	    }
 	  };
@@ -247,6 +250,11 @@ function checkForm(event) {
 	  if (!emailPattern.test(email)) {
 	    alert("유효한 이메일 주소를 입력해주세요.");
 	    return false;
+	  }
+	  if (!isEmailChecked) {
+		    alert("이메일 중복 체크를 해주세요.");
+		    return false;		  
+	
 	  }
 
 	  // 비밀번호 입력값 검사
