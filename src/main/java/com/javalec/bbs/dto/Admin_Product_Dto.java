@@ -12,7 +12,7 @@ public class Admin_Product_Dto {
 		String pcontent;
 		Timestamp pinsertdate;
 		Timestamp pdeletedate;
-		
+		String c_name;
 		
 		
 		
@@ -30,6 +30,18 @@ public class Admin_Product_Dto {
 			this.pprice = pprice;
 			this.pid = pid;
 		}
+		
+		public Admin_Product_Dto(String pfilename, String pname, int pprice, int pid, String c_name) {
+			super();
+			this.pfilename = pfilename;
+			this.pname = pname;
+			this.pprice = pprice;
+			this.pid = pid;
+			this.c_name = c_name;
+		}
+		
+		
+		
 		
 		
 		// Method
@@ -58,6 +70,18 @@ public class Admin_Product_Dto {
 
 		public void setPname(String pname) {
 			this.pname = pname;
+		}
+
+		
+		public String getC_name() {
+			return c_name;
+		}
+		
+		
+		
+		
+		public void setC_name(String c_name) {
+			this.c_name = c_name;
 		}
 
 

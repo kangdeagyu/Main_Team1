@@ -38,8 +38,8 @@ public class Admin_Product_Dao {
 		ResultSet resultSet = null;
 		try {
 			connection = datasource.getConnection();
-			String query = "select pfilename, pname, pprice, pid";
-			String query1 = " from product";
+			String query = "SELECT p.pfilename, p.pname, p.pprice, p.pid, c.c_name ";
+			String query1 = " FROM product p JOIN category c ON p.pcategory = c.c_num";
 			preparedStatement = connection.prepareStatement(query+query1);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -47,7 +47,8 @@ public class Admin_Product_Dao {
 			    String pname = resultSet.getString(2);
 			    int pprice = resultSet.getInt(3);
 			    int pid = resultSet.getInt(4);
-			    Admin_Product_Dto dto = new Admin_Product_Dto(pfilename, pname, pprice, pid);
+			    String c_name=resultSet.getString(5);
+			    Admin_Product_Dto dto = new Admin_Product_Dto(pfilename, pname, pprice, pid, c_name);
 			    dtos.add(dto);
 			}
 		}catch (Exception e) {
@@ -150,15 +151,6 @@ public class Admin_Product_Dao {
 	    PreparedStatement preparedStatement = null;
 	    try {
 	        connection = datasource.getConnection();
-	        
-	        // Delete from inbound table first
-	        String deleteInboundQuery = "delete from inbound where i_pid = ?";
-	        deleteInboundStatement = connection.prepareStatement(deleteInboundQuery);
-	        for (int i = 0; i < pid.length; i++) {
-	            deleteInboundStatement.setInt(1, Integer.parseInt(pid[i]));
-	            deleteInboundStatement.executeUpdate();
-	        }
-	        
 	        // Delete from product table
 	        String deleteProductQuery = "delete from product where pid = ?";
 	        preparedStatement = connection.prepareStatement(deleteProductQuery);
