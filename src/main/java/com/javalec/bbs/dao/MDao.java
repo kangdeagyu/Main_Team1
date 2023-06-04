@@ -142,5 +142,79 @@ public class MDao {
 		return result;
 	}
 	
+	// Id찾기
+	public String Id(String cname, String cphone) {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		String result = null;
+		
+		try {
+			connection = dataSource.getConnection(); // sql 연결
+			String query = "select cid from customer where cname = ? and cphone = ?";
+			ps = connection.prepareStatement(query);
+		      ps.setString(1, cname);
+		      ps.setString(2, cphone);
+		      rs = ps.executeQuery();
+		      
+				if(rs.next()) {
+					result =  rs.getString(1);	// 등록된 회원	
+				}
+			
+
+		}catch (Exception e) {
+			e.printStackTrace();
+		
+		}finally {
+			try {
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+	  }
+		return result;
+		
+	}
 	
+	// 비밀번호 찾기
+	public String Pw(String cid, String cname) {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		String result = null;
+		
+		try {
+			connection = dataSource.getConnection(); // sql 연결
+			String query = "select cpassword from customer where cid = ? and cname = ?";
+			ps = connection.prepareStatement(query);
+		      ps.setString(1, cid);
+		      ps.setString(2, cname);
+		      rs = ps.executeQuery();
+		      
+				if(rs.next()) {
+					result =  rs.getString(1);	// 등록된 회원	
+				}
+			
+
+		}catch (Exception e) {
+			e.printStackTrace();
+		
+		}finally {
+			try {
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+	  }
+		return result;
+		
+	}
 }// end

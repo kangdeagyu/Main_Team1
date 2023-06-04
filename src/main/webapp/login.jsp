@@ -151,7 +151,7 @@ function kakaoLogin() {
 	 	 <a href="join.do" class="text-dark">회원가입</a>
 	  </div>
 	  <div>
-	  	<a href="#" class="text-dark">아이디/비밀번호 찾기</a>
+	  	<a href="findId.do" class="text-dark">아이디</a> / <a href="findPw.do" class="text-dark">비밀번호 찾기</a>
 	  </div>
 	</div>
 <hr/>

@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.javalec.bbs.command.IdCommand;
 import com.javalec.bbs.command.JoinCommand;
 import com.javalec.bbs.command.MCommand;
+import com.javalec.bbs.command.PwCommand;
 import com.javalec.bbs.command.aHomeCommand_kkg;
 
 
@@ -67,10 +69,6 @@ public class MController extends HttpServlet {
 	
 			
 		case("/home.do"):
-			//command = new LMCommand();
-			//command.execute(request, response);
-			String username = (String)session.getAttribute("cid");
-			System.out.println(username);
 			viewPage = "home.jsp";
 			break;
 			
@@ -82,12 +80,25 @@ public class MController extends HttpServlet {
 		case("/join.do"):
 			viewPage = "join.jsp";
 			break;
-			
-			
-		case("/joinDB.do"):
-			command = new JoinCommand();
+		
+			// 아이디 찾기
+		case("/findId.do"):
+			viewPage = "FindId.jsp";
+			break;
+		case("/pindIdview.do"):
+			command = new IdCommand();
 			command.execute(request, response);
-			viewPage = "join.jsp";
+			viewPage = "FindIdview.jsp";
+			break;
+			
+			// 비밀번호 차기
+		case("/findPw.do"):
+			viewPage = "Findpw.jsp";
+			break;
+		case("/pindPwview.do"):
+			command = new PwCommand();
+			command.execute(request, response);
+			viewPage = "FindPwview.jsp";
 			break;
 			
 			/* PART I 종료. 킹갓더제너럴 강대규팀장님 part 입니다. 일동 기립. 경례. 쉬어.*/
