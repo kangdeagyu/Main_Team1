@@ -8,12 +8,13 @@
 <meta charset="UTF-8">
 <title>회원가입</title>
 
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
 <link href="join.css" rel="stylesheet">
 
 </head>
-<body onload="initializePage()">
+<body>
 
 <div class="container">
 	<main class="form-signin w-100 m-auto">
@@ -26,7 +27,7 @@
 		</div>
 		
 		
-			<form id="join-form" name="join" action="joinDB.do" method="post">
+			<form id="join-form" name="join" method="post">
 				<label>아이디</label>
 				<div class="input-group">
 					<input type="email" class="form-control" name="cid" id="cid" placeholder="name@example.com">
@@ -58,7 +59,7 @@
 					  <select class="form-control" id="birthMonth" name="birthMonth"></select>
 					  <select class="form-control" id="birthDay" name="birthDay"></select>
 					</div><br/>
-					<button class="w-100 btn btn-lg btn-primary" type="submit" onclick="checkForm()" >회원가입</button>
+					<button class="w-100 btn btn-lg btn-primary" type="submit" onclick="checkForm(event)" >회원가입</button>
 			
 			</form>
 	
@@ -203,122 +204,168 @@
 	  xhr.send("email=" + encodeURIComponent(email)); // 이메일 값을 요청에 포함시킵니다
 	  
 	}
-
+	</script>
+	<script type="text/javascript">
 <!-- 정규식 검사 -->
-	function checkForm() {
-		  // 이메일 정규식 패턴
-		  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-		  
-		  // 비밀번호 정규식 패턴
-		  const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
-		  // 이름 정규식 패턴
-		  const namePattern = /^[가-힣]{2,}$/;
+	
+function checkForm(event) {
+	event.preventDefault();
+	const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	
+	// 비밀번호 정규식 패턴
+	const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+	
+	// 이름 정규식 패턴
+	const namePattern = /^[가-힣]{2,}$/;
+	
+	// 전화번호 정규식 패턴
+	const phonePattern = /^\d{3}-\d{3,4}-\d{4}$/;
+	
+	// 우편번호 정규식 패턴
+	const postcodePattern = /^\d{5}$/;
+	
+	// 폼 내용 가져오기
+	const form = document.join;
+	const email = form.cid.value;
+	const password = form.cpassword.value;
+	const passwordcheak = form.passwordcheak.value;
+	const name = form.cname.value;
+	const phone = form.cphone.value;
+	const genderInputs = form.cgender;
+	const cpostnum = form.cpostnum.value;
+	const caddress1 = form.caddress1.value;
+	const caddress2 = form.caddress2.value;
+	const birthYear = form.birthYear.value;
+	const birthMonth = form.birthMonth.value;
+	const birthDay = form.birthDay.value;
+	  // 이메일 입력값 검사
+	  if (email.length == 0) {
+	    alert("이메일 주소를 입력해주세요.");
+	    return false;
+	  }
+	  if (!emailPattern.test(email)) {
+	    alert("유효한 이메일 주소를 입력해주세요.");
+	    return false;
+	  }
 
-		  // 전화번호 정규식 패턴
-		  const phonePattern = /^\d{3}-\d{3,4}-\d{4}$/;
+	  // 비밀번호 입력값 검사
+	  if (password.length == 0) {
+	    alert("비밀번호를 입력해주세요.");
+	    return false;
+	  }
+	  if (!passwordPattern.test(password)) {
+	    alert("비밀번호는 영문자, 숫자를 포함하여 8자 이상으로 설정해주세요.");
+	    return false;
+	  }
 
-		  // 우편번호 정규식 패턴
-		  const postcodePattern = /^\d{5}$/;
+	  // 비밀번호 확인 검사
+	  if (passwordcheak.length == 0) {
+	    alert("비밀번호 확인란을 입력해주세요.");
+	    return false;
+	  }
 
+	  // 이름 입력값 검사
+	  if (name.length == 0) {
+	    alert("이름을 입력해주세요.");
+	    return false;
+	  }
+	  if (!namePattern.test(name)) {
+	    alert("유효한 이름을 입력해주세요.");
+	    return false;
+	  }
 
-		  // 폼 내용 가져오기
-		  const form = document.join
-		  const email = form.cid.value
-		  const password = form.cpassword.value
-		  const passwordcheak = form.passwordcheak.value
-		  const name = form.cname.value
-		  const phone = form.cphone.value
-		  const cpostnum = form.cpostnum.value
-		  const birthYear = form.birthYear.value
-		  const birthMonth = form.birthMonth.value
-		  const birthDay = form.birthDay.value
-		  
-		  
-		  // 이메일 입력값 검사
-		  if (email.length == 0) {
-		    alert("이메일 주소를 입력해주세요.");
-		    return;
-		  }
-		  if (!emailPattern.test(email)) {
-		    alert("유효한 이메일 주소를 입력해주세요.");
-		    return;
-		  }
-	  
-		  
-		  // 비밀번호 입력값 검사
-		  if (password.length == 0) {
-		    alert("비밀번호를 입력해주세요.");
-		    return;
-		  }
-		  if (!passwordPattern.test(password)) {
-		    alert("비밀번호는 영문자, 숫자를 포함하여 8자 이상으로 설정해주세요.");
-		    return;
-		  }
+	  // 전화번호 입력값 검사
+	  if (phone.length == 0) {
+	    alert("전화번호를 입력해주세요.");
+	    return false;
+	  }
+	  if (!phonePattern.test(phone)) {
+	    alert("유효한 전화번호를 입력해주세요. (예: 010-1234-5678)");
+	    return false;
+	  }
 
-		  // 비밀번호 확인 검사
-		  if (passwordcheak.length == 0) {
-		    alert("비밀번호 확인란을 입력해주세요.");
-		    return false;
-		  }
+	  // 성별 입력값 검사
+	  var genderChecked = false;
+	  for (var i = 0; i < genderInputs.length; i++) {
+	    if (genderInputs[i].checked) {
+	      genderChecked = true;
+	      break;
+	    }
+	  }
+	  if (!genderChecked) {
+	    alert("성별을 선택해주세요.");
+	    return false;
+	  }
 
-		  
-		  // 이름 입력값 검사
-		  if (name.length == 0) {
-		    alert("이름을 입력해주세요.");
-		    return ;
-		  }
-		  if (!namePattern.test(name)) {
-		    alert("유효한 이름을 입력해주세요.");
-		    return ;
-		  } 
+	  // 우편번호 입력값 검사
+	  if (cpostnum.length == 0) {
+	    alert("우편번호를 입력해주세요.");
+	    return false;
+	  }
+	  if (!postcodePattern.test(cpostnum)) {
+	    alert("유효한 우편번호를 입력해주세요.");
+	    return false;
+	  }
 
-		  // 전화번호 입력값 검사
-		  if (phone.length == 0) {
-		    alert("전화번호를 입력해주세요.");
-		    return ;
-		  }
-		  if (!phonePattern.test(phone)) {
-		    alert("유효한 전화번호를 입력해주세요. (예: 010-1234-5678)");
-		    return ;
-		  }
+	  // 생년월일 검사
+	  if (birthYear.length == 0 || birthMonth.length == 0 || birthDay.length == 0) {
+	    alert("생년월일을 선택해주세요.");
+	    return false;
+	  }
 
-		  // 우편번호 입력값 검사
-		  if (cpostnum.length == 0) {
-		    alert("우편번호를 입력해주세요.");
-		    return ;
-		  }
-		  if (!postcodePattern.test(postcode)) {
-		    alert("유효한 우편번호를 입력해주세요.");
-		    return ;
-		  }
-
-		  // 생년월일 검사
-		  if (birthYear.length == 0 || birthMonth.length == 0 || birthDay.length == 0) {
-		    alert("생년월일을 선택해주세요.");
-		    return ;
-		  }
-		  document.getElementById("join-form").submit();
+	  submitForm()
 	}
 
 </script>
 
 <script type="text/javascript">
-function initializePage() {
-    var result = '${join}';
-	
-    if(result == 1){
-    	alert("회원가입을 축하드립니다. 로그인을 해주세요!");
-    	window.location.href = "login.jsp";
-    }
-    if(result == 2){
-    	result = 0;
-    	alert("회원가입 오류");
-    	document.join.cid.select();
-    }
-    
-    
-  }
+function submitForm() {
+	  const form = document.join;
+	  const email = form.cid.value;
+	  const password = form.cpassword.value;
+	  const name = form.cname.value;
+	  const phone = form.cphone.value;
+	  const genderInputs = form.cgender.value;
+	  const cpostnum = form.cpostnum.value;
+	  const caddress1 = form.caddress1.value;
+	  const caddress2 = form.caddress2.value;
+	  const birthYear = form.birthYear.value;
+	  const birthMonth = form.birthMonth.value;
+	  const birthDay = form.birthDay.value;
+
+	  var xhr = new XMLHttpRequest();
+	  xhr.open("POST", "joinDB.jn", true);
+	  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	  xhr.onreadystatechange = function() {
+	    if (xhr.readyState === XMLHttpRequest.DONE) {
+	      if (xhr.status === 200) {
+	        alert("회원가입을 축하드립니다. 로그인을 해주세요!");
+	        window.location.href = "login.jsp";
+	      } else {
+	        alert("회원가입 오류");
+	        form.cid.select();
+	      }
+	    }
+	  };
+	  
+	  // POST 파라미터를 생성하여 전송합니다
+	  var params = "email=" + encodeURIComponent(email)
+	    + "&password=" + encodeURIComponent(password)
+	    + "&name=" + encodeURIComponent(name)
+	    + "&phone=" + encodeURIComponent(phone)
+	    + "&genderInputs=" + encodeURIComponent(genderInputs)
+	    + "&cpostnum=" + encodeURIComponent(cpostnum)
+	    + "&caddress1=" + encodeURIComponent(caddress1)
+	    + "&caddress2=" + encodeURIComponent(caddress2)
+	    + "&birthYear=" + encodeURIComponent(birthYear)
+	    + "&birthMonth=" + encodeURIComponent(birthMonth)
+	    + "&birthDay=" + encodeURIComponent(birthDay);
+	  
+	  xhr.send(params);
+	}
+
+
 </script>
 
 

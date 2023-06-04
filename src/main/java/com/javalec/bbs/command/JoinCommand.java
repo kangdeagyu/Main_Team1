@@ -22,9 +22,11 @@ public class JoinCommand implements MCommand {
 		String cpostnum = request.getParameter("cpostnum");
 		String caddress1 = request.getParameter("caddress1");
 		String caddress2 = request.getParameter("caddress2");
-		int gender = 0;
+		int gender;
 		if(cgender.equals("male")) {
 			gender = 1;
+		}else {
+			gender = 0;
 		}
 
 		
