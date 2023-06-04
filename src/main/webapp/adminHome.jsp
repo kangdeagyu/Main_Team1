@@ -7,47 +7,93 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 홈 화면</title>
-
-
-<link href="admin_kkg.css" rel="stylesheet"> 
-</head>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<link rel="stylesheet" href="admin_main.css">
+
+</head>
+
+<style>
+  .container {
+    width: 80%;
+    overflow: hidden;
+  }
+  
+  .box {
+    float: left;
+    width: 300px;
+    height: 200px;
+    background-color: rgb(240, 248, 255);
+    margin-right: 2%;
+    box-sizing: border-box;
+  }
+</style>
+
 
 
 <body>
 
+
+<!-- 사이드바 입력하기 위함. 일단 css 는 나중에 합시다. -->
+
+<!-- 	<aside class="sidebar-nav-wrapper">
+	
+		<div>
+			<h3> 여기는 로고 자리인데. </h3>
+		</div>
+		<nav class="sidebar-nav">
+			<ul>
+				<li>
+					<a href="Temp_admin_start.jsp"> ul>li 일단 시작페이지.</a>
+					<a href="Temp_admin_start.jsp"> ul>li 일단 시작페이지.</a>
+					
+					<ul>
+						<li>
+							<a href="temp_admin_start.jsp">ul >>li>>ul>>li</a><br/>
+							<a href="temp_admin_start.jsp">ul >>li>>ul>>li</a>
+						
+						
+						</li>			
+					</ul>
+				</li>			
+				
+				
+				
+				
+			
+			
+			</ul>
+		
+		
+		</nav>
+	
+	</aside> -->
+
+
+
+
 	<div class="container">
+	<h2> 매출 관리 </h2>
 	  <div class="box">	
-	  월간 매출/판매 현황 <br/>
+	  최근 1년 월간 매출/판매 현황 
 	  <canvas id="SaleChart_month" ></canvas>
 	  </div>
 	  
 	  <div class="box">	
-	  주간 매출/판매 현황  <br/>
+	  최근 12	주 주간 매출/판매 현황 
 	  <canvas id="SaleChart_weekly" ></canvas>
 	  </div>  
 	
 	  <div class="box">	
-	  일간 매출/판매 현황  <br/>
-	  <canvas id="SaleChart_daily" ></canvas>
+	  최근 2주간 매출/판매 현황  
+	  <canvas id='SaleChart_daily' ></canvas>
 	  </div>
 	
 
 	
 	</div> <br/>
 	
-	<p>매출 : ${request.dailySale}</p>
-	<p>날짜 :${request.dailyDate}</p>
-
-
-
-
-
-
-
-
-
-
+	<p>매출 :${requestScope.dailySale}</p>
+	<p>날짜 :${requestScope.dailyDate}</p>
 
 
 
@@ -60,29 +106,29 @@
 	
 	
 	<script>
+
 	
+			var context = document.getElementById('SaleChart_daily');	
+	  		
+
+ 			 var xlabels = ${requestScope.dailyDate};
 			
-	
-	
-	
-	
-	
-	
-	
-			var context = document.getElementById('myChart').getContext('2d');			
 			
-			const labels = [];
-				
-			const data = {
-				labels: ${request.dailyDate}   /* x축을 선언하는 파트. - 위에서 선언한 labels 로 대체할 수 있다.*/
+			 var ydatas_01 = ${requestScope.dailySale};
+			
+			
+			
+			const datas = {
+				labels: xlabels, /* x축을 선언하는 파트. - 위에서 선언한 labels 로 대체할 수 있다.*/
 			    
 			    datasets: [  					/* 그려질 그래프의 정보를 입력하는 부분이다. 그래프의 배경색, 테두리색, data 값들이 입력된다. */
 			    	{
-			      label: '일일 매출 현황',   /* 그래프(차트)의 제목이다.*/ 
-			      backgroundColor: 'rgb(255, 99, 132)',
-			      borderColor: 'rgb(255, 99, 132)',
-			      data: ${request.dailySale}      /* 리스트 형식으로 data들은 [ ] 안에 입력된 값들로 줘야한다. */
-			    }
+			      label: '일일 매출 현황',   /* 그래프(차트)의 제목이다.*/
+			      fill : false,
+			      backgroundColor: 'rgb(255, 0, 0)',
+			      borderColor: 'rgb(255, 0, 0)',
+			      data: ydatas_01      /* 리스트 형식으로 data들은 [ ] 안에 입력된 값들로 줘야한다. */
+			    }]
 			  };
 			
 		
@@ -97,13 +143,46 @@
 			  
 			    const config = {
 					    type: 'line',
-					    data: data,
-					    options: {}
-					  };
+					    data: datas,
+					    options: {
+					    	maintainAspectRatio: false,   /*  가로세로 비율 무시하기*/
+					    	
+					    	scales: {
+					    	      xAxes: [{
+					    	        ticks: {
+					    	          fontSize: 8, // x축 레이블의 글씨 크기를 10으로 설정 (원하는 크기로 조정)
+					    	        }
+					    	      }]
+					    	    },/* scale 끝 */
+					    	layout: {
+					    	        padding: {
+					    	          top: 0,
+					    	          right: 0,
+					    	          bottom: 20,
+					    	          left: 0
+					    	        }
+		
+					    	      },/*  layout 끝*/
+					    	      
+					    	legend: {
+					    	       display: true,
+					    	       labels: {
+					    	         fontSize: 8,
+					    	         boxWidth: 5,// 범례의 글씨 크기 설정
+					    	          },
+					    	      	elements: {
+					    	          line: {
+					    	            borderWidth: 1, // 선의 두께 설정 (기본값: 3)
+					    	        }
+					    	     }
+			  
+					    }//legend 끝 
+					  
+					    }/* option 끝 */
+			  };
 		
 				
-		  		const myChart = new Chart(document.getElementById('myChart').getcontext('2d'), config);
-	
+		  		const SaleChart_daily = new Chart(context, config);
 			
 			
 	

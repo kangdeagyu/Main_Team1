@@ -35,14 +35,16 @@ public class chartDao_kkg {
 	
 	
 	public ArrayList<aExtraDto_kkg> dailyGraph(Timestamp startday, Timestamp endday){
-		ArrayList<aExtraDto_kkg> dtos= null;
+		ArrayList<aExtraDto_kkg> dtos= new ArrayList<aExtraDto_kkg>();
 				
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		
 		Date startdate = new Date(startday.getTime()); 
+			System.out.println("시작 날짜 : "+startdate);
 		Date enddate = new Date(endday.getTime()); 
+			System.out.println("마지막 날짜 : " + enddate);
 		long oneday = 24*60*60*1000;
 		
 		Date enddatePlusOneday = new Date(enddate.getTime()+oneday);
@@ -50,27 +52,33 @@ public class chartDao_kkg {
 		//가져오는 값들 int bid,  int sale, 
 		try {
 			connection =dataSource.getConnection();
-			String sql_select = "Select ROW_NUMBER() OVER (ORDER BY Date(o.odate)) AS No, sum(oprice) as sale, Date(o.odate) as date ";
-			String sql_from ="from ordering as o";
-			String sql_where = "where odate >= ? AND odate < ? ";
-			String sql_group = "group by date";
+			String sql_select = "select ROW_NUMBER() OVER (ORDER BY Date(odate)) AS No, sum(oprice) as sale, Date(odate) as date ";
+			String sql_from =	" from ordering";
+			String sql_where = 	" where odate >= ? AND odate < ? group by date(odate);";
+			String sql_group = "";
 			String sql = sql_select + sql_from + sql_where+sql_group;
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setTimestamp(1, startday);
 			preparedStatement.setTimestamp(2, endday);
 			
+			System.out.println(sql);
 			resultSet = preparedStatement.executeQuery();
 			int i = 0;
 			while(resultSet.next()) {
 				
 				long dayplus = oneday *i;
+					//System.out.println("i값 : "+ i);
+					//System.out.println("더하는 날짜 : "+oneday/(60*60*24*1000) );
 				int dailySales = resultSet.getInt("sale");
-				Date date = new Date(enddate.getTime()+dayplus);
-				
+				Date date = new Date(startdate.getTime()+dayplus);
+					//System.out.println("날짜 : " +date);
+					//System.out.println("매출 : "+ dailySales);
 				aExtraDto_kkg dto = new aExtraDto_kkg (date, dailySales);
 				dtos.add(dto);
 				
 			System.out.println("완료된 date : "+date);
+			System.out.println("완료된 날의 sale : "+ dailySales);
+			i++;
 			}
 		} catch (Exception e) {
 				// TODO: handle exception
