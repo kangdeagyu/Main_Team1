@@ -63,13 +63,7 @@ public class MController extends HttpServlet {
 		
 		/* ***** PART I 시작. 킹갓더제너럴 5STAR 강대규팀장님 part 입니다. 일동 기립. 경례. 쉬어.***** */
 		
-		
-		
-		
-		case("/login.go"):
-			session.invalidate();
-			viewPage = "login.jsp";
-			break;
+	
 			
 		case("/home.do"):
 			//command = new LMCommand();
@@ -87,7 +81,13 @@ public class MController extends HttpServlet {
 		case("/join.do"):
 			viewPage = "join.jsp";
 			break;
-		
+			
+			
+		case("/joinDB.do"):
+			command = new JoinCommand();
+			command.execute(request, response);
+			viewPage = "join.jsp";
+			break;
 			
 			/* PART I 종료. 킹갓더제너럴 강대규팀장님 part 입니다. 일동 기립. 경례. 쉬어.*/
 		    //*************************************************************//
@@ -102,10 +102,10 @@ public class MController extends HttpServlet {
 
 			
 			
-			/* PART III 시작. 스윗남자 박지환 서윗한 part 입니다. 일용할 스윗함에 고마움을 :).*/
+			/* PART III 시작. 스윗남자 박지환 서윗남 part 입니다. 일용할 스윗함에 고마움을 :).*/
 			
 			
-			/* PART III 종. 스윗남자 박지환 서윗한 part 입니다. 일동 .일용할 스윗함에 고마움을 :)*/
+			/* PART III 종. 스윗남자 박지환 서윗남 part 입니다. 일동 .일용할 스윗함에 고마움을 :)*/
 		    //*************************************************************//
 
 			
@@ -131,6 +131,8 @@ public class MController extends HttpServlet {
 			System.out.println("viewPage 입력되었음");
 			
 		break;
+		
+		
 		
 			/* PART V 종료. 나 강경구 파트다. 돈트 터치 디스 에어리어. 디스 이즈 사유지. ㅋㅋㅋㅋㅋㅋㅋ */
 		    //*************************************************************//
