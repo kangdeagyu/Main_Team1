@@ -85,7 +85,7 @@ public class Kms_WriteList_Dao {
 		try {
 			connection = dataSource.getConnection();
 			String query2 = "insert into forum (f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, ftitle, fcontent, finsertdate, fmotherid, fanswernum)";
-			String query3 = " select ?,'admin', ?, 1 , max(fref) + 1, 0, 0,?,?,now(),0,0";
+			String query3 = " select ?,'admin', ?, 1 , max(fref) + 1, 0, 0,?,?,now(),0,0 from forum";
 			preparedStatement1 = connection.prepareStatement(query2 + query3);
 			preparedStatement1.setString(1, f_cid);
 			preparedStatement1.setInt(2, f_pid);
@@ -155,4 +155,84 @@ public class Kms_WriteList_Dao {
 		}
 		
 	} // 답글 
+	
+	public Kms_WriteList_Dto ForumView(int fid) {
+		Kms_WriteList_Dto dto = null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "select f_cid, f_pid, ftitle, fcontent, finsertdate from product where pname = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, fid);
+			rs = preparedStatement.executeQuery();
+			
+			if(rs.next()) { // 한 줄 짜리니까 while 말고 if 쓰자
+				String f_cid = rs.getString("f_cid");
+				int f_pid = rs.getInt("f_pid");
+				String ftitle = rs.getString("ftitle");
+				String fcontent = rs.getString("fcontent");
+				Timestamp finsertdate = rs.getTimestamp("finsertdate");
+				
+				dto = new Kms_WriteList_Dto(f_cid, f_pid, ftitle, fcontent, finsertdate);
+				
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) rs.close();
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return dto;
+
+	} // content view
+	
+	public ArrayList<Kms_WriteList_Dto> comment(int fid){
+		ArrayList<Kms_WriteList_Dto> dtos = new ArrayList<Kms_WriteList_Dto>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "select f_cid, ftitle, finsertdate from forum where ftype = 3 and fmotherid = ? order by fref,freforder";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, fid);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				String f_cid = resultSet.getString(1);
+				String ftitle = resultSet.getString(2);
+				Timestamp finsertdate = resultSet.getTimestamp(3);
+				
+				
+				
+				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(f_cid, ftitle, finsertdate);
+				dtos.add(dto);
+				
+			
+				}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(resultSet != null) resultSet.close();
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return dtos;
+		
+	} // list
 }

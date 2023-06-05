@@ -67,7 +67,7 @@
     <tbody>
         <c:forEach items="${RList}" var="dto">
             <tr>
-                <td>${dto.fid}</td>
+                <td><a href="ForumView.do?fid=${dto.fid}">${dto.fid}</a></td>
                 <td>${dto.f_cid}</td>
                 <td>${dto.f_pid}</td>
                 <td>${dto.ftitle}</td>
