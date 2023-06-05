@@ -1,28 +1,26 @@
 package com.javalec.bbs.command;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.javalec.bbs.dao.MDao;
 
-
 /**
- * Servlet implementation class JoinDbCommand
+ * Servlet implementation class member
  */
-@WebServlet("*.jn")
-public class JoinDbCommand extends HttpServlet {
+@WebServlet("*.mb")
+public class MemberCommand extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public JoinDbCommand() {
+    public MemberCommand() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,7 +30,7 @@ public class JoinDbCommand extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		actionjn(request, response);
+		actionmb(request, response);
 	}
 
 	/**
@@ -40,14 +38,14 @@ public class JoinDbCommand extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		actionjn(request, response);
+		actionmb(request, response);
 	}
 
-	private void actionjn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void actionmb(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
+		HttpSession session = request.getSession(true);
 		String cid = request.getParameter("email");
-		String cpassword = request.getParameter("password");
 		String cname = request.getParameter("name");
 		String cphone = request.getParameter("phone");
 		String cbirth = request.getParameter("cbirth");
@@ -65,17 +63,19 @@ public class JoinDbCommand extends HttpServlet {
 
 
 		MDao dao = new MDao();
-		int result = dao.join(cid, cpassword, cname, cphone, cbirth, gender, cpostnum, caddress1, caddress2);
+		boolean result = dao.memberUpdate(cid, cname, cphone, cbirth, gender, cpostnum, caddress1, caddress2);
 	    
 
-	    if (result == 1) {
-	        // 회원가입 성공
+	    if (result == true) {
+	        // 회원정보 수정
 	    	response.setStatus(HttpServletResponse.SC_OK);
 	    	response.getWriter().print("success");
+	    	session.removeAttribute("name");
+	    	session.setAttribute("name", cname);
 	    } else {
-	        // 회원가입 실패
+	        // 회원가입 
 		      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		      response.getWriter().print("Login failed");
+		      response.getWriter().print("failed");
 	    }
 	  
 	}	

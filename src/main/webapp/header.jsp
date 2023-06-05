@@ -58,7 +58,7 @@
 			    </li>
 			</c:if>
 			<li class="nav-item">	<!-- 마이 페이지 이동 -->
-			    <a class="nav-link" href="login.jsp">
+			    <a class="nav-link" href="mypageview.do" onclick="return userCheck()">
 			   	 <img src="image/so5.png" alt="" width="30" height="24">
 			    </a>
 		    </li>
@@ -73,7 +73,19 @@
 
 <hr/>
 
+<script type="text/javascript">
 
+function userCheck() {
+	if(${cid == null }){
+	    alert("로그인을 해주세요.")
+	    return false
+	}else{
+		return true
+	}
+	
+}
+
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>

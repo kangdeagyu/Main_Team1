@@ -1,88 +1,166 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="header.jsp" %>
-
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
+<title>My Page</title>
 
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
 <link href="join.css" rel="stylesheet">
+
+
+<style>
+   .mb-3 {
+	margin: 0 auto;
+	width: 800px;
+	margin-bottom: 20px;
+	align-items: center;
+	text-align: left;
+	
+  }
+   .custom-nav {
+	float: left;
+	width: 25%;
+    margin-right: 0px;
+    
+  }
+
+  
+</style>
 
 </head>
 <body>
 
 <div class="container">
-	<main class="form-signin w-100 m-auto">
-		<div class="container">
-			<figure class="text-center">
-				<h3 class="text-dark">Little and Precious</h3>
-				<h3 class="text-dark">회원가입</h3>
-			</figure>
-			
-		</div>
+  <div class="row justify-content-center">
+    <div class="col-4 custom-nav">
+      <nav>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="mypageview.do">회원정보 수정</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="PwChange.jsp">비밀번호 변경</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">나의 리뷰</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">배송 현황</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#memberModal">회원 탈퇴</a>
+
+          </li>
+        </ul>
+      </nav>
+    </div>
+    
+    <div class="col-8">
+      <main class="form-signin">
+        <div class="container">
+          <figure class="text-center">
+            <h3 class="text-dark">Little and Precious</h3>
+            <h3 class="text-dark">회원정보 수정</h3>
+          </figure>
+        </div>
 		
 		
-			<form id="join-form" name="join" method="post">
+			<form id="member-form" name="member" method="post" >
+			<c:forEach items="${list }" var="dto">
+			    <label>*수정을 원하시면 비밀번호를 입력해주세요!!</label><br/>
 				<label>아이디</label>
-				<div class="input-group">
-					<input type="email" class="form-control" name="cid" id="cid" placeholder="name@example.com">
-					<input type="button" value="중복확인" name="emailcheak" onclick="checkDuplicate()">
-				</div> 
+				
+					<input type="email" class="form-control" name="cid" id="cid" value="${dto.cid }"  readonly>
+<!-- 					<input type="button" value="중복확인" name="emailcheak" onclick="checkDuplicate()"> -->
+				
 				<label>비밀번호</label>
+				<div class="input-group">
 					<input type="password" class="form-control" name="cpassword" id="cpassword" placeholder="비밀번호">
-					<input type="password" class="form-control" name="passwordcheak" id="passwordcheak" placeholder="비밀번호 확인">
-				<p class="text-end" id="passwordMatchMessage"style="color: red" ></p>
+					<input type="button" value="확인" name="pwcheak" onclick="pwCk()">
+				</div>
+
+				<script type="text/javascript">
+					function pwCk(){
+						const cpassword = '${dto.cpassword}'
+						const form = document.member
+						const mpassword = form.cpassword.value
+						
+					    if (cpassword === mpassword) {
+					        alert("비밀번호가 일치합니다.");
+					        form.cpassword.readOnly = true;
+					        form.cname.readOnly = false;
+					        form.cphone.readOnly = false;
+					        form.cgender.forEach((radio) => {
+					            radio.disabled = false;
+					        });
+					        form.addrBtn.disabled = false;
+					        form.caddress2.readOnly = false;
+					        form.cbirthdate.readOnly = false;
+					        form.memberUp.disabled = false;
+					    } else {
+					        alert("비밀번호가 일치하지 않습니다.");
+					    }
+					}
+				
+				</script>
+				
 				<label>이름</label>
-					<input type="text" class="form-control" name="cname" id="cname" placeholder="이름">
+					<input type="text" class="form-control" name="cname" id="cname" value="${dto.cname }" placeholder="이름" readonly>
 				<label>전화번호</label>
-					<input type="text" class="form-control" name="cphone" id="cphone" placeholder="휴대폰 번호 입력('-'포함해서 입력해주세요)">
+					<input type="text" class="form-control" name="cphone" id="cphone" value="${dto.cphone }" placeholder="휴대폰 번호 입력('-'포함해서 입력해주세요)" readonly>
 				<label>성별</label><br/>
-					  <input type="radio" name="cgender" value="male"> 남자<br/>
-					  <input type="radio" name="cgender" value="female"> 여자<br/>
+					<input type="radio" name="cgender" value="male" ${dto.cgender == 'male' ? 'checked' : ''} disabled> 남자<br/>
+					<input type="radio" name="cgender" value="female" ${dto.cgender == 'female' ? 'checked' : ''} disabled> 여자<br/>
+
 				<label>주소</label>
 				<div class="input-group">
-					<input type="text" class="form-control" name="cpostnum" id="sample6_postcode" placeholder="우편번호" readonly>
-					<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+					<input type="text" class="form-control" name="cpostnum" id="sample6_postcode" value="${dto.cpostnum }" placeholder="우편번호" readonly>
+					<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" name="addrBtn" disabled>
 				</div>
 				<br>
-					<input type="text" class="form-control" name="caddress1" id="sample6_address" placeholder="주소" readonly><br>
-					<input type="text" class="form-control" name="caddress2" id="sample6_detailAddress" placeholder="상세주소">
+					<input type="text" class="form-control" name="caddress1" id="sample6_address" value="${dto.caddress1 }" placeholder="주소" readonly><br>
+					<input type="text" class="form-control" name="caddress2" id="sample6_detailAddress"value="${dto.caddress2 }" placeholder="상세주소" readonly>
 					<input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
 				<label>생년월일</label>
-					<input type="date" class="form-control" min="1930-01-01" max="2050-12-31" name="cbirth"><br/>
-					<button class="w-100 btn btn-lg btn-primary" type="submit" onclick="checkForm(event)" >회원가입</button>
-			
+					<input type="date" class="form-control" name="cbirthdate" min="1930-01-01" max="2050-12-31" value="${dto.cbirthdate }" readonly><br/>
+			</c:forEach>
+					<button class="w-100 btn btn-lg btn-primary" name="memberUp" type="submit" onclick="checkForm(event)" disabled>확인</button>
 			</form>
-	
-	</main>
+			
+		<div class="modal" id="memberModal">
+		  <div class="modal-dialog modal-dialog-centered">
+		    <div class="modal-content">
+		      <div class="modal-body text-center">
+		        <h5 class="modal-title fw-bold">회원 탈퇴</h5>
+		        <p>회원 탈퇴를 진행하시면 아래와 같은 내용이 적용됩니다:</p>
+		        <ul class="list-unstyled text-center">
+		          <li><strong>계정과 관련된 모든 개인정보가 삭제됩니다.</strong></li>
+		          <li><strong>저장된 데이터, 포스트, 댓글 등 모든 활동 내역이 삭제됩니다.</strong></li>
+		          <li><strong>탈퇴 후에는 이전에 사용했던 계정으로 다시 로그인할 수 없습니다.</strong></li>
+		        </ul>
+		        <p>회원 탈퇴를 진행하시겠습니까?</p>
+		      </div>
+		      <div class="modal-footer border-0">
+		        <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">취소</button>
+		        <button type="button" class="btn btn-danger rounded-pill" onclick="memberDraw()">회원 탈퇴</button>
+		      </div>
+    		</div>
+  		  </div>
+		</div>
+
+
+		
+		</main>
+		</div>
+	</div>
 </div>
-<%@ include file="bottom.jsp" %>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 
-<!-- 비밀번호 체크  -->
-<script>
-	// 비밀번호 입력란과 비밀번호 확인 입력란의 값을 실시간으로 비교하여 일치 여부를 체크하는 함수
-	function checkPasswordMatch() {
-		var password = document.getElementById("cpassword").value;
-		var passwordcheak = document.getElementById("passwordcheak").value;
-		var messageElement = document.getElementById("passwordMatchMessage");
-
-		if (password === passwordcheak) {
-			messageElement.innerHTML = "비밀번호가 일치합니다.";
-		} else {
-			messageElement.innerHTML = "비밀번호가 일치하지 않습니다.";
-		}
-	}
-
-	// 비밀번호 확인 입력란의 값이 변경될 때마다 checkPasswordMatch 함수를 호출하여 비교 체크
-	document.getElementById("passwordcheak").addEventListener("input", checkPasswordMatch);
-</script>
 
 <!-- 주소 api  -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -136,51 +214,13 @@
     }
 </script>
 
-
-
-<!-- 이메일 중복체크 -->
 <script type="text/javascript">
-	var isEmailChecked = false;
-	
-	function checkDuplicate() {
-	  // 중복 체크를 수행할 이메일 값을 가져옵니다
-	  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-	  const form = document.join
-	  const email = form.cid.value
-	  if (!emailPattern.test(email)) {
-		    alert("유효한 이메일 주소를 입력해주세요.");
-		    return false;
-		  }
-	  // Ajax 요청을 보냅니다
-	  var xhr = new XMLHttpRequest();
-	  xhr.open("POST", "Email.ch", true); // 중복 체크를 수행할 URL을 지정합니다
-	  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	  xhr.onreadystatechange = function () {
-	    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-	      // Ajax 요청이 성공적으로 완료되었을 때 수행할 동작을 작성합니다
-	      var response = xhr.responseText;
-	      // 중복 체크 결과에 따라 동작을 수행합니다
-	      if (response === "duplicate") {
-	        alert("중복된 이메일입니다.");   
-	        isEmailChecked = false;
-	        form.cid.focus();
-	      } else {
-	    	  alert("사용 가능한 이메일입니다.");
-	    	  isEmailChecked = true;
-	      }
-	    }
-	  };
-	  xhr.send("email=" + encodeURIComponent(email)); // 이메일 값을 요청에 포함시킵니다
-	  
-	}
-	</script>
-	<script type="text/javascript">
 <!-- 정규식 검사 -->
 
 	
 function checkForm(event) {
 	event.preventDefault();
-	const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 	
 	// 비밀번호 정규식 패턴
 	const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
@@ -195,48 +235,16 @@ function checkForm(event) {
 	const postcodePattern = /^\d{5}$/;
 	
 	// 폼 내용 가져오기
-	const form = document.join;
-	const email = form.cid.value;
-	const password = form.cpassword.value;
-	const passwordcheak = form.passwordcheak.value;
+	const form = document.member;
 	const name = form.cname.value;
 	const phone = form.cphone.value;
 	const genderInputs = form.cgender;
 	const cpostnum = form.cpostnum.value;
 	const caddress1 = form.caddress1.value;
 	const caddress2 = form.caddress2.value;
-	const cbirth = form.cbirth.value;
+	const cbirth = form.cbirthdate.value;
 
-	  // 이메일 입력값 검사
-	  if (email.length == 0) {
-	    alert("이메일 주소를 입력해주세요.");
-	    return false;
-	  }
-	  if (!emailPattern.test(email)) {
-	    alert("유효한 이메일 주소를 입력해주세요.");
-	    return false;
-	  }
-	  if (!isEmailChecked) {
-		    alert("이메일 중복 체크를 해주세요.");
-		    return false;		  
-	
-	  }
 
-	  // 비밀번호 입력값 검사
-	  if (password.length == 0) {
-	    alert("비밀번호를 입력해주세요.");
-	    return false;
-	  }
-	  if (!passwordPattern.test(password)) {
-	    alert("비밀번호는 영문자, 숫자를 포함하여 8자 이상으로 설정해주세요.");
-	    return false;
-	  }
-
-	  // 비밀번호 확인 검사
-	  if (passwordcheak.length == 0) {
-	    alert("비밀번호 확인란을 입력해주세요.");
-	    return false;
-	  }
 
 	  // 이름 입력값 검사
 	  if (name.length == 0) {
@@ -294,7 +302,7 @@ function checkForm(event) {
 
 <script type="text/javascript">
 function submitForm() {
-	  const form = document.join;
+	  const form = document.member;
 	  const email = form.cid.value;
 	  const password = form.cpassword.value;
 	  const name = form.cname.value;
@@ -303,18 +311,18 @@ function submitForm() {
 	  const cpostnum = form.cpostnum.value;
 	  const caddress1 = form.caddress1.value;
 	  const caddress2 = form.caddress2.value;
-	  const cbirth = form.cbirth.value;
+	  const cbirth = form.cbirthdate.value;
 
 	  var xhr = new XMLHttpRequest();
-	  xhr.open("POST", "joinDB.jn", true);
+	  xhr.open("POST", "member.mb", true);
 	  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	  xhr.onreadystatechange = function() {
 	    if (xhr.readyState === XMLHttpRequest.DONE) {
 	      if (xhr.status === 200) {
-	        alert("회원가입을 축하드립니다. 로그인을 해주세요!");
-	        window.location.href = "login.jsp";
+	        alert("회원정보가 수정되었습니다.");
+	        window.location.href = "mypageview.do";
 	      } else {
-	        alert("회원가입 오류");
+	        alert("회원정보 수정 오류");
 	        form.cid.select();
 	      }
 	    }
@@ -334,12 +342,36 @@ function submitForm() {
 	  xhr.send(params);
 	}
 
+</script>
 
+<script type="text/javascript">
+function memberDraw() {
+  const form = document.member;
+  const email = form.cid.value;
+  
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "memberDraw.dw", true); 
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          alert("회원 탈퇴 되었습니다.");
+          window.location.href = "logout.do";
+        } else {
+          alert("회원탈퇴 오류");
+        }
+      }
+    }
+  };
+  xhr.send("email=" + encodeURIComponent(email)); // 이메일 값을 요청에 포함시킵니다
+}
 </script>
 
 
 
-
-
+ <%@ include file="bottom.jsp" %>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
+

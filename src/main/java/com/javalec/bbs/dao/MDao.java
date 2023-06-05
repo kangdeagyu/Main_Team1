@@ -3,12 +3,15 @@ package com.javalec.bbs.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+
+import com.javalec.bbs.dto.MDto;
 
 
 
@@ -217,4 +220,175 @@ public class MDao {
 		return result;
 		
 	}
+	
+	
+	//회원 정보 불러오기
+	public ArrayList<MDto> list(String mcid){
+		ArrayList<MDto> dtos = new ArrayList<MDto>();
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String gender;
+		try {
+			connection = dataSource.getConnection(); // sql 연결
+			String query = "select cid, cpassword, cname, cphone,cbirthdate, cgender, cpostnum, caddress1, caddress2 from customer where cid = ?";
+			ps = connection.prepareStatement(query);
+			ps.setString(1, mcid);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				String cid = rs.getString("cid");
+				String cpassword = rs.getString("cpassword");
+				String cname = rs.getString("cname");
+				String cphone = rs.getString("cphone");
+				String cbirthdate = rs.getString("cbirthdate");
+				int cgender = rs.getInt("cgender");
+				String cpostnum = rs.getString("cpostnum");
+				String caddress1 = rs.getString("caddress1");
+				String caddress2 = rs.getString("caddress2");
+					// 성별
+					if(cgender == 0) {
+						gender = "female";
+					}else {
+						gender = "male";
+					}
+					
+					// birth
+
+				
+				MDto dto = new MDto(cid, cpassword, cname, cphone, cbirthdate, gender, cpostnum, caddress1, caddress2);
+				dtos.add(dto);
+				
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return dtos;
+	}
+	
+	// 회원 정보 수정
+	public boolean memberUpdate(String cid, String cname, String cphone, String cbirthdate, int cgender, String cpostnum,
+			String caddress1, String caddress2) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		boolean result = false;
+		try {
+			connection = dataSource.getConnection(); // sql 연결
+			String query = "update customer set cname = ?, cphone = ?, cbirthdate = ?, cgender = ?, cpostnum = ?, caddress1 = ?, caddress2 = ? where cid = ?";
+			preparedStatement = connection.prepareStatement(query);
+			
+			preparedStatement.setString(1, cname);
+			preparedStatement.setString(2, cphone);
+			preparedStatement.setString(3, cbirthdate);
+			preparedStatement.setInt(4, cgender);
+			preparedStatement.setString(5, cpostnum);
+			preparedStatement.setString(6, caddress1);
+			preparedStatement.setString(7, caddress2);
+			preparedStatement.setString(8, cid);
+			preparedStatement.executeUpdate();
+			result = true;
+
+		}catch (Exception e) {
+			result = false;
+		}finally {
+			try {
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
+	
+	// 비밀번호 변경
+	public boolean pwchange(String cid, String pw, String newpw) {
+		Connection connection = null;
+		PreparedStatement ps = null;
+
+
+		boolean result = false;
+		
+		try {
+			connection = dataSource.getConnection(); // sql 연결
+			String query = "update customer set cpassword = ? where cid = ? and cpassword = ?";
+			ps = connection.prepareStatement(query);
+		      ps.setString(1, newpw);
+		      ps.setString(2, cid);
+		      ps.setString(3, pw);
+		      int rowsUpsated = ps.executeUpdate();
+		      
+		      if (rowsUpsated > 0) {
+		            result = true; // 변경 작업이 성공한 경우
+		        }
+
+		}catch (Exception e) {
+			e.printStackTrace();
+		
+		}finally {
+			try {
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+	  }
+		return result;
+		
+		
+	}
+	
+	//회원 탈퇴
+	public boolean memberDraw(String cid) {
+		boolean result = false;
+		
+		Connection connection = null;
+		PreparedStatement ps = null;
+
+		
+		try {
+			connection = dataSource.getConnection(); // sql 연결
+			String query = "delete from customer where cid = ?";
+			ps = connection.prepareStatement(query);
+		    ps.setString(1, cid);
+		    int rowsUpsated = ps.executeUpdate();
+		      
+		      if (rowsUpsated > 0) {
+		            result = true; // 변경 작업이 성공한 경우
+		        }
+		      
+			
+
+		}catch (Exception e) {
+			e.printStackTrace();
+		
+		}finally {
+			try {
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+	  }
+		return result;
+	}
+	
+	
+	
+	
+	
+	
 }// end

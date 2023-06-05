@@ -94,28 +94,11 @@ function kakaoLogin() {
         console.log(error)
       },
     })
+
   }
- 
   
 </script>
 
-
-
-<!-- <main>
-	<div id="app">
-		<form @submit.prevent="login" method="post">
-			  <label>Username:</label>
-			  <input type="text" v-model="username" required>
-			  <br>
-			  <label>Password:</label>
-			  <input type="password" v-model="password" required>
-			  <br>
-			  <button type="submit">Login</button>
-		</form>
-	    <p v-if="errorMessage">{{ errorMessage }}</p>
-	 </div>
-
-</main> -->
 <div class="container">
 	<main class="form-signin w-100 m-auto">
 	<div class="container">

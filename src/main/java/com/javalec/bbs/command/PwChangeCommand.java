@@ -1,28 +1,26 @@
 package com.javalec.bbs.command;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.javalec.bbs.dao.MDao;
 
-
 /**
- * Servlet implementation class JoinDbCommand
+ * Servlet implementation class PwChangeCommand
  */
-@WebServlet("*.jn")
-public class JoinDbCommand extends HttpServlet {
+@WebServlet("*.cg")
+public class PwChangeCommand extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public JoinDbCommand() {
+    public PwChangeCommand() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,7 +30,7 @@ public class JoinDbCommand extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		actionjn(request, response);
+		actioncg(request, response);
 	}
 
 	/**
@@ -40,40 +38,28 @@ public class JoinDbCommand extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		actionjn(request, response);
+		actioncg(request, response);
 	}
-
-	private void actionjn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	private void actioncg(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
-		String cid = request.getParameter("email");
+		HttpSession session = request.getSession(true);
 		String cpassword = request.getParameter("password");
-		String cname = request.getParameter("name");
-		String cphone = request.getParameter("phone");
-		String cbirth = request.getParameter("cbirth");
-		String cgender = request.getParameter("genderInputs");
-		String cpostnum = request.getParameter("cpostnum");
-		String caddress1 = request.getParameter("caddress1");
-		String caddress2 = request.getParameter("caddress2");
-		int gender = 0;
-		
-		if(cgender.equals("male")) {
-			gender = 1;
-		}else {
-			gender = 0;
-		}
+		String newpassword = request.getParameter("newpassword");
+		String cid = (String)session.getAttribute("cid");
 
 
 		MDao dao = new MDao();
-		int result = dao.join(cid, cpassword, cname, cphone, cbirth, gender, cpostnum, caddress1, caddress2);
+		boolean result = dao.pwchange(cid, cpassword, newpassword);
 	    
-
-	    if (result == 1) {
-	        // 회원가입 성공
+		System.out.println(result);
+	    if (result == true) {
+	    	
 	    	response.setStatus(HttpServletResponse.SC_OK);
 	    	response.getWriter().print("success");
 	    } else {
-	        // 회원가입 실패
+
 		      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		      response.getWriter().print("Login failed");
 	    }

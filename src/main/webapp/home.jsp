@@ -99,7 +99,7 @@
 
 
 </main>
-<hr/>
+
 <!-- 하단  -->
 <%@ include file="bottom.jsp" %>
 
