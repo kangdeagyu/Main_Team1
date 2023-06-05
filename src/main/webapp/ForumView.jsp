@@ -34,12 +34,21 @@
         </tr>
         <c:forEach items="${CList}" var="cdto">
             <tr>
-                <td>${cdto.fid}</a></td>
+                <td>${cdto.f_cid}</a></td>
                 <td>${cdto.ftitle}</td>
                 <td>${cdto.finsertdate}</td>
             </tr>
         </c:forEach>
 </table>
-    
+
+   <form action="commentwrite.do" method="post">
+   <input type="hidden" name="fid" value=${dto.fid}>
+   <input type="hidden" name="f_cid" value="IULee1993">
+   <input type="hidden" name="f_cid" value=${forumView.f_cid}>
+            댓글달기 <input type="text" name="ftitle" >
+      
+    <input type="submit" value="리뷰작성하기">
+</form>
+   
 </body>
 </html>

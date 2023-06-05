@@ -235,4 +235,36 @@ public class Kms_WriteList_Dao {
 		return dtos;
 		
 	} // list
+	
+	public void commentAction(int fid,String f_cid, int f_pid,String ftitle) {
+		Connection connection = null;
+		PreparedStatement preparedStatement1 = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query2 = "insert into forum (f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, ftitle, fcontent, finsertdate, fmotherid, fanswernum)";
+			String query3 = " select ?,'admin', ?, 3 , max(fref) + 1, 0, 0,?,?,now(),?,0 from forum";
+			preparedStatement1 = connection.prepareStatement(query2 + query3);
+			preparedStatement1.setString(1, f_cid);
+			preparedStatement1.setInt(2, f_pid);
+			preparedStatement1.setString(3, ftitle);
+			preparedStatement1.setString(4, ftitle);
+			preparedStatement1.setInt(4, fid);
+			
+			
+			preparedStatement1.executeUpdate();
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(preparedStatement1 != null) preparedStatement1.close();
+				if(connection != null) connection.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	} // 답글 
 }
