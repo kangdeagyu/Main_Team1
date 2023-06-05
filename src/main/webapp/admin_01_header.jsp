@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 
 	<link href="admin_kkg.css" rel="stylesheet">
-	<hr>
+
 
 </head>
 
@@ -18,9 +18,11 @@
 			<input type="submit" value="adminHome" size="50">	
 		</form>
 	</div>
-	<div>
+	<div class="headbar">
 		<span > 관리자 홈 입니다.</span>
 	</div>
+	
+	<hr>
 
 
 

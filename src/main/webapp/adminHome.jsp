@@ -12,7 +12,7 @@
 
 	<jsp:include page="admin_01_header.jsp" />
 	<link href="admin_kkg.css" rel="stylesheet">
-	<hr>
+	
 </head>
 
 
