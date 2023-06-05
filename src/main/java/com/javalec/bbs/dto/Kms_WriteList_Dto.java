@@ -25,8 +25,9 @@ public class Kms_WriteList_Dto {
 	
 	
 
-	public Kms_WriteList_Dto(String f_cid, int f_pid, String ftitle, String fcontent, Timestamp finsertdate) {
+	public Kms_WriteList_Dto(int fid,String f_cid, int f_pid, String ftitle, String fcontent, Timestamp finsertdate) {
 		super();
+		this.fid = fid;
 		this.f_cid = f_cid;
 		this.f_pid = f_pid;
 		this.ftitle = ftitle;

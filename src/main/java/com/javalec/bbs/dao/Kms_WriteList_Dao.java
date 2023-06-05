@@ -164,19 +164,20 @@ public class Kms_WriteList_Dao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select f_cid, f_pid, ftitle, fcontent, finsertdate from product where pname = ?";
+			String query = "select fid, f_cid, f_pid, ftitle, fcontent, finsertdate from forum where fid = ?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, fid);
 			rs = preparedStatement.executeQuery();
 			
 			if(rs.next()) { // 한 줄 짜리니까 while 말고 if 쓰자
+				int Fid = rs.getInt("fid");
 				String f_cid = rs.getString("f_cid");
 				int f_pid = rs.getInt("f_pid");
 				String ftitle = rs.getString("ftitle");
 				String fcontent = rs.getString("fcontent");
 				Timestamp finsertdate = rs.getTimestamp("finsertdate");
 				
-				dto = new Kms_WriteList_Dto(f_cid, f_pid, ftitle, fcontent, finsertdate);
+				dto = new Kms_WriteList_Dto(Fid, f_cid, f_pid, ftitle, fcontent, finsertdate);
 				
 			}
 		}catch(Exception e) {
@@ -195,28 +196,40 @@ public class Kms_WriteList_Dao {
 
 	} // content view
 	
-	public ArrayList<Kms_WriteList_Dto> comment(int fid){
-		ArrayList<Kms_WriteList_Dto> dtos = new ArrayList<Kms_WriteList_Dto>();
+	public ArrayList<Kms_WriteList_Dto> commentList(int fid){
+		ArrayList<Kms_WriteList_Dto> dtos1 = new ArrayList<Kms_WriteList_Dto>();
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select f_cid, ftitle, finsertdate from forum where ftype = 3 and fmotherid = ? order by fref,freforder";
+			String query = "select * from forum where ftype = 3 and fmotherid = ? order by fref,freforder";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, fid);
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()) {
-				String f_cid = resultSet.getString(1);
-				String ftitle = resultSet.getString(2);
-				Timestamp finsertdate = resultSet.getTimestamp(3);
+				int f_id = resultSet.getInt(1);
+				String f_cid = resultSet.getString(2);
+				String f_aid = resultSet.getString(3);
+				int f_pid = resultSet.getInt(4);
+				int ftype = resultSet.getInt(5);
+				int fref = resultSet.getInt(6);
+				int freforder = resultSet.getInt(7);
+				int fstep = resultSet.getInt(8);
+				String ftitle = resultSet.getString(9);
+				String fcontent = resultSet.getString(10);
+				Timestamp finsertdate = resultSet.getTimestamp(11);
+				Timestamp fdeletedate = resultSet.getTimestamp(12);
+				int fmotherid = resultSet.getInt(13);
+				int fanswernum = resultSet.getInt(14);
 				
 				
 				
-				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(f_cid, ftitle, finsertdate);
-				dtos.add(dto);
+				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(f_id, f_cid, f_aid, f_pid, ftype, fref, freforder, 
+						fstep, ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum);
+				dtos1.add(dto);
 				
 			
 				}
@@ -232,24 +245,24 @@ public class Kms_WriteList_Dao {
 			}
 		}
 		
-		return dtos;
+		return dtos1;
 		
 	} // list
 	
-	public void commentAction(int fid,String f_cid, int f_pid,String ftitle) {
+	public void commentAction(String f_cid, int f_pid, String ftitle, int fid) {
 		Connection connection = null;
 		PreparedStatement preparedStatement1 = null;
 		
 		try {
 			connection = dataSource.getConnection();
 			String query2 = "insert into forum (f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, ftitle, fcontent, finsertdate, fmotherid, fanswernum)";
-			String query3 = " select ?,'admin', ?, 3 , max(fref) + 1, 0, 0,?,?,now(),?,0 from forum";
+			String query3 = " select ?,'admin', ?, 3 , max(fref) + 1, 0, 0, ?, ?, now(),?,0 from forum";
 			preparedStatement1 = connection.prepareStatement(query2 + query3);
 			preparedStatement1.setString(1, f_cid);
 			preparedStatement1.setInt(2, f_pid);
 			preparedStatement1.setString(3, ftitle);
 			preparedStatement1.setString(4, ftitle);
-			preparedStatement1.setInt(4, fid);
+			preparedStatement1.setInt(5, fid);
 			
 			
 			preparedStatement1.executeUpdate();
@@ -260,6 +273,54 @@ public class Kms_WriteList_Dao {
 		}finally {
 			try {
 				if(preparedStatement1 != null) preparedStatement1.close();
+				if(connection != null) connection.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	} // 답글 
+	
+	public void bigCommentAction(int fid, String f_cid, int f_pid, int fref, int fstep, int freforder,
+			String ftitle, String fcontent, int fmotherid, int fanswernum) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		PreparedStatement preparedStatement1 = null;
+		PreparedStatement preparedStatement2 = null;
+		int a = freforder + fanswernum;
+		try {
+			connection = dataSource.getConnection();
+			String query = "update forum set freforder = freforder + 1 where freforder >=" + freforder + " + " + fanswernum + " + 1";
+			String query1 = " and fref = " + fref;
+			preparedStatement = connection.prepareStatement(query + query1);
+			preparedStatement.executeUpdate();
+			
+			String query2 = "insert into forum (f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, ftitle, fcontent, finsertdate, fmotherid, fanswernum)";
+			String query3 = " values (?,'admin', ?, 3 ,?, ? + 1, ? + 1,? ,? ,now(), ?, 0)";
+			preparedStatement1 = connection.prepareStatement(query2 + query3);
+			preparedStatement1.setString(1, f_cid);
+			preparedStatement1.setInt(2, f_pid);
+			preparedStatement1.setInt(3, fref);
+			preparedStatement1.setInt(4, a);
+			preparedStatement1.setInt(5, fstep);
+			preparedStatement1.setString(6, ftitle);
+			preparedStatement1.setString(7, ftitle);
+			preparedStatement1.setInt(8, fmotherid);
+			
+			
+			
+			preparedStatement1.executeUpdate();
+				
+			String query4 = "update forum set fanswernum = fanswernum + 1 where fid = " + fid;
+			preparedStatement2 = connection.prepareStatement(query4);
+			preparedStatement2.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(preparedStatement != null) preparedStatement.close();
+				if(preparedStatement1 != null) preparedStatement1.close();
+				if(preparedStatement2 != null) preparedStatement2.close();
 				if(connection != null) connection.close();
 			}catch(Exception e) {
 				e.printStackTrace();
