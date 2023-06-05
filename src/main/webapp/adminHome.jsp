@@ -45,74 +45,72 @@
 <!-- 헤더부분이랑 사이드바 부분은 일단 주석 처리 해두겠습니다.  -->
 <%-- 	<jsp:include page="admin_01_header.jsp" />
  --%>
-
-	<div>
+		
+		
+		
 		<div class="sidebar">
 			<jsp:include page="admin_01_sidebar.jsp" />
 	 	</div>
-	 </div>
+	 
+	 
 <div class="wrapper">
-  <div class="content">
-	 	
-	 	
-	 	
-	 	<div>
-	 		<h2>매출 관리</h2>
-	 		<div class="col-md-2">
-				<div class="card" style="width: 18rem; height: 18rem;">
-				    <h5 class="card-title"> 월간 매출/판매 현황</h5>
-				  <canvas id="SaleChart_month"></canvas>
-				  <div class="card-body">
-				    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-				  </div>
-				</div>
-			</div>
-			
-			
-			<div class="col-md-3">
-			
-				<div class="card" style="width: 18rem; height: 18rem;">
-				    <h5 class="card-title"> 주간 매출/판매 현황</h5>
-				  <canvas id="SaleChart_weekly"></canvas>
-				  <!-- <div class="card-body">
-					<a href="#" class="btn btn-primary">Go somewhere</a>
-				  </div> -->
-				</div>
-			</div>
-			
-			<div class="col-md-4">
-				<div class="card" style="width: 18rem; height: 18rem;">
-				    <h5 class="card-title"> 일일 매출/판매 현황</h5>
-				  <canvas id="SaleChart_daily"></canvas>
-				  <!-- <div class="card-body">
-					<a href="#" class="btn btn-primary">Go somewhere</a>
-				  </div> -->
-				</div>
-			</div>
-
-
-
-		</div><br/><br/>
-
-
-
-	 	
-			<div>
+	<div>
+		<h2>매출 관리</h2>
 	
-				<p>받아온 data 검증하기 위한 파트</p>
-				<p>날짜 :${requestScope.dailyDate}</p>
-				<p>주문 :${requestScope.dailyOrder}</p>
-				<p>매출 :${requestScope.dailySale}</p>
+		<div class="content">
+
+	
+					<div class="array">
+						<div class="card" style="width: 350px; height: 300px;">
+						    <h5 class="card-title"> 월간 매출/판매 현황</h5>
+						  <canvas id="SaleChart_month"></canvas>
+						  <div class="card-body">
+						    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+						  </div>
+						</div>
+					</div>
 					
-				<p>월별 :${requestScope.monthlyMonth}</p>
-				<p>주문 :${requestScope.monthlyOrder}</p>
-				<p>매출 :${requestScope.monthlySale}</p>
+					
+	
+					
+					<div class="array">
+						<div class="card" style="width: 350px; height: 300px;">
+						    <h5 class="card-title"> 주간 매출/판매 현황</h5>
+						  <canvas id="SaleChart_weekly"></canvas>
+						  <!-- <div class="card-body">
+							<a href="#" class="btn btn-primary">Go somewhere</a>
+						  </div> -->
+						</div>
+					</div>
+					
+					
+					<div class="array">
+						<div class="card" style="width: 350px; height: 300px;">
+						    <h5 class="card-title"> 일일 매출/판매 현황</h5>
+						  <canvas id="SaleChart_daily"></canvas>
+						  <!-- <div class="card-body">
+							<a href="#" class="btn btn-primary">Go somewhere</a>
+						  </div> -->
+						
+						</div>
+					</div>	
+						
+			</div> <!-- content  -->
+		</div>
 		
-			</div>
-			</div>
-			</div>
-
-
+		
+		<div>
+					<p>받아온 data 검증하기 위한 파트</p>
+					<p>날짜 :${requestScope.dailyDate}</p>
+					<p>주문 :${requestScope.dailyOrder}</p>
+					<p>매출 :${requestScope.dailySale}</p>
+						
+					<p>월별 :${requestScope.monthlyMonth}</p>
+					<p>주문 :${requestScope.monthlyOrder}</p>
+					<p>매출 :${requestScope.monthlySale}</p>
+		</div>
+		
+	</div> <!--wrapper 끝 -->
 
 
 	<!-- SaleChart_daily 그리기   -->
@@ -175,7 +173,8 @@
 							position: 'left',
 							ticks: {
 								fontSize: 8,
-								fontColor : 'rgb(255,0,0)'
+								fontColor : 'rgb(255,0,0)',
+								max : 1600000
 							}
 						},
 						{
@@ -184,7 +183,7 @@
 							ticks: {
 								fontSize: 8,
 								fontColor : 'rgb(0,0,255)',
-								max : 15
+								max : 16
 							}
 						}
 					],
@@ -201,7 +200,7 @@
 					padding : {
 						top : 0,
 						right : 0,
-						bottom : 20,
+						bottom : 30,
 						left : 0
 					}
 
@@ -302,7 +301,7 @@
 							ticks: {
 								fontSize: 8,
 								fontColor : 'rgb(0,0,255)',
-								max : 300
+								max : 400
 							}
 						}
 					],
@@ -319,7 +318,7 @@
 					padding : {
 						top : 0,
 						right : 0,
-						bottom : 20,
+						bottom : 30,
 						left : 0
 					}
 
