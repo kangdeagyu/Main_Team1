@@ -8,25 +8,30 @@
     <title>공지사항</title>
     <link rel="stylesheet" type="text/css" href="aQnA_style.css">
     <script>
+        // 전체 데이터 개수
         var totalData = ${listSize};
 
+        // 데이터를 테이블에 렌더링하는 함수
         function renderData(data) {
             var tableBody = $("#tableBody");
             tableBody.empty();
             tableBody.append(data);
         }
 
+        // 특정 페이지 번호에 해당하는 데이터를 가져오는 함수
         function GetTarget(pageNumber) {
             var dataPerPage = 10;
             var startIndex = (pageNumber - 1) * dataPerPage;
             var endIndex = startIndex + dataPerPage;
+
             var rows = $("#tableBody tr.data-row");
             rows.addClass("hidden-row"); // 모든 행 숨기기
-            rows.slice(startIndex, endIndex).removeClass("hidden-row"); // 페이지에 해당하는 행 표시
+            rows.slice(startIndex, endIndex).removeClass("hidden-row"); // 현재 페이지에 해당하는 행 보이기
 
             paging(totalData, pageNumber);
         }
 
+        // 페이지네이션 링크 생성 함수
         function paging(totalData, currentPage) {
             var dataPerPage = 10;
             var pageCount = 10;
@@ -42,22 +47,27 @@
             var pages = $("#pages");
             pages.empty();
 
+            // 이전 링크 추가 (이전 페이지가 있는 경우)
             if (first > 10) {
                 pages.append("<li class=\"pagination-item\">" +
                     "<a onclick=\"GetTarget(" + prev + ");\" style='margin-left: 2px'>이전</a></li>");
             }
+
+            // 페이지 번호 링크 생성
             for (var i = first; i <= last; i++) {
                 if (i > totalPage) {
                     break;
                 }
                 if (i == currentPage) {
                     pages.append("<li class=\"pagination-item\">" +
-                        "<a class=\"active\">" + i + "</a></li>");
+                        "<a class=\"active\">" + i + "</a></li>"); // 현재 페이지를 강조 표시
                 } else {
                     pages.append("<li class=\"pagination-item\">" +
-                        "<a onclick=\"GetTarget(" + i + ");\">" + i + "</a></li>");
+                        "<a onclick=\"GetTarget(" + i + ");\">" + i + "</a></li>"); // 다른 페이지에 대한 링크 추가
                 }
             }
+
+            // 다음 링크 추가 (더 많은 페이지가 있는 경우)
             if (last < totalPage) {
                 pages.append("<li class=\"pagination-item\">" +
                     "<a onclick=\"GetTarget(" + next + ");\" style='margin-left: 2px'>다음</a></li>");
@@ -65,7 +75,7 @@
         }
 
         $(document).ready(function() {
-            GetTarget(1); // 초기 페이지 설정
+            GetTarget(1); // 초기 페이지를 1로 설정
         });
     </script>
 </head>
@@ -82,10 +92,10 @@
         <tbody id="tableBody">
             <c:forEach items="${list}" var="dto" varStatus="status">
                 <tr class="data-row hidden-row" id="dataRow${status.index}">
-                    <td>${dto.fid}</td>
-                    <td>${dto.ftitle}</td>
-                    <td>${dto.f_cid}</td>
-                    <td>${dto.finsertdate}</td>
+                    <td>${dto.fid}</td>        <!-- 현재 아이템의 'fid' 속성을 출력 -->
+                    <td>${dto.ftitle}</td>     <!-- 현재 아이템의 'ftitle' 속성을 출력 -->
+                    <td>${dto.f_cid}</td>     <!-- 현재 아이템의 'f_cid' 속성을 출력 -->
+                    <td>${dto.finsertdate}</td>   <!-- 현재 아이템의 'finsertdate' 속성을 출력 -->
                 </tr>
             </c:forEach>
         </tbody>
