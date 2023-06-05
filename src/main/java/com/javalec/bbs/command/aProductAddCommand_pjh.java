@@ -24,7 +24,7 @@ public class aProductAddCommand_pjh implements MCommand {
         
         String fileName = multipartRequest.getOriginalFileName("file");
         String fileRealName = multipartRequest.getFilesystemName("file");
-        String filepath1="..\\webapp\\image\\";
+        String filepath1="../webapp/imag/";
         
         String pname = multipartRequest.getParameter("pname");
         String pcategory = multipartRequest.getParameter("pcategory");

@@ -53,7 +53,7 @@
                     <input type="checkbox" name="selectedItems" value="${dto.pid}">
                 </td>
                 <td>
-                    <img src="${dto.pfilename}" alt="Product Image" />
+                    <img src="${dto.pfilename}" alt="Product Image" width="100"/>
                 </td>
                 <td>${dto.c_name }</td>
                 <td>${dto.pname }</td>

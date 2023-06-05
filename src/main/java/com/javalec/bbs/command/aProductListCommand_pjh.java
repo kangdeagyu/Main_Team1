@@ -29,6 +29,7 @@ public class aProductListCommand_pjh implements MCommand {
 			dto.setPfilename(imagePath);
 			String pfilename = dto.getPfilename();
 			int price = dto.getPprice();
+			System.out.println(pfilename);
 			total += price;
 		}		
 		request.setAttribute("list", dtos);
