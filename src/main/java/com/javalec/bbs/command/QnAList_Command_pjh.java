@@ -17,11 +17,13 @@ public class QnAList_Command_pjh implements MCommand {
 		// TODO Auto-generated method stub
 		Admin_QnA_Dao dao = new Admin_QnA_Dao();
 		ArrayList<Admin_QnA_Dto> dtos = dao.list();
+		
+		int listSize= dtos.size();
 		for (Admin_QnA_Dto dto : dtos) {
 		int fid=dto.getFid();
-		System.out.println(fid);
 		}
 		request.setAttribute("list", dtos);
+		request.setAttribute("listSize", listSize);
 	}
 
 }

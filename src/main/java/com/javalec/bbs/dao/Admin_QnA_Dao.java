@@ -67,6 +67,26 @@ public class Admin_QnA_Dao {
 		} // list
 		
 		
+		public int getTotalData() {
+		    ArrayList<Admin_QnA_Dto> allData = list(); // 모든 데이터 조회
+		    return allData.size();
+		}
+		
+		public ArrayList<Admin_QnA_Dto> getDataInRange(int startIndex, int endIndex) {
+			ArrayList<Admin_QnA_Dto> dtos = new ArrayList<Admin_QnA_Dto>();
+			ArrayList<Admin_QnA_Dto> allData = list(); // 모든 데이터 조회
+			
+			int dataSize = allData.size();
+			int start = Math.min(startIndex, dataSize); // 시작 인덱스를 데이터 사이즈 내에서 제한
+			int end = Math.min(endIndex, dataSize); // 종료 인덱스를 데이터 사이즈 내에서 제한
+			
+			for (int i = start; i < end; i++) {
+				dtos.add(allData.get(i));
+			}
+			
+			return dtos;
+		}
+		
 		
 		public int saveQnA(String pname, String pprice, String pstock, String pcontent, String pcategory, String filename, String fileRealName, String filepath) {
 			Connection connection = null;
