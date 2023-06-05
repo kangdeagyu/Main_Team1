@@ -12,6 +12,8 @@ import javax.servlet.http.HttpSession;
 
 import com.javalec.bbs.command.IdCommand;
 import com.javalec.bbs.command.JoinCommand;
+import com.javalec.bbs.command.Kms_CommentActionCommand;
+import com.javalec.bbs.command.Kms_ForumViewCommand;
 import com.javalec.bbs.command.Kms_ReplyActionCommand;
 import com.javalec.bbs.command.Kms_WriteForumCommand;
 import com.javalec.bbs.command.Kms_WriteListCommand;
@@ -183,6 +185,17 @@ public class MController extends HttpServlet {
 				command.execute(request, response);
 				viewPage = "writelist.do";
 				break;
+			case ("/ForumView.do"):		
+				command = new Kms_ForumViewCommand();
+				command.execute(request, response);
+				viewPage = "ForumView.jsp";
+				break;
+			case ("/commentwrite.do"):		
+				command = new Kms_CommentActionCommand();
+				command.execute(request, response);
+				viewPage = "ForumView.do";
+				break;	
+				
 			/* PART IV 종료. 세상Cool 남자 김민성군의 Part 입니다. 평균연령 낮춰줘서 고맙다 민성아.*/
 		    //*************************************************************//
 

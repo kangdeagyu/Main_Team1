@@ -10,57 +10,107 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
-	<jsp:include page="admin_01_header.jsp" />
-	<link href="admin_kkg.css" rel="stylesheet">
+
 	<!--  bootsstrap link -->
+	
+	<link href="css/admin_kkg.css" rel="stylesheet">
 	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap.rtl.css" rel="stylesheet">
+	<link href="css/bootstrap.rtl.min.css" rel="stylesheet">
+	
+	<link href="css/bootstrap-grid.css" rel="stylesheet">
+	<link href="css/bootstrap-grid.min.css" rel="stylesheet">
+	<link href="css/bootstrap-grid.rtl.css" rel="stylesheet">
+	<link href="css/bootstrap-grid.min.rtl.css" rel="stylesheet">
+	
+	
+	<link href="css/bootstrap-reboot.css" rel="stylesheet">
+	<link href="css/bootstrap-reboot.min.css" rel="stylesheet">
+	<link href="css/bootstrap-reboot.rtl.css" rel="stylesheet">
+	<link href="css/bootstrap-reboot.rtl.min.css" rel="stylesheet">
+	
+	<link href="css/bootstrap-utilities.css" rel="stylesheet">
+	<link href="css/bootstrap-utilities.min.css" rel="stylesheet">
+	<link href="css/bootstrap-utilities.rtl.css" rel="stylesheet">
+	<link href="css/bootstrap-utilities.rtl.min.css" rel="stylesheet">
+
 	
 </head>
 
 
 
-<body>
+<body data-new-gr-c-s-check-loaded="14.1111.0 data-gr-ext-installed">
 
 <!-- 헤더부분이랑 사이드바 부분은 일단 주석 처리 해두겠습니다.  -->
+<%-- 	<jsp:include page="admin_01_header.jsp" />
+ --%>
 
-	<div class="container">
-		<div >
+	<div>
+		<div class="sidebar">
 			<jsp:include page="admin_01_sidebar.jsp" />
 	 	</div>
-
-		<div class="adminBody">
-			<div>
-				<h2>매출 관리</h2>
-				<div class="box">
-					최근 1년 월간 매출/판매 현황
-					<canvas id="SaleChart_month"></canvas>
-				</div>
-	
-				<div class="box">
-					최근 12 주 주간 매출/판매 현황
-					<canvas id="SaleChart_weekly"></canvas>
-				</div>
-	
-				<div class="box">
-					최근 2주간 매출/판매 현황
-					<canvas id='SaleChart_daily'></canvas>
+	 </div>
+<div class="wrapper">
+  <div class="content">
+	 	
+	 	
+	 	
+	 	<div>
+	 		<h2>매출 관리</h2>
+	 		<div class="col-md-2">
+				<div class="card" style="width: 18rem; height: 18rem;">
+				    <h5 class="card-title"> 월간 매출/판매 현황</h5>
+				  <canvas id="SaleChart_month"></canvas>
+				  <div class="card-body">
+				    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+				  </div>
 				</div>
 			</div>
 			
 			
+			<div class="col-md-3">
 			
+				<div class="card" style="width: 18rem; height: 18rem;">
+				    <h5 class="card-title"> 주간 매출/판매 현황</h5>
+				  <canvas id="SaleChart_weekly"></canvas>
+				  <!-- <div class="card-body">
+					<a href="#" class="btn btn-primary">Go somewhere</a>
+				  </div> -->
+				</div>
+			</div>
 			
-			<br/>
-			<p>받아온 data 검증하기 위한 파트</p>
-			<p>날짜 :${requestScope.dailyDate}</p>
-			<p>주문 :${requestScope.dailyOrder}</p>
-			<p>매출 :${requestScope.dailySale}</p>
-				
-			<p>월별 :${requestScope.monthlyMonth}</p>
-			<p>주문 :${requestScope.monthlyOrder}</p>
-			<p>매출 :${requestScope.monthlySale}</p>
-		</div>
-	</div>
+			<div class="col-md-4">
+				<div class="card" style="width: 18rem; height: 18rem;">
+				    <h5 class="card-title"> 일일 매출/판매 현황</h5>
+				  <canvas id="SaleChart_daily"></canvas>
+				  <!-- <div class="card-body">
+					<a href="#" class="btn btn-primary">Go somewhere</a>
+				  </div> -->
+				</div>
+			</div>
+
+
+
+		</div><br/><br/>
+
+
+
+	 	
+			<div>
+	
+				<p>받아온 data 검증하기 위한 파트</p>
+				<p>날짜 :${requestScope.dailyDate}</p>
+				<p>주문 :${requestScope.dailyOrder}</p>
+				<p>매출 :${requestScope.dailySale}</p>
+					
+				<p>월별 :${requestScope.monthlyMonth}</p>
+				<p>주문 :${requestScope.monthlyOrder}</p>
+				<p>매출 :${requestScope.monthlySale}</p>
+		
+			</div>
+			</div>
+			</div>
 
 
 
