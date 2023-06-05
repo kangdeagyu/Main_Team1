@@ -4,7 +4,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html;" charset="UTF-8">
-    <title>Q&A 작성</title>
+    <title>공지사항 작성</title>
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
@@ -13,7 +13,7 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script> 
 </head>
 <body>
-<h3>Q&A</h3>
+<h3>공지사항</h3>
 <form action="AQnA.do" method="post" enctype="multipart/form-data">
     <table>
     	<tr>
@@ -35,14 +35,14 @@
             <input type="radio" name="openornot" value="비공개">비공개
             </td>
         </tr>
-        <tr>
+       <!--  <tr>
             <td>전화번호</td>
             <td><input type="text" name="phone"></td>
         </tr>
         <tr>
             <td>E-mail</td>
             <td><input type="text" name="E-mail"></td>
-        </tr>
+        </tr> -->
         <tr>
             <td>제목</td>
             <td><input type="text" name="title"></td>
@@ -53,7 +53,7 @@
     <script type="text/javascript">
 $(document).ready(function() {
     $('#content').summernote({
-        width: 1200,
+        width: 800,
     	height: 500,
         minHeight : null,
         maxHeight : null,

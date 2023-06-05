@@ -22,13 +22,12 @@ public class aQnAuploadCommand_pjh implements MCommand {
         String encoding = "UTF-8";
 		MultipartRequest multipartRequest = new MultipartRequest(request, directory, maxSize, encoding, new DefaultFileRenamePolicy());
 		String fileName = multipartRequest.getOriginalFileName("file");
-		String f_aid= request.getParameter("aid");
-		String list = request.getParameter("list");
-		String[] openornot = request.getParameterValues("openornot");
-		String phone= request.getParameter("phone");
-		String Email= request.getParameter("E-mail");
-		String title= request.getParameter("title");
-		String content=request.getParameter("pcontent");
+	    String list = multipartRequest.getParameter("list");
+	    String[] openornot = multipartRequest.getParameterValues("openornot");
+	    String phone = multipartRequest.getParameter("phone");
+	    String email = multipartRequest.getParameter("E-mail");
+	    String title = multipartRequest.getParameter("title");
+	    String content = multipartRequest.getParameter("content");
 		content = content.replaceAll("<p>", "").replaceAll("</p>", "");
 		
 		 if (!fileName.endsWith(".png") && !fileName.endsWith(".jpg") && !fileName.endsWith(".jpeg")) {

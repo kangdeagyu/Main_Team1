@@ -38,7 +38,7 @@ public class Admin_QnA_Dao {
 			try {
 				connection = datasource.getConnection();
 				String query = "SELECT f.fid, f.ftitle, f.f_aid, f.f_cid, f.finsertdate, t.t_name ";
-				String query1 = " FROM forum f JOIN type t ON (f.ftype-1) = t.t_num where f.type=1";
+				String query1 = " FROM forum f JOIN type t ON (f.ftype-1) = t.t_num where f.ftype=1";
 				preparedStatement = connection.prepareStatement(query+query1);
 				resultSet = preparedStatement.executeQuery();
 				while (resultSet.next()) {
