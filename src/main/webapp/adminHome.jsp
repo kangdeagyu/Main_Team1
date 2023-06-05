@@ -10,49 +10,21 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
-
+	<jsp:include page="admin_01_header.jsp" />
+	<link href="admin_kkg.css" rel="stylesheet">
+	<hr>
 </head>
-
-<style>
-.container {
-	width: 100%;
-	overflow: hidden;
-}
-
-.box {
-	float: left;
-	width: 300px;
-	height: 200px;
-	background-color: rgb(240, 248, 255);
-	margin-right: 1%;
-	box-sizing: border-box;
-}
-
-.sidebar{
-	float: left;
-	width: 100px;
-	height: 100%;
-	background-color: rgb(150, 150, 255);
-	margin-right: 1%;
-	box-sizing: border-box;
-
-}
-</style>
 
 
 
 <body>
 
 <!-- 헤더부분이랑 사이드바 부분은 일단 주석 처리 해두겠습니다.  -->
- 	<jsp:include page="admin_01_header.jsp" />
-
 
 	<div class="container">
-		<%-- <div class="sidebar">
+		<div class="box" style="width:100px">
 			<jsp:include page="admin_01_sidebar.jsp" />
-		</div> --%> 
-
-
+		</div> 
 
 
 		<div>

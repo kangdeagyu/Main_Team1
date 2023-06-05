@@ -1,16 +1,37 @@
 @charset "UTF-8";
 
 
-  .container {
-    width: 100%;
-    overflow: hidden;
-  }
-  
-  .box {
-    float: left;
-    width: 20%;
-    height: 200px;
-    background-color: #ccc;
-    margin-right: 10px;
-    box-sizing: border-box;
-  }
+	.container {
+		width: 100%;
+		overflow: hidden;
+	}
+	
+	.box {
+		float: left;
+		width: 300px;
+		height: 200px;
+		background-color: rgb(240, 248, 255);
+		margin-right: 1%;
+		box-sizing: border-box;
+	}
+	
+	.sidebar{
+		float: left;
+		width: 100px;
+		height: 100%;
+		background-color: rgb(150, 150, 255);
+		margin-right: 1%;
+		box-sizing: border-box;
+	
+	}
+	
+	.headbar{
+		float: none;
+		width: 100px;
+		height: 100%;
+		background-color: rgb(150, 150, 255);
+		margin-right: 1%;
+		box-sizing: border-box;
+	
+	}
+

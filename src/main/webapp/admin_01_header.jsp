@@ -4,9 +4,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+
+	<link href="admin_kkg.css" rel="stylesheet">
+	<hr>
+
 </head>
+
+
+
 <body>
+	<div class="sidebar">
+		<form action="adminHome.do" method="post">
+			<input type="submit" value="adminHome" size="50">	
+		</form>
+	</div>
+	<div>
+		<span > 관리자 홈 입니다.</span>
+	</div>
+
+
+
 
 </body>
 </html>
