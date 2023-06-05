@@ -68,13 +68,13 @@
                 <td>${dto.fid}</td>
                 <td>${dto.finsertdate}</td>
                 <td>${dto.cname }</td>
-                <td><img src="${dto.pfilename}" alt="Product Image" width="100"/>
+                <td><a href="productInformation.do?fid=${dto.fid}"><img src="${dto.pfilename}" alt="Product Image" width="100"/></a>
                 </br>
                 ${dto.pname }</br>
                 판매가 : ${dto.pprice}원
                 </td>
                     
-                <td>${dto.fcontent}</td> 
+                <td><a href="reviewInformation.do?fid=${dto.fid}">${dto.ftitle}</a></td> 
                 <td>
                     <form action="editProduct.do" method="post">
                         <input type="hidden" name=fid value="${dto.fid }">

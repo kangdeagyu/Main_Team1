@@ -34,7 +34,7 @@ public class Admin_Review_Dto {
 	
 
 
-	public Admin_Review_Dto(int fid, Timestamp finsertdate, String cname, String pname, String pfilename, int pprice, String fcontent) {
+	public Admin_Review_Dto(int fid, Timestamp finsertdate, String cname, String pname, String pfilename, int pprice, String ftitle) {
 		super();
 		this.fid = fid;
 		this.finsertdate = finsertdate;
@@ -42,7 +42,7 @@ public class Admin_Review_Dto {
 		this.pname = pname;
 		this.pfilename = pfilename;
 		this.pprice = pprice;
-		this.fcontent=fcontent;
+		this.ftitle=ftitle;
 	}
 
 	
