@@ -38,7 +38,7 @@ public class MDao {
 
 		try {
 			connection = dataSource.getConnection(); // sql 연결
-			String query = "select count(cname), cname from customer where cid = ? and cpassword = ?";
+			String query = "select count(cname), cname, cdeletedate from customer where cid = ? and cpassword = ?";
 			ps = connection.prepareStatement(query);
 		      ps.setString(1, username);
 		      ps.setString(2, password);
@@ -46,9 +46,13 @@ public class MDao {
 				if(rs.next()) {
 					count = rs.getInt(1);
 				}
-				if(count > 0) {
-					result =  rs.getString(2);	// 등록된 회원
-				}
+                if (rs.getString(3) != null) {
+                    // cdeletedate가 존재하는 경우, 탈퇴한 회원으로 처리
+                    result = "mdraw";
+                } else {
+                    // cdeletedate가 존재하지 않는 경우, 등록된 회원
+                    result = rs.getString(2);
+                }
 				
 
 		}catch (Exception e) {
@@ -360,7 +364,7 @@ public class MDao {
 		
 		try {
 			connection = dataSource.getConnection(); // sql 연결
-			String query = "delete from customer where cid = ?";
+			String query = "update customer set cdeletedate = now() where cid = ?";
 			ps = connection.prepareStatement(query);
 		    ps.setString(1, cid);
 		    int rowsUpsated = ps.executeUpdate();

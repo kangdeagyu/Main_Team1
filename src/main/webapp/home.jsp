@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="header.jsp" %>
 <!doctype html>
 <html lang="ko">
@@ -36,6 +37,10 @@
 		  border-bottom: 1px solid #ced4da;
 		  border-radius: 0;
 		}
+	
+
+
+
 	</style>
 
 
@@ -82,21 +87,19 @@
 <!-- 상품을 관리 -->
 
  <div class="container">
+ <label>전체 상품</label>
    	<div class="row my-2">
-  	  <div class="col-md-3">
-  	  	<a class="nav-link" href="#">
-		  	<div class="card" style="width: 100%">
-			<img src="https://www.yoox.com/images/items/58/58026081tc_14_f.jpg?width=210&height=272&impolicy=crop&gravity=Center" class="card-img-top" alt="...">
-		
-		  <div class="card-body">
-		   	  <p class="text-dark">상품설명</p>
-		  </div>
-		</div>
-		</a>
-      </div>
+  	  <c:forEach items="${list }" var="dto">
+	  	  <div class="col-md-4 text-center">
+		  	  <a class="nav-link" href="#">
+					<img src="${dto.pfilename }" style="width: 400px; height: 400px; margin-bottom: 10px;"  alt="..."><br/>
+				   	 <p class="text-dark" style="margin: 0;">${dto.pname }</p>
+				   	 <p class="text-dark" style="margin: 0;"><fmt:formatNumber value="${dto.pprice}" pattern="#,##0원" /></p>
+			  </a>
+	      </div>
+  	  </c:forEach>
  	</div>
 </div>
-
 
 </main>
 

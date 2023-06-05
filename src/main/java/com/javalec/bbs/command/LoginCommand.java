@@ -48,17 +48,22 @@ public class LoginCommand extends HttpServlet {
 		
 	    String username = request.getParameter("username").trim();
 	    String password = request.getParameter("password").trim();
-	    System.out.println(username);
+
 	    // DAO를 사용하여 유저 정보 검증 등의 작업 수행
 	    MDao dao = new MDao();
 	    String isAuthenticated = dao.authenticate(username, password);
-	    System.out.println(isAuthenticated);
 	    if (isAuthenticated != null) {
-	      // 로그인 성공
-	    	response.setStatus(HttpServletResponse.SC_OK);
-	    	response.getWriter().print("success");
-	    	session.setAttribute("cid", username);
-	    	session.setAttribute("name", isAuthenticated);
+	    	if(isAuthenticated.equals("mdraw")) {
+	    		response.setStatus(HttpServletResponse.SC_OK);
+	    		response.getWriter().print("mdraw");	    		
+	    	}else {
+	    		// 로그인 성공
+	    		response.setStatus(HttpServletResponse.SC_OK);
+	    		response.getWriter().print(isAuthenticated);
+	    		session.setAttribute("cid", username);
+	    		session.setAttribute("name", isAuthenticated);	    		
+	    	}
+	      
 	    } else {
 	      // 로그인 실패
 	      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

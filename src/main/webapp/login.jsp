@@ -182,8 +182,13 @@ function kakaoLogin() {
     		  .then(response => {
     		    // 로그인 성공 시 처리
     		    console.log(response.data);
-    		    alert("로그인 성공")
-    		    window.location.href = 'home.do';
+    		    if(response.data == "mdraw"){
+    		    	 alert("탈퇴한 회원입니다.")
+    		    }else{
+	    		    alert("로그인 성공")
+	    		    window.location.href = 'home.do';    		    	
+    		    }
+    		 
     	         
     	      
     		  })
