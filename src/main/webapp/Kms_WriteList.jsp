@@ -50,6 +50,9 @@
 <body>
 
 <h1>리뷰 게시판</h1>
+<form action="Kms_WriteForum.jsp">
+<input type="submit" value="리뷰쓰기">
+</form>
 <table class="table table-striped table-bordered">
     <thead class="thead-light">
         <tr>
@@ -64,7 +67,7 @@
     <tbody>
         <c:forEach items="${RList}" var="dto">
             <tr>
-                <td>${dto.fid}</td>
+                <td><a href="ForumView.do?fid=${dto.fid}">${dto.fid}</a></td>
                 <td>${dto.f_cid}</td>
                 <td>${dto.f_pid}</td>
                 <td>${dto.ftitle}</td>
