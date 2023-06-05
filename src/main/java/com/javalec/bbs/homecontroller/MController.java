@@ -169,6 +169,12 @@ public class MController extends HttpServlet {
 				command.execute(request, response);
 				viewPage = "Kms_WriteList.jsp";
 				break;
+				
+			case ("/replywrite.do"):		
+				command = new Kms_ReplyActionCommand();
+				command.execute(request, response);
+				viewPage = "writelist.do";
+				break;
 			
 			
 			/* PART IV 종료. 세상Cool 남자 김민성군의 Part 입니다. 평균연령 낮춰줘서 고맙다 민성아.*/

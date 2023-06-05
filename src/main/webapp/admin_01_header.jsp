@@ -13,17 +13,17 @@
 
 
 <body>
-	<div class="sidebar">
-		<form action="adminHome.do" method="post">
-			<input type="submit" value="adminHome" size="50">	
-		</form>
-	</div>
-	<div class="headbar">
-		<span > 관리자 홈 입니다.</span>
-	</div>
-	
-	<hr>
-
+	<div class="Hcontainer">
+		<div class="Headsidebar">
+			<form action="adminHome.do" method="post">
+				<input type="submit" value="adminHome" size="50">	
+			</form>
+		</div>
+		<div class="headbar">
+			<span style="text-align: center;"> 관리자 홈 입니다.</span>
+		</div>
+		<br/>	<hr>	<hr>
+	</div>	
 
 
 

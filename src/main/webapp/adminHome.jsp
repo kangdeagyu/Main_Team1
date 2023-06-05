@@ -22,38 +22,43 @@
 <!-- 헤더부분이랑 사이드바 부분은 일단 주석 처리 해두겠습니다.  -->
 
 	<div class="container">
-		<div class="box" style="width:100px">
 			<jsp:include page="admin_01_sidebar.jsp" />
-		</div> 
+	 
 
-
-		<div>
-			<h2>매출 관리</h2>
-			<div class="box">
-				최근 1년 월간 매출/판매 현황
-				<canvas id="SaleChart_month"></canvas>
+		<div class="adminBody">
+			<div>
+				<h2>매출 관리</h2>
+				<div class="box">
+					최근 1년 월간 매출/판매 현황
+					<canvas id="SaleChart_month"></canvas>
+				</div>
+	
+				<div class="box">
+					최근 12 주 주간 매출/판매 현황
+					<canvas id="SaleChart_weekly"></canvas>
+				</div>
+	
+				<div class="box">
+					최근 2주간 매출/판매 현황
+					<canvas id='SaleChart_daily'></canvas>
+				</div>
 			</div>
-
-			<div class="box">
-				최근 12 주 주간 매출/판매 현황
-				<canvas id="SaleChart_weekly"></canvas>
-			</div>
-
-			<div class="box">
-				최근 2주간 매출/판매 현황
-				<canvas id='SaleChart_daily'></canvas>
-			</div>
+			
+			
+			
+			
+			<br/>
+			<p>받아온 data 검증하기 위한 파트</p>
+			<p>날짜 :${requestScope.dailyDate}</p>
+			<p>주문 :${requestScope.dailyOrder}</p>
+			<p>매출 :${requestScope.dailySale}</p>
+				
+			<p>월별 :${requestScope.monthlyMonth}</p>
+			<p>주문 :${requestScope.monthlyOrder}</p>
+			<p>매출 :${requestScope.monthlySale}</p>
 		</div>
 	</div>
-	<br />
 
-	<p>날짜 :${requestScope.dailyDate}</p>
-	<p>주문 :${requestScope.dailyOrder}</p>
-	<p>매출 :${requestScope.dailySale}</p>
-	
-	<p>월별 :${requestScope.monthlyMonth}</p>
-	<p>주문 :${requestScope.monthlyOrder}</p>
-	<p>매출 :${requestScope.monthlySale}</p>
 
 
 
