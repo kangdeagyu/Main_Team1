@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.javalec.bbs.command.IdCommand;
 import com.javalec.bbs.command.JoinCommand;
+import com.javalec.bbs.command.Kms_ReplyActionCommand;
 import com.javalec.bbs.command.Kms_WriteListCommand;
 import com.javalec.bbs.command.MCommand;
 import com.javalec.bbs.command.PwCommand;
