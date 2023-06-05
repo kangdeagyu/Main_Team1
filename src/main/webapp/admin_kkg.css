@@ -27,7 +27,7 @@
 		box-sizing: border-box;
 	}
 	
-	.sidebar{
+/* 	.sidebar{
 		float: left;
 		width: 150px;
 		height: 100%;
@@ -38,7 +38,7 @@
 		box-sizing: border-box;
 	
 	
-	}
+	} */
 	.Headsidebar{
 		float: left;
 		width: 100px;
@@ -59,4 +59,100 @@
 		box-sizing: border-box;
 	
 	}
+	
+	
+		
+	.sidebar {
+		float: left;
+		background-color: #000000;
 
+		padding: 10px;
+		width: 200px;
+		height: 100vh;
+		margin-right: 10px;
+	}
+	
+	.sidebar a {
+		text-decoration: none;
+		display: block;
+		margin-bottom: 10px;
+	}
+	
+	.sidebar button {
+		width: 100%;
+		padding: 8px;
+		border: none;
+		border-radius: 5px;
+		background-color: #FFFFFF;
+		color: #000;
+		font-weight: bold;
+		cursor: pointer;
+	}
+	
+	.sidebar span {
+		margin-right: 5px;
+	}
+	.sidebar ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	}
+	
+	.sidebar li {
+		margin-bottom: 10px;
+	}
+
+	
+	
+/*  이 아래는 bootstrap 위해서 가져온 파트 */
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+ 

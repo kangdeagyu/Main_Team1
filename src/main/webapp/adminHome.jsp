@@ -12,6 +12,8 @@
 
 	<jsp:include page="admin_01_header.jsp" />
 	<link href="admin_kkg.css" rel="stylesheet">
+	<!--  bootsstrap link -->
+	<link href="css/bootstrap.css" rel="stylesheet">
 	
 </head>
 
@@ -22,8 +24,9 @@
 <!-- 헤더부분이랑 사이드바 부분은 일단 주석 처리 해두겠습니다.  -->
 
 	<div class="container">
+		<div >
 			<jsp:include page="admin_01_sidebar.jsp" />
-	 
+	 	</div>
 
 		<div class="adminBody">
 			<div>
