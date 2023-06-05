@@ -17,10 +17,11 @@ public class aQnAuploadCommand_pjh implements MCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		// TODO Auto-generated method stub
-		String directory = "C:\\Users\\xdrag\\OneDrive\\Documents\\ji hwan\\Main_Team1\\src\\main\\webapp\\image\\";
+		String directory = "../src/main/webapp/image";
         int maxSize = 1024 * 1024 * 100;
         String encoding = "UTF-8";
 		MultipartRequest multipartRequest = new MultipartRequest(request, directory, maxSize, encoding, new DefaultFileRenamePolicy());
+		String fileName = multipartRequest.getOriginalFileName("file");
 		String f_aid= request.getParameter("aid");
 		String list = request.getParameter("list");
 		String[] openornot = request.getParameterValues("openornot");
@@ -28,7 +29,6 @@ public class aQnAuploadCommand_pjh implements MCommand {
 		String Email= request.getParameter("E-mail");
 		String title= request.getParameter("title");
 		String content=request.getParameter("pcontent");
-		String fileName = MultipartRequest.getOriginalFileName("file");
 		content = content.replaceAll("<p>", "").replaceAll("</p>", "");
 		
 		 if (!fileName.endsWith(".png") && !fileName.endsWith(".jpg") && !fileName.endsWith(".jpeg")) {

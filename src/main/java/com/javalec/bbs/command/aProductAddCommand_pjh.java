@@ -16,7 +16,7 @@ public class aProductAddCommand_pjh implements MCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		// TODO Auto-generated method stub
-		String directory = "C:\\Users\\xdrag\\OneDrive\\Documents\\ji hwan\\Main_Team1\\src\\main\\webapp\\image\\";
+		String directory = "/Volumes/Data/jihwan/Main_Team1/src/main/webapp/image/";
         int maxSize = 1024 * 1024 * 100;
         String encoding = "UTF-8";
         

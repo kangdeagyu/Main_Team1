@@ -22,7 +22,7 @@ public class aProductListCommand_pjh implements MCommand {
 		Admin_Product_Dao dao = new Admin_Product_Dao();
 		ArrayList<Admin_Product_Dto>dtos = dao.list();
 		
-		String uploadPath = "C:\\Users\\xdrag\\OneDrive\\Documents\\ji hwan\\Main_Team1\\src\\main\\webapp\\image\\";
+		String uploadPath = "image/";
 		for (Admin_Product_Dto dto : dtos) {
 			String fileName = dto.getPfilename();
 			String imagePath = uploadPath + fileName;
