@@ -11,8 +11,18 @@
 
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script> 
+     
+     <link href="css/admin_kkg.css" rel="stylesheet">
+
 </head>
 <body>
+
+		<div class="sidebar">
+			<jsp:include page="admin_01_sidebar.jsp" />
+	 	</div>
+	 	
+
+	 	<div class="wrapper">
 <h3>공지사항</h3>
 <form action="AQnA.do" method="post" enctype="multipart/form-data">
     <table>
@@ -35,14 +45,6 @@
             <input type="radio" name="openornot" value="비공개">비공개
             </td>
         </tr>
-       <!--  <tr>
-            <td>전화번호</td>
-            <td><input type="text" name="phone"></td>
-        </tr>
-        <tr>
-            <td>E-mail</td>
-            <td><input type="text" name="E-mail"></td>
-        </tr> -->
         <tr>
             <td>제목</td>
             <td><input type="text" name="title"></td>
@@ -50,11 +52,13 @@
         <tr>
             <td>내용</td>
    <td><textarea id="content" name="content"></textarea>
+   
+  
     <script type="text/javascript">
 $(document).ready(function() {
     $('#content').summernote({
-        width: 800,
-    	height: 500,
+        width: 600,
+    	height: 300,
         minHeight : null,
         maxHeight : null,
         tabsize : 2,
@@ -79,6 +83,7 @@ $(document).ready(function() {
         }
     });
 });
+        
 </script></td>
             
         </tr>
@@ -94,5 +99,6 @@ $(document).ready(function() {
 		<form action="Admin_QnA_List.do" method="post">
             <input type="submit" value="목록">
         </form>
+         </div>
 </body>
 </html>

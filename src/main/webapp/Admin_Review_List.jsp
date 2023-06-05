@@ -8,6 +8,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link href="css/admin_kkg.css" rel="stylesheet">
+
     <meta http-equiv="Content-Type" content="text/html;" charset="UTF-8">
     <title>리뷰 목록</title>
     <script>
@@ -22,6 +24,10 @@
     </script>
 </head>
 		<body>
+		<div class="sidebar">
+			<jsp:include page="admin_01_sidebar.jsp" />
+	 	</div>
+	 	<div class="wrapper">
 		<h3>리뷰 목록</h3>
 		<form action="productQuery.do" method="post">
 		     <select name="list" class="form-select">
@@ -52,7 +58,7 @@
             <th>고객정보</th>
             <th>상품</th>
             <th>리뷰 상세 내용</th>
-            <th>리뷰 관</th>
+            <th>리뷰 관리</th>
         </tr>
         <c:forEach items="${list}" var="dto">
             <tr>
@@ -82,6 +88,6 @@
 <br/>
 <hr>
 <br/>
-
+</div>
 </body>
 </html>

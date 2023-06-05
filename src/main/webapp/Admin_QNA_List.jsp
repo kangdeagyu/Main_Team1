@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>공지사항</title>
+    <link href="css/admin_kkg.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="aQnA_style.css">
     <script>
         // 전체 데이터 개수
@@ -80,6 +81,10 @@
     </script>
 </head>
 <body>
+	<div class="sidebar">
+			<jsp:include page="admin_01_sidebar.jsp" />
+	 	</div>
+	 	<div class="wrapper">
     <table>
         <thead>
             <tr class="data-row">
@@ -104,6 +109,7 @@
     <div class="pagination-wrapper clearfix">
         <ul class="pagination float--right" id="pages">
         </ul>
+    </div>
     </div>
 </body>
 </html>

@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
+	<link href="css/admin_kkg.css" rel="stylesheet">
   <meta http-equiv="Content-Type" content="text/html;" charset="UTF-8">
     <title>상품 추가하기</title>
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
@@ -13,47 +14,53 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script> 
 </head>
 <body>
-<h3>상품 추가하기</h3>
-<form action="AProductInsert.do" method="post" enctype="multipart/form-data">
-    <table>
-        <tr>
-            <th>상품 설정</th>
-            <th>상세 설명</th>
-        </tr>
-        <tr>
-            <td>이름</td>
-        </tr>
-        <tr>
-            <td><input type="text" name="pname"></td>
-        </tr>
-        <tr>
-            <td>카테고리</td>
-        </tr>
-        <tr>
-            <td><input type="text" name="pcategory"></td>
-        </tr>
-        <tr>
-        <tr>
-            <td>가격</td>
-        </tr>
-        <tr>
-            <td><input type="text" name="pprice"></td>
-        </tr>
-        <tr>
-            <td>대표 이미지</td>
-        </tr>
-        <tr>
-            <td><input type="file" name="file"></td>
-        </tr>
-        <tr>
-            <td>수량</td>
-        </tr>
-        <tr>
-            <td><input type="text" name="pstock"></td>
-        </tr>
-    </table>
-   <textarea id="content" name="pcontent"></textarea>
-    <script type="text/javascript">
+	<div class="sidebar">
+		<jsp:include page="admin_01_sidebar.jsp" />
+	</div>
+	<div class="wrapper">
+	
+		<h3>상품 추가하기</h3>
+		<form action="AProductInsert.do" method="post"
+			enctype="multipart/form-data">
+			<table>
+				<tr>
+					<th>상품 설정</th>
+					<th>상세 설명</th>
+				</tr>
+				<tr>
+					<td>이름</td>
+				</tr>
+				<tr>
+					<td><input type="text" name="pname"></td>
+				</tr>
+				<tr>
+					<td>카테고리</td>
+				</tr>
+				<tr>
+					<td><input type="text" name="pcategory"></td>
+				</tr>
+				<tr>
+				<tr>
+					<td>가격</td>
+				</tr>
+				<tr>
+					<td><input type="text" name="pprice"></td>
+				</tr>
+				<tr>
+					<td>대표 이미지</td>
+				</tr>
+				<tr>
+					<td><input type="file" name="file"></td>
+				</tr>
+				<tr>
+					<td>수량</td>
+				</tr>
+				<tr>
+					<td><input type="text" name="pstock"></td>
+				</tr>
+			</table>
+			<textarea id="content" name="pcontent"></textarea>
+			<script type="text/javascript">
 $(document).ready(function() {
     $('#content').summernote({
         width: 1200,
@@ -83,10 +90,10 @@ $(document).ready(function() {
     });
 });
 </script>
-            <input type="submit" value="업로드">
-    
-    
-    
-</form>
+			<input type="submit" value="업로드">
+
+
+
+		</form>
 </body>
 </html>
