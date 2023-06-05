@@ -8,26 +8,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.javalec.bbs.dao.Kms_WriteList_Dao;
 
-public class Kms_ReplyActionCommand implements MCommand {
+public class Kms_WriteForumCommand implements MCommand {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
-		int fid = Integer.parseInt(request.getParameter("fid"));
 		String f_cid = request.getParameter("f_cid");
 		int f_pid = Integer.parseInt(request.getParameter("f_pid"));
-		int fref = Integer.parseInt(request.getParameter("fref"));
-		int fstep = Integer.parseInt(request.getParameter("fstep"));
-		int freforder = Integer.parseInt(request.getParameter("freforder"));
 		String ftitle = request.getParameter("ftitle");
 		String fcontent = request.getParameter("fcontent");	
-		int fmotherid = Integer.parseInt(request.getParameter("fmotherid"));
-		int fanswernum = Integer.parseInt(request.getParameter("fanswernum"));
-		
 		
 		Kms_WriteList_Dao dao = new Kms_WriteList_Dao();
-		dao.replyAction(fid, f_cid, f_pid, fref, fstep, freforder, ftitle, fcontent, fmotherid, fanswernum);
+		dao.forumAction(f_cid, f_pid, ftitle, fcontent);
 	}
 
 }
