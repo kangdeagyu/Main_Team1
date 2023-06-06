@@ -95,6 +95,15 @@
             </tr>
         </thead>
         <tbody id="tableBody">
+        	<c:forEach items="${noticelist}" var="noticedto" varStatus="status">
+        	<tr>
+        			<td>${noticedto.nid}</td>       
+                    <td>${noticedto.ntitle}</td>     
+                    <td>관리자</td>     
+                    <td>${noticedto.ninsertdate}</td>
+        	</tr>
+        	</c:forEach>
+        	
             <c:forEach items="${list}" var="dto" varStatus="status">
                 <tr class="data-row hidden-row" id="dataRow${status.index}">
                     <td>${dto.fid}</td>        <!-- 현재 아이템의 'fid' 속성을 출력 -->

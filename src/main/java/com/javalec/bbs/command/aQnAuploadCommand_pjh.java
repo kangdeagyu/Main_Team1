@@ -17,33 +17,26 @@ public class aQnAuploadCommand_pjh implements MCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		// TODO Auto-generated method stub
-		String directory = "../src/main/webapp/image";
-        int maxSize = 1024 * 1024 * 100;
-        String encoding = "UTF-8";
-		MultipartRequest multipartRequest = new MultipartRequest(request, directory, maxSize, encoding, new DefaultFileRenamePolicy());
-		String fileName = multipartRequest.getOriginalFileName("file");
-	    String list = multipartRequest.getParameter("list");
-	    String[] openornot = multipartRequest.getParameterValues("openornot");
-	    String phone = multipartRequest.getParameter("phone");
-	    String email = multipartRequest.getParameter("E-mail");
-	    String title = multipartRequest.getParameter("title");
-	    String content = multipartRequest.getParameter("content");
-		content = content.replaceAll("<p>", "").replaceAll("</p>", "");
+	    String list = request.getParameter("list");
+	    String[] openornot = request.getParameterValues("openornot");
+	    String title = request.getParameter("title");
+	    String content = request.getParameter("content");
+		int ftype=1;
+		String f_aid = "admin";
+	    int dao = new Admin_QnA_Dao().saveNotice(title, content);
+	    
 		
-		 if (!fileName.endsWith(".png") && !fileName.endsWith(".jpg") && !fileName.endsWith(".jpeg")) {
-	            File file = new File(directory + fileName);
-	            file.delete();
-	            request.setAttribute("uploadError", "업로드 할 수 없는 확장자입니다.");
-	        } else {
-	            String filePath = directory + fileName; // 파일 경로 생성
-	            int result = new Admin_QnA_Dao().saveQnA(title, content, fileName);
-	            if (result == -1) {
-	                System.out.println("업로드에 실패했습니다.");
-	            } else {
-	                request.setAttribute("fileName", fileName);
-	                request.setAttribute("fileDirectory", filePath);
-	            }
-	        }
+		
+		
+		/*
+		 * if (!fileName.endsWith(".png") && !fileName.endsWith(".jpg") &&
+		 * !fileName.endsWith(".jpeg")) { File file = new File(directory + fileName);
+		 * file.delete(); request.setAttribute("uploadError", "업로드 할 수 없는 확장자입니다."); }
+		 * else { String filePath = directory + fileName; // 파일 경로 생성 int result = new
+		 * Admin_QnA_Dao().saveQnA(title, content, fileName); if (result == -1) {
+		 * System.out.println("업로드에 실패했습니다."); } else { request.setAttribute("fileName",
+		 * fileName); request.setAttribute("fileDirectory", filePath); } }
+		 */
 		
 		
 		
