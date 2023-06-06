@@ -10,14 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.javalec.bbs.command.CategoryPorductCommand;
+import com.javalec.bbs.command.HomePorductCommand;
 import com.javalec.bbs.command.IdCommand;
 import com.javalec.bbs.command.JoinCommand;
+import com.javalec.bbs.command.Kms_BigCommentActionCommand;
 import com.javalec.bbs.command.Kms_CommentActionCommand;
 import com.javalec.bbs.command.Kms_ForumViewCommand;
 import com.javalec.bbs.command.Kms_ReplyActionCommand;
 import com.javalec.bbs.command.Kms_WriteForumCommand;
 import com.javalec.bbs.command.Kms_WriteListCommand;
 import com.javalec.bbs.command.MCommand;
+import com.javalec.bbs.command.MypageCommand;
 import com.javalec.bbs.command.PwCommand;
 import com.javalec.bbs.command.aDeleteProductCommand_pjh;
 import com.javalec.bbs.command.aHomeCommand_kkg;
@@ -79,14 +83,16 @@ public class MController extends HttpServlet {
 	
 			
 		case("/home.do"):
+			command = new HomePorductCommand();
+			command.execute(request, response);
 			viewPage = "home.jsp";
 			break;
-			
+		//로그아웃	
 		case("/logout.do"):
 			session.invalidate();
 			viewPage = "home.jsp";
 			break;
-			
+		// 회원가입 창	
 		case("/join.do"):
 			viewPage = "join.jsp";
 			break;
@@ -101,7 +107,7 @@ public class MController extends HttpServlet {
 			viewPage = "FindIdview.jsp";
 			break;
 			
-			// 비밀번호 차기
+			// 비밀번호 찾기
 		case("/findPw.do"):
 			viewPage = "Findpw.jsp";
 			break;
@@ -109,6 +115,17 @@ public class MController extends HttpServlet {
 			command = new PwCommand();
 			command.execute(request, response);
 			viewPage = "FindPwview.jsp";
+			break;
+			// 마이페이지
+		case("/mypageview.do"):
+			command = new MypageCommand();
+			command.execute(request, response);
+			viewPage = "mypage.jsp";
+			break;
+		case("/CategoryView.do"):
+			command = new CategoryPorductCommand();
+			command.execute(request, response);
+			viewPage = (String)request.getAttribute("view");
 			break;
 			
 			/* PART I 종료. 킹갓더제너럴 강대규팀장님 part 입니다. 일동 기립. 경례. 쉬어.*/
@@ -195,7 +212,11 @@ public class MController extends HttpServlet {
 				command.execute(request, response);
 				viewPage = "ForumView.do";
 				break;	
-				
+			case ("/BigCommentWrite.do"):		
+				command = new Kms_BigCommentActionCommand();
+				command.execute(request, response);
+				viewPage = "ForumView.do";
+				break;	
 			/* PART IV 종료. 세상Cool 남자 김민성군의 Part 입니다. 평균연령 낮춰줘서 고맙다 민성아.*/
 		    //*************************************************************//
 
