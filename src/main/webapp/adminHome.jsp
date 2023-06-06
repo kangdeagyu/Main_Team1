@@ -41,77 +41,77 @@
 
 
 <body data-new-gr-c-s-check-loaded="14.1111.0 data-gr-ext-installed">
+	<div class="headbar">
+ 		<jsp:include page="admin_01_header.jsp" />
+	</div>
 
-<!-- 헤더부분이랑 사이드바 부분은 일단 주석 처리 해두겠습니다.  -->
-<%-- 	<jsp:include page="admin_01_header.jsp" />
- --%>
 		
 		
-		
+	<div class="container_mk">	
 		<div class="sidebar">
 			<jsp:include page="admin_01_sidebar.jsp" />
-	 	</div>
-	 
-	 
-<div class="wrapper">
-	<div>
-		<h2>매출 관리</h2>
-	
-		<div class="content">
-
-	
-					<div class="array">
-						<div class="card" style="width: 350px; height: 300px;">
-						    <h5 class="card-title"> 월간 매출/판매 현황</h5>
-						  <canvas id="SaleChart_month"></canvas>
-						  <div class="card-body">
-						    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-						  </div>
-						</div>
-					</div>
-					
-					
-	
-					
-					<div class="array">
-						<div class="card" style="width: 350px; height: 300px;">
-						    <h5 class="card-title"> 주간 매출/판매 현황</h5>
-						  <canvas id="SaleChart_weekly"></canvas>
-						  <!-- <div class="card-body">
-							<a href="#" class="btn btn-primary">Go somewhere</a>
-						  </div> -->
-						</div>
-					</div>
-					
-					
-					<div class="array">
-						<div class="card" style="width: 350px; height: 300px;">
-						    <h5 class="card-title"> 일일 매출/판매 현황</h5>
-						  <canvas id="SaleChart_daily"></canvas>
-						  <!-- <div class="card-body">
-							<a href="#" class="btn btn-primary">Go somewhere</a>
-						  </div> -->
-						
-						</div>
-					</div>	
-						
-			</div> <!-- content  -->
 		</div>
+		 
+		 
+		<div class="wrapper">
+			<div>
+				<h2>매출 관리</h2>
+			
+				<div class="content">
 		
-		
-		<div>
-					<p>받아온 data 검증하기 위한 파트</p>
-					<p>날짜 :${requestScope.dailyDate}</p>
-					<p>주문 :${requestScope.dailyOrder}</p>
-					<p>매출 :${requestScope.dailySale}</p>
-						
-					<p>월별 :${requestScope.monthlyMonth}</p>
-					<p>주문 :${requestScope.monthlyOrder}</p>
-					<p>매출 :${requestScope.monthlySale}</p>
-		</div>
-		
-	</div> <!--wrapper 끝 -->
-
+			
+							<div class="array">
+								<div class="card" style="width: 350px; height: 300px;">
+								    <h5 class="card-title"> 월간 매출/판매 현황</h5>
+								  <canvas id="SaleChart_month"></canvas>
+								  <div class="card-body">
+								    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+								  </div>
+								</div>
+							</div>
+							
+							
+			
+							
+							<div class="array">
+								<div class="card" style="width: 350px; height: 300px;">
+								    <h5 class="card-title"> 주간 매출/판매 현황</h5>
+								  <canvas id="SaleChart_weekly"></canvas>
+								  <!-- <div class="card-body">
+									<a href="#" class="btn btn-primary">Go somewhere</a>
+								  </div> -->
+								</div>
+							</div>
+							
+							
+							<div class="array">
+								<div class="card" style="width: 350px; height: 300px;">
+								    <h5 class="card-title"> 일일 매출/판매 현황</h5>
+								  <canvas id="SaleChart_daily"></canvas>
+								  <!-- <div class="card-body">
+									<a href="#" class="btn btn-primary">Go somewhere</a>
+								  </div> -->
+								
+								</div>
+							</div>	
+								
+					</div> <!-- content  -->
+				</div>
+				
+				
+				<div>
+							<p>받아온 data 검증하기 위한 파트</p>
+							<p>날짜 :${requestScope.dailyDate}</p>
+							<p>주문 :${requestScope.dailyOrder}</p>
+							<p>매출 :${requestScope.dailySale}</p>
+								
+							<p>월별 :${requestScope.monthlyMonth}</p>
+							<p>주문 :${requestScope.monthlyOrder}</p>
+							<p>매출 :${requestScope.monthlySale}</p>
+				</div>
+				
+		</div> <!--wrapper 끝 -->
+	</div>
 
 	<!-- SaleChart_daily 그리기   -->
 
