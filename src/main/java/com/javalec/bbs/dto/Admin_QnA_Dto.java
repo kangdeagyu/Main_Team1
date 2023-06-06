@@ -22,6 +22,10 @@ public class Admin_QnA_Dto {
 	int t_num;
 	String t_name;
 	
+	int nid;
+	String ntitle;
+	String ncontent;
+	Timestamp ninsertdate;
 	
 	// Constructor
 	
@@ -39,20 +43,19 @@ public class Admin_QnA_Dto {
 	
 	
 	
+	public Admin_QnA_Dto(int nid, String ntitle, String ncontent, Timestamp ninsertdate) {
+		super();
+		this.nid = nid;
+		this.ntitle = ntitle;
+		this.ncontent = ncontent;
+		this.ninsertdate = ninsertdate;
+	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
 	// Method
 	public int getFid() {
 		return fid;
@@ -202,21 +205,67 @@ public class Admin_QnA_Dto {
 	public void setT_name(String t_name) {
 		this.t_name = t_name;
 	}
+
+
+
+
+
+	public int getNid() {
+		return nid;
+	}
 	
 	
 	
 	
 	
+	public void setNid(int nid) {
+		this.nid = nid;
+	}
+
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public String getNtitle() {
+		return ntitle;
+	}
+
+
+
+
+
+	public void setNtitle(String ntitle) {
+		this.ntitle = ntitle;
+	}
+
+
+
+
+
+	public String getNcontent() {
+		return ncontent;
+	}
+
+
+
+
+
+	public void setNcontent(String ncontent) {
+		this.ncontent = ncontent;
+	}
+
+
+
+
+
+	public Timestamp getNinsertdate() {
+		return ninsertdate;
+	}
+
+
+
+
+
+	public void setNinsertdate(Timestamp ninsertdate) {
+		this.ninsertdate = ninsertdate;
+	}
 	
 	
 }

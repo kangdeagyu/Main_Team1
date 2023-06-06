@@ -5,12 +5,6 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html;" charset="UTF-8">
     <title>공지사항 작성</title>
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script> 
      
      <link href="css/admin_kkg.css" rel="stylesheet">
 
@@ -24,11 +18,11 @@
 
 	 	<div class="wrapper">
 <h3>공지사항</h3>
-<form action="AQnA.do" method="post" enctype="multipart/form-data">
+<form action="ANoticeUpload.do" method="post" id="myForm">
     <table>
     	<tr>
     	<td>카테고리</td>
-    		<td><select name="list" class="form-select">
+    		<td><select name="list" class="form-select" style="width:130px;height:32px;">
         <option value="pname" selected="selected">서비스</option>
         <option value="pcategory">공지사항</option>
     			</select>
@@ -39,66 +33,42 @@
             <td>이름</td>
             <td>${dto.id}</td>
         </tr>
-        <tr>
+       <!--  <tr>
             <td>공개여부</td>
             <td><input type="radio" name="openornot" value="공개" checked="checked">공개
             <input type="radio" name="openornot" value="비공개">비공개
             </td>
-        </tr>
+        </tr> -->
         <tr>
             <td>제목</td>
             <td><input type="text" name="title"></td>
         </tr>
         <tr>
             <td>내용</td>
-   <td><textarea id="content" name="content"></textarea>
-   
-  
-    <script type="text/javascript">
-$(document).ready(function() {
-    $('#content').summernote({
-        width: 600,
-    	height: 300,
-        minHeight : null,
-        maxHeight : null,
-        tabsize : 2,
-        lang : "ko-KR",
-        toolbar : [
-        	['fontsize',['fontsize']],
-        	['style', ['fontname']],
-        	['color', ['forecolor', 'backcolor']],
-        	['para', ['ul','ol','paragraph']],
-        	['height', ['height']],
-        	['table',['table']],
-        	['insert',['link','video']],
-        	['view',['fullscreen','codeview','help']],
-        ],
-        fontNames : ['맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체'],
-        fontSizes : ['8','9','10','11','12','14','16','18','20','22','24','28','30','36'],
-   		
-        callbacks: {
-        	onImageUpload : function(files, editor, welEditable){
-        		sendFile(files[0], this);
-        	}
-        }
-    });
-});
-        
-</script></td>
+   <td><textarea name="content" style="width:500px;height:500px;"></textarea>
+   </td>
             
         </tr>
-        <tr>
+        <!-- <tr>
             <td>첨부파일</td>
             <td><input type="file" name="file"></td>
-        </tr>
+        </tr> -->
     </table>
             <input type="submit" name=action value="업로드">
-            <input type="submit" name=action value="재작성">
-    
+            <input type="button" value="재작성" onclick="resetForm()">
 		</form>
+		
 		<form action="Admin_QnA_List.do" method="post">
             <input type="submit" value="목록">
         </form>
          </div>
+
+	<script type="text/javascript">
+		function resetForm() {
+			document.getElementById("myForm").reset();
+		}
+	</script>
+
+
 </body>
 </html>

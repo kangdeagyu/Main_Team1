@@ -88,20 +88,17 @@ public class Admin_QnA_Dao {
 		}
 		
 		
-		public int saveQnA(String pname, String pprice, String pstock, String pcontent, String pcategory, String filename, String fileRealName, String filepath) {
+		public int saveNotice(String ftitle, String fcontent) {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 
 			try{
 				connection = datasource.getConnection();
-				String query = "INSERT INTO forum (pname, pprice, pstock, pfilename, pcategory, pcontent, pinsertdate) VALUES (?, ?, ?, ?, ?, ?, now())";
-				preparedStatement = connection.prepareStatement(query);
-				preparedStatement.setString(1, pname);
-				preparedStatement.setString(2, pprice);
-				preparedStatement.setString(3, pstock);
-				preparedStatement.setString(4, filename);
-				preparedStatement.setString(5, pcategory);
-				preparedStatement.setString(6, pcontent);
+				String query2= "insert into forum (f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, ftitle, fcontent, finsertdate, fmotherid)";
+				String query3 = " select 'AdminOnly','admin', 1, 1, max(fref) + 1, 0, 0, ?, ?, now(),0 from forum";
+				preparedStatement = connection.prepareStatement(query2+query3);
+				preparedStatement.setString(1, ftitle);
+				preparedStatement.setString(2, fcontent);
 				return preparedStatement.executeUpdate();
 			}catch (Exception e) {
 				e.printStackTrace();
@@ -124,6 +121,84 @@ public class Admin_QnA_Dao {
 			    }
 			    return -1;
 			}
+		
+		
+		public int saveNotice2(String ftitle, String fcontent) {
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+
+			try{
+				connection = datasource.getConnection();
+				String query2= "insert into notice (n_aid, ntitle, ncontent, ninsertdate)";
+				String query3 = " select 'admin', ?, ?, now()";
+				preparedStatement = connection.prepareStatement(query2+query3);
+				preparedStatement.setString(1, ftitle);
+				preparedStatement.setString(2, fcontent);
+				return preparedStatement.executeUpdate();
+			}catch (Exception e) {
+				e.printStackTrace();
+			 } finally {
+			        // 리소스 해제 코드
+			        if (preparedStatement != null) {
+			            try {
+			                preparedStatement.close();
+			            } catch (Exception e) {
+			                e.printStackTrace();
+			            }
+			        }
+			        if (connection != null) {
+			            try {
+			                connection.close();
+			            } catch (Exception e) {
+			                e.printStackTrace();
+			            }
+			        }
+			    }
+			    return -1;
+			}
+		
+		
+		public ArrayList<Admin_QnA_Dto> Noticelist() {
+			ArrayList<Admin_QnA_Dto> dtos = new ArrayList<Admin_QnA_Dto>();
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+			ResultSet resultSet = null;
+			try {
+				connection = datasource.getConnection();
+				String query = "SELECT nid, ntitle, ncontent, ninsertdate";
+				String query1 = " FROM notice";
+				preparedStatement = connection.prepareStatement(query+query1);
+				resultSet = preparedStatement.executeQuery();
+				while (resultSet.next()) {
+					int nid = resultSet.getInt(1);
+				    String ntitle = resultSet.getString(2);
+				    String ncontent = resultSet.getString(3);
+				    Timestamp ninsertdate = resultSet.getTimestamp(4);
+				    Admin_QnA_Dto dto = new Admin_QnA_Dto(nid, ntitle, ncontent, ninsertdate);
+				    dtos.add(dto);
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(resultSet !=null) resultSet.close();
+					if(preparedStatement !=null) preparedStatement.close();
+					if(connection !=null) connection.close();
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return dtos;
+			
+		} // list
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		
