@@ -28,13 +28,13 @@
 			    <a class="nav-link active" aria-current="page" href="home.do"><p class="text-dark">HOME</p></a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" href="#"><p class="text-dark">LIFESTYLE</p></a>
+			    <a class="nav-link" href="CategoryView.do?num=0"><p class="text-dark">LAMP</p></a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" href="#"><p class="text-dark">FURNITURE</p></a>
+			    <a class="nav-link" href="CategoryView.do?num=1"><p class="text-dark">MINIATURE</p></a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" href="#"><p class="text-dark">STATIONERTY</p></a>
+			    <a class="nav-link" href="CategoryView.do?num=2"><p class="text-dark">CHAIR</p></a>
 			  </li>
 			  <li class="nav-item">
 			    <a class="nav-link" href="#"><p class="text-dark">Q&A</p></a>
@@ -47,7 +47,7 @@
 		<ul class="nav justify-content-end">
 			<c:if test="${cid != null }">
 				<li class="nav-item">
-				   	<p class="text-dark">${name }님</p>
+				   	<a class="nav-link" href="mypageview.do"><p class="text-dark" >${name }님</p></a>
 				<li class="nav-item">
 				   	 <a class="nav-link" href="logout.do"><p class="text-dark">로그아웃</p></a>
 			    </li>
