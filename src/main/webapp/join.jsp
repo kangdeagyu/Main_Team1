@@ -29,20 +29,33 @@
 		
 			<form id="join-form" name="join" method="post">
 				<label>아이디</label>
-				<div class="input-group">
-					<input type="email" class="form-control" name="cid" id="cid" placeholder="name@example.com">
-					<input type="button" value="중복확인" name="emailcheak" onclick="checkDuplicate()">
+				<c:if test="${kakao != 0}">
+					<div class="input-group">
+						<input type="email" class="form-control" name="cid" id="cid" placeholder="name@example.com" value="${jid }">
+						<input type="button" value="중복확인" name="emailcheak" onclick="checkDuplicate()">
+					</div> 
+				</c:if>
+				<c:if test="${kakao == 0}">
+					<div class="input-group">
+						<input type="email" class="form-control" name="cid" id="cid" placeholder="name@example.com">
+						<input type="button" value="중복확인" name="emailcheak" onclick="checkDuplicate()">
 				</div> 
+				</c:if>
 				<label>비밀번호</label>
 					<input type="password" class="form-control" name="cpassword" id="cpassword" placeholder="비밀번호">
 					<input type="password" class="form-control" name="passwordcheak" id="passwordcheak" placeholder="비밀번호 확인">
 				<p class="text-end" id="passwordMatchMessage"style="color: red" ></p>
 				<label>이름</label>
+				<c:if test="${kakao != 0}">
+					<input type="text" class="form-control" name="cname" id="cname" placeholder="이름" value="${jname }">
+				</c:if>
+				<c:if test="${kakao == 0}">
 					<input type="text" class="form-control" name="cname" id="cname" placeholder="이름">
+				</c:if>
 				<label>전화번호</label>
 					<input type="text" class="form-control" name="cphone" id="cphone" placeholder="휴대폰 번호 입력('-'포함해서 입력해주세요)">
 				<label>성별</label><br/>
-					  <input type="radio" name="cgender" value="male"> 남자<br/>
+					  <input type="radio" name="cgender" value="male" > 남자<br/>
 					  <input type="radio" name="cgender" value="female"> 여자<br/>
 				<label>주소</label>
 				<div class="input-group">

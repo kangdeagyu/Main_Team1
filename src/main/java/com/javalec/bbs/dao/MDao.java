@@ -44,16 +44,15 @@ public class MDao {
 		      ps.setString(2, password);
 		      rs = ps.executeQuery();
 				if(rs.next()) {
-					count = rs.getInt(1);
+					count = rs.getInt(1);	
+	                if (rs.getString(3) != null) {
+	                    // cdeletedate가 존재하는 경우, 탈퇴한 회원으로 처리
+	                    result = "mdraw";
+	                } else {
+	                    // cdeletedate가 존재하지 않는 경우, 등록된 회원
+	                    result = rs.getString(2);
+	                }
 				}
-                if (rs.getString(3) != null) {
-                    // cdeletedate가 존재하는 경우, 탈퇴한 회원으로 처리
-                    result = "mdraw";
-                } else {
-                    // cdeletedate가 존재하지 않는 경우, 등록된 회원
-                    result = rs.getString(2);
-                }
-				
 
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -390,7 +389,54 @@ public class MDao {
 		return result;
 	}
 	
-	
+	// 카카오 로그인 확인
+	public int kakaoLogin(String cid) {
+		int result = 0; // 아이디가 존재 하지 않을때
+		int idcount = 0; // 아이디
+	    int pwcount = 0; // 비밀번호
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			connection = dataSource.getConnection(); // sql 연결
+			String query = "select count(cid), count(cpassword), cdeletedate from customer where cid = ?";
+			ps = connection.prepareStatement(query);
+		      ps.setString(1, cid);
+		      rs = ps.executeQuery();
+		      
+				if(rs.next()) {
+					idcount = rs.getInt(1);
+					pwcount = rs.getInt(2);
+					System.out.println(idcount);
+					System.out.println(pwcount);
+					
+	                if (rs.getString(3) != null && idcount > 0 && pwcount > 0) {
+	                	result = 2; // 탈퇴한회원
+	                }else if(rs.getString(3) == null && idcount > 0 && pwcount > 0) { 
+	                    result = 1; // 등록된 회원
+	                }else {
+	                	result = 0;
+	                }
+				}
+
+		}catch (Exception e) {
+			e.printStackTrace();
+		
+		}finally {
+			try {
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+	  }
+		return result;
+		
+		
+	}
 	
 	
 	

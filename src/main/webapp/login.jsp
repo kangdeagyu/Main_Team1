@@ -72,32 +72,70 @@
 <!-- 카카오 스크립트 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
-	Kakao.init('e94ea7cf7a4161d305da7590513621dc'); //발급받은 키 중 javascript키를 사용해준다.
+	Kakao.init('e94ea7cf7a4161d305da7590513621dc'); // 발급받은 키 중 javascript키를 사용해준다.
 	console.log(Kakao.isInitialized()); // sdk초기화여부판단
 
-//카카오로그인
-function kakaoLogin() {
-    Kakao.Auth.login({
-      success: function (response) {
-        Kakao.API.request({
-          url: '/v2/user/me',
-          success: function (response) {
-        	  console.log(response)
-        	  
-          },
-          fail: function (error) {
-            console.log(error)
-          },
-        })
-      },
-      fail: function (error) {
-        console.log(error)
-      },
-    })
+	// 카카오로그인
+	function kakaoLogin() {
+		Kakao.Auth.login({
+			success: function(response) {
+				Kakao.API.request({
+					url: '/v2/user/me',
+					success: function(response) {
+						var nickname = response.properties.nickname; // 닉네임 가져오기
+						var kakaoAccount = response.kakao_account;
+						var email = kakaoAccount.email; // 카카오 계정 이메일 가져오기
+						var gender = kakaoAccount.gender; // 성별 가져오기
+						var birthday = kakaoAccount.birthday; // 생일 가져오기
 
-  }
-  
+						// 가져온 정보 활용
+						console.log("닉네임: " + nickname);
+						console.log("카카오 계정 이메일: " + email);
+						console.log("성별: " + gender);
+						console.log("생일: " + birthday);
+
+						// 이메일을 서버로 전송하여 데이터베이스에 있는지 확인
+						
+						axios.post('kalogin.kao', null, {
+								params: {
+									cid: email,
+									cname: nickname,
+									cgender: gender,
+									cbirthday: birthday
+								}
+							})
+							.then(response => {
+								// 로그인 성공 시 처리
+								console.log(response.data);
+								if(response.data == "join"){
+									alert("등록되어 있는 회원정보가 없습니다. 회원가입을 해주세요");
+									window.location.href = 'join.jsp?kakao=1'; 
+								}else if(response.data == "mdraw"){
+									alert("탈퇴한 회원입니다.");
+								}else{
+									alert("로그인 성공");
+									window.location.href = 'home.do'; 
+								}
+								
+							})
+							.catch(error => {
+								// 로그인 실패 시 처리
+								this.errorMessage = error.response.data.message;
+								alert("아이디와 비밀번호를 확인해주세요!");
+							});
+					},
+					fail: function(error) {
+						console.log(error);
+					}
+				});
+			},
+			fail: function(error) {
+				console.log(error);
+			}
+		});
+	}
 </script>
+
 
 <div class="container">
 	<main class="form-signin w-100 m-auto">
