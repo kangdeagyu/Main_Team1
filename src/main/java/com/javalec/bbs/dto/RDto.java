@@ -3,13 +3,13 @@ package com.javalec.bbs.dto;
 public class RDto {
 
 	int pid;
-	String pName;
+	String pname;
     String pfilename;
     String pcontent;
     int pprice;
     
     String f_cid;
-    String ftype;
+    int ftype;
     String ftitle;
     String fcontent;
 
@@ -19,7 +19,7 @@ public class RDto {
 
 
 
-	public RDto(String f_cid, String ftype, String ftitle, String fcontent) {
+	public RDto(String f_cid, int ftype, String ftitle, String fcontent) {
 		super();
 		this.f_cid = f_cid;
 		this.ftype = ftype;
@@ -29,10 +29,10 @@ public class RDto {
 
 
 
-	public RDto(int pid, String pName, String pfilename, String pcontent, int pprice) {
+	public RDto(int pid, String pname, String pfilename, String pcontent, int pprice) {
 		super();
 		this.pid = pid;
-		this.pName = pName;
+		this.pname = pname;
 		this.pfilename = pfilename;
 		this.pcontent = pcontent;
 		this.pprice = pprice;
@@ -56,14 +56,14 @@ public class RDto {
 
 
 
-	public String getpName() {
-		return pName;
+	public String getpname() {
+		return pname;
 	}
 
 
 
-	public void setpName(String pName) {
-		this.pName = pName;
+	public void setpname(String pname) {
+		this.pname = pname;
 	}
 
 
@@ -116,13 +116,16 @@ public class RDto {
 
 
 
-	public String getFtype() {
+
+
+
+	public int getFtype() {
 		return ftype;
 	}
 
 
 
-	public void setFtype(String ftype) {
+	public void setFtype(int ftype) {
 		this.ftype = ftype;
 	}
 

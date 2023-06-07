@@ -42,12 +42,12 @@ public class RDao {
 	
 		while(resultSet.next()) {
 			String f_cid = resultSet.getString("f_cid");
-			String ftype = resultSet.getString("ftype");
+			int ftype = resultSet.getInt("ftype");
 			String ftitle = resultSet.getString("ftitle");
 			String fcontent = resultSet.getString("fcontent");
 		
 			
-			RDto dto = new RDto(f_cid, ftype, ftitle, fcontent);
+		RDto dto = new RDto(f_cid, ftype, ftitle, fcontent);
 			dtos.add(dto);
 			
 		}
@@ -77,17 +77,19 @@ public ArrayList<RDto> DetailedProduct(){
 
 try {
 	connection = dataSource.getConnection(); // sql 연결
-	String query = "select pid, pname, pfilename, pcontent, pprice from product";
+	String query = "select pid, pname, pfilename, pcontent, pprice from product where p.id = ?";
 	preparedStatement = connection.prepareStatement(query);
+	preparedStatement.setString(1, "pid");
 	resultSet = preparedStatement.executeQuery();
 
 	while(resultSet.next()) {
 		int pid = resultSet.getInt("pid");
 		String pname = resultSet.getString("pname");
-		String pfilename = resultSet.getString("pfilename");
+		String filename = resultSet.getString("pfilename");
 		String pcontent = resultSet.getString("pcontent");
 		int pprice = resultSet.getInt("pprice");
-	
+		
+		String pfilename = "image/" + filename; 	
 		RDto dto = new RDto(pid, pname, pfilename, pcontent, pprice);
 		dtos.add(dto);
 		
