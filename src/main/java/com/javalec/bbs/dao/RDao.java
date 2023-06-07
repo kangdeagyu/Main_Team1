@@ -26,7 +26,7 @@ public class RDao {
 	
 	}
 
-//나의 리뷰 가져오기
+//나의 리뷰 가져오기(잠깐 대기)
 	public ArrayList<RDto> list(){
 		ArrayList<RDto> dtos = new ArrayList<RDto>();
 		Connection connection = null;
@@ -126,9 +126,13 @@ public void InsertCart(int pid, int cid, String bqty) {
 		preparedStatement.setInt(2, pid);
 		preparedStatement.setString(3, bqty);
 		
-		preparedStatement.executeUpdate();
-		
+		int rowsInserted = preparedStatement.executeUpdate();
+		 if (rowsInserted > 0) {
+			System.out.println("장바구니에 상품이 추가되었습니다."); 
+			preparedStatement.executeUpdate();
+		 }
 
+	
 	}catch (Exception e) {
 		e.printStackTrace();
 	}finally {
@@ -140,7 +144,9 @@ public void InsertCart(int pid, int cid, String bqty) {
 		}
 	}
 	
-} // write
+}
+
+// write
 //상품별 리뷰 잠깐 대기
 //public ArrayList<RDto> ProductReview(int ppid){
 //	ArrayList<RDto> dtos = new ArrayList<RDto>();

@@ -80,7 +80,7 @@ function updateTotalAmount() {
       <tr>
         <c:forEach items="${DetailedProduct}" var="dto">
           <td class="product-image">
-            <img alt="" style="width: 500px; height: 500px;" src="${dto.pfilename}">
+            <img alt="상품 이미지" style="width: 500px; height: 500px;" src="${dto.pfilename}">
           </td>
           <td>
             <table>
@@ -102,10 +102,6 @@ function updateTotalAmount() {
   					<input type="number" id="quantity" value="1" min="1" max="${dto.pstock}" onchange="updateTotalAmount()">
 				</td>
 
-                <td>
-                <div>
-                
-                </td>
               </tr>
               <tr>
                 <td colspan="2" class="purchase-details">
