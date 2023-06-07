@@ -7,7 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.javalec.bbs.dao.Admin_Product_Dao;
 import com.javalec.bbs.dao.Admin_Review_Dao;
+import com.javalec.bbs.dto.Admin_Product_Dto;
 import com.javalec.bbs.dto.Admin_Review_Dto;
 
 public class aReview_List_Command_pjh implements MCommand {
@@ -29,9 +31,35 @@ int total = 0;
 			String pfilename = dto.getPfilename();
 			int price = dto.getPprice();
 			total += price;
-		}		
-		request.setAttribute("list", dtos);
+			
+			   int pcategory = dto.getPcategory();
+	            String categoryName = getCategoryName(pcategory);
+	            dto.setCategoryName(categoryName);
+			
+		}
+		
+		request.setAttribute("reviewlist", dtos);
 		request.setAttribute("total", total);
+	}
+		
+		private String getCategoryName(int pcategory) {
+	        String categoryName = "";
+	        switch (pcategory) {
+	            case 0:
+	                categoryName = "조명";
+	                break;
+	            case 1:
+	                categoryName = "미니어쳐";
+	                break;
+	            case 2:
+	                categoryName = "의자";
+	                break;
+	            default:
+	                categoryName = "기타";
+	                break;
+	        }
+	        return categoryName;
+		
 	}
 
 }

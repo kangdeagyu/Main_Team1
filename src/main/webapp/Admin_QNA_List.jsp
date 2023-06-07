@@ -98,7 +98,7 @@
         	<c:forEach items="${noticelist}" var="noticedto" varStatus="status">
         	<tr>
         			<td>${noticedto.nid}</td>       
-                    <td>${noticedto.ntitle}</td>     
+                    <td><a href="">${noticedto.ntitle}</a></td>     
                     <td>관리자</td>     
                     <td>${noticedto.ninsertdate}</td>
         	</tr>

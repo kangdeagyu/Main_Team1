@@ -22,8 +22,11 @@ public class Admin_Review_Dto {
 	String pname;
 	String pfilename;
 	int pprice;
+	String pcontent;
+	int pcategory;
 	String t_name;
-	
+	String categoryName;
+	private Admin_Product_Dto productInfo;
 	// Constructor
 	
 	
@@ -34,15 +37,19 @@ public class Admin_Review_Dto {
 	
 
 
-	public Admin_Review_Dto(int fid, Timestamp finsertdate, String cname, String pname, String pfilename, int pprice, String ftitle) {
+	public Admin_Review_Dto(int fid, int f_pid, Timestamp finsertdate, String cname, String pname, String pfilename, int pprice, String fcontent, String ftitle, String pcontent, int pcategory) {
 		super();
 		this.fid = fid;
+		this.f_pid=f_pid;
 		this.finsertdate = finsertdate;
 		this.cname = cname;
 		this.pname = pname;
 		this.pfilename = pfilename;
 		this.pprice = pprice;
+		this.fcontent=fcontent;
 		this.ftitle=ftitle;
+		this.pcontent=pcontent;
+		this.pcategory=pcategory;
 	}
 
 	
@@ -189,16 +196,59 @@ public class Admin_Review_Dto {
 	}
 	
 	
+	public Admin_Product_Dto getProductInfo() {
+        return productInfo;
+    }
+	
+	 public void setProductInfo(Admin_Product_Dto productInfo) {
+	        this.productInfo = productInfo;
+	 }
+
+
+
+	public String getPcontent() {
+		return pcontent;
+	}
+
+
+
+	public void setPcontent(String pcontent) {
+		this.pcontent = pcontent;
+	}
+
+
+
+	public int getPcategory() {
+		return pcategory;
+	}
+
+
+
+	public void setPcategory(int pcategory) {
+		this.pcategory = pcategory;
+	}
+	
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
 	
 	
 	
 	
 	
 	
-	
-	
-	
-	
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 	
 	
 	

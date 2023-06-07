@@ -23,8 +23,8 @@ public class aQnAuploadCommand_pjh implements MCommand {
 	    String content = request.getParameter("content");
 		int ftype=1;
 		String f_aid = "admin";
-	    int dao = new Admin_QnA_Dao().saveNotice(title, content);
-	    
+	    //int dao = new Admin_QnA_Dao().saveNotice(title, content);
+	    int daos = new Admin_QnA_Dao().saveNotice(title, content);
 		
 		
 		

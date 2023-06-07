@@ -13,9 +13,7 @@ public class Admin_Product_Dto {
 		Timestamp pinsertdate;
 		Timestamp pdeletedate;
 		String c_name;
-		
-		
-		
+		int pstock;
 		
 		
 		
@@ -23,12 +21,30 @@ public class Admin_Product_Dto {
 		
 		
 		// Constructor
+		
+		
+		
+		
+		
+		
 		public Admin_Product_Dto(String pfilename, String pname, int pprice, int pid) {
 			super();
 			this.pfilename = pfilename;
 			this.pname = pname;
 			this.pprice = pprice;
 			this.pid = pid;
+		}
+		
+
+		public Admin_Product_Dto(String pfilename, String pname, int pprice, int pid, int pstock, String pcontent, String c_name) {
+			super();
+			this.pfilename = pfilename;
+			this.pname = pname;
+			this.pprice = pprice;
+			this.pid = pid;
+			this.pstock = pstock;
+			this.pcontent = pcontent;
+			this.c_name = c_name;
 		}
 		
 		public Admin_Product_Dto(String pfilename, String pname, int pprice, int pid, String c_name) {
@@ -43,7 +59,14 @@ public class Admin_Product_Dto {
 		
 		
 		
-		
+		public Admin_Product_Dto(int pid, String pname, int pprice, String pcontent) {
+			super();
+			this.pid = pid;
+			this.pname = pname;
+			this.pprice = pprice;
+			this.pcontent = pcontent;
+		}
+
 		// Method
 		
 		public String getPfilename() {
@@ -153,7 +176,24 @@ public class Admin_Product_Dto {
 		public void setPdeletedate(Timestamp pdeletedate) {
 			this.pdeletedate = pdeletedate;
 		}
+
+
+		public int getPstock() {
+			return pstock;
+		}
+
+
+		public void setPstock(int pstock) {
+			this.pstock = pstock;
+		}
+
+		
+		
+		
+		
+		
 		
 		
 		
 }
+

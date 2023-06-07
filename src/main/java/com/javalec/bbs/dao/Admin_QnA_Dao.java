@@ -88,42 +88,42 @@ public class Admin_QnA_Dao {
 		}
 		
 		
+//		public int saveNotice(String ftitle, String fcontent) {
+//			Connection connection = null;
+//			PreparedStatement preparedStatement = null;
+//
+//			try{
+//				connection = datasource.getConnection();
+//				String query2= "insert into forum (f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, ftitle, fcontent, finsertdate, fmotherid)";
+//				String query3 = " select 'AdminOnly','admin', 1, 1, max(fref) + 1, 0, 0, ?, ?, now(),0 from forum";
+//				preparedStatement = connection.prepareStatement(query2+query3);
+//				preparedStatement.setString(1, ftitle);
+//				preparedStatement.setString(2, fcontent);
+//				return preparedStatement.executeUpdate();
+//			}catch (Exception e) {
+//				e.printStackTrace();
+//			 } finally {
+//			        // 리소스 해제 코드
+//			        if (preparedStatement != null) {
+//			            try {
+//			                preparedStatement.close();
+//			            } catch (Exception e) {
+//			                e.printStackTrace();
+//			            }
+//			        }
+//			        if (connection != null) {
+//			            try {
+//			                connection.close();
+//			            } catch (Exception e) {
+//			                e.printStackTrace();
+//			            }
+//			        }
+//			    }
+//			    return -1;
+//			}
+		
+		
 		public int saveNotice(String ftitle, String fcontent) {
-			Connection connection = null;
-			PreparedStatement preparedStatement = null;
-
-			try{
-				connection = datasource.getConnection();
-				String query2= "insert into forum (f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, ftitle, fcontent, finsertdate, fmotherid)";
-				String query3 = " select 'AdminOnly','admin', 1, 1, max(fref) + 1, 0, 0, ?, ?, now(),0 from forum";
-				preparedStatement = connection.prepareStatement(query2+query3);
-				preparedStatement.setString(1, ftitle);
-				preparedStatement.setString(2, fcontent);
-				return preparedStatement.executeUpdate();
-			}catch (Exception e) {
-				e.printStackTrace();
-			 } finally {
-			        // 리소스 해제 코드
-			        if (preparedStatement != null) {
-			            try {
-			                preparedStatement.close();
-			            } catch (Exception e) {
-			                e.printStackTrace();
-			            }
-			        }
-			        if (connection != null) {
-			            try {
-			                connection.close();
-			            } catch (Exception e) {
-			                e.printStackTrace();
-			            }
-			        }
-			    }
-			    return -1;
-			}
-		
-		
-		public int saveNotice2(String ftitle, String fcontent) {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 

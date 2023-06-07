@@ -38,7 +38,7 @@ public class Admin_Product_Dao {
 		ResultSet resultSet = null;
 		try {
 			connection = datasource.getConnection();
-			String query = "SELECT p.pfilename, p.pname, p.pprice, p.pid, c.c_name ";
+			String query = "SELECT p.pfilename, p.pname, p.pprice, p.pid, pstock, pcontent, c.c_name ";
 			String query1 = " FROM product p JOIN category c ON p.pcategory = c.c_num";
 			preparedStatement = connection.prepareStatement(query+query1);
 			resultSet = preparedStatement.executeQuery();
@@ -47,8 +47,10 @@ public class Admin_Product_Dao {
 			    String pname = resultSet.getString(2);
 			    int pprice = resultSet.getInt(3);
 			    int pid = resultSet.getInt(4);
-			    String c_name=resultSet.getString(5);
-			    Admin_Product_Dto dto = new Admin_Product_Dto(pfilename, pname, pprice, pid, c_name);
+			    int pstock = resultSet.getInt(5);
+			    String pcontent = resultSet.getString(6);
+			    String c_name=resultSet.getString(7);
+			    Admin_Product_Dto dto = new Admin_Product_Dto(pfilename, pname, pprice, pid, pstock, pcontent, c_name);
 			    dtos.add(dto);
 			}
 		}catch (Exception e) {
@@ -75,7 +77,7 @@ public class Admin_Product_Dao {
 		
 		try {
 			connection = datasource.getConnection();
-			String query1 = "select pfilename, pid, pprice, pname from product";
+			String query1 = "select pfilename, pid, pprice, pname, pcategory from product";
 			String Where2 = " where " + list + " like ?";
 			ps = connection.prepareStatement(query1 + Where2);
 			ps.setString(1, "%" + query + "%");
@@ -86,10 +88,11 @@ public class Admin_Product_Dao {
 				int pid = rs.getInt(2);
 				int pprice = rs.getInt(3);
 				String pname = rs.getString(4);
+				String pcategory = Integer.toString(rs.getInt(5));
 
 				
 				
-				Admin_Product_Dto dto = new Admin_Product_Dto(pfilename, pname, pprice, pid);
+				Admin_Product_Dto dto = new Admin_Product_Dto(pfilename, pname, pprice, pid, pcategory);
 				dtos.add(dto);
 			}
 		}catch(Exception e) {
@@ -106,7 +109,6 @@ public class Admin_Product_Dao {
 		
 		return dtos;
 	} // list 출력
-	
 	
 	public int saveProduct(String pname, String pprice, String pstock, String pcontent, String pcategory, String filename, String fileRealName, String filepath) {
 		Connection connection = null;
@@ -206,6 +208,72 @@ public class Admin_Product_Dao {
 		return totalCount;
 	}
 	
+	
+	public ArrayList<Admin_Product_Dto> informationlist() {
+		ArrayList<Admin_Product_Dto> dtos = new ArrayList<Admin_Product_Dto>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = datasource.getConnection();
+			String query = "SELECT p.pfilename, p.pname, p.pprice, p.pid, c.c_name ";
+			String query1 = " FROM product p JOIN category c ON p.pcategory = c.c_num";
+			preparedStatement = connection.prepareStatement(query+query1);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				String pfilename=resultSet.getString(1);
+			    String pname = resultSet.getString(2);
+			    int pprice = resultSet.getInt(3);
+			    int pid = resultSet.getInt(4);
+			    String c_name=resultSet.getString(5);
+			    Admin_Product_Dto dto = new Admin_Product_Dto(pfilename, pname, pprice, pid, c_name);
+			    dtos.add(dto);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(resultSet !=null) resultSet.close();
+				if(preparedStatement !=null) preparedStatement.close();
+				if(connection !=null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dtos;
+		
+	} // list
+	
+	
+	public Admin_Product_Dto getProductInfo(int f_pid) {
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+	    ResultSet resultSet = null;
+	    Admin_Product_Dto productInfo = null;
+	    
+	    try {
+	        connection = datasource.getConnection();
+	        String query = "SELECT pid, pname, pprice, pcontent FROM product WHERE pid = ?";
+	        preparedStatement = connection.prepareStatement(query);
+	        preparedStatement.setInt(1, f_pid);
+	        resultSet = preparedStatement.executeQuery();
+	        
+	        if (resultSet.next()) {
+	            int pid = resultSet.getInt("pid");
+	            String pname = resultSet.getString("pname");
+	            int pprice = resultSet.getInt("pprice");
+	            String pcontent = resultSet.getString("pcontent");
+	            
+	            productInfo = new Admin_Product_Dto(pid, pname, pprice, pcontent);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        // 리소스 해제
+	    }
+	    
+	    return productInfo;
+	}
 	
 	
 	

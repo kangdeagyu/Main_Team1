@@ -40,19 +40,23 @@ public class Admin_Review_Dao {
 		ResultSet resultSet = null;
 		try {
 			connection = datasource.getConnection();
-			String query = "SELECT f.fid, f.finsertdate, c.cname, p.pname, p.pfilename, p.pprice, f.fcontent"; 
+			String query = "SELECT f.fid, f.f_pid, f.finsertdate, c.cname, p.pname, p.pfilename, p.pprice, f.fcontent, f.ftitle, p.pcontent, p.pcategory"; 
 			String query1 = " FROM forum f, product p, customer c, type t WHERE f.f_cid=c.cid AND f.f_pid=p.pid AND f.ftype=1;";
 			preparedStatement = connection.prepareStatement(query+query1);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				int fid=resultSet.getInt(1);
-			    Timestamp finsertdate = resultSet.getTimestamp(2);
-			    String cname  = resultSet.getString(3);
-			    String pname = resultSet.getString(4);
-			    String pfilename=resultSet.getString(5);
-			    int pprice = resultSet.getInt(6);
-			    String fcontent = resultSet.getString(7);
-			    Admin_Review_Dto dto = new Admin_Review_Dto(fid, finsertdate, cname, pname, pfilename, pprice, fcontent);
+				int f_pid=resultSet.getInt(2);
+			    Timestamp finsertdate = resultSet.getTimestamp(3);
+			    String cname  = resultSet.getString(4);
+			    String pname = resultSet.getString(5);
+			    String pfilename=resultSet.getString(6);
+			    int pprice = resultSet.getInt(7);
+			    String fcontent = resultSet.getString(8);
+			    String ftitle= resultSet.getString(9);
+			    String pcontent =resultSet.getString(10);
+			    int pcategory = resultSet.getInt(11);
+			    Admin_Review_Dto dto = new Admin_Review_Dto(fid, f_pid, finsertdate, cname, pname, pfilename, pprice, fcontent, ftitle, pcontent, pcategory);
 			    dtos.add(dto);
 			}
 		}catch (Exception e) {
