@@ -63,7 +63,7 @@
    <input type="hidden" name="f_pid" value=${forumView.f_pid }>
             댓글달기 <input type="text" name="ftitle" >
       
-    <input type="submit" value="리뷰작성하기">
+    <input type="submit" value="댓글달기">
 </form>
    
 </body>

@@ -34,7 +34,7 @@ public class Kms_WriteList_Dao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select * from forum where ftype = 1 order by fref,freforder";
+			String query = "select * from forum where ftype = 1 order by fref desc,freforder";
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 			
@@ -115,6 +115,7 @@ public class Kms_WriteList_Dao {
 		PreparedStatement preparedStatement = null;
 		PreparedStatement preparedStatement1 = null;
 		PreparedStatement preparedStatement2 = null;
+		PreparedStatement preparedStatement3 = null;
 		int a = freforder + fanswernum;
 		try {
 			connection = dataSource.getConnection();
@@ -141,6 +142,10 @@ public class Kms_WriteList_Dao {
 			String query4 = "update forum set fanswernum = fanswernum + 1 where fid = " + fid;
 			preparedStatement2 = connection.prepareStatement(query4);
 			preparedStatement2.executeUpdate();
+			
+			String query5 = "update forum set fanswernum = fanswernum + 1 where fref =" + fref + " and freforder <" + freforder + " and fanswernum >= 1";
+			preparedStatement3 = connection.prepareStatement(query5);
+			preparedStatement3.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -148,6 +153,7 @@ public class Kms_WriteList_Dao {
 				if(preparedStatement != null) preparedStatement.close();
 				if(preparedStatement1 != null) preparedStatement1.close();
 				if(preparedStatement2 != null) preparedStatement2.close();
+				if(preparedStatement3 != null) preparedStatement3.close();
 				if(connection != null) connection.close();
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -204,7 +210,7 @@ public class Kms_WriteList_Dao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select * from forum where ftype = 3 and fmotherid = ? order by fref,freforder";
+			String query = "select * from forum where ftype = 3 and fmotherid = ? order by fref desc,freforder";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, fid);
 			resultSet = preparedStatement.executeQuery();
@@ -287,6 +293,7 @@ public class Kms_WriteList_Dao {
 		PreparedStatement preparedStatement = null;
 		PreparedStatement preparedStatement1 = null;
 		PreparedStatement preparedStatement2 = null;
+		PreparedStatement preparedStatement3 = null;
 		int a = freforder + fanswernum;
 		try {
 			connection = dataSource.getConnection();
@@ -314,6 +321,10 @@ public class Kms_WriteList_Dao {
 			String query4 = "update forum set fanswernum = fanswernum + 1 where fid = " + fid;
 			preparedStatement2 = connection.prepareStatement(query4);
 			preparedStatement2.executeUpdate();
+			
+			String query5 = "update forum set fanswernum = fanswernum + 1 where fref =" + fref + " and freforder <" + freforder + " and fanswernum >= 1";
+			preparedStatement3 = connection.prepareStatement(query5);
+			preparedStatement3.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -321,6 +332,7 @@ public class Kms_WriteList_Dao {
 				if(preparedStatement != null) preparedStatement.close();
 				if(preparedStatement1 != null) preparedStatement1.close();
 				if(preparedStatement2 != null) preparedStatement2.close();
+				if(preparedStatement3 != null) preparedStatement3.close();
 				if(connection != null) connection.close();
 			}catch(Exception e) {
 				e.printStackTrace();
