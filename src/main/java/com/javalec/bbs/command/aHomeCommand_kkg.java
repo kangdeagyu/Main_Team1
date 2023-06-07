@@ -3,6 +3,7 @@ package com.javalec.bbs.command;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -49,7 +50,7 @@ public class aHomeCommand_kkg implements MCommand {
             String dateString = dateFormat.format(date);
             dateListStr.add("'"+dateString+"'");
         }
-        
+
         
         
         
@@ -63,6 +64,9 @@ public class aHomeCommand_kkg implements MCommand {
         // dao 에서 data 받아오고, 넘겨줄 형식 List<integer> 선언하기
         chartDao_kkg dao = new chartDao_kkg(); 
         ArrayList<aExtraDto_kkg> ddrs = dao.dailyGraph(startday, endday);
+        
+        //System.out.println("*********** 체크해야됨  : dateList : "+ dateList);
+        
         
         List<Integer> saleList = getDailySaleList(dateList, ddrs); //method02. dailySale 저장하기 위한 메소드 실행. 하단 function 기능에서 설명
         List<Integer> orderList = getDailyOrderList(dateList, ddrs); //method03. dailyOrders 저장하기 위한 메소드 실행. 
@@ -88,8 +92,48 @@ public class aHomeCommand_kkg implements MCommand {
         
         ArrayList<aExtraDto_kkg> mdrs = dao.monthlyGraph(mstartday, endday);
         List<Integer> monthSaleList = getMonthlySaleList(monthList, mdrs);
+        System.out.println("mdrs : "+ mdrs);
         List<Integer> monthOrderList = getMonthlyOrderList(monthList, mdrs);
       
+        
+        
+        
+        
+        
+        
+        
+        //  *************** 날짜별 신규 가입자 데이터 가져오기 (daily)************** 
+        
+       
+        
+        ArrayList<aExtraDto_kkg> DNrs = dao.dailyNSGraph(startday, endday); //Daily New subscriber
+        System.out.println("DNrs 의 값 : " + DNrs.get(0).getDate());
+        List<Integer> dailyNSList = getDailySaleList(dateList, DNrs); //method02. dailySale 랑 같이써도 상관 없음.
+        //추후에 탈퇴자 내용포함 시킬 것.
+        
+        
+        
+        
+        
+        
+ 
+        
+        
+        
+        //  *************** 회원수 현황을 위한 데이터 가져오기************** 
+        
+        //시작일 기준 가입일자가 시작일 이전인 수를 카운 
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         
@@ -109,7 +153,9 @@ public class aHomeCommand_kkg implements MCommand {
         request.setAttribute("monthlyMonth", monthListStr);
         request.setAttribute("monthlyOrder", monthOrderList);
         request.setAttribute("monthlySale", monthSaleList);
-	
+        
+        //신규가입자 daily
+        request.setAttribute("dailyNS", dailyNSList);
         
         
         
@@ -184,28 +230,44 @@ public class aHomeCommand_kkg implements MCommand {
         // j와 k를 둘다 ++함.
         
 		while (k < len) {
-System.out.println("j 값 : " + j);
-System.out.println("k 값 : " + k);
+//System.out.println("j 값 : " + j);
+//System.out.println("k 값 : " + k);
 
 			try {
 				// DB에서 가져온 목록에서 오늘 날짜의 날이 있는지 없는지 검증.
 				Date DB_date = ddrs.get(j).getDate(); // DB 데이터의 날짜.
 				Date Real_date = dateList.get(k); // 실제 있어야 하는 날짜.
-System.out.println("DB 날짜 : " + DB_date);
-System.out.println("실제 날짜 : " + Real_date);
+//System.out.println("DB 날짜 : " + DB_date);
+//System.out.println("실제 날짜 : " + Real_date);
+//System.out.println(DB_date.compareTo(Real_date));
 
-				if (!DB_date.equals(Real_date)) {
-					saleList.add(0); // 날짜가 없으면 (같지 않으면) 0 더하기.
-					k++;
-				} else {
-					saleList.add(ddrs.get(j).getSales()); // 날짜가 있으면
-System.out.println("일치한 데이터베이스 날짜 : " + DB_date);
-System.out.println("일치한 실제날짜리스 날짜 : " + Real_date);
-System.out.println("일치한 날짜의 매출액 : " + ddrs.get(j).getSales());
-					j++;
-					k++;
-				}
-			} catch (IndexOutOfBoundsException e) {
+//DateTimeFormatter 객체를 생성하고, 날짜 형식을 설정합니다.
+DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+//날짜를 문자열로 변환합니다.
+
+
+			if(dtf.format(DB_date.toLocalDate()).equals(dtf.format(Real_date.toLocalDate()))) {
+				
+				saleList.add(ddrs.get(j).getSales()); // 날짜가 있으면
+			System.out.println("일치한 데이터베이스 날짜 : " + DB_date);
+			System.out.println("일치한 실제날짜리스 날짜 : " + Real_date);
+			System.out.println("일치한 날짜의 매출액 : " + ddrs.get(j).getSales());
+				j++;
+				k++;
+			}
+
+			else if (DB_date.compareTo(Real_date)>0) {
+				saleList.add(0); // 날짜가 없으면 (같지 않으면) 0 더하기.
+				k++;
+			
+			
+			} else {
+				j++;
+			}
+			
+
+				} catch (IndexOutOfBoundsException e) {
 				saleList.add(0);
 				// j++;
 				k++;
@@ -255,27 +317,41 @@ System.out.println("일치한 날짜의 매출액 : " + ddrs.get(j).getSales());
         // j와 k를 둘다 ++함.
         
 		while (k < len) {
-System.out.println("j 값 : " + j);
-System.out.println("k 값 : " + k);
+//System.out.println("j 값 : " + j);
+//System.out.println("k 값 : " + k);
 
 			try {
 				// DB에서 가져온 목록에서 오늘 날짜의 날이 있는지 없는지 검증.
 				Date DB_date = ddrs.get(j).getDate(); // DB 데이터의 날짜.
 				Date Real_date = dateList.get(k); // 실제 있어야 하는 날짜.
-System.out.println("DB 날짜 : " + DB_date);
-System.out.println("실제 날짜 : " + Real_date);
+//System.out.println("DB 날짜 : " + DB_date);
+//System.out.println("실제 날짜 : " + Real_date);
 
-				if (!DB_date.equals(Real_date)) {
-					OrderList.add(0); // 날짜가 없으면 (같지 않으면) 0 더하기.
-					k++;
-				} else {
-					OrderList.add(ddrs.get(j).getOrdercount()); // 날짜가 있으면
-System.out.println("일치한 데이터베이스 날짜 : " + DB_date);
-System.out.println("일치한 실제날짜리스 날짜 : " + Real_date);
-System.out.println("일치한 날짜의 판매건수 : " + ddrs.get(j).getOrdercount());
-					j++;
-					k++;
-				}
+//DateTimeFormatter 객체를 생성하고, 날짜 형식을 설정합니다.
+DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+//날짜를 문자열로 변환합니다.
+
+
+			if(dtf.format(DB_date.toLocalDate()).equals(dtf.format(Real_date.toLocalDate()))) {
+				
+				OrderList.add(ddrs.get(j).getOrdercount()); // 날짜가 있으면
+			System.out.println("일치한 데이터베이스 날짜 : " + DB_date);
+			System.out.println("일치한 실제날짜리스 날짜 : " + Real_date);
+			System.out.println("일치한 날짜의 주문수 : " + ddrs.get(j).getSales());
+				j++;
+				k++;
+			}
+
+			else if (DB_date.compareTo(Real_date)>0) {
+				OrderList.add(0); // 날짜가 없으면 (같지 않으면) 0 더하기.
+				k++;
+			
+			
+			} else {
+				
+				j++;
+			}
 			} catch (IndexOutOfBoundsException e) {
 				OrderList.add(0);
 				// j++;
@@ -334,24 +410,24 @@ System.out.println("일치한 날짜의 판매건수 : " + ddrs.get(j).getOrderc
 
         
 		while (k < len) {
-System.out.println("j 값 : " + j);
-System.out.println("k 값 : " + k);
+//System.out.println("j 값 : " + j);
+//System.out.println("k 값 : " + k);
 
 			try {
 				// DB에서 가져온 목록에서 오늘 날짜의 날이 있는지 없는지 검증.
 				String DB_month = mdrs.get(j).getMonth(); // DB 데이터의 날짜.
 				String Real_month = monthListStr.get(k); // 실제 있어야 하는 날짜.
-System.out.println("DB Month : " + DB_month);
-System.out.println("실제 Month : " + Real_month);
+//System.out.println("DB Month : " + DB_month);
+//System.out.println("실제 Month : " + Real_month);
 
 				if (!DB_month.equals(Real_month)) {
 					saleList.add(0); // 날짜가 없으면 (같지 않으면) 0 더하기.
 					k++;
 				} else {
 					saleList.add(mdrs.get(j).getSales()); // 날짜가 있으면
-System.out.println("일치한 데이터베이스 month : " + DB_month);
-System.out.println("일치한 실제날짜리스 month : " + Real_month);
-System.out.println("일치한 월의 매출액 : " + mdrs.get(j).getSales());
+//System.out.println("일치한 데이터베이스 month : " + DB_month);
+//System.out.println("일치한 실제날짜리스 month : " + Real_month);
+//System.out.println("일치한 월의 매출액 : " + mdrs.get(j).getSales());
 					j++;
 					k++;
 				}
@@ -388,24 +464,24 @@ System.out.println("일치한 월의 매출액 : " + mdrs.get(j).getSales());
 
         
 		while (k < len) {
-System.out.println("j 값 : " + j);
-System.out.println("k 값 : " + k);
+//System.out.println("j 값 : " + j);
+//System.out.println("k 값 : " + k);
 
 			try {
 				// DB에서 가져온 목록에서 오늘 날짜의 날이 있는지 없는지 검증.
 				String DB_month = mdrs.get(j).getMonth(); // DB 데이터의 날짜.
 				String Real_month = monthListStr.get(k); // 실제 있어야 하는 날짜.
-System.out.println("DB Month : " + DB_month);
-System.out.println("실제 Month : " + Real_month);
+//System.out.println("DB Month : " + DB_month);
+//System.out.println("실제 Month : " + Real_month);
 
 				if (!DB_month.equals(Real_month)) {
 					orderList.add(0); // 날짜가 없으면 (같지 않으면) 0 더하기.
 					k++;
 				} else {
 					orderList.add(mdrs.get(j).getOrdercount()); // 날짜가 있으면
-System.out.println("일치한 데이터베이스 month : " + DB_month);
-System.out.println("일치한 실제날짜리스 month : " + Real_month);
-System.out.println("일치한 월의 매출액 : " + mdrs.get(j).getOrdercount());
+//System.out.println("일치한 데이터베이스 month : " + DB_month);
+//System.out.println("일치한 실제날짜리스 month : " + Real_month);
+//System.out.println("일치한 월의 매출액 : " + mdrs.get(j).getOrdercount());
 					j++;
 					k++;
 				}
