@@ -17,12 +17,12 @@ public class DetailedCommand implements MCommand {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
-		HttpSession session = request.getSession(true);
+
 		
-		int pid = (int)session.getAttribute("pid");
+		int pid = Integer.parseInt(request.getParameter("pid"));
 				
 		RDao dao = new RDao();
-		ArrayList<RDto> dtos = dao.DetailedProduct();
+		ArrayList<RDto> dtos = dao.DetailedProduct(pid);
 		System.out.println(dtos);
 		request.setAttribute("DetailedProduct", dtos);
 	}
