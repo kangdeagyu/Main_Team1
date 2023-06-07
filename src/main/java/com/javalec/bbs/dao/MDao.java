@@ -70,6 +70,47 @@ public class MDao {
 		return result;
 	}
 	
+	public String adminCheck(String username, String password) {
+		String result = null;
+		int count = 0;
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			connection = dataSource.getConnection(); // sql 연결
+			String query = "select count(aid), adeletedate from admin where aid = ? and apw = ?";
+			ps = connection.prepareStatement(query);
+		      ps.setString(1, username);
+		      ps.setString(2, password);
+		      rs = ps.executeQuery();
+				if(rs.next()) {
+					count = rs.getInt(1);	
+	                if (rs.getString(2) != null) {
+	                    // cdeletedate가 존재하는 경우, 탈퇴한 관리자로 처리
+	                    result = "mdraw";
+	                } else {
+	                    // cdeletedate가 존재하지 않는 경우, 등록된 관리자
+	                    result = "admin";
+	                }
+				}
+
+		}catch (Exception e) {
+			e.printStackTrace();
+		
+		}finally {
+			try {
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+	  }
+		return result;
+	}
+	
 // 이메일 체크
 	public String emailcheak(String email) {
 		String result = "email";

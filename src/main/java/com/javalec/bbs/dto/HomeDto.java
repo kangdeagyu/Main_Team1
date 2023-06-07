@@ -3,11 +3,13 @@ package com.javalec.bbs.dto;
 public class HomeDto {
 
 	int pid;
+	int bid;
 	String pname;
 	String pfilename;
 	String pcontent;
 	int pprice;
 	String c_name;
+	int bqty;
 	
 	
 	public HomeDto() {
@@ -25,6 +27,35 @@ public class HomeDto {
 	}
 
 
+
+	public HomeDto(int pid, int bid, String pname, String pfilename, String pcontent, int pprice, int bqty) {
+		super();
+		this.pid = pid;
+		this.bid = bid;
+		this.pname = pname;
+		this.pfilename = pfilename;
+		this.pcontent = pcontent;
+		this.pprice = pprice;
+		this.bqty = bqty;
+	}
+
+	
+	
+	public int getBid() {
+		return bid;
+	}
+
+	public void setBid(int bid) {
+		this.bid = bid;
+	}
+
+	public int getBqty() {
+		return bqty;
+	}
+
+	public void setBqty(int bqty) {
+		this.bqty = bqty;
+	}
 
 	public int getPprice() {
 		return pprice;
