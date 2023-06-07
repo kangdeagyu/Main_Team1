@@ -49,26 +49,47 @@ public class LoginCommand extends HttpServlet {
 	    String username = request.getParameter("username").trim();
 	    String password = request.getParameter("password").trim();
 
-	    // DAO를 사용하여 유저 정보 검증 등의 작업 수행
 	    MDao dao = new MDao();
-	    String isAuthenticated = dao.authenticate(username, password);
-	    if (isAuthenticated != null) {
-	    	if(isAuthenticated.equals("mdraw")) {
-	    		response.setStatus(HttpServletResponse.SC_OK);
-	    		response.getWriter().print("mdraw");	    		
-	    	}else {
-	    		// 로그인 성공
-	    		response.setStatus(HttpServletResponse.SC_OK);
-	    		response.getWriter().print(isAuthenticated);
-	    		session.setAttribute("cid", username);
-	    		session.setAttribute("name", isAuthenticated);	    		
+	    if(username.startsWith("admin")) {
+	        String result = dao.adminCheck(username, password);
+	        if(result != null) {
+	        	
+	        	if(result.equals("admin")) {
+	        		response.setStatus(HttpServletResponse.SC_OK);
+	        		response.getWriter().print("admin");
+	        	}else {
+	        		response.setStatus(HttpServletResponse.SC_OK);
+	        		response.getWriter().print("mdraw");
+	        	}
+	        }else {
+	    		// 로그인 실패
+	    		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+	    		response.getWriter().print("Login failed");
 	    	}
-	      
-	    } else {
-	      // 로그인 실패
-	      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-	      response.getWriter().print("Login failed");
+	    	
+	    	
+	    }else {
+	    	
+	    	String isAuthenticated = dao.authenticate(username, password);
+	    	if (isAuthenticated != null) {
+	    		if(isAuthenticated.equals("mdraw")) {
+	    			response.setStatus(HttpServletResponse.SC_OK);
+	    			response.getWriter().print("mdraw");	    		
+	    		}else {
+	    			// 로그인 성공
+	    			response.setStatus(HttpServletResponse.SC_OK);
+	    			response.getWriter().print(isAuthenticated);
+	    			session.setAttribute("cid", username);
+	    			session.setAttribute("name", isAuthenticated);	    		
+	    		}
+	    		
+	    	} else {
+	    		// 로그인 실패
+	    		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+	    		response.getWriter().print("Login failed");
+	    	}
 	    }
+	    
 	    
 	}	
 	

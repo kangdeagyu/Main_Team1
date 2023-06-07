@@ -7,6 +7,30 @@
 <meta charset="UTF-8">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <title>Little</title>
+	<style>
+
+	  	html,
+		body {
+		  height: 100%;
+		}
+		
+		body {
+		  display: flex;
+		  padding-top: 40px;
+		  padding-bottom: 40px;
+		}
+		.header {
+		  position: fixed;
+		  top: 0;
+		  left: 0;
+		  width: 100%;
+		}
+
+
+	</style>
+
+
+
 </head>
 <body>
 <div class="container">
@@ -63,8 +87,8 @@
 			    </a>
 		    </li>
 			<li class="nav-item">	<!-- 장바구니 이동 -->
-			    <a class="nav-link" href="#">
-			   	 <img src="image/so6.png" alt="" width="30" height="24">
+			    <a class="nav-link" href="cart.do" onclick="return userCheck()">
+			   	 <img src="image/so10.png" alt="" width="30" height="24">
 			    </a>
 		    </li>
 		</ul>
@@ -84,6 +108,17 @@ function userCheck() {
 	}
 	
 }
+
+window.addEventListener('scroll', function() {
+	  var header = document.querySelector('.header');
+	  var contentThreshold = 300; // 내용이 화면에 300px 이상 표시될 때 헤더를 고정
+
+	  if (window.pageYOffset > contentThreshold) {
+	    header.classList.add('sticky');
+	  } else {
+	    header.classList.remove('sticky');
+	  }
+	});
 
 </script>
 

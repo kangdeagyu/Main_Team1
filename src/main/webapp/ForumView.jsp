@@ -7,6 +7,37 @@
 <meta charset="UTF-8">
 <title>리뷰 상세 보기</title>
 </head>
+<script type="text/javascript">
+function validateForm() {
+	  var inputValue = document.getElementsByName("ftitle")[0].value;
+	  if (inputValue === "") {
+	    alert("에러 메시지: 댓글을 입력해주세요!");
+	    return false; // 폼 제출 중단
+	  }
+	  return true; // 폼 제출 진행
+	}
+function confirmDelete() {
+	  var userCid = "JHWoo1990"; // 로그인 사용자의 f_cid 값 (예시로 1로 가정)
+	  var commentCid = ${cdto.f_cid}; // 삭제하려는 댓글의 f_cid 값 (예시로 2로 가정)
+
+	  if (userCid === commentCid) {
+	    // 댓글 삭제 확인 메시지 표시
+	    var confirmed = confirm("정말로 댓글을 삭제하시겠습니까?");
+
+	    if (confirmed) {
+	      // 사용자가 확인한 경우에만 댓글 삭제 로직 수행
+	      // ...
+
+	      // 삭제 성공 메시지 출력
+	      alert("댓글이 성공적으로 삭제되었습니다.");
+	    }
+	  } else {
+	    // 삭제 권한이 없는 경우 경고 메시지 출력
+	    alert("댓글 삭제 권한이 없습니다.");
+	  }
+	}
+
+</script>
 <body>
  <table>
         <tr>
@@ -40,7 +71,7 @@
                 <td>${cdto.ftitle}</td>
                 <td>${cdto.finsertdate}</td>
                 <td>${cdto.fmotherid}</td>
-                <td><form action="BigCommentWrite.do" method="post">
+                <td><form action="BigCommentWrite.do" method="post" onsubmit="return validateForm()">
                 <input type="text" name="ftitle">
                 <input type="hidden" name="f_cid" value="JHWoo1990" >
                 <input type="hidden" name="fid" value="${cdto.fid}">
@@ -50,20 +81,24 @@
                 <input type="hidden" name="freforder" value="${cdto.freforder}">
                 <input type="hidden" name="fmotherid" value="${cdto.fmotherid}">
                 <input type="hidden" name="fanswernum" value="${cdto.fanswernum}">
-                <input type="submit" value="댓글">
+                <input type="submit" value="댓글" >
+                </form></td>
+                <td><form action="commentdelete.do" method="post">
+                <input type="hidden" name="fid" value="${cdto.fid}">
+                <input type="submit" value="삭제" onclick="confirmDelete()">
                 </form></td>
             </tr>
         </c:forEach>
         </tbody>
 </table>
 
-   <form action="commentwrite.do" method="post">
+   <form action="commentwrite.do" method="post" onsubmit="return validateForm()">
    <input type="hidden" name="fid" value=${forumView.fid }>
    <input type="hidden" name="f_cid" value="IULee1993">
    <input type="hidden" name="f_pid" value=${forumView.f_pid }>
             댓글달기 <input type="text" name="ftitle" >
       
-    <input type="submit" value="리뷰작성하기">
+    <input type="submit" value="댓글달기">
 </form>
    
 </body>

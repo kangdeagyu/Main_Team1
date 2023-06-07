@@ -111,5 +111,50 @@ public class HomeDao {
 		
 	}
 	
+	// 장바구니
+	public ArrayList<HomeDto> cartlist(String cid) {
+		ArrayList<HomeDto> list = new ArrayList<HomeDto>();
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			connection = dataSource.getConnection(); // sql 연결
+			String query = "select p.pid, b.bid, p.pname, p.pfilename, p.pcontent, p.pprice, b.bqty "
+							+ "from product p, basket b where b_pid = p.pid and b.b_cid = ?";
+			ps = connection.prepareStatement(query);
+			ps.setString(1, cid);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				int pid = rs.getInt(1);
+				int bid = rs.getInt(2);
+				String pname = rs.getString(3);
+				String filename = rs.getString(4);
+				String pcontent = rs.getString(5);
+				int pprice = rs.getInt(6);
+				int bqty = rs.getInt(7);
+				
+				
+				String pfilename = "image/" + filename;
+				HomeDto dto = new HomeDto(pid, bid, pname, pfilename, pcontent, pprice, bqty);
+				list.add(dto);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return list;
+		
+		
+	}
+	
 }// end
 

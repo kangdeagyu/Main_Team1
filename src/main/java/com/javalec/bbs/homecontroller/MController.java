@@ -16,6 +16,7 @@ import com.javalec.bbs.command.IdCommand;
 import com.javalec.bbs.command.JoinCommand;
 import com.javalec.bbs.command.Kms_BigCommentActionCommand;
 import com.javalec.bbs.command.Kms_CommentActionCommand;
+import com.javalec.bbs.command.Kms_CommentDeleteCommand;
 import com.javalec.bbs.command.Kms_ForumViewCommand;
 import com.javalec.bbs.command.Kms_ReplyActionCommand;
 import com.javalec.bbs.command.Kms_WriteForumCommand;
@@ -217,6 +218,14 @@ public class MController extends HttpServlet {
 				command.execute(request, response);
 				viewPage = "ForumView.do";
 				break;	
+			case ("/commentdelete.do"):		
+				command = new Kms_CommentDeleteCommand();
+				command.execute(request, response);
+				viewPage = "ForumView.do";
+				break;	
+				
+				
+				
 			/* PART IV 종료. 세상Cool 남자 김민성군의 Part 입니다. 평균연령 낮춰줘서 고맙다 민성아.*/
 		    //*************************************************************//
 
