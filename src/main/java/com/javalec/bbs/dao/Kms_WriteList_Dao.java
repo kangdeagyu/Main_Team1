@@ -170,20 +170,28 @@ public class Kms_WriteList_Dao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select fid, f_cid, f_pid, ftitle, fcontent, finsertdate from forum where fid = ?";
+			String query = "select * from forum where fid = ?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, fid);
 			rs = preparedStatement.executeQuery();
 			
 			if(rs.next()) { // 한 줄 짜리니까 while 말고 if 쓰자
-				int Fid = rs.getInt("fid");
-				String f_cid = rs.getString("f_cid");
-				int f_pid = rs.getInt("f_pid");
-				String ftitle = rs.getString("ftitle");
-				String fcontent = rs.getString("fcontent");
-				Timestamp finsertdate = rs.getTimestamp("finsertdate");
+				int Fid = rs.getInt(1);
+				String f_cid = rs.getString(2);
+				String f_aid = rs.getString(3);
+				int f_pid = rs.getInt(4);
+				int ftype = rs.getInt(5);
+				int fref = rs.getInt(6);
+				int freforder = rs.getInt(7);
+				int fstep = rs.getInt(8);
+				String ftitle = rs.getString(9);
+				String fcontent = rs.getString(10);
+				Timestamp finsertdate = rs.getTimestamp(11);
+				Timestamp fdeletedate = rs.getTimestamp(12);
+				int fmotherid = rs.getInt(13);
+				int fanswernum = rs.getInt(14);
 				
-				dto = new Kms_WriteList_Dto(Fid, f_cid, f_pid, ftitle, fcontent, finsertdate);
+				dto = new Kms_WriteList_Dto(Fid, f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum);
 				
 			}
 		}catch(Exception e) {

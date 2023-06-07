@@ -29,16 +29,7 @@ function confirmDelete(cid, form) {
 	    alert("댓글이 성공적으로 삭제되었습니다.");
 
 	    // 삭제된 댓글의 삭제와 댓글 버튼을 숨김
-	    var deleteButton = document.getElementById(`deleteButton_${cid}`);
-	    var replyButton = document.getElementById(`replyButton_${cid}`);
-
-	    if (deleteButton) {
-	      deleteButton.style.display = "none";
-	    }
-	    if (replyButton) {
-	      replyButton.style.display = "none";
-	    }
-
+	 
 	    return true;
 	  } else {
 	    return false;
@@ -62,7 +53,6 @@ function confirmDelete(cid, form) {
         </tr>
         <tr>
             <td>상품코드</td>
-            <td>${forumView.f_pid }</td>
         </tr>
         <tr>
             <td colspan="2">내용</td>
@@ -124,6 +114,14 @@ function confirmDelete(cid, form) {
    <input type="hidden" name="f_pid" value=${forumView.f_pid }>
     <input type="submit" value="댓글달기">
 </form>
-   
+<form action="Kms_WriteReply.jsp" method="post">
+<input type="hidden" name="fid" value="${forumView.fid }">
+<input type="hidden" name="fref" value="${forumView.fref }">
+<input type="hidden" name="freforder" value="${forumView.freforder }">
+<input type="hidden" name="fstep" value="${forumView.fstep }">
+<input type="hidden" name="fmotherid" value="${forumView.fmotherid }">
+<input type="hidden" name="fanswernum" value="${forumView.fanswernum }">
+<input type="submit" value="답글달기">
+</form> 
 </body>
 </html>
