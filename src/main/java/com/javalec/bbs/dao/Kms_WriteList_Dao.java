@@ -340,4 +340,30 @@ public class Kms_WriteList_Dao {
 		}
 		
 	} // 답글 
+	
+	public void commentdelete(int fid) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "UPDATE forum SET fdeletedate = CURRENT_TIMESTAMP, ftitle = '삭제된 댓글입니다'";
+			String query1 = " WHERE fid =" + fid;
+			preparedStatement = connection.prepareStatement(query + query1);
+			
+			
+			preparedStatement.executeUpdate();
+				
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	} // 수정
 }
