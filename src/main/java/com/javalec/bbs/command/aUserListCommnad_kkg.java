@@ -32,27 +32,22 @@ public class aUserListCommnad_kkg implements MCommand {
 		SimpleDateFormat tempFormat = new SimpleDateFormat("MM/dd/yyyy");
 
 		Timestamp startday = null; 
-//		Timestamp.valueOf(request.getAttribute("startDate").toString());
 		Timestamp endday = null;
-//		Timestamp.valueOf(request.getAttribute("endDate").toString());
-		// String replacedStr = str.replace("-", "/");
-		// request.startDate = null일때. startDate = 7일전으로 설정 endDate = 오늘로 설정.
-
-		// 시작 날짜와 종료 날짜를 LocalDate로 변환
 		
-		try {
-			startday=Timestamp.valueOf(tempFormat.format(request.getParameter("startDate")) + " 00:00:00");
-			endday=Timestamp.valueOf(tempFormat.format(request.getParameter("endDate")) + " 00:00:00");
-			
-		} catch (Exception e) {
-			
+		
+		if(request.getParameter("startDate") == null) {
 			startday=Timestamp.valueOf(dateFormat.format(request.getAttribute("startDate")) + " 00:00:00");
 			endday=Timestamp.valueOf(dateFormat.format(request.getAttribute("endDate")) + " 00:00:00");
-			// TODO: handle exception
+		}else{	
+			try {
+				startday=new Timestamp (tempFormat.parse(request.getParameter("startDate")).getTime());
+				endday=new Timestamp (tempFormat.parse(request.getParameter("endDate")).getTime());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
-
-
-	
 
 		// String 배열로 바꿀거임.
 		List<Date> dateList = getDateList(startday, endday); // method01. Timestamp 2개로 List<DATE> 만들어오기.
@@ -69,7 +64,7 @@ public class aUserListCommnad_kkg implements MCommand {
 		chartDao_kkg dao = new chartDao_kkg();
 
 		ArrayList<aExtraDto_kkg> DNrs = dao.dailyNSGraph(startday, endday); // Daily New subscriber
-		System.out.println("DNrs 의 값 : " + DNrs.get(0).getDate());
+		//System.out.println("DNrs 의 값 : " + DNrs.get(0).getDate());
 		dailyNSList = getDailySaleList(dateList, DNrs); // method02. dailySale 랑 같이써도 상관 없음.
 		// 추후에 탈퇴자 내용포함 시킬 것.
 

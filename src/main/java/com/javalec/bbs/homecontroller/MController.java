@@ -235,21 +235,26 @@ public class MController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "ForumView.do";
 			break;
-		case ("/BigCommentWrite.do"):
-			command = new Kms_BigCommentActionCommand();
-			command.execute(request, response);
-			viewPage = "ForumView.do";
-			break;
-		case ("/commentdelete.do"):
-			command = new Kms_CommentDeleteCommand();
-			command.execute(request, response);
-			viewPage = "ForumView.do";
-			break;
 		case ("/forumsearch.do"):
 			command = new Kms_ForumSearchCommand();
 			command.execute(request, response);
 			viewPage = "Kms_WriteList.jsp";
 			break;
+			
+		case ("/BigCommentWrite.do"):
+			command = new Kms_BigCommentActionCommand();
+			command.execute(request, response);
+			viewPage = "ForumView.do?fid="+request.getParameter("page");
+			break;
+		case ("/commentdelete.do"):
+			command = new Kms_CommentDeleteCommand();
+			command.execute(request, response);
+			viewPage = "ForumView.do?fid="+request.getParameter("page");
+			break;
+			
+			
+			
+			
 
 		/* PART IV 종료. 세상Cool 남자 김민성군의 Part 입니다. 평균연령 낮춰줘서 고맙다 민성아. */
 		// *************************************************************//
@@ -269,8 +274,7 @@ public class MController extends HttpServlet {
 
 		case ("/AUserlist_default.do"):
 			System.out.println("AuserLIst_default.do 들어옴");
-			request.setAttribute("startDate", Date.valueOf(LocalDate.now().minusDays(7)));
-			request.setAttribute("endDate", Date.valueOf(LocalDate.now()));
+
 			command = new aUserListCommnad_kkg();
 			command.execute(request, response);
 			System.out.println("aUserListCommand_kkg 커맨드 실행 완료");
@@ -282,8 +286,10 @@ public class MController extends HttpServlet {
 
 		case ("/AUserlist.do"):
 			System.out.println("AuserLIst.do 들어옴");
-
 			System.out.println("startDate 값 : " + request.getParameter("startDate"));
+			request.setAttribute("startDate", Date.valueOf(LocalDate.now().minusDays(7)));
+			request.setAttribute("endDate", Date.valueOf(LocalDate.now()));
+			
 			command = new aUserListCommnad_kkg();
 			command.execute(request, response);
 			System.out.println("aUserListCommand_kkg 커맨드 실행 완료");

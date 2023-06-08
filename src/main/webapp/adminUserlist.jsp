@@ -41,12 +41,32 @@
 	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
 	
-	</head>
+</head>
+
+<script type="text/javascript">
+			function checkDate(){
+				const regstartdate = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
+				const regenddate = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;				
+					
+				if(!regstartdate.test(startDate)){
+						alert("날짜를 입력해 주세요.")
+						form.id.select()
+						return
+					}
+					
+				if(!regenddate.test(endDate)){
+						alert("날짜를 입력해 주세요")
+						form.id.select()
+						return
+					}
+				
+				
+					form.submit()
+</script>
 
 
 
-  
-  
+
 <body data-new-gr-c-s-check-loaded="14.1111.0 data-gr-ext-installed">
 <%-- <div class="container_mk">
 		<div class="headbar">
@@ -81,7 +101,7 @@
 						<form action="AUserlist.do" method="get">
 							<input type="text" name ="startDate" id="startDate" placeholder="시작일">
 	 						<input type="text" name ="endDate" id="endDate" placeholder="종료일">
-	 						<input type="submit" value="확인">
+	 						<input type="button" value="확인" onclick="checkDate()">
 						</form>
 						
 					</div>
