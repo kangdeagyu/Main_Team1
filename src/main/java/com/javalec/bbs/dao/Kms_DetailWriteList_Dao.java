@@ -130,5 +130,5 @@ public class Kms_DetailWriteList_Dao {
 		
 		return dtos;
 		
-	} // list
+	} // Review Detail list
 }

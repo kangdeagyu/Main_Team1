@@ -133,11 +133,6 @@ function updateTotalAmount() {
 </div>
 
  <div class="detailTab">
- 		<%-- 	<c:set var="ftype" value="${param.ftype}" />
-		  <c:set var="f_pid" value="${param.f_pid}" />
-          <a href="#detailGoodsInfo" class="active">DETAIL PRODUCT</a>
-          <a href="writelist.do?ftype=1&f_pid=${dto.pid}">REVIEW BOARD</a>
-          <a href="writelist.do?ftype=2&f_pid=${dto.pid}">Q&amp;A BOARD</a>  --%>  
           <a href="#detailGoodsInfo" class="active">DETAIL PRODUCT</a>
          <a href="#detailReview">REVIEW BOARD</a>
           <a href="#detailQna">Q&amp;A BOARD</a>                   
