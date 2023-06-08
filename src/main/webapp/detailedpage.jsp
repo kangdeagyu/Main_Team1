@@ -133,6 +133,11 @@ function updateTotalAmount() {
 </div>
 
  <div class="detailTab">
+ 		<%-- 	<c:set var="ftype" value="${param.ftype}" />
+		  <c:set var="f_pid" value="${param.f_pid}" />
+          <a href="#detailGoodsInfo" class="active">DETAIL PRODUCT</a>
+          <a href="writelist.do?ftype=1&f_pid=${dto.pid}">REVIEW BOARD</a>
+          <a href="writelist.do?ftype=2&f_pid=${dto.pid}">Q&amp;A BOARD</a>  --%>  
           <a href="#detailGoodsInfo" class="active">DETAIL PRODUCT</a>
          <a href="#detailReview">REVIEW BOARD</a>
           <a href="#detailQna">Q&amp;A BOARD</a>                   
@@ -151,9 +156,67 @@ function updateTotalAmount() {
 
 
 <div id="detailGoodsInfo">상세 상품 내용</div>
-<div id="detailReview">리뷰 게시판 내용</div>
+<div id="detailReview">
+		<table>
+        		<tr>
+            		<th style="background-color: lavender; color: purple;">ReviewNo.</th>
+            		<th style="background-color: lavender;color: purple;">작성자</th>
+            		<th style="background-color: lavender;color: purple;">제품</th>
+            		<th style="background-color: lavender;color: purple;">제목</th>
+            		<th style="background-color: lavender;color: purple;">내용</th>
+            		<th style="background-color: lavender;color: purple;">작성일</th>
+        	</tr>
+        	<c:choose>
+    <c:when test="${empty Rdto}">
+        <tr>
+            <td colspan="6">아직 게시물이 없습니다.</td>
+        </tr>
+    </c:when>
+    <c:otherwise>
+        	<c:forEach items="${Rdto}" var="dto">
+            	<tr>
+                <td><a href="ForumView.do?fid=${dto.fid}">${dto.fid}</a></td>
+                <td>${dto.f_cid}</td>
+                <td>${dto.f_pid}</td>
+                <td>${dto.ftitle}</td>
+                <td>${dto.fcontent}</td>
+                <td>${dto.finsertdate}</td>
+            	</tr>
+        	</c:forEach>
+        	 </c:otherwise>
+</c:choose>
+		</table>
+	</div>
 
-<div id="detailQna">Q&amp;A 게시판 내용</div>
+<div id="detailQna"><table>
+        		<tr>
+            		<th style="background-color: lavender; color: purple;">QnAno.</th>
+            		<th style="background-color: lavender;color: purple;">작성자</th>
+            		<th style="background-color: lavender;color: purple;">제품</th>
+            		<th style="background-color: lavender;color: purple;">제목</th>
+            		<th style="background-color: lavender;color: purple;">내용</th>
+            		<th style="background-color: lavender;color: purple;">작성일</th>
+        	</tr>
+        	<c:choose>
+    <c:when test="${empty Qdto}">
+        <tr>
+            <td colspan="6">아직 게시물이 없습니다.</td>
+        </tr>
+    </c:when>
+    <c:otherwise>
+        	<c:forEach items="${Qdto}" var="dto">
+            	<tr>
+                <td><a href="ForumView.do?fid=${dto.fid}">${dto.fid}</a></td>
+                <td>${dto.f_cid}</td>
+                <td>${dto.f_pid}</td>
+                <td>${dto.ftitle}</td>
+                <td>${dto.fcontent}</td>
+                <td>${dto.finsertdate}</td>
+            	</tr>
+        </c:forEach>
+         </c:otherwise>
+</c:choose>
+</table></div>
 </body>
 
 </html>

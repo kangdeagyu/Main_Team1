@@ -56,10 +56,15 @@
 	<c:if test="${ftype eq 2}">
 		<h1>QnA 게시판</h1>
 	</c:if> 
-
+	
+	<c:if test="${ftype eq 1}">
 	<form action="Kms_WriteForum.jsp">
 		<input type="submit" value="리뷰쓰기">
-	</form>
+	</form></c:if>
+	<c:if test="${ftype eq 2}">
+	<form action="Kms_WriteForum.jsp">
+		<input type="submit" value="QnA쓰기">
+	</form></c:if>
 
 	<form action="forumsearch.do" method="post">
 		<input type="hidden" name="ftype" value="${ftype }">

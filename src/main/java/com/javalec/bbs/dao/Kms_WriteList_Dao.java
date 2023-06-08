@@ -10,7 +10,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.javalec.bbs.dto.Kms_UserMain_Dto;
 import com.javalec.bbs.dto.Kms_WriteList_Dto;
 
 public class Kms_WriteList_Dao {
