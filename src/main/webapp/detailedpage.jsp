@@ -100,30 +100,39 @@ function updateTotalAmount() {
                 <th>수량</th> 
             	<td>
   					<input type="number" id="quantity" value="1" min="1" max="${dto.pstock}" onchange="updateTotalAmount()">
+
 				</td>
 
               </tr>
-              <tr>
-                <td colspan="2" class="purchase-details">
-              <div class="money">
-                  <span>총 구매 금액: </span>
-                  <span id="total-amount">${dto.pprice}</span>
-                </div>
-        </td>
-      </tr>
-      
-    <tr>
-      <td colspan="2" class="form-button">
-        <form action=".jsp" method="get">
-           <input type="submit" name="WriteForum" value="구매하기" >
-        </form>
-        <form action="userCart.jsp" method="get">
-        <a class="nav-link" href="userCart.do?pid=${dto.pid }"></a>
-            <input type="submit" name="Cart" value="장바구니">
-            
-		</form>
-      </td>
-    </tr>
+   
+     <tr>
+  <td colspan="2" class="purchase-details" >
+    <div class="money">
+      <span>총 구매 금액: </span>
+      <span id="total-amount">${dto.pprice}</span>
+      <form action="userCart.jsp" method="get">
+      <input type="hidden" name="pid" value="${dto.pid}">
+      <a class="nav-link" href="productcart.do?pid=${dto.pid}&qty=1">주문하기</a>
+    </form>
+    </div>
+  </td>
+</tr>
+
+<tr>
+  <td colspan="4" class="form-button">
+    <form action="productpurchase.jsp" method="get">
+      <input type="submit" name="WriteForum" value="구매하기">
+    </form>
+<tr>
+  <td colspan="2" class="form-button">
+   <%--  <form action="userCart.jsp" method="get">
+      <input type="hidden" name="pid" value="${dto.pid}">
+      <input type="number" name="qty" value="1">
+      <a class="nav-link" href="productcart.do?pid=${dto.pid}&qty=1">주문하기</a>
+      <input type="submit" name="Cart" value="장바구니">
+    </form> --%>
+  </td>
+</tr>
             </table>
           </td>
         </c:forEach>
@@ -137,10 +146,10 @@ function updateTotalAmount() {
          <a href="#detailReview">REVIEW BOARD</a>
           <a href="#detailQna">Q&amp;A BOARD</a>                   
           </div>
-          <div style="padding-top: 10px; ">      
+       <!--    <div style="padding-top: 10px; ">      
           <table border="0" cellpadding="0" cellspacing="0" width="100%">
           <tr><td align="center"><img src="/상품 상세페이지에 들어가는 첫 이미지!!" align="absmiddle" border="0" /></td></tr>
-          </table></div>
+          </table></div> -->
 
 <div>
  <img src="image/dog.png" alt="제품 이미지">
@@ -212,6 +221,16 @@ function updateTotalAmount() {
          </c:otherwise>
 </c:choose>
 </table></div>
+<script>
+  var userQty = 1; // 초기값 설정
+
+  function updateUserQty() {
+    userQty = document.getElementById("quantity").value;
+
+    // 업데이트된 값을 사용하여 필요한 작업 수행
+    console.log("userQty: ", userQty);
+  }
+</script>
 </body>
 
 </html>
