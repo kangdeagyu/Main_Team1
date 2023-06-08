@@ -26,7 +26,7 @@ public class RDao {
 	
 	}
 
-//나의 리뷰 가져오기
+//나의 리뷰 가져오기(잠깐 대기)
 	public ArrayList<RDto> list(){
 		ArrayList<RDto> dtos = new ArrayList<RDto>();
 		Connection connection = null;
@@ -69,7 +69,7 @@ public class RDao {
 
 	
 	//상품 상세 페이지
-public ArrayList<RDto> DetailedProduct(){
+public ArrayList<RDto> DetailedProduct(int ppid){
 	ArrayList<RDto> dtos = new ArrayList<RDto>();
 	Connection connection = null;
 	PreparedStatement preparedStatement = null;
@@ -77,9 +77,9 @@ public ArrayList<RDto> DetailedProduct(){
 
 try {
 	connection = dataSource.getConnection(); // sql 연결
-	String query = "select pid, pname, pfilename, pcontent, pprice from product where p.id = ?";
+	String query = "select pid, pname, pfilename, pcontent, pprice, pstock from product where pid = ?";
 	preparedStatement = connection.prepareStatement(query);
-	preparedStatement.setString(1, "pid");
+	preparedStatement.setInt(1, ppid);
 	resultSet = preparedStatement.executeQuery();
 
 	while(resultSet.next()) {
@@ -88,9 +88,10 @@ try {
 		String filename = resultSet.getString("pfilename");
 		String pcontent = resultSet.getString("pcontent");
 		int pprice = resultSet.getInt("pprice");
+		int pstock = resultSet.getInt("pstock");
 		
 		String pfilename = "image/" + filename; 	
-		RDto dto = new RDto(pid, pname, pfilename, pcontent, pprice);
+		RDto dto = new RDto(pid, pname, pfilename, pcontent, pprice, pstock);
 		dtos.add(dto);
 		
 	}
@@ -111,7 +112,85 @@ return dtos;
 
 
 }
+//데이터 베이스 장바구니(basket) 입력
+public void InsertCart(int pid, int cid, String bqty) {
+	Connection connection = null;
+	PreparedStatement preparedStatement = null;
+	
+	try {
+		connection = dataSource.getConnection(); // sql 연결
+		String query = "INSERT INTO basket (cid, pid, bqty) VALUES (?, ?, ?)";
+				       		
+		preparedStatement = connection.prepareStatement(query);
+		preparedStatement.setInt(1, cid);
+		preparedStatement.setInt(2, pid);
+		preparedStatement.setString(3, bqty);
+		
+		int rowsInserted = preparedStatement.executeUpdate();
+		 if (rowsInserted > 0) {
+			System.out.println("장바구니에 상품이 추가되었습니다."); 
+			preparedStatement.executeUpdate();
+		 }
 
+	
+	}catch (Exception e) {
+		e.printStackTrace();
+	}finally {
+		try {
+			if(preparedStatement != null) preparedStatement.close();
+			if(connection != null) connection.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+}
+
+// write
+//상품별 리뷰 잠깐 대기
+//public ArrayList<RDto> ProductReview(int ppid){
+//	ArrayList<RDto> dtos = new ArrayList<RDto>();
+//	Connection connection = null;
+//	PreparedStatement preparedStatement = null;
+//	ResultSet resultSet = null;
+//
+//try {
+//	connection = dataSource.getConnection(); // sql 연결
+//	String query = "select pid, pname, pfilename, pcontent, pprice, pstock from product where pid = ?";
+//	preparedStatement = connection.prepareStatement(query);
+//	preparedStatement.setInt(1, ppid);
+//	resultSet = preparedStatement.executeQuery();
+//
+//	while(resultSet.next()) {
+//		int pid = resultSet.getInt("pid");
+//		String pname = resultSet.getString("pname");
+//		String filename = resultSet.getString("pfilename");
+//		String pcontent = resultSet.getString("pcontent");
+//		int pprice = resultSet.getInt("pprice");
+//		int pstock = resultSet.getInt("pstock");
+//		
+//		String pfilename = "image/" + filename; 	
+//		RDto dto = new RDto(pid, pname, pfilename, pcontent, pprice, pstock);
+//		dtos.add(dto);
+//		
+//	}
+//}catch (Exception e) {
+//	e.printStackTrace();
+//}finally {
+//	try {
+//		if(resultSet != null) resultSet.close();
+//		if(preparedStatement != null) preparedStatement.close();
+//		if(connection != null) connection.close();
+//	}catch (Exception e) {
+//		e.printStackTrace();
+//	}
+//}
+//
+//return dtos;
+//
+//
+//
+//}
 
 }
 

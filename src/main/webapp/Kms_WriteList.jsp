@@ -48,15 +48,22 @@
 
 </head>
 <body>
-
+<%-- <c:if test="${ftype eq 1}"> --%>
 <h1>리뷰 게시판</h1>
+<%-- </c:if> --%>
+<%-- <c:if test="${ftype eq 2}">
+<h1>QnA 게시판</h1>
+</c:if> --%>
 <form action="Kms_WriteForum.jsp">
 <input type="submit" value="리뷰쓰기">
 </form>
 <table class="table table-striped table-bordered">
     <thead class="thead-light">
         <tr>
-            <th style="background-color: lavender; color: purple;">Review No.</th>
+            <th style="background-color: lavender; color: purple;">
+            <%-- <c:if test="${ftype eq 1}"> --%>Review No.<%-- </c:if> --%>
+            <%-- <c:if test="${ftype eq 2}">QnA No.</c:if> --%>
+            </th>
             <th style="background-color: lavender;color: purple;">작성자</th>
             <th style="background-color: lavender;color: purple;">제품</th>
             <th style="background-color: lavender;color: purple;">제목</th>
