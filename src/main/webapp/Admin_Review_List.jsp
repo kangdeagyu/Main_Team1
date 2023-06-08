@@ -153,7 +153,6 @@ function deleteSelectedItems() {
 							</table>
 				</c:forEach>
 			</table>
-		</form>
 	</div>
 
 	<div id="myModal" class="modal">

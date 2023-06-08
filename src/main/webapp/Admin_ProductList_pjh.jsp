@@ -97,9 +97,47 @@
 
         function saveChanges() {
             var form = document.getElementById('editForm');
-            form.action = 'editProduct.do'; // 저장 처리 액션 URL로 변경
-            form.submit();
+            var fileInput = document.getElementById('pfilename');
+
+            // 파일이 선택되었는지 확인
+            if (fileInput.files.length > 0) {
+                // 선택된 파일 가져오기
+                var file = fileInput.files[0];
+
+                // 새로운 파일 이름 생성
+                var newFileName = generateNewFileName(product.pid, file.name);
+
+                // FormData 객체 생성
+                var formData = new FormData(form);
+
+                // 새로운 이름으로 파일을 FormData에 추가
+                formData.append('pfilename', file, newFileName);
+
+                // AJAX를 사용하여 파일 업로드 및 폼 데이터 전송
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'editProduct.do', true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        // 업로드 및 저장 완료 후 처리할 로직 작성
+                        closeModal(); // 업로드 및 저장 완료 후 모달 닫기
+                    }
+                };
+                xhr.send(formData);
+            } else {
+                // 파일이 선택되지 않은 경우 기존 폼 데이터만 전송
+                form.action = 'editProduct.do';
+                form.submit();
+                closeModal(); // 모달 닫기
+            }
         }
+
+        function generateNewFileName(pid, originalFileName) {
+            var timestamp = new Date().getTime();
+            var extension = originalFileName.split('.').pop();
+            var newFileName = pid + '_' + timestamp + '.' + extension;
+            return newFileName;
+        }
+        
         function closeModal() {
             var modal = document.getElementById('myModal');
             modal.style.display = 'none';
@@ -155,7 +193,7 @@
     <div id="myModal" class="modal">
     <div id="editImageContainer"></div>
         <div class="modal-content">
-            <form id="editForm">
+            <form id="editForm" enctype="multipart/form-data"	>
                 <table border="1">
                     <tr>
                         <td>상품번호</td>
