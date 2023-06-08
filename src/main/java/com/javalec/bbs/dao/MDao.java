@@ -479,7 +479,47 @@ public class MDao {
 		
 	}
 	
-	
+	// 장바구니 선택 삭제
+	public boolean selectionDelete(String[] bids) {
+	    boolean result = false;
+	    Connection connection = null;
+	    PreparedStatement ps = null;
+
+	    try {
+	        connection = dataSource.getConnection(); // SQL 연결
+	        String query = "DELETE FROM basket WHERE bid = ?";
+	        ps = connection.prepareStatement(query);
+	        
+	        for (String bid : bids) {
+	            ps.setString(1, bid);
+	            ps.addBatch(); // 배치에 쿼리 추가
+	        }
+	        
+	        int[] updateCounts = ps.executeBatch(); // 배치 실행
+	        
+	        // 각 배치 작업의 결과 확인
+	        for (int i : updateCounts) {
+	            if (i == PreparedStatement.EXECUTE_FAILED) {
+	                // 배치 실행 실패
+	                result = false;
+	                break;
+	            }
+	        }
+	        
+	        result = true; // 모든 배치 작업이 성공한 경우
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (ps != null) ps.close();
+	            if (connection != null) connection.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return result;
+	}
+
 	
 	
 }// end

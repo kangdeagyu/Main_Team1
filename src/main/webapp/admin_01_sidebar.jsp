@@ -30,7 +30,7 @@
 
 
 <body>
-<main class="d-flex flex-nowrap">
+<main class="d-flex flex-wrap">
 	<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 200px;" >
 
 	    <ul class="nav nav-pills flex-column mb-auto">
@@ -43,31 +43,31 @@
 	      </li>
 	      <li>
 	        <a href="AQnA.do" class="nav-link text-white">
-	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#gird"></use></svg>
 	          AQnA.do
 	        </a>
 	      </li>
 	      <li>
 	        <a href="AReview.do" class="nav-link text-white">
-	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#gird"></use></svg>
 	          AReview.do
 	        </a>
 	      </li>
 	      <li>
 	        <a href="AReviewList.do" class="nav-link text-white">
-	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
 	          AReviewList.do
 	        </a>
 	      </li>
 	      <li>
 	        <a href="AreviewRate.do" class="nav-link text-white">
-	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
+	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
 	          AreviewRate.do
 	        </a>
 	      </li>
 	      <li>
 	        <a href="APlist.do" class="nav-link text-white">
-	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#gird"></use></svg>
 	          APlist.do
 	        </a>
 	      </li>
@@ -97,23 +97,25 @@
 	      </li>
 	      <li>
 	        <a href="AUserlist.do" class="nav-link text-white">
-	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
 	          AUserlist.do
 	        </a>
 	      </li>
 	      <li>
 	        <a href="Salemanage.do" class="nav-link text-white">
-	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
 	          Salemanage.do
 	        </a>
 	      </li>
 	      <li>
 	        <a href="Visitmanage.do" class="nav-link text-white">
-	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
 	          Visitmanage.do
 	        </a>
 	      </li>
 	    </ul>
+	    
+	    <hr>
 	    <hr>
 	    <div class="dropdown">
 	      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

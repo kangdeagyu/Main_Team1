@@ -26,7 +26,7 @@ public class Kms_WriteList_Dao {
 		}
 	}
 
-	public ArrayList<Kms_WriteList_Dto> list(){
+	public ArrayList<Kms_WriteList_Dto> list(int Ftype){
 		ArrayList<Kms_WriteList_Dto> dtos = new ArrayList<Kms_WriteList_Dto>();
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -34,8 +34,10 @@ public class Kms_WriteList_Dao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select * from forum where ftype = 1 order by fref desc,freforder";
-			preparedStatement = connection.prepareStatement(query);
+			String query = "select f.*,p.pname from forum f,product p";
+			String query1 = " where p.pid = f.f_pid and ftype = ? order by fref desc,freforder";
+			preparedStatement = connection.prepareStatement(query + query1);
+			preparedStatement.setInt(1, Ftype);
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()) {
@@ -134,9 +136,6 @@ public class Kms_WriteList_Dao {
 			preparedStatement1.setInt(5, fstep);
 			preparedStatement1.setString(6, ftitle);
 			preparedStatement1.setString(7, fcontent);
-			
-			
-			
 			preparedStatement1.executeUpdate();
 				
 			String query4 = "update forum set fanswernum = fanswernum + 1 where fid = " + fid;
@@ -261,7 +260,7 @@ public class Kms_WriteList_Dao {
 		
 		return dtos1;
 		
-	} // list
+	} // 댓글list
 	
 	public void commentAction(String f_cid, int f_pid, String ftitle, int fid) {
 		Connection connection = null;
@@ -293,7 +292,7 @@ public class Kms_WriteList_Dao {
 			}
 		}
 		
-	} // 답글 
+	} // 댓글 
 	
 	public void bigCommentAction(int fid, String f_cid, int f_pid, int fref, int fstep, int freforder,
 			String ftitle, String fcontent, int fmotherid, int fanswernum) {
@@ -308,7 +307,7 @@ public class Kms_WriteList_Dao {
 			String query = "update forum set freforder = freforder + 1 where freforder >=" + freforder + " + " + fanswernum + " + 1";
 			String query1 = " and fref = " + fref;
 			preparedStatement = connection.prepareStatement(query + query1);
-			preparedStatement.executeUpdate();
+			preparedStatement.executeUpdate(); // 자리 만들어주기
 			
 			String query2 = "insert into forum (f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, ftitle, fcontent, finsertdate, fmotherid, fanswernum)";
 			String query3 = " values (?,'admin', ?, 3 ,?, ? + 1, ? + 1,? ,? ,now(), ?, 0)";
@@ -320,7 +319,7 @@ public class Kms_WriteList_Dao {
 			preparedStatement1.setInt(5, fstep);
 			preparedStatement1.setString(6, ftitle);
 			preparedStatement1.setString(7, ftitle);
-			preparedStatement1.setInt(8, fmotherid);
+			preparedStatement1.setInt(8, fmotherid); // 대댓글 입력하기
 			
 			
 			
@@ -328,11 +327,11 @@ public class Kms_WriteList_Dao {
 				
 			String query4 = "update forum set fanswernum = fanswernum + 1 where fid = " + fid;
 			preparedStatement2 = connection.prepareStatement(query4);
-			preparedStatement2.executeUpdate();
+			preparedStatement2.executeUpdate(); // 다음 대댓글을 위한 작업1
 			
 			String query5 = "update forum set fanswernum = fanswernum + 1 where fref =" + fref + " and freforder <" + freforder + " and fanswernum >= 1";
 			preparedStatement3 = connection.prepareStatement(query5);
-			preparedStatement3.executeUpdate();
+			preparedStatement3.executeUpdate(); // 다음 대댓글을 위한 작업2
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -347,7 +346,7 @@ public class Kms_WriteList_Dao {
 			}
 		}
 		
-	} // 답글 
+	} // 대댓글 
 	
 	public void commentdelete(int fid) {
 		Connection connection = null;
@@ -373,5 +372,56 @@ public class Kms_WriteList_Dao {
 				e.printStackTrace();
 			}
 		}
-	} // 수정
+	} // 삭제
+	
+	public ArrayList<Kms_WriteList_Dto> forumsearch(int Ftype, String content){
+		ArrayList<Kms_WriteList_Dto> dtos = new ArrayList<Kms_WriteList_Dto>();
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "select f.* from forum f,product p";
+			String Where2 = " where p.pid = f.f_pid and ftype =" + Ftype + " and p.pname like ?";
+			ps = connection.prepareStatement(query + Where2);
+			ps.setString(1, "%" + content + "%");
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				int f_id = rs.getInt(1);
+				String f_cid = rs.getString(2);
+				String f_aid = rs.getString(3);
+				int f_pid = rs.getInt(4);
+				int ftype = rs.getInt(5);
+				int fref = rs.getInt(6);
+				int freforder = rs.getInt(7);
+				int fstep = rs.getInt(8);
+				String ftitle = rs.getString(9);
+				String fcontent = rs.getString(10);
+				Timestamp finsertdate = rs.getTimestamp(11);
+				Timestamp fdeletedate = rs.getTimestamp(12);
+				int fmotherid = rs.getInt(13);
+				int fanswernum = rs.getInt(14);
+
+				
+				
+				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(f_id, f_cid, f_aid, f_pid, ftype, fref, freforder, fstep,
+						ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum);
+				dtos.add(dto);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return dtos;
+	} // list 출력
 }

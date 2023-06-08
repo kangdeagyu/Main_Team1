@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"   %>
-
+<%@ include file="header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,12 +35,28 @@ function confirmDelete(cid, form) {
 	    return false;
 	  }
 	}
-
-
-
-
+</script>
+<!-- <script type="text/javascript">
+function validateComment() {
+    var comment = document.getElementsByName("ftitle")[0].value;
+    if (comment.trim() === "") {
+        alert("댓글을 입력하세요.");
+        return false;
+    }
+    return true;
+}
 
 </script>
+<script type="text/javascript">
+    function validateCommentForm() {
+        var comment = document.getElementsByName("ftitle")[0].value;
+        if (comment.trim() === "") {
+            alert("댓글을 입력하세요.");
+            return false;
+        }
+        return true;
+    }
+</script> -->
 <body>
  <table>
         <tr>
@@ -76,15 +92,16 @@ function confirmDelete(cid, form) {
                     ${cdto.ftitle}
                 </c:when>
                 <c:otherwise> <!-- step이 0이 아닌 경우 (대댓글) -->
-                    <span style="margin-left: ${cdto.fstep * 20}px">${cdto.ftitle}</span>
+                    <span style="margin-left: ${cdto.fstep * 20}px">ㄴ${cdto.ftitle}</span>
                 </c:otherwise>
             </c:choose>
         </td>
                 <td>${cdto.finsertdate}</td>
                 <td>${cdto.fmotherid}</td>
                 <td><c:if test="${cdto.fdeletedate eq null}">
-               <form action="BigCommentWrite.do" method="post">
-                <input type="text" name="ftitle">
+               <form action="BigCommentWrite.do" method="post"> <!-- onsubmit="return validateCommentForm()" -->
+                <input type="text" name="ftitle" placeholder="댓글을 입력하세요.">
+                <input type="hidden" name="page" value="${forumView.fid}">
                 <input type="hidden" name="f_cid" value="JHWoo1990" >
                 <input type="hidden" name="fid" value="${cdto.fid}">
                 <input type="hidden" name="f_pid" value="${cdto.f_pid}">
@@ -107,14 +124,14 @@ function confirmDelete(cid, form) {
         </tbody>
 </table>
 
-   <form action="commentwrite.do" method="post" >
-            댓글달기 <input type="text" name="ftitle" >
+   <form action="commentwrite.do" method="post"> <!-- onsubmit="return validateComment()"> -->
+            댓글달기 <input type="text" name="ftitle" placeholder="댓글을 입력하세요.">
    <input type="hidden" name="fid" value=${forumView.fid }>
    <input type="hidden" name="f_cid" value="IULee1993">
    <input type="hidden" name="f_pid" value=${forumView.f_pid }>
     <input type="submit" value="댓글달기">
 </form>
-<form action="Kms_WriteReply.jsp" method="post">
+<form action="Kms_WriteReply.jsp" method="post" >
 <input type="hidden" name="fid" value="${forumView.fid }">
 <input type="hidden" name="fref" value="${forumView.fref }">
 <input type="hidden" name="freforder" value="${forumView.freforder }">
@@ -123,5 +140,6 @@ function confirmDelete(cid, form) {
 <input type="hidden" name="fanswernum" value="${forumView.fanswernum }">
 <input type="submit" value="답글달기">
 </form> 
+<%@ include file="bottom.jsp" %>
 </body>
 </html>

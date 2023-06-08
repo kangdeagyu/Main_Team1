@@ -13,7 +13,8 @@ public class Kms_BigCommentActionCommand implements MCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+		
+		int page = Integer.parseInt(request.getParameter("page"));
 		int fid = Integer.parseInt(request.getParameter("fid"));
 		System.out.println(fid);
 		String f_cid = request.getParameter("f_cid");

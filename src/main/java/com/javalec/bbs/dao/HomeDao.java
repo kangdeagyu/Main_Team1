@@ -120,7 +120,7 @@ public class HomeDao {
 		try {
 			connection = dataSource.getConnection(); // sql 연결
 			String query = "select p.pid, b.bid, p.pname, p.pfilename, p.pcontent, p.pprice, b.bqty "
-							+ "from product p, basket b where b_pid = p.pid and b.b_cid = ?";
+							+ "from product p, basket b where b.b_pid = p.pid and b.b_cid = ?";
 			ps = connection.prepareStatement(query);
 			ps.setString(1, cid);
 			rs = ps.executeQuery();
