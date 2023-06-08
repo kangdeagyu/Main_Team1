@@ -109,16 +109,7 @@ function userCheck() {
 	
 }
 
-window.addEventListener('scroll', function() {
-	  var header = document.querySelector('.header');
-	  var contentThreshold = 300; // 내용이 화면에 300px 이상 표시될 때 헤더를 고정
 
-	  if (window.pageYOffset > contentThreshold) {
-	    header.classList.add('sticky');
-	  } else {
-	    header.classList.remove('sticky');
-	  }
-	});
 
 </script>
 
