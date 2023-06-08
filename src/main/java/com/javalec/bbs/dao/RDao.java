@@ -113,24 +113,23 @@ return dtos;
 
 }
 //데이터 베이스 장바구니(basket) 입력
-public void InsertCart(int pid, int cid, String bqty) {
+public boolean InsertCart(String cid, int pid, int qty) {
 	Connection connection = null;
 	PreparedStatement preparedStatement = null;
+	boolean result = false;
 	
 	try {
 		connection = dataSource.getConnection(); // sql 연결
-		String query = "INSERT INTO basket (cid, pid, bqty) VALUES (?, ?, ?)";
+		String query = "INSERT INTO basket (b_cid, b_pid, bqty) VALUES (?, ?, ?)";
 				       		
 		preparedStatement = connection.prepareStatement(query);
-		preparedStatement.setInt(1, cid);
+		preparedStatement.setString(1, cid);
 		preparedStatement.setInt(2, pid);
-		preparedStatement.setString(3, bqty);
+		preparedStatement.setInt(3, qty);
 		
-		int rowsInserted = preparedStatement.executeUpdate();
-		 if (rowsInserted > 0) {
-			System.out.println("장바구니에 상품이 추가되었습니다."); 
-			preparedStatement.executeUpdate();
-		 }
+		preparedStatement.executeUpdate();
+	
+		result = true;
 
 	
 	}catch (Exception e) {
@@ -144,6 +143,7 @@ public void InsertCart(int pid, int cid, String bqty) {
 		}
 	}
 	
+	return result;
 }
 
 // write
