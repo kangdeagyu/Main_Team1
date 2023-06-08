@@ -41,7 +41,7 @@ public class Admin_Review_Dao {
 		try {
 			connection = datasource.getConnection();
 			String query = "SELECT f.fid, f.f_pid, f.finsertdate, c.cname, p.pname, p.pfilename, p.pprice, f.fcontent, f.ftitle, p.pcontent, p.pcategory"; 
-			String query1 = " FROM forum f, product p, customer c, type t WHERE f.f_cid=c.cid AND f.f_pid=p.pid AND f.ftype=1;";
+			String query1 = " FROM forum f, product p, customer c, type t WHERE f.f_cid=c.cid AND f.f_pid=p.pid AND f.ftype=1 AND f.fdeletedate IS NULL;";
 			preparedStatement = connection.prepareStatement(query+query1);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -73,4 +73,48 @@ public class Admin_Review_Dao {
 		return dtos;
 		
 	} // list
+	
+	public void delete(String[] fid) {
+	    if (fid == null) {
+	        // pid 배열이 null인 경우 처리
+	        System.out.println("No products selected for deletion.");
+	        return;
+	    }
+	    Connection connection = null;
+	    PreparedStatement deleteInboundStatement = null;
+	    PreparedStatement preparedStatement = null;
+	    try {
+	        connection = datasource.getConnection();
+	        // Delete from product table
+	        String deleteProductQuery = "delete from product where fid = ?";
+	        String deletedateInsert= "update forum set fdeletedate= now() where fid = ?";
+	        preparedStatement = connection.prepareStatement(deletedateInsert);
+	        for (int i = 0; i < fid.length; i++) {
+	            preparedStatement.setInt(1, Integer.parseInt(fid[i]));
+	            preparedStatement.executeUpdate();
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (deleteInboundStatement != null)
+	                deleteInboundStatement.close();
+	            if (preparedStatement != null)
+	                preparedStatement.close();
+	            if (connection != null)
+	                connection.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

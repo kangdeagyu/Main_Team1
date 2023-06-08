@@ -8,11 +8,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="css/admin_kkg.css" rel="stylesheet">
     <link href="css/modifymodal.css" rel="stylesheet">
     <meta http-equiv="Content-Type" content="text/html;" charset="UTF-8">
     <title>상품 리스트</title>
-    <script src="js/modifymodal.js"></script>
     <script>
         function selectAll() {
             var checkboxes = document.getElementsByName('selectedItems');
@@ -35,39 +35,71 @@
 
             if (selectedItems.length === 0) {
                 alert('삭제할 상품을 선택해주세요.');
-                return false; // 폼 제출 중지
+                return;
             }
 
-            if (confirm('선택한 상품을 삭제하시겠습니까?')) {
-                document.forms[0].action = 'deleteProduct.do';
-                document.forms[0].submit();
+            // 선택된 상품들의 값을 'pid'라는 이름으로 서버로 전송
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'deleteProduct.do';
+
+            for (var i = 0; i < selectedItems.length; i++) {
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'pid';
+                input.value = selectedItems[i];
+                form.appendChild(input);
             }
+
+            document.body.appendChild(form);
+            form.submit();
 
             return false; // 폼 제출 중지
         }
 
-        function openEditModal(pid, pprice, pstock, cname, pname, pcontent) {
-            document.getElementById('editPid').value = pid;
-            document.getElementById('editPidDisplay').innerText = pid;
-            document.getElementById('editPprice').value = pprice;
-            document.getElementById('editPstock').value = pstock;
-            document.getElementById('editCname').innerText = cname;
-            document.getElementById('editPname').value = pname;
-            document.getElementById('editPcontent').value = pcontent;
+        function openEditModal(pid, pprice, pstock, cname, pname, pcontent, pfilename) {
+            var product = {
+                pid: pid,
+                pprice: pprice,
+                pstock: pstock,
+                cname: cname,
+                pname: pname,
+                pcontent: pcontent,
+                pfilename: pfilename
+            };
+
+            populateEditModal(product);
 
             var modal = document.getElementById('myModal');
             modal.style.display = 'block';
+        }
+
+        function populateEditModal(product) {
+            document.getElementById('editPid').value = product.pid;
+            document.getElementById('editPidDisplay').innerText = product.pid;
+            document.getElementById('editPprice').value = product.pprice;
+            document.getElementById('editPstock').value = product.pstock;
+            document.getElementById('editCname').innerText = product.cname;
+            document.getElementById('editPname').value = product.pname;
+            document.getElementById('editPcontent').value = product.pcontent;
+
+            var imageContainer = document.getElementById('editImageContainer');
+            imageContainer.innerHTML = ""; // 이미지 컨테이너 초기화
+
+            if (product.pfilename) {
+                var image = document.createElement('img');
+                image.src = product.pfilename;
+                image.alt = "Product Image";
+                image.width = 100;
+                imageContainer.appendChild(image);
+            }
         }
 
         function saveChanges() {
             var form = document.getElementById('editForm');
             form.action = 'editProduct.do'; // 저장 처리 액션 URL로 변경
             form.submit();
-        
-            var modal = document.getElementById('myModal');
-            modal.style.display = 'none';
         }
-
         function closeModal() {
             var modal = document.getElementById('myModal');
             modal.style.display = 'none';
@@ -88,12 +120,13 @@
             <input type="text" name="query">
             <input type="submit" name="action" value="검색">
         </form>
-        <form action="uploadAction.do" method="post">
+        <form action="APinsert.do" method="post" enctype="multipart/form-data">
             <input type="submit" name="action" value="상품 추가하기">
         </form>
         <form>
-            <input type="checkbox" id="selectAllCheckbox" onchange="selectAll()"> 전체 선택
-            <input type="button" value="삭제" onclick="deleteSelectedItems()">
+		    <input type="checkbox" id="selectAllCheckbox" onchange="selectAll()"> 전체 선택
+		    <input type="button" value="삭제" onclick="deleteSelectedItems()">
+		</form>
             <table border=1>
                 <tr>
                     <th>상품선택</th>
@@ -101,7 +134,6 @@
                     <th>카테고리</th>
                     <th>제품명</th>
                     <th>가격</th>
-                    <th>상태</th>
                 </tr>
                 <c:forEach items="${list}" var="dto">
                     <tr>
@@ -110,19 +142,18 @@
                         <td>${dto.c_name }</td>
                         <td>${dto.pname }</td>
                         <td>${dto.pprice }</td>
-                        <td>판매</td>
                         <td>
                             <button onclick="openEditModal('${dto.pid}', '${dto.pprice}', '${dto.pstock}','${dto.c_name}', '${dto.pname}', '${dto.pcontent}')">편집하기</button>
                         </td>
                     </tr>
                 </c:forEach>
             </table>
-        </form>
         <br />
         <hr>
         <br />
     </div>
     <div id="myModal" class="modal">
+    <div id="editImageContainer"></div>
         <div class="modal-content">
             <form id="editForm">
                 <table border="1">
@@ -146,6 +177,8 @@
                     <tr>
                         <td>재고</td>
                         <td><input type="text" id="editPstock" name="pstock"></td>
+                        <td>이미지 변경</td>
+                        <td><input type="file" id="pfilename" name="pfilename"></td>
                     </tr>
                 </table>
                 <p>상세 설명</p>

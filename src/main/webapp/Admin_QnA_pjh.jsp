@@ -58,7 +58,7 @@
             <input type="button" value="재작성" onclick="resetForm()">
 		</form>
 		
-		<form action="Admin_QnA_List.do" method="post">
+		<form action="noticelist.do" method="post">
             <input type="submit" value="목록">
         </form>
          </div>

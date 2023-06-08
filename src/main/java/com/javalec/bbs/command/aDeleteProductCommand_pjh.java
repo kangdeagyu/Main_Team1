@@ -12,7 +12,7 @@ public class aDeleteProductCommand_pjh implements MCommand {
 		// TODO Auto-generated method stub
 			
 			Admin_Product_Dao dao = new Admin_Product_Dao();
-			String[] selectedItems = request.getParameterValues("selectedItems");
+			String[] selectedItems = request.getParameterValues("pid");
 			dao.delete(selectedItems);
 		}
 

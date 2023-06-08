@@ -114,11 +114,13 @@
             </c:forEach>
         </tbody>
     </table>
-
     <div class="pagination-wrapper clearfix">
         <ul class="pagination float--right" id="pages">
         </ul>
     </div>
+	<form action="noticewrite.do" method="post">
+	 <input type="submit" name="action" value="게시물 작성">
+	</form>
     </div>
 </body>
 </html>
