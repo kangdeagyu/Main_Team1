@@ -10,7 +10,7 @@
 </head>
 <script type="text/javascript">
 function confirmDelete(cid, form) {
-	  var userCid = "JHWoo1990"; // 로그인 사용자의 f_cid 값
+	  var userCid = "${cid}"; // 로그인 사용자의 f_cid 값
 	  var commentCid = form.elements["f_cid"].value;
 
 	  if (userCid !== commentCid) {
@@ -69,6 +69,7 @@ function validateComment() {
         </tr>
         <tr>
             <td>상품코드</td>
+            <td>${forumView.f_pid} </td>
         </tr>
         <tr>
             <td colspan="2">내용</td>
@@ -102,7 +103,7 @@ function validateComment() {
                <form action="BigCommentWrite.do" method="post"> <!-- onsubmit="return validateCommentForm()" -->
                 <input type="text" name="ftitle" placeholder="댓글을 입력하세요.">
                 <input type="hidden" name="page" value="${forumView.fid}">
-                <input type="hidden" name="f_cid" value="JHWoo1990" >
+                <input type="hidden" name="f_cid" value="${cid } }" >
                 <input type="hidden" name="fid" value="${cdto.fid}">
                 <input type="hidden" name="f_pid" value="${cdto.f_pid}">
                 <input type="hidden" name="fref" value="${cdto.fref}">
@@ -127,7 +128,7 @@ function validateComment() {
    <form action="commentwrite.do" method="post"> <!-- onsubmit="return validateComment()"> -->
             댓글달기 <input type="text" name="ftitle" placeholder="댓글을 입력하세요.">
    <input type="hidden" name="fid" value=${forumView.fid }>
-   <input type="hidden" name="f_cid" value="IULee1993">
+   <input type="hidden" name="f_cid" value="${cid }">
    <input type="hidden" name="f_pid" value=${forumView.f_pid }>
     <input type="submit" value="댓글달기">
 </form>

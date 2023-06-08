@@ -30,13 +30,18 @@ import com.javalec.bbs.command.Kms_WriteListCommand;
 import com.javalec.bbs.command.MCommand;
 import com.javalec.bbs.command.MypageCommand;
 import com.javalec.bbs.command.PwCommand;
+import com.javalec.bbs.command.QnAList_Command_pjh;
 import com.javalec.bbs.command.RviewCommand;
 import com.javalec.bbs.command.aDeleteProductCommand_pjh;
+import com.javalec.bbs.command.aDeleteReviewCommand_pjh;
 import com.javalec.bbs.command.aHomeCommand_kkg;
 import com.javalec.bbs.command.aModifyProductCommand_pjh;
 import com.javalec.bbs.command.aProductAddCommand_pjh;
 import com.javalec.bbs.command.aProductListCommand_pjh;
 import com.javalec.bbs.command.aProductSearchCommand_pjh;
+import com.javalec.bbs.command.aQnAuploadCommand_pjh;
+import com.javalec.bbs.command.aReviewSearchCommand_pjh;
+import com.javalec.bbs.command.aReview_List_Command_pjh;
 import com.javalec.bbs.command.aUserListCommnad_kkg;
 
 /**
@@ -167,40 +172,73 @@ public class MController extends HttpServlet {
 		// *************************************************************//
 
 		/* PART III 시작. 스윗남자 박지환 서윗남 part 입니다. 일용할 스윗함에 고마움을 :). */
-		case ("/APlist.do"):
+		case("/APlist.do") :
 			command = new aProductListCommand_pjh();
 			command.execute(request, response);
 			viewPage = "Admin_ProductList_pjh.jsp";
 			break;
-
-		// 상품관리에서 상품등록하는 페이지로 이동
-		case ("/uploadAction.do"):
+				
+			//상품관리에서 상품등록하는 페이지로 이동	
+			case("/APinsert.do") :
 			viewPage = "Admin_ProductAdd_pjh.jsp";
 			break;
-		// 상품등록 페이지에서 업로드 버튼
-		case ("/AProductInsert.do"):
+			//상품등록 페이지에서 업로드 버튼
+			case("/AProductInsert.do") :
 			command = new aProductAddCommand_pjh();
-
+			
 			command.execute(request, response);
 			viewPage = "APlist.do";
 			break;
-		// 상품관리 페이지에서 상품 삭제
-		case ("/deleteProduct.do"):
+			//상품관리 페이지에서 상품 삭제
+			case ("/deleteProduct.do"):
 			command = new aDeleteProductCommand_pjh();
 			command.execute(request, response);
 			viewPage = "APlist.do";
 			break;
-		// 상품 관리 페이지에서 상품 변경 버튼 눌렀을 때
-		case ("/editProduct.do"):
-			command = new aModifyProductCommand_pjh();
-			command.execute(request, response);
-			viewPage = "APlist.do";
+			//상품 관리 페이지에서 상품 변경 버튼 눌렀을 때		
+			case ("/editProduct.do"):	
+			command = new aModifyProductCommand_pjh();	
+			command.execute(request, response);	
+			viewPage = "APlist.do";	
 			break;
-		// 상품 검색
-		case ("/productQuery.do"):
+			//상품 검색		
+			case ("/productQuery.do"):		
 			command = new aProductSearchCommand_pjh();
 			command.execute(request, response);
 			viewPage = "Admin_ProductList_pjh.jsp";
+			break;
+			case ("/AReviewList.do"):		
+			command = new aReview_List_Command_pjh();
+			command.execute(request, response);
+			viewPage = "Admin_Review_List.jsp";
+			break;
+			case ("/productInformation.do"):		
+			command = new aProductSearchCommand_pjh();
+			command.execute(request, response);
+			viewPage = "Admin_ProductList_pjh.jsp";
+			break;
+			case ("/AQnA.do"):		
+			command = new QnAList_Command_pjh();
+			command.execute(request, response);
+			viewPage = "Admin_QNA_List.jsp";
+			break;
+			case ("/noticewrite.do"):		
+			viewPage = "Admin_QnA_pjh.jsp";
+			break;
+			case ("/ANoticeUpload.do"):		
+			command = new aQnAuploadCommand_pjh();
+			command.execute(request, response);
+			viewPage = "noticelist.do";
+			break;
+			case ("/deleteReview.do"):		
+			command = new aDeleteReviewCommand_pjh();
+			command.execute(request, response);
+			viewPage = "reviewlist.do";
+			break;
+			case ("/reviewQuery.do"):		
+			command = new aReviewSearchCommand_pjh();
+			command.execute(request, response);
+			viewPage = "Admin_Review_List.jsp";
 			break;
 
 		/* PART III 종. 스윗남자 박지환 서윗남 part 입니다. 일동 .일용할 스윗함에 고마움을 :) */
