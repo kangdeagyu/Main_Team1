@@ -36,7 +36,7 @@ function confirmDelete(cid, form) {
 	  }
 	}
 </script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 function validateComment() {
     var comment = document.getElementsByName("ftitle")[0].value;
     if (comment.trim() === "") {
@@ -56,7 +56,7 @@ function validateComment() {
         }
         return true;
     }
-</script>
+</script> -->
 <body>
  <table>
         <tr>
@@ -99,8 +99,9 @@ function validateComment() {
                 <td>${cdto.finsertdate}</td>
                 <td>${cdto.fmotherid}</td>
                 <td><c:if test="${cdto.fdeletedate eq null}">
-               <form action="BigCommentWrite.do" method="post" onsubmit="return validateCommentForm()">
+               <form action="BigCommentWrite.do" method="post"> <!-- onsubmit="return validateCommentForm()" -->
                 <input type="text" name="ftitle" placeholder="댓글을 입력하세요.">
+                <input type="hidden" name="page" value="${forumView.fid}">
                 <input type="hidden" name="f_cid" value="JHWoo1990" >
                 <input type="hidden" name="fid" value="${cdto.fid}">
                 <input type="hidden" name="f_pid" value="${cdto.f_pid}">
@@ -123,7 +124,7 @@ function validateComment() {
         </tbody>
 </table>
 
-   <form action="commentwrite.do" method="post" onsubmit="return validateComment()">
+   <form action="commentwrite.do" method="post"> <!-- onsubmit="return validateComment()"> -->
             댓글달기 <input type="text" name="ftitle" placeholder="댓글을 입력하세요.">
    <input type="hidden" name="fid" value=${forumView.fid }>
    <input type="hidden" name="f_cid" value="IULee1993">

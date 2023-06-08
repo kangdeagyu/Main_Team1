@@ -19,11 +19,36 @@ public class Kms_WriteList_Dto {
 	int fmotherid;
 	int fanswernum;
 	
+	String pname;
+	
 	public Kms_WriteList_Dto() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	
+
+	public Kms_WriteList_Dto(int fid, String f_cid, String f_aid, int f_pid, int ftype, int fref, int freforder,
+			int fstep, String ftitle, String fcontent, Timestamp finsertdate, Timestamp fdeletedate, int fmotherid,
+			int fanswernum, String pname) {
+		super();
+		this.fid = fid;
+		this.f_cid = f_cid;
+		this.f_aid = f_aid;
+		this.f_pid = f_pid;
+		this.ftype = ftype;
+		this.fref = fref;
+		this.freforder = freforder;
+		this.fstep = fstep;
+		this.ftitle = ftitle;
+		this.fcontent = fcontent;
+		this.finsertdate = finsertdate;
+		this.fdeletedate = fdeletedate;
+		this.fmotherid = fmotherid;
+		this.fanswernum = fanswernum;
+		this.pname = pname;
+	}
+
+
 
 	public Kms_WriteList_Dto(int fid,String f_cid, int f_pid, String ftitle, String fcontent, Timestamp finsertdate) {
 		super();

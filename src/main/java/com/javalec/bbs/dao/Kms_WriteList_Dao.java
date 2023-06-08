@@ -34,8 +34,9 @@ public class Kms_WriteList_Dao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select * from forum where ftype = ? order by fref desc,freforder";
-			preparedStatement = connection.prepareStatement(query);
+			String query = "select f.*,p.pname from forum f,product p";
+			String query1 = " where p.pid = f.f_pid and ftype = ? order by fref desc,freforder";
+			preparedStatement = connection.prepareStatement(query + query1);
 			preparedStatement.setInt(1, Ftype);
 			resultSet = preparedStatement.executeQuery();
 			
@@ -135,9 +136,6 @@ public class Kms_WriteList_Dao {
 			preparedStatement1.setInt(5, fstep);
 			preparedStatement1.setString(6, ftitle);
 			preparedStatement1.setString(7, fcontent);
-			
-			
-			
 			preparedStatement1.executeUpdate();
 				
 			String query4 = "update forum set fanswernum = fanswernum + 1 where fid = " + fid;
@@ -384,8 +382,8 @@ public class Kms_WriteList_Dao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select * from forum";
-			String Where2 = " where ftype =" + Ftype + " like ?";
+			String query = "select f.* from forum f,product p";
+			String Where2 = " where p.pid = f.f_pid and ftype =" + Ftype + " and p.pname like ?";
 			ps = connection.prepareStatement(query + Where2);
 			ps.setString(1, "%" + content + "%");
 			rs = ps.executeQuery();
