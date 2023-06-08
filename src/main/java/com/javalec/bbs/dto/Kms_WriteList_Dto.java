@@ -27,6 +27,18 @@ public class Kms_WriteList_Dto {
 	
 	
 
+	public String getPname() {
+		return pname;
+	}
+
+
+
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+
+
+
 	public Kms_WriteList_Dto(int fid, String f_cid, String f_aid, int f_pid, int ftype, int fref, int freforder,
 			int fstep, String ftitle, String fcontent, Timestamp finsertdate, Timestamp fdeletedate, int fmotherid,
 			int fanswernum, String pname) {
