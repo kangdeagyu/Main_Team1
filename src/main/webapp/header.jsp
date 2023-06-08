@@ -61,7 +61,8 @@
 			    <a class="nav-link" href="CategoryView.do?num=2"><p class="text-dark">CHAIR</p></a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" href="#"><p class="text-dark">Q&A</p></a>
+			 	 <c:set var="ftype" value="${param.ftype}" />
+			    <a class="nav-link" href="writelist.do?ftype=2"><p class="text-dark">Q&A</p></a>
 			  </li>
 		
 		</ul>
