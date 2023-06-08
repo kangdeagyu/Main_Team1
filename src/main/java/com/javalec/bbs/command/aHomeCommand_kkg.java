@@ -22,7 +22,7 @@ public class aHomeCommand_kkg implements MCommand {
 		// TODO Auto-generated method stub
 		
 		
-		
+
 		
 		
         //  *************** daily chart를 위한 데이터 가져오기************** 
@@ -198,6 +198,7 @@ public class aHomeCommand_kkg implements MCommand {
 	
 	
     // -------------------------method02. DailySale 저장하기  getDailySaleList 메소드 시작-------------------------------------------
+	// -------------------------method02. g회원수 가져올때 사용해도 됨-------------------------------------------
 	
 	private List<Integer> getDailySaleList(List<Date> dateList, ArrayList<aExtraDto_kkg> ddrs){
 		
