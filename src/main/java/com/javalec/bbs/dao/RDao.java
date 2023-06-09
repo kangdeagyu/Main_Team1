@@ -112,6 +112,50 @@ return dtos;
 
 
 }
+
+public ArrayList<RDto> productordre(int ppid){
+	ArrayList<RDto> dtos = new ArrayList<RDto>();
+	Connection connection = null;
+	PreparedStatement preparedStatement = null;
+	ResultSet resultSet = null;
+
+try {
+	connection = dataSource.getConnection(); // sql 연결
+	String query = "select pid, pname, pfilename, pcontent, pprice, pstock from product where pid = ?";
+	preparedStatement = connection.prepareStatement(query);
+	preparedStatement.setInt(1, ppid);
+	resultSet = preparedStatement.executeQuery();
+
+	while(resultSet.next()) {
+		int pid = resultSet.getInt("pid");
+		String pname = resultSet.getString("pname");
+		String filename = resultSet.getString("pfilename");
+		String pcontent = resultSet.getString("pcontent");
+		int pprice = resultSet.getInt("pprice");
+		int pstock = resultSet.getInt("pstock");
+		
+		String pfilename = "image/" + filename; 	
+		RDto dto = new RDto(pid, pname, pfilename, pcontent, pprice, pstock);
+		dtos.add(dto);
+		
+	}
+}catch (Exception e) {
+	e.printStackTrace();
+}finally {
+	try {
+		if(resultSet != null) resultSet.close();
+		if(preparedStatement != null) preparedStatement.close();
+		if(connection != null) connection.close();
+	}catch (Exception e) {
+		e.printStackTrace();
+	}
+}
+
+return dtos;
+
+
+
+}
 //데이터 베이스 장바구니(basket) 입력
 public boolean InsertCart(String cid, int pid, int qty) {
 	Connection connection = null;
