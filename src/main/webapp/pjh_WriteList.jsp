@@ -121,6 +121,7 @@
 
 </head>
 <body>
+
 <div class="sidebar">
 			<jsp:include page="admin_01_sidebar.jsp" />
 	 	</div>
@@ -185,12 +186,10 @@
         </c:forEach>
         </tbody>
     </table>
-
-  <div class="pagination-wrapper clearfix">
+	<div class="pagination-wrapper clearfix">
         <ul class="pagination float--right" id="pages">
         </ul>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </div>
 </body>
