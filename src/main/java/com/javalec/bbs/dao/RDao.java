@@ -112,7 +112,48 @@ return dtos;
 
 
 }
+//공지사항 게시판
+public ArrayList<RDto> Notice(){
+	ArrayList<RDto> dtos = new ArrayList<RDto>();
+	Connection connection = null;
+	PreparedStatement preparedStatement = null;
+	ResultSet resultSet = null;
 
+try {
+	connection = dataSource.getConnection(); // sql 연결
+	String query = "select nid, n_aid, ntitle, ncontent, ninsertdate from notice";
+	preparedStatement = connection.prepareStatement(query);
+	resultSet = preparedStatement.executeQuery();
+
+	while(resultSet.next()) {
+		int nid = resultSet.getInt("nid");
+		String n_aid = resultSet.getString("n_aid");
+		String ntitle = resultSet.getString("ntitle");
+		String ncontent = resultSet.getString("ncontent");
+		String ninsertdate = resultSet.getString("ninsertdate");
+		
+		RDto dto = new RDto(nid, n_aid, ntitle, ncontent, ninsertdate);
+		dtos.add(dto);
+		
+	}
+}catch (Exception e) {
+	e.printStackTrace();
+}finally {
+	try {
+		if(resultSet != null) resultSet.close();
+		if(preparedStatement != null) preparedStatement.close();
+		if(connection != null) connection.close();
+	}catch (Exception e) {
+		e.printStackTrace();
+	}
+}
+
+return dtos;
+
+
+
+}
+//상세페이지 구매하기 버튼 누르면 실행
 public ArrayList<RDto> productordre(int ppid){
 	ArrayList<RDto> dtos = new ArrayList<RDto>();
 	Connection connection = null;

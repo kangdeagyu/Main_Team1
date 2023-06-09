@@ -16,8 +16,25 @@ public class RDto {
     
     int cid;
     String bqty;
+    
+    int nid;
+    String ntitle;
+    String ncontent;
+    String n_aid;
+    String ninsertdate;
     public RDto() {
 		// TODO Auto-generated constructor stub
+	}
+
+
+
+	public RDto(int nid, String n_aid, String ntitle, String ncontent, String ninsertdate) {
+		super();
+		this.nid = nid;
+		this.n_aid = n_aid;
+		this.ntitle = ntitle;
+		this.ncontent = ncontent;
+		this.ninsertdate = ninsertdate;
 	}
 
 
@@ -31,42 +48,6 @@ public class RDto {
 
 
 
-	public String getPname() {
-		return pname;
-	}
-
-
-
-	public void setPname(String pname) {
-		this.pname = pname;
-	}
-
-
-
-	public int getCid() {
-		return cid;
-	}
-
-
-
-	public void setCid(int cid) {
-		this.cid = cid;
-	}
-
-
-
-	public String getBqty() {
-		return bqty;
-	}
-
-
-
-	public void setBqty(String bqty) {
-		this.bqty = bqty;
-	}
-
-
-
 	public RDto(String f_cid, int ftype, String ftitle, String fcontent) {
 		super();
 		this.f_cid = f_cid;
@@ -75,8 +56,9 @@ public class RDto {
 		this.fcontent = fcontent;
 	}
 
+	
 
-
+	
 	public RDto(int pid, String pname,String pfilename, String pcontent, int pprice, int pstock) {
 		super();
 		this.pid = pid;
@@ -85,16 +67,87 @@ public class RDto {
 		this.pcontent = pcontent;
 		this.pprice = pprice;
 		this.pstock = pstock;
+	
+	
+	
+	
+	
+	}
+	
+	public String getNtitle() {
+		return ntitle;
 	}
 
 
 
+	public void setNtitle(String ntitle) {
+		this.ntitle = ntitle;
+	}
 
+
+
+	public String getN_aid() {
+		return n_aid;
+	}
+
+
+
+	public void setN_aid(String n_aid) {
+		this.n_aid = n_aid;
+	}
+
+
+
+	public String getNinsertdate() {
+		return ninsertdate;
+	}
+
+
+
+	public void setNinsertdate(String ninsertdate) {
+		this.ninsertdate = ninsertdate;
+	}
 
 
 
 	public int getPstock() {
 		return pstock;
+	}
+
+
+
+	public int getNid() {
+		return nid;
+	}
+
+
+
+	public void setNid(int nid) {
+		this.nid = nid;
+	}
+
+
+
+	public String getNtitel() {
+		return ntitle;
+	}
+
+
+
+	public void setNtitel(String ntitel) {
+		this.ntitle = ntitel;
+	}
+
+
+
+	public String getNcontent() {
+		return ncontent;
+	}
+
+
+
+	public void setNcontent(String ncontent) {
+		this.ncontent = ncontent;
 	}
 
 
@@ -215,4 +268,51 @@ public class RDto {
 	}
 
 	
+	public String getPname() {
+		return pname;
+	}
+	
+	
+	
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+	
+	
+	
+	public int getCid() {
+		return cid;
+	}
+	
+	
+	
+	public void setCid(int cid) {
+		this.cid = cid;
+	}
+	
+	
+	
+	public String getBqty() {
+		return bqty;
+	}
+	
+	
+	
+	public void setBqty(String bqty) {
+		this.bqty = bqty;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
+
