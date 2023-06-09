@@ -11,8 +11,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.javalec.bbs.dao.chartDao_kkg;
-import com.javalec.bbs.dto.aExtraDto_kkg;
+import com.javalec.bbs.dao.ChartDao_kkg;
+import com.javalec.bbs.dto.AdminExtra_Dto_kkg;
 
 
 public class aHomeCommand_kkg implements MCommand {
@@ -62,8 +62,8 @@ public class aHomeCommand_kkg implements MCommand {
         
         
         // dao 에서 data 받아오고, 넘겨줄 형식 List<integer> 선언하기
-        chartDao_kkg dao = new chartDao_kkg(); 
-        ArrayList<aExtraDto_kkg> ddrs = dao.dailyGraph(startday, endday);
+        ChartDao_kkg dao = new ChartDao_kkg(); 
+        ArrayList<AdminExtra_Dto_kkg> ddrs = dao.dailyGraph(startday, endday);
         
         //System.out.println("*********** 체크해야됨  : dateList : "+ dateList);
         
@@ -90,7 +90,7 @@ public class aHomeCommand_kkg implements MCommand {
         
         
         
-        ArrayList<aExtraDto_kkg> mdrs = dao.monthlyGraph(mstartday, endday);
+        ArrayList<AdminExtra_Dto_kkg> mdrs = dao.monthlyGraph(mstartday, endday);
         List<Integer> monthSaleList = getMonthlySaleList(monthList, mdrs);
         System.out.println("mdrs : "+ mdrs);
         List<Integer> monthOrderList = getMonthlyOrderList(monthList, mdrs);
@@ -106,7 +106,7 @@ public class aHomeCommand_kkg implements MCommand {
         
        
         
-        ArrayList<aExtraDto_kkg> DNrs = dao.dailyNSGraph(startday, endday); //Daily New subscriber
+        ArrayList<AdminExtra_Dto_kkg> DNrs = dao.dailyNSGraph(startday, endday); //Daily New subscriber
         System.out.println("DNrs 의 값 : " + DNrs.get(0).getDate());
         List<Integer> dailyNSList = getDailySaleList(dateList, DNrs); //method02. dailySale 랑 같이써도 상관 없음.
         //추후에 탈퇴자 내용포함 시킬 것.
@@ -200,7 +200,7 @@ public class aHomeCommand_kkg implements MCommand {
     // -------------------------method02. DailySale 저장하기  getDailySaleList 메소드 시작-------------------------------------------
 	// -------------------------method02. g회원수 가져올때 사용해도 됨-------------------------------------------
 	
-	private List<Integer> getDailySaleList(List<Date> dateList, ArrayList<aExtraDto_kkg> ddrs){
+	private List<Integer> getDailySaleList(List<Date> dateList, ArrayList<AdminExtra_Dto_kkg> ddrs){
 		
         List<Integer> saleList = new ArrayList<>();
 
@@ -287,7 +287,7 @@ DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	
     // -------------------------method03. DailyOrder 저장하기  getDailyOrderList 메소드 시작-------------------------------------------
 	
-	private List<Integer> getDailyOrderList(List<Date> dateList, ArrayList<aExtraDto_kkg> ddrs){
+	private List<Integer> getDailyOrderList(List<Date> dateList, ArrayList<AdminExtra_Dto_kkg> ddrs){
 		
         List<Integer> OrderList = new ArrayList<>();
 
@@ -397,7 +397,7 @@ DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     
     // -------------------------method05. monthlySale 저장하기 메소드 시작-------------------------------------------
 	
-	private List<Integer> getMonthlySaleList(List<String> monthListStr, ArrayList<aExtraDto_kkg> mdrs){
+	private List<Integer> getMonthlySaleList(List<String> monthListStr, ArrayList<AdminExtra_Dto_kkg> mdrs){
 		
         List<Integer> saleList = new ArrayList<>();
 
@@ -451,7 +451,7 @@ DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	
     // -------------------------method06. monthlySale 저장하기 메소드 시작-------------------------------------------
 	
-	private List<Integer> getMonthlyOrderList(List<String> monthListStr, ArrayList<aExtraDto_kkg> mdrs){
+	private List<Integer> getMonthlyOrderList(List<String> monthListStr, ArrayList<AdminExtra_Dto_kkg> mdrs){
 		
         List<Integer> orderList = new ArrayList<>();
 

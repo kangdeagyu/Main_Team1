@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%> 
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"   %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,46 +46,67 @@
 </head>
 
 <script type="text/javascript">
+				/* 날짜 입력의 정규화를 위함 */
 			function checkDate(){
 				const regstartdate = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
 				const regenddate = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;				
 					
+				const formdate = document.date;
+				const startDate = formdate.startDate.value;
+				const endDate = formdate.endDate.value;
+				
+				
 				if(!regstartdate.test(startDate)){
-						alert("날짜를 입력해 주세요.")
-						form.id.select()
+						alert("시작 날짜를 입력해 주세요.")
+						form.startDate.select()
 						return
 					}
 					
 				if(!regenddate.test(endDate)){
-						alert("날짜를 입력해 주세요")
-						form.id.select()
+						alert("마지막 날짜를 입력해 주세요")
+						form.endDate.select()
 						return
 					}
+				if (endDate < startDate) {
+				    alert("종료일은 시작일보다 뒷날짜여야 합니다.");
+				    form.endDate.select();
+				    return;
+				}
+
+				
+					formdate.submit()
+			}
+			
+			/* 수정/삭제 버튼과, 결재내역 보는 버튼을 위 */
+			/* 수정/삭제 버튼 : 이건 팝업창 띄워서 수정하는 방식으로 구현하자.*/
+			function updateInfo(cid){
 				
 				
-					form.submit()
+			}
+			/* 결재,주문내역 보기 : 이건 mvc 모델로 보내서 바꾸기 */
+
+			
+			
 </script>
 
 
 
 
 <body data-new-gr-c-s-check-loaded="14.1111.0 data-gr-ext-installed">
-<%-- <div class="container_mk">
+	<div class="container_mk">
 		<div class="headbar">
 			<jsp:include page="admin_01_header.jsp" />
 		</div>
 		<div class="sidebar">
 			<jsp:include page="admin_01_sidebar.jsp" />
 		</div>
-
-	</div> --%>
+	</div> 
 
 <!--  ************* Headbar && Sidebar 종료 ************* -->
 
 
 	<div class="container-fluid">
-		<div class="row">
-
+		<div class="row" style="margin-left : 70px; padding : 10px">
 			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 				<div class="chartjs-size-monitor">
 					<div class="chartjs-size-monitor-expand">
@@ -98,7 +121,7 @@
 					<h1 class="h2">회원관리</h1>
 					<div>
 					
-						<form action="AUserlist.do" method="get">
+						<form action="AUserlist.do" name="date" method="get">
 							<input type="text" name ="startDate" id="startDate" placeholder="시작일">
 	 						<input type="text" name ="endDate" id="endDate" placeholder="종료일">
 	 						<input type="button" value="확인" onclick="checkDate()">
@@ -133,142 +156,63 @@
 				</div>
 				<div>
 
-
-
-
-
 				<canvas class="my-4 w-100 chartjs-render-monitor" id="userChart" width="500" height="300" 
 						style="display: block; height: 275px; width: 652px;"></canvas>
 
 
-
-
 				</div>
-				<h2>Section title</h2>
+				<h2>회원 목록</h2>
 				<div class="table-responsive">
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
 								<th scope="col">#</th>
-								<th scope="col">Header</th>
-								<th scope="col">Header</th>
-								<th scope="col">Header</th>
-								<th scope="col">Header</th>
+								<th scope="col">이름</th>
+								<th scope="col">ID</th>
+								<th scope="col">생년월일</th>
+								<th scope="col">성별</th>
+								<th scope="col">주소</th>
+								<th scope="col">Email</th>
+								<th scope="col">연락처</th>
+								<th scope="col">가입일</th>
+								<th scope="col">정보 수정/삭제</th>
+								<th scope="col">결재내역 보기</th>
+
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td>1,001</td>
-								<td>random</td>
-								<td>data</td>
-								<td>placeholder</td>
-								<td>text</td>
+								<td>1</td>
+								<td>이지은</td>
+								<td>IloveIU@naver.com</td>
+								<td>1993/05/16</td>
+								<td>여</td>
+								<td>서울시 강남구 역삼동 더조은 아카데미</td>
+								<td>010-7777-7777</td>
+								<td>2023/03/03</td>
+								<td><button name="updateThis">수정/삭제</button></td>
+								<td><button name="showOlist">결재/구매내역</button></td>
 							</tr>
-							<tr>
-								<td>1,002</td>
-								<td>placeholder</td>
-								<td>irrelevant</td>
-								<td>visual</td>
-								<td>layout</td>
-							</tr>
-							<tr>
-								<td>1,003</td>
-								<td>data</td>
-								<td>rich</td>
-								<td>dashboard</td>
-								<td>tabular</td>
-							</tr>
-							<tr>
-								<td>1,003</td>
-								<td>information</td>
-								<td>placeholder</td>
-								<td>illustrative</td>
-								<td>data</td>
-							</tr>
-							<tr>
-								<td>1,004</td>
-								<td>text</td>
-								<td>random</td>
-								<td>layout</td>
-								<td>dashboard</td>
-							</tr>
-							<tr>
-								<td>1,005</td>
-								<td>dashboard</td>
-								<td>irrelevant</td>
-								<td>text</td>
-								<td>placeholder</td>
-							</tr>
-							<tr>
-								<td>1,006</td>
-								<td>dashboard</td>
-								<td>illustrative</td>
-								<td>rich</td>
-								<td>data</td>
-							</tr>
-							<tr>
-								<td>1,007</td>
-								<td>placeholder</td>
-								<td>tabular</td>
-								<td>information</td>
-								<td>irrelevant</td>
-							</tr>
-							<tr>
-								<td>1,008</td>
-								<td>random</td>
-								<td>data</td>
-								<td>placeholder</td>
-								<td>text</td>
-							</tr>
-							<tr>
-								<td>1,009</td>
-								<td>placeholder</td>
-								<td>irrelevant</td>
-								<td>visual</td>
-								<td>layout</td>
-							</tr>
-							<tr>
-								<td>1,010</td>
-								<td>data</td>
-								<td>rich</td>
-								<td>dashboard</td>
-								<td>tabular</td>
-							</tr>
-							<tr>
-								<td>1,011</td>
-								<td>information</td>
-								<td>placeholder</td>
-								<td>illustrative</td>
-								<td>data</td>
-							</tr>
-							<tr>
-								<td>1,012</td>
-								<td>text</td>
-								<td>placeholder</td>
-								<td>layout</td>
-								<td>dashboard</td>
-							</tr>
-							<tr>
-								<td>1,013</td>
-								<td>dashboard</td>
-								<td>irrelevant</td>
-								<td>text</td>
-								<td>visual</td>
-							</tr>
-							<tr>
-								<td>1,014</td>
-								<td>dashboard</td>
-								<td>illustrative</td>
-								<td>rich</td>
-								<td>data</td>
-							</tr>
-							<tr>
-								<td>1,015</td>
-								<td>random</td>
-								<td>tabular</td>
-								<td>information</td>
-								<td>text</td>
-							</tr>
+							
+							<c:forEach items="${request.userList}" var="customer">
+								<tr>
+									<td>${customer.seq}</td>
+									<td>${customer.cname}</td>
+									<td>${customer.cid}</td>
+									<td>${customer.cbirthdate}</td>
+									<td>${customer.cgender}</td>
+									<td>${customer.caddress}</td>
+									<td>${customer.cphone}</td>
+									<td>${customer.cinsertdate}</td>
+
+									<td><form  name="updateInfo"><button onclick="updateInfo(${customer.cid})">수정/삭제</button></form></td>
+									<td><form action="showOderList.do" name="showOlist"> <input type="hidden" name="cid" value="${customer.cid}"><input type="submit" value="구매내역" size="30"></form></td>
+								</tr>
+							
+							
+							
+							</c:forEach>
+						
 						</tbody>
 					</table>
 				</div>
@@ -288,14 +232,6 @@
 	    var userContext = document.getElementById('userChart');
 		SingleBarChart(userContext, ${requestScope.dailyDate}, '신규가입자' ,${requestScope.dailyNS});  
     </script>
-
-
-
-
-
-
-
-
 
 
 </body>

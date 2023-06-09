@@ -43,6 +43,7 @@ import com.javalec.bbs.command.aQnAuploadCommand_pjh;
 import com.javalec.bbs.command.aReviewSearchCommand_pjh;
 import com.javalec.bbs.command.aReview_List_Command_pjh;
 import com.javalec.bbs.command.aUserListCommnad_kkg;
+import com.javalec.bbs.command.showOrderListCommand_kkg;
 
 /**
  * Servlet implementation class MController
@@ -167,6 +168,7 @@ public class MController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "cart.do";
 			break;
+			
 
 		/* PART II 종료. 큐티보이 김종진뀨 part 입니다. 뀨 일동 say 뀨~. 쉬어. */
 		// *************************************************************//
@@ -241,7 +243,7 @@ public class MController extends HttpServlet {
 			viewPage = "Admin_Review_List.jsp";
 			break;
 
-		/* PART III 종. 스윗남자 박지환 서윗남 part 입니다. 일동 .일용할 스윗함에 고마움을 :) */
+		/* PART III 종료. 스윗남자 박지환 서윗남 part 입니다. 일동 .일용할 스윗함에 고마움을 :) */
 		// *************************************************************//
 
 		/* PART IV 시작. 세상Cool 남자 김민성군의 Part 입니다. 평균연령 낮춰줘서 고맙다 민성아. */
@@ -310,18 +312,6 @@ public class MController extends HttpServlet {
 			System.out.println("viewPage 입력되었음");
 			break;
 
-		case ("/AUserlist_default.do"):
-			System.out.println("AuserLIst_default.do 들어옴");
-
-			command = new aUserListCommnad_kkg();
-			command.execute(request, response);
-			System.out.println("aUserListCommand_kkg 커맨드 실행 완료");
-			viewPage = "adminUserlist.jsp";
-			System.out.println("viewPage 입력되었음 : " + viewPage);
-			request.removeAttribute("startDate");
-			request.removeAttribute("endDate");
-			break;
-
 		case ("/AUserlist.do"):
 			System.out.println("AuserLIst.do 들어옴");
 			System.out.println("startDate 값 : " + request.getParameter("startDate"));
@@ -335,6 +325,21 @@ public class MController extends HttpServlet {
 			System.out.println("viewPage 입력되었음 : " + viewPage);
 
 			break;
+			
+		case ("/showOrderList.do"):
+			System.out.println("showOrderList.do 로 들어옴");
+
+			command = new showOrderListCommand_kkg();
+			command.execute(request, response);
+			System.out.println("showOrderListCommand_kkg 실행완료");
+	
+			viewPage = "adminOrderList.jsp";
+			System.out.println("viewPage 입력되었음");
+			
+			
+			
+			break;
+		
 
 		/* PART V 종료. 나 강경구 파트다. 돈트 터치 디스 에어리어. 디스 이즈 사유지. ㅋㅋㅋㅋㅋㅋㅋ */
 		// *************************************************************//

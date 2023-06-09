@@ -16,8 +16,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.javalec.bbs.dao.chartDao_kkg;
-import com.javalec.bbs.dto.aExtraDto_kkg;
+import com.javalec.bbs.dao.ChartDao_kkg;
+import com.javalec.bbs.dto.AdminExtra_Dto_kkg;
 
 public class aUserListCommnad_kkg implements MCommand {
 
@@ -25,6 +25,10 @@ public class aUserListCommnad_kkg implements MCommand {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
+		
+		
+		//상단의 그래프를 가져오기 위한 작업
+		
 		// x축 (날짜) 리스트 만들기.
 		// String startDate ;
 		// String endDate;
@@ -61,20 +65,43 @@ public class aUserListCommnad_kkg implements MCommand {
 
 		}
 
-		chartDao_kkg dao = new chartDao_kkg();
+		ChartDao_kkg dao = new ChartDao_kkg();
 
-		ArrayList<aExtraDto_kkg> DNrs = dao.dailyNSGraph(startday, endday); // Daily New subscriber
+		ArrayList<AdminExtra_Dto_kkg> DNrs = dao.dailyNSGraph(startday, endday); // Daily New subscriber
 		//System.out.println("DNrs 의 값 : " + DNrs.get(0).getDate());
 		dailyNSList = getDailySaleList(dateList, DNrs); // method02. dailySale 랑 같이써도 상관 없음.
 		// 추후에 탈퇴자 내용포함 시킬 것.
 
-		// request 셋팅하기
-		request.setAttribute("dailyDate", dateListStr);
-		System.out.println("여기는 왔니?");
-		request.setAttribute("dailyNS", dailyNSList);
+	
+	//그래프를 그리기 위한 작업 완료
+		
+	//회원목록을 가져오기 위한 작업.
+	//
+		
+	ArrayList<AdminExtra_Dto_kkg> userList = dao.getUserList();
+		
+	
+	// request 셋팅하기
+	request.setAttribute("dailyDate", dateListStr);
+	request.setAttribute("dailyNS", dailyNSList);
+	request.setAttribute("userList", userList);
 
-	}// body end
-		// ----------function----------
+	
+	
+	}// ************ end of execute
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// ----------function----------
 
 	// ----------------- method01. 실제로 JSP로 넘겨줄 Date 변수들의 리스트 목록 dateList 만들기.
 	// ----------------
@@ -98,7 +125,7 @@ public class aUserListCommnad_kkg implements MCommand {
 	// -------------------------method02. g회원수 가져올때 사용해도
 	// 됨-------------------------------------------
 
-	private List<Integer> getDailySaleList(List<Date> dateList, ArrayList<aExtraDto_kkg> ddrs) {
+	private List<Integer> getDailySaleList(List<Date> dateList, ArrayList<AdminExtra_Dto_kkg> ddrs) {
 
 		List<Integer> saleList = new ArrayList<>();
 
