@@ -13,7 +13,6 @@ import javax.sql.DataSource;
 
 import com.javalec.bbs.dto.Admin_Product_Dto;
 import com.javalec.bbs.dto.Admin_Review_Dto;
-import com.javalec.bbs.dto.aExtraDto_kkg;
 
 public class Admin_Review_Dao {
 	
