@@ -14,6 +14,7 @@ public class InsertCommand implements MCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
 		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession(true);
 		int pid = Integer.parseInt(request.getParameter("pid"));
