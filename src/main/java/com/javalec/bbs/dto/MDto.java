@@ -36,16 +36,15 @@ public class MDto {
 
 
 
-
-
-
-
-
-
-
-
-
-
+	public MDto(String cid, String cname, String cphone, String cpostnum, String caddress1, String caddress2) {
+		super();
+		this.cid = cid;
+		this.cname = cname;
+		this.cphone = cphone;
+		this.cpostnum = cpostnum;
+		this.caddress1 = caddress1;
+		this.caddress2 = caddress2;
+	}
 
 
 

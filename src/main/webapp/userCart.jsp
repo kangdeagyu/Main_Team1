@@ -64,7 +64,7 @@
             <th>주문 금액</th>
             <th>배송 정보</th>
         </tr>
-		<!-- 장바구니 리스트 사이즈  -->
+		<!-- 구매 리스트 사이즈  -->
 		<c:set var="listSize" value="${fn:length(list)}" />
 
 
@@ -87,7 +87,7 @@
     </table><br/>
     <button type="button" onclick="sendSelectedBids()">선택 상품 삭제</button>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <button>전체상품 삭제</button>  
+    <!-- <button>전체상품 삭제</button>  --> 
   
     <hr/>
     <label>총 주문 상품</label> ${listSize}<label>개</label>
@@ -119,7 +119,7 @@
     <hr/>
     <div class="container">
         <figure class="text-center">
-  		  <button>주문하기</button><br/><br/>
+  		  <button type="button" onclick="sendOrder()">주문하기</button><br/><br/>
   		  <a href="home.do">계속 쇼핑하기</a>
     	</figure>
     </div>
@@ -134,6 +134,7 @@ var totalprice = 0;
 var totaldelivery = 0;
 var deliveryFee = 0;
 var selectedBids = [];
+
 // 개별 선택한 값
 function handleCheckboxChange(checkbox) {
 	  var row = checkbox.parentNode.parentNode;
@@ -149,7 +150,7 @@ if (bidInput) {
 		  	selectedBids.push(bid); // 체크된 bid 값을 배열에 추가 
 	    	totalprice += price;
 		  	
-	    if (totalprice > 150000) {
+	    if (totalprice >= 150000) {
 	     	 deliveryFee = 0;
 	      	 totaldelivery = totalprice;
 	    } else {
@@ -268,8 +269,46 @@ function calculateTotalPrice() {
 	  }
 	}
 
-
+	// 구매데이터 넘겨주기
+function sendOrder() {
+	  if (selectedBids.length === 0) {
+	    alert("상품을 선택해주세요");
+	  } else {
+	    var url = "selectionOrder.od";
+	    var params = "selectedBids=";
+	    
+	    for (var i = 0; i < selectedBids.length; i++) {
+	      params += encodeURIComponent(selectedBids[i]);
+	      
+	      if (i !== selectedBids.length - 1) {
+	        params += "&selectedBids=";
+	      }
+	    }
+	    
+	    var xhr = new XMLHttpRequest();
+	    xhr.open('POST', url, true);
+	    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	    xhr.onreadystatechange = function() {
+	      if (xhr.readyState === 4) {
+	        if (xhr.status === 200) {
+	          alert("상품을 주문 하시겠습니까?");
+	          window.location.href = "order.do";
+	        } else {
+	          alert("주문 오류");
+	        }
+	      }
+	    };
 	
+	    xhr.send(params);
+	  }
+}
+
+
+
+
+
+
+
 </script>
 
 
