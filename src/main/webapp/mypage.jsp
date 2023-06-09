@@ -50,7 +50,7 @@
             <a class="nav-link" href="#">나의 리뷰</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">배송 현황</a>
+            <a class="nav-link" href="orderinglist.do?cid=${cid }">주문 목록</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#memberModal">회원 탈퇴</a>
