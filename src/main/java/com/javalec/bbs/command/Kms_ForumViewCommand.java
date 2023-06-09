@@ -25,6 +25,8 @@ public class Kms_ForumViewCommand implements MCommand {
 		Kms_WriteList_Dao dao1 = new Kms_WriteList_Dao();
 		ArrayList<Kms_WriteList_Dto> dtos1 = dao1.commentList(fid);
 		request.setAttribute("Clist", dtos1);
+		int listSize= dtos1.size();
+		request.setAttribute("ListSize", listSize);
 	}
 
 }
