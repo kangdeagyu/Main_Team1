@@ -10,7 +10,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-
+import com.javalec.bbs.dto.DetailsDto;
 import com.javalec.bbs.dto.MDto;
 import com.javalec.bbs.dto.OrderDto;
 
@@ -632,7 +632,7 @@ public class MDao {
 	        String query2 = "update product set pstock = pstock - ? where pid = ?";
 	        pu = connection.prepareStatement(query2);
 	        
-	        for (int i = 0; i < bid.length; i++) {
+	        for (int i = 0; i <pid.length; i++) {
 	        	
 	            ps.setString(1, cid);
 	            ps.setInt(2, Integer.parseInt(pid[i]));
@@ -670,6 +670,60 @@ public class MDao {
 		
 		return result;
 	}
+	
+	
+	// 구매내역
+	public ArrayList<DetailsDto> details(String ccid) {
+		ArrayList<DetailsDto> list = new ArrayList<DetailsDto>();
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			connection = dataSource.getConnection(); // sql 연결
+			String query = "select c.cname, c.cphone, oqty, oprice, opostnum, oaddress1, oaddress2 ";
+			String query1 = " from ordering o, customer c";
+			String query2 = " where o.customer_cid = c.cid and o.customer_cid = ?";
+			String query3 = " and odate = (select MAX(odate) from ordering where cid = ?)";
+			ps = connection.prepareStatement(query + query1 + query2 + query3);
+
+			ps.setString(1, ccid);
+			ps.setString(2, ccid);
+
+
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				String name = rs.getString(1);
+				String phone = rs.getString(2);
+				int qty = rs.getInt(3);
+				int price = rs.getInt(4);
+				String postnum = rs.getString(5);
+				String address1 = rs.getString(6);
+				String address2 = rs.getString(7);
+
+				DetailsDto dto = new DetailsDto(name, phone, qty, price, postnum, address1, address2);
+				list.add(dto);
+				
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return list;
+		
+	}
+	
+	
+	
 	
 	
 }// end

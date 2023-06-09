@@ -25,12 +25,22 @@ public class OrderProductCommand implements MCommand {
 		String postnum = request.getParameter("cpostnum");
 		String address1 = request.getParameter("caddress1");
 		String address2 = request.getParameter("caddress2");
+		String memo = request.getParameter("memo");
+		String payment = request.getParameter("payment");
+		String view;
+		session.setAttribute("Memo", memo);
+		session.setAttribute("Payment", payment);
 		
 		MDao dao = new MDao();
 		boolean result = dao.order(bid, cid, pid, qty, price, postnum, address1, address2);
 		
-		System.out.println(result);
+		if(result == true) {
+			view = "details.do";
+		}else {
+			view = "OrderView.jsp";
+		}
 		
+		request.setAttribute("view", view);
 		
 	}
 

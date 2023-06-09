@@ -26,13 +26,11 @@
 
 
 <meta charset="UTF-8">
-<title>구매내역</title>
+<title>구매</title>
 </head>
 <body>
 	
 
-		<!-- 장바구니 리스트 사이즈  -->
-		<c:set var="listSize" value="${fn:length(orderList)}" />
 <div>
 	<h3>주문 상품 정보</h3>
 	<table>
@@ -54,7 +52,7 @@
 <br/>
 
 	<h3>주문자 정보</h3>
-	<form action="orderProduct.do" method="get">
+	<form action="orderProduct.do" name="orderForm" id="orderForm" method="post" onsubmit="return check()">
 	<c:forEach items="${list}" var="dto" >
 			<c:set var="name" value="${dto.cname }"></c:set>
 			<c:set var="phone" value="${dto.cphone }"></c:set>
@@ -77,7 +75,7 @@
 		<br><br>
 		
 		배송메모<br>
-		<select>
+		<select name="memo">
 			<option>배송메모를 선택해주세요.</option>		
 			<option>배송 전에 미리 연락 바랍니다.</option>		
 			<option>부재시 경비실에 맡겨주세요.</option>		
@@ -107,18 +105,13 @@
 <br/><br/>
 
 	<h3>결제수단</h3>
-	<input type="radio" name="purchase" checked="checked">신용카드
-	<input type="radio" name="purchase" >가상계좌<br/>
-	<input type="radio" name="purchase" >무통장입금
-	<input type="radio" name="purchase" >카카오페이<br/>
-	<input type="radio" name="purchase" >삼성페이
-	<input type="radio" name="purchase" >휴대폰<br/>
-	
-	
-	<!-- 정규식 체크 해야됨 -->
-	<input type="submit" value="구매하기" onclick="check()">
-	</form>
+	<input type="radio" name="payment" checked="checked" value="신용카드">신용카드
+	<input type="radio" name="payment" value="무통장입금" >무통장입금
+	<input type="radio" name="payment" value="카카오페이" >카카오페이
+	<input type="radio" name="payment" value="삼성페이" >삼성페이
 
+	<input type="submit" value="구매하기">
+	</form>
 
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -170,10 +163,8 @@
             }
         }).open();
     }
-    
-    
-    
- // 체크박스 요소를 가져옵니다.
+      
+	 // 체크박스 요소를 가져옵니다.
     const checkbox = document.getElementById('sameInfoCheckbox');
 
     // 텍스트 필드 요소들을 가져옵니다.
@@ -212,6 +203,78 @@
     // 페이지 로드 시 체크박스의 초기 상태에 따라 toggleAdditionalInfo 함수를 호출하여 데이터를 채울지 비울지 결정합니다.
     toggleAdditionalInfo();
 
+    function check() {
+    	event.preventDefault();
+    	const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    	
+    	// 이름 정규식 패턴
+    	const namePattern = /^[가-힣]{2,}$/;
+    	
+    	// 전화번호 정규식 패턴
+    	const phonePattern = /^\d{3}-\d{3,4}-\d{4}$/;
+    	
+    	// 우편번호 정규식 패턴
+    	const postcodePattern = /^\d{5}$/;
+    	
+    	// 폼 내용 가져오기
+    	const form = document.orderForm;
+    	const email = form.cid.value;
+    	const name = form.cname.value;
+    	const phone = form.cphone.value;
+    	const cpostnum = form.cpostnum.value;
+    	const caddress1 = form.caddress1.value;
+    	const caddress2 = form.caddress2.value;
+ 
+
+ 
+    	  // 이름 입력값 검사
+    	  if (name.length == 0) {
+    	    alert("이름을 입력해주세요.");
+    	    return false;
+    	  }
+    	  if (!namePattern.test(name)) {
+    	    alert("유효한 이름을 입력해주세요.");
+    	    return false;
+    	  }
+
+    	  // 전화번호 입력값 검사
+    	  if (phone.length == 0) {
+    	    alert("전화번호를 입력해주세요.");
+    	    return false;
+    	  }
+    	  if (!phonePattern.test(phone)) {
+    	    alert("유효한 전화번호를 입력해주세요. (예: 010-1234-5678)");
+    	    return false;
+    	  }
+
+    	  // 우편번호 입력값 검사
+    	  if (cpostnum.length == 0) {
+    	    alert("우편번호를 입력해주세요.");
+    	    return false;
+    	  }
+    	  if (!postcodePattern.test(cpostnum)) {
+    	    alert("유효한 우편번호를 입력해주세요.");
+    	    return false;
+    	  }
+
+
+    	  
+    	 
+    	 var confirmed = confirm("구매하시겠습니까?");
+    		  
+    	 if (confirmed) {
+    		 document.getElementById("orderForm").submit();
+    	} else {
+    		return false
+    	}
+    		
+
+		  
+    	  
+    	}
+
+
+	
 
 
 </script>
