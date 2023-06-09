@@ -49,12 +49,14 @@ public class selectionOrderCommand extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession(true);
 		String[] bid = request.getParameterValues("selectedBids");
+		session.removeAttribute("orderList");
 		
 		MDao dao = new MDao();
 		ArrayList<OrderDto> list = dao.userOrder(bid);
 
 		if(list.size() > 0) {
 			session.setAttribute("orderList", list);
+			session.setAttribute("bid", bid);
 			response.setStatus(HttpServletResponse.SC_OK);
 		}else {
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
