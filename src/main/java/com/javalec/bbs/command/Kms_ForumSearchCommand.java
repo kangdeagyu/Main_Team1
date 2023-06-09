@@ -22,7 +22,9 @@ public class Kms_ForumSearchCommand implements MCommand {
 		
 		Kms_WriteList_Dao dao = new Kms_WriteList_Dao();
 		ArrayList<Kms_WriteList_Dto> dtos = dao.forumsearch(Ftype,content);
+		int listSize= dtos.size();
 		request.setAttribute("RList", dtos);
+		request.setAttribute("ListSize", listSize);
 	}
 
 }

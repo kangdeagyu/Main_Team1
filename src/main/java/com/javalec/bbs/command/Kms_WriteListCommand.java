@@ -19,7 +19,9 @@ public class Kms_WriteListCommand implements MCommand {
 		int Ftype = Integer.parseInt(request.getParameter("ftype"));
 		Kms_WriteList_Dao dao = new Kms_WriteList_Dao();
 		ArrayList<Kms_WriteList_Dto> dtos = dao.list(Ftype);
+		int listSize= dtos.size();
 		request.setAttribute("RList", dtos);
+		request.setAttribute("ListSize", listSize);
 	}
 
 }
