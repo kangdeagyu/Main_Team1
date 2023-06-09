@@ -143,6 +143,9 @@
         <form action="pjh_WriteForum.jsp">
             <input type="submit" value="QnA쓰기">
         </form>
+        <form action="Admin_QnA_pjh.jsp">
+        	<input type="submit" value="공지사항 적기">
+        </form>
     </c:if>
 
     <div style="text-align: right;">
@@ -170,8 +173,9 @@
         	<c:forEach items="${noticelist}" var="noticedto" varStatus="status">
         	<tr>
         			<td>${noticedto.nid}</td>       
+                    <td>관리자</td>
+                    <td></td>
                     <td><a href="">${noticedto.ntitle}</a></td>     
-                    <td>관리자</td>     
                     <td>${noticedto.ninsertdate}</td>
         	</tr>
         	</c:forEach>

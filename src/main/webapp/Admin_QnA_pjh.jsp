@@ -58,7 +58,7 @@
             <input type="button" value="재작성" onclick="resetForm()">
 		</form>
 		
-		<form action="noticelist.do" method="post">
+		<form action="Awritelist.do?ftype=2" method="post">
             <input type="submit" value="목록">
         </form>
          </div>
