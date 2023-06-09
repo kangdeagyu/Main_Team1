@@ -86,7 +86,7 @@
         </tr>
         <tr>
             <td><strong>상품:</strong></td>
-            <td>${forumView.pname}</td>
+            <td>${forumView.cname}</td>
         </tr>
         <tr>
             <td colspan="2"><strong>내용:</strong></td>
@@ -106,19 +106,25 @@
             <th>삭제</th>
         </tr>
         <tbody>
+        <c:if test="${empty Clist}">
+    		<tr>
+        		<td colspan="5">아직 등록된 댓글이 없습니다.</td>
+   	 		</tr>
+		</c:if>
             <c:forEach items="${Clist}" var="cdto">
                 <tr>
                     <td>${cdto.cname}</td>
-                    <td>
-                        <c:choose>
-                            <c:when test="${cdto.fstep eq 0}">
-                                ${cdto.ftitle}
-                            </c:when>
-                            <c:otherwise>
-                                <span style="margin-left: ${cdto.fstep * 20}px">ㄴ${cdto.ftitle}</span>
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
+                    <td class="text-left">
+				    <c:choose>
+				        <c:when test="${cdto.fstep eq 0}">
+				            ${cdto.ftitle}
+				        </c:when>
+				        <c:otherwise>
+				            <span style="font-weight: lighter; margin-left: ${cdto.fstep * 30}px">ㄴ${cdto.ftitle}</span>
+				        </c:otherwise>
+				    </c:choose>
+					</td>
+
                     <td>${cdto.finsertdate}</td>
                     <td>
                         <c:if test="${cdto.fdeletedate eq null}">
@@ -133,7 +139,7 @@
                                 <input type="hidden" name="freforder" value="${cdto.freforder}">
                                 <input type="hidden" name="fmotherid" value="${cdto.fmotherid}">
                                 <input type="hidden" name="fanswernum" value="${cdto.fanswernum}">
-                                <input type="submit" id="replyButton_${cdto.f_cid}" value="댓글">
+                                <input type="submit" id="replyButton_${cdto.f_cid}" value="입력">
                             </form>
                         </c:if>
                     </td>
@@ -151,15 +157,17 @@
             </c:forEach>
         </tbody>
     </table>
-
-    <h3>댓글 달기</h3>
+	<br/><br/>
+    <div class="center-align">
     <form action="commentwrite.do" method="post">
-        <input type="text" name="ftitle" placeholder="댓글을 입력하세요.">
+        <input type="text" name="ftitle" style="width: 300px;" placeholder="댓글을 입력하세요.">
         <input type="hidden" name="fid" value="${forumView.fid}">
         <input type="hidden" name="f_cid" value="${cid}">
         <input type="hidden" name="f_pid" value="${forumView.f_pid}">
-        <input type="submit" value="댓글 달기">
+        <input type="submit" value="입력">
     </form>
+</div>
+
     <form action="Kms_WriteReply.jsp" method="post">
         <input type="hidden" name="fid" value="${forumView.fid}">
         <input type="hidden" name="fref" value="${forumView.fref}">

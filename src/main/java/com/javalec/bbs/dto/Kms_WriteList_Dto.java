@@ -29,33 +29,12 @@ public class Kms_WriteList_Dto {
 	
 	
 
-	public String getCname() {
-		return cname;
-	}
-
-
-
-	public void setCname(String cname) {
-		this.cname = cname;
-	}
-
-
-
-	public String getPname() {
-		return pname;
-	}
-
-
-
-	public void setPname(String pname) {
-		this.pname = pname;
-	}
 
 
 
 	public Kms_WriteList_Dto(int fid, String f_cid, String f_aid, int f_pid, int ftype, int fref, int freforder,
 			int fstep, String ftitle, String fcontent, Timestamp finsertdate, Timestamp fdeletedate, int fmotherid,
-			int fanswernum, String pname,String cname) {
+			int fanswernum, String pname, String cname) {
 		super();
 		this.fid = fid;
 		this.f_cid = f_cid;
@@ -72,6 +51,29 @@ public class Kms_WriteList_Dto {
 		this.fmotherid = fmotherid;
 		this.fanswernum = fanswernum;
 		this.pname = pname;
+		this.cname = cname;
+	}
+
+
+
+	public Kms_WriteList_Dto(int fid, String f_cid, String f_aid, int f_pid, int ftype, int fref, int freforder,
+			int fstep, String ftitle, String fcontent, Timestamp finsertdate, Timestamp fdeletedate, int fmotherid,
+			int fanswernum, String cname) {
+		super();
+		this.fid = fid;
+		this.f_cid = f_cid;
+		this.f_aid = f_aid;
+		this.f_pid = f_pid;
+		this.ftype = ftype;
+		this.fref = fref;
+		this.freforder = freforder;
+		this.fstep = fstep;
+		this.ftitle = ftitle;
+		this.fcontent = fcontent;
+		this.finsertdate = finsertdate;
+		this.fdeletedate = fdeletedate;
+		this.fmotherid = fmotherid;
+		this.fanswernum = fanswernum;
 		this.cname = cname;
 	}
 
@@ -98,27 +100,28 @@ public class Kms_WriteList_Dto {
 
 
 
-	public Kms_WriteList_Dto(int fid, String f_cid, String f_aid, int f_pid, int ftype, int fref, int freforder,
-			int fstep, String ftitle, String fcontent, Timestamp finsertdate, Timestamp fdeletedate, int fmotherid,
-			int fanswernum, String cname) {
-		super();
-		this.fid = fid;
-		this.f_cid = f_cid;
-		this.f_aid = f_aid;
-		this.f_pid = f_pid;
-		this.ftype = ftype;
-		this.fref = fref;
-		this.freforder = freforder;
-		this.fstep = fstep;
-		this.ftitle = ftitle;
-		this.fcontent = fcontent;
-		this.finsertdate = finsertdate;
-		this.fdeletedate = fdeletedate;
-		this.fmotherid = fmotherid;
-		this.fanswernum = fanswernum;
+
+	public String getCname() {
+		return cname;
+	}
+	
+	
+	
+	public void setCname(String cname) {
 		this.cname = cname;
 	}
-
+	
+	
+	
+	public String getPname() {
+		return pname;
+	}
+	
+	
+	
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
 
 
 	public int getFid() {

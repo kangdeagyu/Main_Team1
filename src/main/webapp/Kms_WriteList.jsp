@@ -67,38 +67,57 @@
 	</form></c:if>
 
 	<div style="text-align: right;">
-    <form action="forumsearch.do" method="post">
-        <input type="hidden" name="ftype" value="${ftype}">
-        <input type="text" name="content" placeholder="원하시는 상품을 검색하세요!">
-        <input type="submit" value="검색">
-    </form>
-</div>
+	    <form action="forumsearch.do" method="post">
+	        <input type="hidden" name="ftype" value="${ftype}">
+	        <input type="text" name="content" placeholder="원하시는 상품을 검색하세요!">
+	        <input type="submit" value="검색">
+	    </form>
+	</div>
 
 		<table class="table table-striped table-bordered">
-    		<thead class="thead-light">
-        		<tr>
-            		<th style="width: 100px; background-color: lavender; color: purple;">
-            		<c:if test="${ftype eq 1}"> Review No. </c:if> 
-            		<c:if test="${ftype eq 2}">QnA No.</c:if> 
-            		</th>
-            		<th style="width: 200px;background-color: lavender;color: purple;">작성자</th>
-            		<th style="width: 200px;background-color: lavender;color: purple;">제품</th>
-            		<th style="background-color: lavender;color: purple;">제목</th>
-            		<th style="width: 300px; background-color: lavender;color: purple;">작성일</th>
-        	</tr>
-    	</thead>
-    	<tbody>
-        	<c:forEach items="${RList}" var="dto">
-            	<tr>
+    <thead class="thead-light">
+        <tr>
+            <th style="width: 120px; background-color: lavender; color: purple;">
+                <c:if test="${ftype eq 1}"> Review No. </c:if> 
+                <c:if test="${ftype eq 2}">QnA No.</c:if> 
+            </th>
+            <th style="width: 150px; background-color: lavender;color: purple;">작성자</th>
+            <th style="width: 150px; background-color: lavender;color: purple;">제품</th>
+            <th style="background-color: lavender;color: purple;">제목</th>
+            <th style="width: 300px; background-color: lavender;color: purple;">작성일</th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach items="${RList}" var="dto">
+            <tr>
                 <td>${dto.fid}</td>
                 <td>${dto.cname}</td>
                 <td>${dto.pname}</td>
-                <td><a href="ForumView.do?fid=${dto.fid}">${dto.ftitle}</a></td>
+                <td>
+                    <c:choose>
+                        <c:when test="${dto.fdeletedate ne null}">
+                            ${dto.ftitle}
+                        </c:when>
+                        <c:otherwise>
+                            <a href="ForumView.do?fid=${dto.fid}">
+                                <c:choose>
+                                    <c:when test="${dto.fstep eq 0}">
+                                        ${dto.ftitle}
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span style="font-weight: lighter; margin-left: ${dto.fstep * 20}px">ㄴ${dto.ftitle}</span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
+                </td>
                 <td>${dto.finsertdate}</td>
-            	</tr>
+            </tr>
         </c:forEach>
     </tbody>
 </table>
+
 <%@ include file="bottom.jsp" %>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 

@@ -171,7 +171,7 @@ public class Kms_WriteList_Dao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select f.*,p.pname from forum f, product p where p.pid = f.f_pid and f.fid = ?";
+			String query = "select f.*, p.pname from forum f, product p where p.pid = f.f_pid and f.fid = ?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, fid);
 			rs = preparedStatement.executeQuery();
@@ -194,11 +194,8 @@ public class Kms_WriteList_Dao {
 				String pname = rs.getString(15);
 				
 				
-				
-			
-				dto = new Kms_WriteList_Dto(Fid, f_cid, f_aid, f_pid, ftype, fref, freforder, fstep,
-						ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum, pname);
-				
+				dto = new Kms_WriteList_Dto(Fid, f_cid, f_aid, f_pid, ftype, fref, freforder, 
+						fstep, ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum, pname);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -248,8 +245,8 @@ public class Kms_WriteList_Dao {
 				
 				
 				
-				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(fid, f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, 
-						ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum, cname);
+				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(f_id, f_cid, f_aid, f_pid, ftype, fref, freforder,
+						fstep, ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum, cname);
 				dtos1.add(dto);
 				
 			
@@ -357,30 +354,34 @@ public class Kms_WriteList_Dao {
 	} // 대댓글 
 	
 	public void commentdelete(int fid) {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		
-		try {
-			connection = dataSource.getConnection();
-			String query = "UPDATE forum SET fdeletedate = CURRENT_TIMESTAMP, ftitle = '삭제된 댓글입니다'";
-			String query1 = " WHERE fid =" + fid;
-			preparedStatement = connection.prepareStatement(query + query1);
-			
-			
-			preparedStatement.executeUpdate();
-				
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				if(preparedStatement != null) preparedStatement.close();
-				if(connection != null) connection.close();
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
-	} // 삭제
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+	    
+	    try {
+	        connection = dataSource.getConnection();
+	        String query = "UPDATE forum SET fdeletedate = CURRENT_TIMESTAMP, ftitle = '삭제된 댓글입니다'";
+	        String query1 = " WHERE fid = ?";
+	        preparedStatement = connection.prepareStatement(query + query1);
+	        
+	        // fid 파라미터 설정
+	        preparedStatement.setInt(1, fid);
+	        
+	        preparedStatement.executeUpdate();
+	            
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (preparedStatement != null)
+	                preparedStatement.close();
+	            if (connection != null)
+	                connection.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+
 	
 	public ArrayList<Kms_WriteList_Dto> forumsearch(int Ftype, String content){
 		ArrayList<Kms_WriteList_Dto> dtos = new ArrayList<Kms_WriteList_Dto>();
@@ -390,8 +391,8 @@ public class Kms_WriteList_Dao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select f.*, c.cname from forum f, product p, customer c";
-			String Where2 = " where p.pid = f.f_pid and c.cid = f.f_cid and ftype =" + Ftype + " and p.pname like ?";
+			String query = "select f.*, p.pname,c.cname from forum f, product p, customer c";
+			String Where2 = " where p.pid = f.f_pid and c.cid = f.f_cid and ftype =" + Ftype + " and p.pname like ? order by fref desc, freforder";
 			ps = connection.prepareStatement(query + Where2);
 			ps.setString(1, "%" + content + "%");
 			rs = ps.executeQuery();
@@ -411,11 +412,13 @@ public class Kms_WriteList_Dao {
 				Timestamp fdeletedate = rs.getTimestamp(12);
 				int fmotherid = rs.getInt(13);
 				int fanswernum = rs.getInt(14);
+				String pname = rs.getString(15);
+				String cname = rs.getString(16);
 
 				
 				
-				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(f_id, f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, 
-						ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum, fcontent);
+				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(f_id, f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, ftitle,
+						fcontent, finsertdate, fdeletedate, fmotherid, fanswernum, pname, cname);
 				dtos.add(dto);
 			}
 		}catch(Exception e) {
