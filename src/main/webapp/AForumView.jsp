@@ -1,7 +1,6 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="header.jsp" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
@@ -9,6 +8,8 @@
 <head>
     <meta charset="UTF-8">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link href="css/admin_kkg.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="aQnA_style.css">
 <style>
     table {
         border-collapse: collapse;
@@ -74,6 +75,10 @@
     </script>
 </head>
 <body>
+<div class="sidebar">
+			<jsp:include page="admin_01_sidebar.jsp" />
+	 	</div>
+	 	<div class="wrapper">
     <h2>리뷰 상세 보기</h2>
     <table>
         <tr>
@@ -128,7 +133,7 @@
                     <td>${cdto.finsertdate}</td>
                     <td>
                         <c:if test="${cdto.fdeletedate eq null}">
-                            <form action="BigCommentWrite.do" method="post">
+                            <form action="ABigCommentWrite.do" method="post">
                                 <input type="text" name="ftitle" placeholder="댓글을 입력하세요.">
                                 <input type="hidden" name="page" value="${forumView.fid}">
                                 <input type="hidden" name="f_cid" value="${cid}">
@@ -145,7 +150,7 @@
                     </td>
                     <td>
                         <c:if test="${cdto.fdeletedate eq null}">
-                            <form action="commentdelete.do" method="post" onsubmit="return confirmDelete('${cdto.f_cid}', this)">
+                            <form action="Acommentdelete.do" method="post" onsubmit="return confirmDelete('${cdto.f_cid}', this)">
                                 <input type="hidden" name="page" value="${forumView.fid}">
                                 <input type="hidden" name="f_cid" value="${cdto.f_cid}">
                                 <input type="hidden" name="fid" value="${cdto.fid}">
@@ -159,16 +164,16 @@
     </table>
 	<br/><br/>
     <div class="center-align">
-    <form action="commentwrite.do" method="post">
+    <form action="Acommentwrite.do" method="post">
         <input type="text" name="ftitle" style="width: 300px;" placeholder="댓글을 입력하세요.">
         <input type="hidden" name="fid" value="${forumView.fid}">
         <input type="hidden" name="f_cid" value="${cid}">
         <input type="hidden" name="f_pid" value="${forumView.f_pid}">
         <input type="submit" value="입력">
     </form>
-</div>
+	</div>
 
-    <form action="Kms_WriteReply.jsp" method="post">
+    <form action="pjh_WriteReply.jsp" method="post">
         <input type="hidden" name="fid" value="${forumView.fid}">
         <input type="hidden" name="fref" value="${forumView.fref}">
         <input type="hidden" name="freforder" value="${forumView.freforder}">
@@ -177,6 +182,6 @@
         <input type="hidden" name="fanswernum" value="${forumView.fanswernum}">
         <input type="submit" value="답글 달기">
     </form>
-    <%@ include file="bottom.jsp" %>
+    </div>
 </body>
 </html>
