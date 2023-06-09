@@ -17,6 +17,7 @@ public class OrderProductCommand implements MCommand {
 		HttpSession session = request.getSession(true);
 		request.setCharacterEncoding("utf-8");
 		
+		String[] bid = (String[]) session.getAttribute("bid");
 		String cid = (String)session.getAttribute("cid");
 		String[] pid = request.getParameterValues("pid[]");
 		String[] qty = request.getParameterValues("qty[]");
@@ -26,7 +27,7 @@ public class OrderProductCommand implements MCommand {
 		String address2 = request.getParameter("caddress2");
 		
 		MDao dao = new MDao();
-		boolean result = dao.order(cid, pid, qty, price, postnum, address1, address2);
+		boolean result = dao.order(bid, cid, pid, qty, price, postnum, address1, address2);
 		
 		System.out.println(result);
 		

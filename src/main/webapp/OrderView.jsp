@@ -56,17 +56,17 @@
 	<h3>주문자 정보</h3>
 	<form action="orderProduct.do" method="get">
 	<c:forEach items="${list}" var="dto" >
-		<c:set var="name" value="${dto.cname }"></c:set>
-		<c:set var="phone" value="${dto.cphone }"></c:set>
-		<c:set var="id" value="${dto.cid }"></c:set>
-		<c:set var="postnum" value="${dto.cpostnum  }"></c:set>
-		<c:set var="address1" value="${dto.caddress1 }"></c:set>
-		<c:set var="address2" value="${dto.caddress2}"></c:set>
-		<input type="checkbox" id="sameInfoCheckbox" name="user"> 주문자 정보와 동일<br/>
+			<c:set var="name" value="${dto.cname }"></c:set>
+			<c:set var="phone" value="${dto.cphone }"></c:set>
+			<c:set var="id" value="${dto.cid }"></c:set>
+			<c:set var="postnum" value="${dto.cpostnum  }"></c:set>
+			<c:set var="address1" value="${dto.caddress1 }"></c:set>
+			<c:set var="address2" value="${dto.caddress2}"></c:set>
+			<input type="checkbox" id="sameInfoCheckbox" name="user"> 주문자 정보와 동일<br/>
 		<div id="additionalInfo">
 		    <input type="text" name="cname" id="cname" size="20" value="${dto.cname }" placeholder="이름"><br/>
 		    <input type="text" name="cphone" id="cphone" size="20" value="${dto.cphone }" placeholder="전화번호"><br/>
-		    <input type="email" name="cid" id="cid" size="42" value="${dto.cid }" placeholder="아이디(이메일)"><br/>
+		    <input type="email" name="cid" id="cid" size="42" value="${dto.cid }" placeholder="아이디(이메일)" readonly><br/>
 		    <input type="text"  name="cpostnum" id="sample6_postcode" placeholder="우편번호" value="${dto.cpostnum }" readonly>
 			<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br/>
 
@@ -91,7 +91,7 @@
 
 	<h3>주문 요약</h3>
 	<c:set var="totalprice" value="0"></c:set>
-	<c:forEach items="${orderList}" var="dto" varStatus="status">
+	<c:forEach items="${orderList}" var="dto" varStatus="status">	
 		<input type="hidden" name="pid[]" value="${dto.pid }">
 		<input type="hidden" name="qty[]" value="${dto.bqty }">
 		<input type="hidden" name="price[]" value="${dto.price }">
@@ -100,9 +100,9 @@
 	</c:forEach>
 	
 	상품가격 ${totalprice }<br/>
-	배송비 ${totalprice >= 150000 ? 0 : 3000  }			<br/>
+	배송비 ${totalprice >= 150000 ? 0 : 3000  }	<br/>
 
-	총 주문 금액 ${(totalprice) + (totalprice >= 150000 ? 0 : 3000)}		<br/>
+	총 주문 금액 ${(totalprice) + (totalprice >= 150000 ? 0 : 3000)}	<br/>
 
 <br/><br/>
 
@@ -115,8 +115,8 @@
 	<input type="radio" name="purchase" >휴대폰<br/>
 	
 	
-	
-	<input type="submit" value="구매하기">
+	<!-- 정규식 체크 해야됨 -->
+	<input type="submit" value="구매하기" onclick="check()">
 	</form>
 
 

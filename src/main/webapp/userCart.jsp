@@ -292,7 +292,7 @@ function sendOrder() {
 	      if (xhr.readyState === 4) {
 	        if (xhr.status === 200) {
 	          alert("상품을 주문 하시겠습니까?");
-	          window.location.href = "order.do";
+	          window.location.href = "cartorder.do";
 	        } else {
 	          alert("주문 오류");
 	        }
