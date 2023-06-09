@@ -51,7 +51,7 @@
 	
 		<div class="container">
 			<figure class="text">
-				<h3 class="text-dark">장바구니</h3>
+				<h3 class="text-dark">주문목록</h3>
 			</figure>
 		</div>
 
@@ -64,7 +64,7 @@
             <th>주문 날짜</th>
             <th>배송 상태</th>
         </tr>
-		<!-- 장바구니 리스트 사이즈  -->
+		
 		<c:set var="listSize" value="${fn:length(list)}" />
 
 
@@ -75,12 +75,13 @@
 			    <td>${dto.oqty}</td>
 			    <td>${dto.oprice}</td>
 			    <td>${dto.odate}</td>
+			    <td>
 			     <c:choose>
           			<c:when test="${dto.odelivery == 0}">배송 전</c:when>
           			<c:when test="${dto.odelivery == 1}">배송 중</c:when>
 		          	<c:when test="${dto.odelivery == 2}">배송 완료</c:when>
 		          	<c:otherwise>알 수 없음</c:otherwise>
-		        </c:choose>
+		        </c:choose></td>
 			  </tr>
 		</c:forEach>
 </table>

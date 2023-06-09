@@ -34,8 +34,8 @@ public class Kms_WriteList_Dao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select f.*,p.pname from forum f,product p";
-			String query1 = " where p.pid = f.f_pid and ftype = ? order by fref desc,freforder";
+			String query = "select f.*,p.pname,c.cname from forum f,product p, customer c";
+			String query1 = " where p.pid = f.f_pid and c.cid = f.f_cid and ftype = ? order by fref desc,freforder";
 			preparedStatement = connection.prepareStatement(query + query1);
 			preparedStatement.setInt(1, Ftype);
 			resultSet = preparedStatement.executeQuery();
@@ -56,11 +56,12 @@ public class Kms_WriteList_Dao {
 				int fmotherid = resultSet.getInt(13);
 				int fanswernum = resultSet.getInt(14);
 				String pname = resultSet.getString(15);
+				String cname = resultSet.getString(16);
 				
 				
 				
-				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(fid, f_cid, f_aid, f_pid, ftype, fref, freforder,
-						fstep, ftitle, fcontent, finsertdate, finsertdate, fmotherid, fanswernum, pname);
+				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(fid, f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, ftitle, 
+						fcontent, finsertdate, fdeletedate, fmotherid, fanswernum, pname, cname);
 				dtos.add(dto);
 				
 			
@@ -223,7 +224,7 @@ public class Kms_WriteList_Dao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select * from forum where ftype = 3 and fmotherid = ? order by fref desc,freforder";
+			String query = "select f.*, c.cname from forum f, customer c where f.f_cid = c.cid and ftype = 3 and fmotherid = ? order by fref desc,freforder";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, fid);
 			resultSet = preparedStatement.executeQuery();
@@ -243,11 +244,12 @@ public class Kms_WriteList_Dao {
 				Timestamp fdeletedate = resultSet.getTimestamp(12);
 				int fmotherid = resultSet.getInt(13);
 				int fanswernum = resultSet.getInt(14);
+				String cname = resultSet.getString(15);
 				
 				
 				
-				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(f_id, f_cid, f_aid, f_pid, ftype, fref, freforder, 
-						fstep, ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum);
+				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(fid, f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, 
+						ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum, cname);
 				dtos1.add(dto);
 				
 			
@@ -388,8 +390,8 @@ public class Kms_WriteList_Dao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select f.* from forum f,product p";
-			String Where2 = " where p.pid = f.f_pid and ftype =" + Ftype + " and p.pname like ?";
+			String query = "select f.*, c.cname from forum f, product p, customer c";
+			String Where2 = " where p.pid = f.f_pid and c.cid = f.f_cid and ftype =" + Ftype + " and p.pname like ?";
 			ps = connection.prepareStatement(query + Where2);
 			ps.setString(1, "%" + content + "%");
 			rs = ps.executeQuery();
@@ -412,8 +414,8 @@ public class Kms_WriteList_Dao {
 
 				
 				
-				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(f_id, f_cid, f_aid, f_pid, ftype, fref, freforder, fstep,
-						ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum);
+				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(f_id, f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, 
+						ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum, fcontent);
 				dtos.add(dto);
 			}
 		}catch(Exception e) {

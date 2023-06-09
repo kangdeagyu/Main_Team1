@@ -66,33 +66,34 @@
 		<input type="submit" value="QnA쓰기">
 	</form></c:if>
 
-	<form action="forumsearch.do" method="post">
-		<input type="hidden" name="ftype" value="${ftype }">
-		<input type="text" name="content" placeholder="원하시는 상품을 검색하세요!">
-		<input type="submit" value="검색">
-	</form>
+	<div style="text-align: right;">
+    <form action="forumsearch.do" method="post">
+        <input type="hidden" name="ftype" value="${ftype}">
+        <input type="text" name="content" placeholder="원하시는 상품을 검색하세요!">
+        <input type="submit" value="검색">
+    </form>
+</div>
+
 		<table class="table table-striped table-bordered">
     		<thead class="thead-light">
         		<tr>
-            		<th style="background-color: lavender; color: purple;">
+            		<th style="width: 100px; background-color: lavender; color: purple;">
             		<c:if test="${ftype eq 1}"> Review No. </c:if> 
             		<c:if test="${ftype eq 2}">QnA No.</c:if> 
             		</th>
-            		<th style="background-color: lavender;color: purple;">작성자</th>
-            		<th style="background-color: lavender;color: purple;">제품</th>
+            		<th style="width: 200px;background-color: lavender;color: purple;">작성자</th>
+            		<th style="width: 200px;background-color: lavender;color: purple;">제품</th>
             		<th style="background-color: lavender;color: purple;">제목</th>
-            		<th style="background-color: lavender;color: purple;">내용</th>
-            		<th style="background-color: lavender;color: purple;">작성일</th>
+            		<th style="width: 300px; background-color: lavender;color: purple;">작성일</th>
         	</tr>
     	</thead>
     	<tbody>
         	<c:forEach items="${RList}" var="dto">
             	<tr>
-                <td><a href="ForumView.do?fid=${dto.fid}">${dto.fid}</a></td>
-                <td>${dto.f_cid}</td>
-                <td>${dto.f_pid}</td>
-                <td>${dto.ftitle}</td>
-                <td>${dto.fcontent}</td>
+                <td>${dto.fid}</td>
+                <td>${dto.cname}</td>
+                <td>${dto.pname}</td>
+                <td><a href="ForumView.do?fid=${dto.fid}">${dto.ftitle}</a></td>
                 <td>${dto.finsertdate}</td>
             	</tr>
         </c:forEach>

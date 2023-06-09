@@ -21,11 +21,25 @@ public class Kms_WriteList_Dto {
 	
 	String pname;
 	
+	String cname;
+	
 	public Kms_WriteList_Dto() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	
+
+	public String getCname() {
+		return cname;
+	}
+
+
+
+	public void setCname(String cname) {
+		this.cname = cname;
+	}
+
+
 
 	public String getPname() {
 		return pname;
@@ -41,7 +55,7 @@ public class Kms_WriteList_Dto {
 
 	public Kms_WriteList_Dto(int fid, String f_cid, String f_aid, int f_pid, int ftype, int fref, int freforder,
 			int fstep, String ftitle, String fcontent, Timestamp finsertdate, Timestamp fdeletedate, int fmotherid,
-			int fanswernum, String pname) {
+			int fanswernum, String pname,String cname) {
 		super();
 		this.fid = fid;
 		this.f_cid = f_cid;
@@ -58,6 +72,7 @@ public class Kms_WriteList_Dto {
 		this.fmotherid = fmotherid;
 		this.fanswernum = fanswernum;
 		this.pname = pname;
+		this.cname = cname;
 	}
 
 
@@ -85,7 +100,7 @@ public class Kms_WriteList_Dto {
 
 	public Kms_WriteList_Dto(int fid, String f_cid, String f_aid, int f_pid, int ftype, int fref, int freforder,
 			int fstep, String ftitle, String fcontent, Timestamp finsertdate, Timestamp fdeletedate, int fmotherid,
-			int fanswernum) {
+			int fanswernum, String cname) {
 		super();
 		this.fid = fid;
 		this.f_cid = f_cid;
@@ -101,6 +116,7 @@ public class Kms_WriteList_Dto {
 		this.fdeletedate = fdeletedate;
 		this.fmotherid = fmotherid;
 		this.fanswernum = fanswernum;
+		this.cname = cname;
 	}
 
 

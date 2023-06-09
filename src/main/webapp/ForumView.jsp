@@ -2,31 +2,48 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="header.jsp" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th {
+        text-align: center;
+        padding: 10px;
+    }
+
+    th:first-child {
+        text-align: left;
+        width: 50%;
+    }
+
+    td {
+        text-align: center;
+        padding: 10px;
+    }
+
+    td:first-child {
+        text-align: left;
+    }
+	.subscript {
+    	vertical-align: super;
+    	font-size: smaller;
+	}
+  .center-align {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
     <title>리뷰 상세 보기</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        
-        th {
-            background-color: #f2f2f2;
-        }
-        
-        input[type="text"] {
-            width: 300px;
-        }
-    </style>
     <script type="text/javascript">
         function confirmDelete(cid, form) {
             var userCid = "${cid}"; // 로그인 사용자의 f_cid 값
@@ -60,7 +77,7 @@
     <h2>리뷰 상세 보기</h2>
     <table>
         <tr>
-            <td><strong>제목:</strong></td>
+            <td style="width: 100px;"><strong>제목:</strong></td>
             <td>${forumView.ftitle}</td>
         </tr>
         <tr>
@@ -82,7 +99,7 @@
     <h3>댓글 목록</h3>
     <table>
         <tr>
-            <th>작성자</th>
+            <th style="width: 100px;">작성자</th>
             <th>제목</th>
             <th>작성일</th>
             <th>댓글</th>
@@ -91,7 +108,7 @@
         <tbody>
             <c:forEach items="${Clist}" var="cdto">
                 <tr>
-                    <td>${cdto.f_cid}</td>
+                    <td>${cdto.cname}</td>
                     <td>
                         <c:choose>
                             <c:when test="${cdto.fstep eq 0}">

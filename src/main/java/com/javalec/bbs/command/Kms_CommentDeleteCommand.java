@@ -13,6 +13,7 @@ public class Kms_CommentDeleteCommand implements MCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
 		int fid = Integer.parseInt(request.getParameter("fid"));
 		int page = Integer.parseInt(request.getParameter("page"));
 		
