@@ -24,6 +24,7 @@ public class Kms_ForumSearchCommand implements MCommand {
 		ArrayList<Kms_WriteList_Dto> dtos = dao.forumsearch(Ftype,content);
 		int listSize= dtos.size();
 		request.setAttribute("RList", dtos);
+		request.setAttribute("ftype", Ftype);
 		request.setAttribute("ListSize", listSize);
 	}
 

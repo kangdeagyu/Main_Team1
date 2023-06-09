@@ -121,6 +121,7 @@
 
 </head>
 <body>
+
 <div class="sidebar">
 			<jsp:include page="admin_01_sidebar.jsp" />
 	 	</div>
@@ -134,12 +135,12 @@
     </c:if>
 
     <c:if test="${ftype eq 1}">
-        <form action="Kms_WriteForum.jsp">
+        <form action="pjh_WriteForum.jsp">
             <input type="submit" value="리뷰쓰기">
         </form>
     </c:if>
     <c:if test="${ftype eq 2}">
-        <form action="Kms_WriteForum.jsp">
+        <form action="pjh_WriteForum.jsp">
             <input type="submit" value="QnA쓰기">
         </form>
     </c:if>
@@ -179,18 +180,16 @@
                 <td>${dto.fid}</td>
                 <td>${dto.cname}</td>
                 <td>${dto.pname}</td>
-                <td><a href="ForumView.do?fid=${dto.fid}">${dto.ftitle}</a></td>
+                <td><a href="AForumView.do?fid=${dto.fid}">${dto.ftitle}</a></td>
                 <td>${dto.finsertdate}</td>
             	</tr>
         </c:forEach>
         </tbody>
     </table>
-
-  <div class="pagination-wrapper clearfix">
+	<div class="pagination-wrapper clearfix">
         <ul class="pagination float--right" id="pages">
         </ul>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </div>
 </body>
