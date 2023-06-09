@@ -121,6 +121,7 @@
 
 </head>
 <body>
+
 <div class="sidebar">
 			<jsp:include page="admin_01_sidebar.jsp" />
 	 	</div>
@@ -166,6 +167,14 @@
             </tr>
         </thead>
         <tbody id="tableBody">
+        	<c:forEach items="${noticelist}" var="noticedto" varStatus="status">
+        	<tr>
+        			<td>${noticedto.nid}</td>       
+                    <td><a href="">${noticedto.ntitle}</a></td>     
+                    <td>관리자</td>     
+                    <td>${noticedto.ninsertdate}</td>
+        	</tr>
+        	</c:forEach>
             <c:forEach items="${RList}" var="dto" varStatus="status">
             <tr class="data-row hidden-row" id="dataRow${status.index}">
                 <td>${dto.fid}</td>
@@ -177,12 +186,10 @@
         </c:forEach>
         </tbody>
     </table>
-
-  <div class="pagination-wrapper clearfix">
+	<div class="pagination-wrapper clearfix">
         <ul class="pagination float--right" id="pages">
         </ul>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </div>
 </body>

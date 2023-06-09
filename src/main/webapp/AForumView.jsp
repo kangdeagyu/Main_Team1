@@ -4,83 +4,10 @@
 <%@ include file="header.jsp" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="aQnA_style.css">
-  <script>
-        // 전체 데이터 개수
-        var totalData = ${ListSize};
-
-        // 데이터를 테이블에 렌더링하는 함수
-        function renderData(data) {
-            var tableBody = $("#tableBody");
-            tableBody.empty();
-            tableBody.append(data);
-        }
-
-        // 특정 페이지 번호에 해당하는 데이터를 가져오는 함수
-        function GetTarget(pageNumber) {
-            var dataPerPage = 10;
-            var startIndex = (pageNumber - 1) * dataPerPage;
-            var endIndex = startIndex + dataPerPage;
-
-            var rows = $("#tableBody tr.data-row");
-            rows.addClass("hidden-row"); // 모든 행 숨기기
-            rows.slice(startIndex, endIndex).removeClass("hidden-row"); // 현재 페이지에 해당하는 행 보이기
-
-            paging(totalData, pageNumber);
-        }
-
-        // 페이지네이션 링크 생성 함수
-        function paging(totalData, currentPage) {
-            var dataPerPage = 10;
-            var pageCount = 10;
-
-            var totalPage = Math.ceil(totalData / dataPerPage);
-            var pageGroup = Math.ceil(currentPage / pageCount);
-
-            var last = pageGroup * pageCount;
-            var first = last - (pageCount - 1);
-            var next = last + 1;
-            var prev = first - 1;
-
-            var pages = $("#pages");
-            pages.empty();
-
-            // 이전 링크 추가 (이전 페이지가 있는 경우)
-            if (first > 10) {
-                pages.append("<li class=\"pagination-item\">" +
-                    "<a onclick=\"GetTarget(" + prev + ");\" style='margin-left: 2px'>이전</a></li>");
-            }
-
-            // 페이지 번호 링크 생성
-            for (var i = first; i <= last; i++) {
-                if (i > totalPage) {
-                    break;
-                }
-                if (i == currentPage) {
-                    pages.append("<li class=\"pagination-item\">" +
-                        "<a class=\"active\">" + i + "</a></li>"); // 현재 페이지를 강조 표시
-                } else {
-                    pages.append("<li class=\"pagination-item\">" +
-                        "<a onclick=\"GetTarget(" + i + ");\">" + i + "</a></li>"); // 다른 페이지에 대한 링크 추가
-                }
-            }
-
-            // 다음 링크 추가 (더 많은 페이지가 있는 경우)
-            if (last < totalPage) {
-                pages.append("<li class=\"pagination-item\">" +
-                    "<a onclick=\"GetTarget(" + next + ");\" style='margin-left: 2px'>다음</a></li>");
-            }
-        }
-
-        $(document).ready(function() {
-            GetTarget(1); // 초기 페이지를 1로 설정
-        });
-    </script>
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <style>
     table {
@@ -170,8 +97,7 @@
     </table>
     <br/>
     <h3>댓글 목록</h3>
-    <table class="table table-striped table-bordered">
-        <thead class="thead-light">
+    <table>
         <tr>
             <th style="width: 100px;">작성자</th>
             <th>제목</th>
@@ -179,15 +105,14 @@
             <th>댓글</th>
             <th>삭제</th>
         </tr>
-        </thead>
-        <tbody id="tableBody">
+        <tbody>
         <c:if test="${empty Clist}">
     		<tr>
         		<td colspan="5">아직 등록된 댓글이 없습니다.</td>
    	 		</tr>
 		</c:if>
-            <c:forEach items="${Clist}" var="cdto" varStatus="status">
-                <tr class="data-row hidden-row" id="dataRow${status.index}">
+            <c:forEach items="${Clist}" var="cdto">
+                <tr>
                     <td>${cdto.cname}</td>
                     <td class="text-left">
 				    <c:choose>
@@ -242,10 +167,7 @@
         <input type="submit" value="입력">
     </form>
 </div>
-<div class="pagination-wrapper clearfix">
-        <ul class="pagination float--right" id="pages">
-        </ul>
-    </div>
+
     <form action="Kms_WriteReply.jsp" method="post">
         <input type="hidden" name="fid" value="${forumView.fid}">
         <input type="hidden" name="fref" value="${forumView.fref}">

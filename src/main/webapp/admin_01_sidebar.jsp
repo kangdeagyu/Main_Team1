@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,15 +42,15 @@
 	          adminHome.do
 	        </a>
 	      </li>
-	      <li>
-	         <c:set var="ftype" value="${param.ftype}" />
+	      <li class="nav-item">
+	      <c:set var="ftype" value="${param.ftype}" />
 			    <a class="nav-link text-white" href="Awritelist.do?ftype=2">
 	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#gird"></use></svg>
 	          AQnA.do
 	        </a>
 	      </li>
-	      <li>
-	         <c:set var="ftype" value="${param.ftype}" />
+	      <li class="nav-item">
+	      <c:set var="ftype" value="${param.ftype}" />
 			    <a class="nav-link text-white" href="Awritelist.do?ftype=1">
 	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#gird"></use></svg>
 	          AReview.do

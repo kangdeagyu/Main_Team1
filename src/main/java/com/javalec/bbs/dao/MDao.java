@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 
 
 import com.javalec.bbs.dto.MDto;
+import com.javalec.bbs.dto.OrderDto;
 
 
 
@@ -449,8 +450,7 @@ public class MDao {
 				if(rs.next()) {
 					idcount = rs.getInt(1);
 					pwcount = rs.getInt(2);
-					System.out.println(idcount);
-					System.out.println(pwcount);
+
 					
 	                if (rs.getString(3) != null && idcount > 0 && pwcount > 0) {
 	                	result = 2; // 탈퇴한회원
@@ -491,22 +491,15 @@ public class MDao {
 	        ps = connection.prepareStatement(query);
 	        
 	        for (String bid : bids) {
-	            ps.setString(1, bid);
-	            ps.addBatch(); // 배치에 쿼리 추가
-	        }
-	        
-	        int[] updateCounts = ps.executeBatch(); // 배치 실행
-	        
-	        // 각 배치 작업의 결과 확인
-	        for (int i : updateCounts) {
-	            if (i == PreparedStatement.EXECUTE_FAILED) {
-	                // 배치 실행 실패
-	                result = false;
-	                break;
+	            String[] bidValues = bid.split(","); // 쉼표로 구분된 값을 분리
+	            for (String value : bidValues) {
+	                int intBid = Integer.parseInt(value.trim()); // 공백 제거 후 int로 변환
+	                ps.setInt(1, intBid);
+	                ps.executeUpdate();
 	            }
 	        }
 	        
-	        result = true; // 모든 배치 작업이 성공한 경우
+	        result = true; 
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    } finally {
@@ -520,6 +513,163 @@ public class MDao {
 	    return result;
 	}
 
+
+
+
+	// 주문 
+	public ArrayList<OrderDto> userOrder(String[] bids) {
+		ArrayList<OrderDto> list = new ArrayList<OrderDto>();
+	    Connection connection = null;
+	    PreparedStatement ps = null;
+
+	    ResultSet rs = null;
+
+	    try {
+	        connection = dataSource.getConnection(); // SQL 연결
+	        
+	        // 장바구니 상품 가져오기
+	        String query = "SELECT b.b_cid, b.b_pid, b.bqty, p.pprice, p.pfilename, p.pname, p.pcontent FROM basket b, product p WHERE b.b_pid = p.pid AND b.bid = ?";
+	        ps = connection.prepareStatement(query);
+	        
+	        for (String bid : bids) {
+	            ps.setString(1, bid);
+	            rs = ps.executeQuery(); // 쿼리 실행
+
+	            // 결과 처리
+	            while (rs.next()) {
+	            	// 장바구니에서 데이터 가져오기
+	                String customer_cid = rs.getString(1);
+	                int product_pid = rs.getInt(2);
+	                int oqty = rs.getInt(3);
+	                int price = rs.getInt(4);
+	                String filename = rs.getString(5);
+	                String pname = rs.getString(6);
+	                String pcontent = rs.getString(7);
+	                String pfilename = "image/" + filename;
+	                OrderDto dto = new OrderDto(customer_cid, product_pid, oqty, price, pfilename, pname, pcontent);
+	                list.add(dto);
+	            }
+
+	        }
+
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) rs.close();
+	            if (ps != null) ps.close();
+
+	            if (connection != null) connection.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return list;
+	}
+	
+	// 구매 회원 정보
+	public ArrayList<MDto> orderUserList(String mcid){
+		ArrayList<MDto> dtos = new ArrayList<MDto>();
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			connection = dataSource.getConnection(); // sql 연결
+			String query = "select cid, cname, cphone, cpostnum, caddress1, caddress2 from customer where cid = ?";
+			ps = connection.prepareStatement(query);
+			ps.setString(1, mcid);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				String cid = rs.getString("cid");
+				String cname = rs.getString("cname");
+				String cphone = rs.getString("cphone");
+				String cpostnum = rs.getString("cpostnum");
+				String caddress1 = rs.getString("caddress1");
+				String caddress2 = rs.getString("caddress2");
+
+					
+				
+				MDto dto = new MDto(cid, cname, cphone, cpostnum, caddress1, caddress2);
+				dtos.add(dto);
+				
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return dtos;
+	}
+	
+	
+	// 구매
+	public boolean order(String[] bid, String cid, String[] pid, String[] qty, String[] price, String postnum, String address1, String addess2) {
+		boolean result = false;
+		Connection connection = null;
+	    PreparedStatement ps = null;
+	    PreparedStatement pw = null;
+	    PreparedStatement pu = null;
+
+	    try {
+	        connection = dataSource.getConnection(); // SQL 연결
+	        // 구매테이블에 상품 넣어주기
+	        String query = "insert into ordering (customer_cid, product_pid, oqty, oprice, opostnum, oaddress1, oaddress2, odelivery, odate) values (?, ?, ?, ?, ?, ?, ?, ?, now())";
+	        ps = connection.prepareStatement(query);
+	        // 장바구니에서 빼기
+	        String query1 = "delete from basket where bid = ?";
+	        pw = connection.prepareStatement(query1);
+	        // 상품 재고량에서 빼기
+	        String query2 = "update product set pstock = pstock - ? where pid = ?";
+	        pu = connection.prepareStatement(query2);
+	        
+	        for (int i = 0; i < bid.length; i++) {
+	        	
+	            ps.setString(1, cid);
+	            ps.setInt(2, Integer.parseInt(pid[i]));
+	            ps.setInt(3,  Integer.parseInt(qty[i]));
+	            ps.setInt(4,  Integer.parseInt(price[i]));
+	            ps.setString(5, postnum);
+	            ps.setString(6, address1);
+	            ps.setString(7, addess2);
+	            ps.setInt(8, 0);
+	            ps.executeUpdate(); // 쿼리 실행
+	            
+	            pw.setInt(1, Integer.parseInt(bid[i]));
+	            pw.executeUpdate();
+	            
+	            pu.setInt(1, Integer.parseInt(qty[i]));
+	            pu.setInt(2, Integer.parseInt(pid[i]));
+	            pu.executeUpdate();
+	        }
+
+	        result = true;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (ps != null) ps.close();
+	            if (pw != null) pw.close();
+	            if (pu != null) pu.close();
+	            if (connection != null) connection.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+		
+		
+		
+		return result;
+	}
 	
 	
 }// end
