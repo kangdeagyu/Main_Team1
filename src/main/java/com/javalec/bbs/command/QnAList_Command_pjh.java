@@ -15,6 +15,7 @@ public class QnAList_Command_pjh implements MCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		request.setCharacterEncoding("utf-8");
 		Admin_QnA_Dao dao = new Admin_QnA_Dao();
 		ArrayList<Admin_QnA_Dto> dtos = dao.list();
 		ArrayList<Admin_QnA_Dto> dtos2 = dao.Noticelist();

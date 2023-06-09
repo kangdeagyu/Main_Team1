@@ -17,6 +17,7 @@ public class aReviewSearchCommand_pjh implements MCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		request.setCharacterEncoding("utf-8");
 		String list = request.getParameter("list");
 		String query = request.getParameter("query");
 

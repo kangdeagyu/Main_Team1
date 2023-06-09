@@ -1,6 +1,7 @@
 package com.javalec.bbs.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -12,6 +13,7 @@ import javax.sql.DataSource;
 
 import com.javalec.bbs.dto.Admin_Product_Dto;
 import com.javalec.bbs.dto.Admin_Review_Dto;
+import com.javalec.bbs.dto.aExtraDto_kkg;
 
 public class Admin_Review_Dao {
 	
@@ -108,6 +110,9 @@ public class Admin_Review_Dao {
 	        }
 	    }
 	}
+	
+	
+	
 	
 	
 	

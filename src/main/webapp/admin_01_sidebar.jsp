@@ -42,13 +42,15 @@
 	        </a>
 	      </li>
 	      <li>
-	        <a href="AQnA.do" class="nav-link text-white">
+	         <c:set var="ftype" value="${param.ftype}" />
+			    <a class="nav-link text-white" href="Awritelist.do?ftype=2">
 	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#gird"></use></svg>
 	          AQnA.do
 	        </a>
 	      </li>
 	      <li>
-	        <a href="AReview.do" class="nav-link text-white">
+	         <c:set var="ftype" value="${param.ftype}" />
+			    <a class="nav-link text-white" href="Awritelist.do?ftype=1">
 	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#gird"></use></svg>
 	          AReview.do
 	        </a>

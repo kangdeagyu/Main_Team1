@@ -57,8 +57,10 @@
             return false; // 폼 제출 중지
         }
 
+        var product = {}; // 전역 범위에 product 객체 정의
+
         function openEditModal(pid, pprice, pstock, cname, pname, pcontent, pfilename) {
-            var product = {
+            product = {
                 pid: pid,
                 pprice: pprice,
                 pstock: pstock,
@@ -125,8 +127,6 @@
                 xhr.send(formData);
             } else {
                 // 파일이 선택되지 않은 경우 기존 폼 데이터만 전송
-                form.action = 'editProduct.do';
-                form.submit();
                 closeModal(); // 모달 닫기
             }
         }
@@ -137,7 +137,7 @@
             var newFileName = pid + '_' + timestamp + '.' + extension;
             return newFileName;
         }
-        
+
         function closeModal() {
             var modal = document.getElementById('myModal');
             modal.style.display = 'none';

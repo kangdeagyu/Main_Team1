@@ -19,7 +19,7 @@ public class aReview_List_Command_pjh implements MCommand {
 		// TODO Auto-generated method stub
 int total = 0;
 		
-		
+		request.setCharacterEncoding("utf-8");
 		Admin_Review_Dao dao = new Admin_Review_Dao();
 		ArrayList<Admin_Review_Dto>dtos = dao.list();
 		

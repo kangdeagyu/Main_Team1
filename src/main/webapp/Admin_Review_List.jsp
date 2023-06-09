@@ -98,7 +98,7 @@ function deleteSelectedItems() {
 						<td><a href="#" onclick="openModal2('${dto.fid}')">
 								${dto.ftitle} </a></td>
 						<td>
-							<form action="editProduct.do" method="post">
+							<form action="ForumView.do?fid=${dto.fid}" method="post">
 								<input type="hidden" name=fid value="${dto.fid}"> <input
 									type="submit" name="action" value="관리">
 							</form>
@@ -108,7 +108,7 @@ function deleteSelectedItems() {
 					        <h3>제품 정보</h3>
 					        <p>주요정보</p>
 					        <p>상품사진</p> 
-					        <a href="productInformation.do?list=pname&query=${dto.pname}">
+					        <a href="productInformation.do?query=${dto.pname}">
 					            <img src="${dto.pfilename}" alt="Product Image" width="100" />
 					        </a>
 					        <table border="1">

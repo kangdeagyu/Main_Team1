@@ -1,9 +1,11 @@
 package com.javalec.bbs.command;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,11 +15,11 @@ import com.javalec.bbs.dto.Admin_Product_Dto;
 public class aProductSearchCommand_pjh implements MCommand {
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		// TODO Auto-generated method stub
+		request.setCharacterEncoding("utf-8");
 		String list = request.getParameter("list");
 		String query = request.getParameter("query");
-
 		if (list.equals("pcategory")) {
 		    // 단어와 인식값을 매핑하는 Map을 생성합니다.
 		    Map<String, String> keywordMap = new HashMap<>();

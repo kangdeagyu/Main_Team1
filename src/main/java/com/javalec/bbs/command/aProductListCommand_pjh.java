@@ -18,7 +18,7 @@ public class aProductListCommand_pjh implements MCommand {
 		
 		int total = 0;
 		
-		
+		request.setCharacterEncoding("utf-8");
 		Admin_Product_Dao dao = new Admin_Product_Dao();
 		ArrayList<Admin_Product_Dto>dtos = dao.list();
 		

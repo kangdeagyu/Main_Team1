@@ -14,7 +14,7 @@ public class aDeleteReviewCommand_pjh implements MCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+		request.setCharacterEncoding("utf-8");
 		Admin_Review_Dao dao = new Admin_Review_Dao();
 		String[] selectedItems = request.getParameterValues("fid");
 		dao.delete(selectedItems);

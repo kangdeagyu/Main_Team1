@@ -3,6 +3,7 @@ package com.javalec.bbs.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -78,7 +79,7 @@ public class Admin_Product_Dao {
 		try {
 			connection = datasource.getConnection();
 			String query1 = "select pfilename, pid, pprice, pname, pcategory from product";
-			String Where2 = " where " + list + " like ?";
+			String Where2 = " where " + list + " like ? and pdeletedate IS NULL";
 			ps = connection.prepareStatement(query1 + Where2);
 			ps.setString(1, "%" + query + "%");
 			rs = ps.executeQuery();
@@ -110,7 +111,60 @@ public class Admin_Product_Dao {
 		return dtos;
 	} // list 출력
 	
-	public int saveProduct(String pname, String pprice, String pstock, String pcontent, String pcategory, String filename, String fileRealName, String filepath) {
+	public ArrayList<Admin_Product_Dto> search2(String query){
+		ArrayList<Admin_Product_Dto> dtos = new ArrayList<Admin_Product_Dto>();
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = datasource.getConnection();
+			String query1 = "select pfilename, pid, pprice, pname, pcategory from product";
+			String Where2 = " where pname like ? and pdeletedate IS NULL";
+			ps = connection.prepareStatement(query1 + Where2);
+			ps.setString(1, query);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				String pfilename = rs.getString(1);
+				int pid = rs.getInt(2);
+				int pprice = rs.getInt(3);
+				String pname = rs.getString(4);
+				String pcategory = Integer.toString(rs.getInt(5));
+
+				
+				
+				Admin_Product_Dto dto = new Admin_Product_Dto(pfilename, pname, pprice, pid, pcategory);
+				dtos.add(dto);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return dtos;
+	} // list 출력
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public int saveProduct(String pname, String pprice, String pstock, String pcontent, String pcategory, String newFileName, String fileRealName, String filepath) {
 	    Connection connection = null;
 	    PreparedStatement preparedStatement = null;
 
@@ -119,21 +173,36 @@ public class Admin_Product_Dao {
 	        String query = "INSERT INTO product (pname, pprice, pstock, pfilename, pcategory, pcontent, pinsertdate) VALUES (?, ?, ?, ?, ?, ?, now())";
 	        String query2 = "INSERT INTO make (product_pid, admin_aid, mdate) VALUES (?, 'admin', now())";
 
-	        preparedStatement = connection.prepareStatement(query);
+	        preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 	        preparedStatement.setString(1, pname);
 	        preparedStatement.setString(2, pprice);
 	        preparedStatement.setString(3, pstock);
-	        preparedStatement.setString(4, filename);
+	        preparedStatement.setString(4, newFileName);
 	        preparedStatement.setString(5, pcategory);
 	        preparedStatement.setString(6, pcontent);
 	        preparedStatement.executeUpdate();
 
-	        int pid = getProductId(pname); // 상품명으로 pid 조회
+	        ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+	        int pid;
+	        if (generatedKeys.next()) {
+	            pid = generatedKeys.getInt(1); // 자동 생성된 pid 값 가져오기
+	        } else {
+	            throw new Exception("Failed to retrieve generated key.");
+	        }
+
+	        // pfilename에 pid를 포함한 새로운 파일 이름 생성
+	        String newFileNameWithPid = pid + "_" + newFileName;
+
+	        // 파일 이름 업데이트
+	        String updateQuery = "UPDATE product SET pfilename = ? WHERE pid = ?";
+	        preparedStatement = connection.prepareStatement(updateQuery);
+	        preparedStatement.setString(1, newFileNameWithPid);
+	        preparedStatement.setInt(2, pid);
+	        preparedStatement.executeUpdate();
 
 	        // make 테이블에 데이터 추가
 	        preparedStatement = connection.prepareStatement(query2);
 	        preparedStatement.setInt(1, pid); // 조회한 pid 사용
-//	        preparedStatement.setInt(2, admin_aid); // 관리자 ID 사용
 	        return preparedStatement.executeUpdate();
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -156,6 +225,54 @@ public class Admin_Product_Dao {
 	    }
 	    return -1;
 	}
+	
+	public String getUpdatedFileName() {
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+	    ResultSet resultSet = null;
+
+	    try {
+	        connection = datasource.getConnection();
+	        String query = "SELECT pfilename FROM product ORDER BY pid DESC LIMIT 1";
+	        preparedStatement = connection.prepareStatement(query);
+	        resultSet = preparedStatement.executeQuery();
+
+	        if (resultSet.next()) {
+	            return resultSet.getString("pfilename");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        // 리소스 해제 코드
+	        if (resultSet != null) {
+	            try {
+	                resultSet.close();
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        if (preparedStatement != null) {
+	            try {
+	                preparedStatement.close();
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        if (connection != null) {
+	            try {
+	                connection.close();
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
+	    return null;
+	}
+	
+	
+	
+	
+	
 	
 	 private int getProductId(String pname) {
 	        int pid = 0;
