@@ -34,8 +34,8 @@ DataSource dataSource;
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select o.*, p.pname from ordering o, product p";
-			String query1 = " where o.product_pid = p.pid and customer_cid = ? order by oid desc";
+			String query = "select o.*, p.pname, c.cname from ordering o, product p, customer c";
+			String query1 = " where o.product_pid = p.pid and c.cid = o.customer_cid and customer_cid = ? order by oid desc";
 			preparedStatement = connection.prepareStatement(query + query1);
 			preparedStatement.setString(1, cid);
 			resultSet = preparedStatement.executeQuery();
@@ -49,11 +49,13 @@ DataSource dataSource;
 				Timestamp finsertdate = resultSet.getTimestamp(6);
 				int odelivery = resultSet.getInt(7);
 				String pname = resultSet.getString(8);
+				String cname = resultSet.getString(9);
 				
 				
 				
 				
-				Kms_OrderingList_Dto dto = new Kms_OrderingList_Dto(oid, customer_cid, product_pid, oqty, oprice, finsertdate, odelivery, pname);
+				Kms_OrderingList_Dto dto = new Kms_OrderingList_Dto(oid, customer_cid, product_pid, oqty, oprice, finsertdate, odelivery, pname, cname);
+						
 				dtos.add(dto);
 				
 			

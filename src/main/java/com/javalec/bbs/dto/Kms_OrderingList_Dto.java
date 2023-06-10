@@ -13,6 +13,7 @@ public class Kms_OrderingList_Dto {
 	int odelivery;
 	
 	String pname;
+	String cname;
 	
 	public Kms_OrderingList_Dto() {
 		// TODO Auto-generated constructor stub
@@ -21,7 +22,7 @@ public class Kms_OrderingList_Dto {
 	
 	
 	public Kms_OrderingList_Dto(int oid, String customer_cid, int product_pid, int oqty, int oprice, Timestamp odate,
-			int odelivery, 	String pname) {
+			int odelivery, 	String pname, String cname) {
 		super();
 		this.oid = oid;
 		this.customer_cid = customer_cid;
@@ -31,6 +32,19 @@ public class Kms_OrderingList_Dto {
 		this.odate = odate;
 		this.odelivery = odelivery;
 		this.pname = pname;
+		this.cname = cname;
+	}
+
+
+
+	public String getCname() {
+		return cname;
+	}
+
+
+
+	public void setCname(String cname) {
+		this.cname = cname;
 	}
 
 

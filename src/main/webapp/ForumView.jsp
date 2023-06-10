@@ -195,7 +195,7 @@
 				            ${cdto.ftitle}
 				        </c:when>
 				        <c:otherwise>
-				            <span style="font-weight: lighter; margin-left: ${cdto.fstep * 30}px">ㄴ${cdto.ftitle}</span>
+				            <span style="font-weight: bold; margin-left: ${cdto.fstep * 30}px">ㄴ${cdto.ftitle}</span>
 				        </c:otherwise>
 				    </c:choose>
 					</td>
@@ -242,7 +242,7 @@
         <input type="submit" value="입력">
     </form>
 </div>
-<div class="pagination-wrapper clearfix">
+<div class="pagination-wrapper clearfix" style="text-align: center;">
         <ul class="pagination float--right" id="pages">
         </ul>
     </div>

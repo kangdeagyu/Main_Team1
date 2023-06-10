@@ -63,6 +63,7 @@
             <th>주문 금액</th>
             <th>주문 날짜</th>
             <th>배송 상태</th>
+            <th>리뷰 쓰기</th>
         </tr>
 		
 		<c:set var="listSize" value="${fn:length(list)}" />
@@ -82,6 +83,17 @@
 		          	<c:when test="${dto.odelivery == 2}">배송 완료</c:when>
 		          	<c:otherwise>알 수 없음</c:otherwise>
 		        </c:choose></td>
+		        <td>
+				    <c:if test="${dto.odelivery == 2}">
+				        <form action="Kms_WriteForum.jsp">
+						    <input type="hidden" name="f_pid" value="${dto.product_pid}">
+						    <input type="hidden" name="pname" value="${dto.pname}">
+						    <input type="hidden" name="cname" value="${dto.cname}">
+						    <input type="submit" value="리뷰쓰기">
+						</form>
+
+				    </c:if>
+				</td>
 			  </tr>
 		</c:forEach>
 </table>
