@@ -19,9 +19,12 @@ public class DetailsCommand implements MCommand {
 		HttpSession session = request.getSession(true);
 		request.setCharacterEncoding("utf-8");
 		String cid = (String)session.getAttribute("cid");
+		String cname = (String)session.getAttribute("Cname");
+		String cphone = (String)session.getAttribute("Cphone");
+		
 		
 		MDao dao = new MDao();
-		ArrayList<DetailsDto> dtos = dao.details(cid);
+		ArrayList<DetailsDto> dtos = dao.details(cid, cname, cphone);
 		
 		request.setAttribute("detail", dtos);
 	}

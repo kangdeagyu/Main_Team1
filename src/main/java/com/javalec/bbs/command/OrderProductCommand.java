@@ -27,9 +27,14 @@ public class OrderProductCommand implements MCommand {
 		String address2 = request.getParameter("caddress2");
 		String memo = request.getParameter("memo");
 		String payment = request.getParameter("payment");
+		String cname = request.getParameter("cname");
+		String cphone = request.getParameter("cphone");
 		String view;
 		session.setAttribute("Memo", memo);
 		session.setAttribute("Payment", payment);
+		session.setAttribute("Cname", cname);
+		session.setAttribute("Cphone", cphone);
+
 		
 		MDao dao = new MDao();
 		boolean result = dao.order(bid, cid, pid, qty, price, postnum, address1, address2);

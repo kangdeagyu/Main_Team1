@@ -25,44 +25,91 @@
 <title>구매내역</title>
 </head>
 <body>
-<div>
-	<h3>구매내역</h3>
-	<table>
-		<c:forEach items="${orderList}" var="dto" varStatus="status">
-			  <tr>
-			   	 <td>
-			    	<img src="${dto.pfilename}" style="width: 100px; height: 100px; margin-bottom: 10px;" alt="..." />
-			    </td>
-			    <td>${dto.pname}<br/>
-			    	${dto.pcontent} - ${dto.bqty}개<br/>
-			    	<fmt:formatNumber value="${dto.price * dto.bqty}" pattern="#,##0원" />
-			    </td>
-			  </tr>
-		</c:forEach> 	
-    </table><br/>
-</div>
+		<figure class="text-center">
+			<h3 class="text-dark">Little and Precious</h3>
+			<h3>구매내역</h3>
+		</figure>
+	<div class="container d-flex justify-content-center align-items-center vh-100">
+		<figure class="text-center">
+		<table>
+			<c:forEach items="${orderList}" var="dto" >
+				<tr>
+					<td>
+			    		<img src="${dto.pfilename}" style="width: 100px; height: 100px; margin-bottom: 10px;" alt="..." />
+			   		</td>
+			   		<td>${dto.pname}<br/>
+			    		${dto.pcontent} - ${dto.bqty}개<br/>
+			    		<fmt:formatNumber value="${dto.price * dto.bqty}" pattern="#,##0원" />
+			    	</td>
+				</tr>
+			</c:forEach>
+		</table>
+		<table>
+				<c:set var="totalprice" value="0"></c:set>
+			<c:forEach items="${orderList}" var="dto" >	
+	  			<c:set var="subtotal" value="${dto.price * dto.bqty}"></c:set>
+	  			<c:set var="totalprice" value="${totalprice + subtotal}"></c:set>
+			</c:forEach>
+			<c:forEach items="${detail}" var="dto" begin="0" end="0">
+				<tr>	
+					<td>이름 :</td>
+					<td>${dto.cname }</td>
+				</tr>
+				<tr>
+					<td>전화번호 :</td>
+					<td>${dto.cphone }</td>
+				</tr>
+				<tr>
+					<td>이메일(아이디) :</td>
+					<td>${cid }</td>
+				</tr>
+				<tr>
+					<td>우편번호 :</td>
+					<td>${dto.postnum }</td>
+				</tr>
+				<tr>
+					<td>주소 :</td>
+					<td>${dto.address1 }</td>
+				</tr>
+				<tr>
+					<td>상세주소 :</td>
+					<td>${dto.address2 }</td>
+				</tr>
+				<tr>
+					<td>배송메모 :</td>
+					<td>${Memo }</td>
+				</tr>
+				<tr>
+					<td>결제수단 :</td>
+					<td>${Payment }</td>
+				</tr>
+				<tr>
+				    <td>상품가격 :</td>
+				    <td><fmt:formatNumber value="${totalprice}" pattern="#,##0원" /></td>
+				</tr>
+				<tr>
+				    <td>배송비 :</td>
+				    <td><fmt:formatNumber value="${totalprice >= 150000 ? 0 : 3000}" pattern="#,##0원" /></td>
+				</tr>
+				<tr>
+				    <td>총 주문 금액 :</td>
+				    <td><fmt:formatNumber value="${(totalprice) + (totalprice >= 150000 ? 0 : 3000)}" pattern="#,##0원" /></td>
+				</tr>
+			</c:forEach>
 
-<c:forEach items="${detail}" var="dto" >
-			<input type="text" name="cname" id="cname" size="20" value="${dto.cname }" ><br/>
-		    <input type="text" name="cphone"  size="20" value="${dto.cphone }" ><br/>
-		    <input type="email" name="cid"  size="42" value="${cid }"  readonly><br/>
-		    <input type="text"  name="cpostnum"  value="${dto.postnum }" readonly><br>
+		</table>
+		</figure>
 
-			<input type="text"  name="caddress1" value="${dto.address1 }" readonly><br>
-			<input type="text"  name="caddress2" value="${dto.address2 }"><br/>
-			<input type="text"  name="memo" value="${Memo }"><br/>
-			<input type="text"  name="payment" value="${Payment }"><br/>
-</c:forEach>
-<c:set var="totalprice" value="0"></c:set>
-	<c:forEach items="${orderList}" var="dto" varStatus="status">	
-	  	<c:set var="subtotal" value="${dto.price * dto.bqty}"></c:set>
-	  	<c:set var="totalprice" value="${totalprice + subtotal}"></c:set>
-	</c:forEach>
+	</div>
+		<figure class="text-center">
+			<button class="w-100 btn btn-lg btn-primary" onclick="home()">홈으로 가기</button>
+		</figure>
 	
-	상품가격 ${totalprice }<br/>
-	배송비 ${totalprice >= 150000 ? 0 : 3000  }	<br/>
-
-	총 주문 금액 ${(totalprice) + (totalprice >= 150000 ? 0 : 3000)}	<br/>
+	<script type="text/javascript">
+		function home(){
+			 window.location.href = "home.do";
+		}
+	</script>
 
 
 	<%@ include file="bottom.jsp" %>

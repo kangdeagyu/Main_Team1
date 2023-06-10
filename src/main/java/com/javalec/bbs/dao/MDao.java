@@ -673,7 +673,7 @@ public class MDao {
 	
 	
 	// 구매내역
-	public ArrayList<DetailsDto> details(String ccid) {
+	public ArrayList<DetailsDto> details(String ccid, String ccname, String ccphone) {
 		ArrayList<DetailsDto> list = new ArrayList<DetailsDto>();
 		Connection connection = null;
 		PreparedStatement ps = null;
@@ -681,10 +681,10 @@ public class MDao {
 
 		try {
 			connection = dataSource.getConnection(); // sql 연결
-			String query = "select c.cname, c.cphone, oqty, oprice, opostnum, oaddress1, oaddress2 ";
-			String query1 = " from ordering o, customer c";
-			String query2 = " where o.customer_cid = c.cid and o.customer_cid = ?";
-			String query3 = " and odate = (select MAX(odate) from ordering where cid = ?)";
+			String query = "select oqty, oprice, opostnum, oaddress1, oaddress2 ";
+			String query1 = " from ordering";
+			String query2 = " where customer_cid = ?";
+			String query3 = " and odate = (select MAX(odate) from ordering where customer_cid = ?)";
 			ps = connection.prepareStatement(query + query1 + query2 + query3);
 
 			ps.setString(1, ccid);
@@ -694,13 +694,13 @@ public class MDao {
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				String name = rs.getString(1);
-				String phone = rs.getString(2);
-				int qty = rs.getInt(3);
-				int price = rs.getInt(4);
-				String postnum = rs.getString(5);
-				String address1 = rs.getString(6);
-				String address2 = rs.getString(7);
+				String name = ccname;
+				String phone = ccphone;
+				int qty = rs.getInt(1);
+				int price = rs.getInt(2);
+				String postnum = rs.getString(3);
+				String address1 = rs.getString(4);
+				String address2 = rs.getString(5);
 
 				DetailsDto dto = new DetailsDto(name, phone, qty, price, postnum, address1, address2);
 				list.add(dto);

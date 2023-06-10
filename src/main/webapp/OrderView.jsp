@@ -62,14 +62,14 @@
 			<c:set var="address2" value="${dto.caddress2}"></c:set>
 			<input type="checkbox" id="sameInfoCheckbox" name="user"> 주문자 정보와 동일<br/>
 		<div id="additionalInfo">
-		    <input type="text" name="cname" id="cname" size="20" value="${dto.cname }" placeholder="이름"><br/>
-		    <input type="text" name="cphone" id="cphone" size="20" value="${dto.cphone }" placeholder="전화번호"><br/>
-		    <input type="email" name="cid" id="cid" size="42" value="${dto.cid }" placeholder="아이디(이메일)" readonly><br/>
-		    <input type="text"  name="cpostnum" id="sample6_postcode" placeholder="우편번호" value="${dto.cpostnum }" readonly>
-			<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br/>
+		    <input type="text" class="form-control" name="cname" id="cname" size="20" value="${dto.cname }" placeholder="이름"><br/>
+		    <input type="text" class="form-control" name="cphone" id="cphone" size="20" value="${dto.cphone }" placeholder="전화번호" ><br/>
+		    <input type="email" class="form-control" name="cid" id="cid" size="42" value="${dto.cid }" placeholder="아이디(이메일)" readonly><br/>
+		    <input type="text"  class="form-control" name="cpostnum" id="sample6_postcode" placeholder="우편번호" value="${dto.cpostnum }" readonly>
+			<input type="button" class="form-control" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br/>
 
-			<input type="text"  name="caddress1" id="sample6_address" placeholder="주소" value="${dto.caddress1 }" readonly><br>
-			<input type="text"  name="caddress2" id="sample6_detailAddress" placeholder="상세주소" value="${dto.caddress2 }"><br/>
+			<input type="text"  class="form-control" name="caddress1" id="sample6_address" placeholder="주소" value="${dto.caddress1 }" readonly><br>
+			<input type="text"  class="form-control" name="caddress2" id="sample6_detailAddress" placeholder="상세주소" value="${dto.caddress2 }"><br/>
 			<input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
 		</div>
 		<br><br>
@@ -96,12 +96,20 @@
 	  	<c:set var="subtotal" value="${dto.price * dto.bqty}"></c:set>
 	  	<c:set var="totalprice" value="${totalprice + subtotal}"></c:set>
 	</c:forEach>
-	
-	상품가격 ${totalprice }<br/>
-	배송비 ${totalprice >= 150000 ? 0 : 3000  }	<br/>
-
-	총 주문 금액 ${(totalprice) + (totalprice >= 150000 ? 0 : 3000)}	<br/>
-
+			<table>
+				<tr>
+				    <td>상품가격 :</td>
+				    <td><fmt:formatNumber value="${totalprice}" pattern="#,##0원" /></td>
+				</tr>
+				<tr>
+				    <td>배송비 :</td>
+				    <td><fmt:formatNumber value="${totalprice >= 150000 ? 0 : 3000}" pattern="#,##0원" /></td>
+				</tr>
+				<tr>
+				    <td>총 주문 금액 :</td>
+				    <td><fmt:formatNumber value="${(totalprice) + (totalprice >= 150000 ? 0 : 3000)}" pattern="#,##0원" /></td>
+				</tr>
+			</table>
 <br/><br/>
 
 	<h3>결제수단</h3>
@@ -170,7 +178,6 @@
     // 텍스트 필드 요소들을 가져옵니다.
     const cnameField = document.getElementById('cname');
     const cphoneField = document.getElementById('cphone');
-    const cidField = document.getElementById('cid');
     const cpostnumField = document.getElementById('sample6_postcode');
     const caddress1Field = document.getElementById('sample6_address');
     const caddress2Field = document.getElementById('sample6_detailAddress');
@@ -182,7 +189,6 @@
             // 체크박스가 체크되어 있다면 데이터를 채웁니다.
             cnameField.value = "${name }";
             cphoneField.value = "${phone }";
-            cidField.value = "${cid }";
             cpostnumField.value = "${postnum }";
             caddress1Field.value = "${address1 }";
             caddress2Field.value = "${address2 }";
@@ -190,7 +196,6 @@
             // 체크박스가 체크되어 있지 않다면 데이터를 비웁니다.
             cnameField.value = "";
             cphoneField.value = "";
-            cidField.value = "";
             cpostnumField.value = "";
             caddress1Field.value = "";
             caddress2Field.value = "";
