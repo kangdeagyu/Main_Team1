@@ -30,7 +30,7 @@ public class AdminExtra_Dto_kkg {
 	Date cinsertdate ;
 	
 	int maxPage;
-	
+	int custnum;
 	
 	//constructor
 	
@@ -49,9 +49,10 @@ public class AdminExtra_Dto_kkg {
 
 
 
-	public AdminExtra_Dto_kkg(int maxPage) {
+	public AdminExtra_Dto_kkg(int maxPage, int custnum) {
 		super();
 		this.maxPage = maxPage;
+		this.custnum = custnum;
 	}
 
 
@@ -285,6 +286,24 @@ public class AdminExtra_Dto_kkg {
 
 	public void setMaxPage(int maxPage) {
 		this.maxPage = maxPage;
+	}
+
+
+
+
+
+
+	public int getCustnum() {
+		return custnum;
+	}
+
+
+
+
+
+
+	public void setCustnum(int custnum) {
+		this.custnum = custnum;
 	}
 	
 	

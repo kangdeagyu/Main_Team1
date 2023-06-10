@@ -309,10 +309,11 @@ System.out.println("dto에 셋팅된 유저 : "+cname + "pageNum : "+ pageNum +"
 	}//getUserList 끝
 	
 	
-	public int getUserCount() {
+	public ArrayList<AdminExtra_Dto_kkg> getUserCount() {
 		
 		int a =0;
-		
+		int m =0;
+		 ArrayList<AdminExtra_Dto_kkg> dtos = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -332,15 +333,17 @@ System.out.println("dto에 셋팅된 유저 : "+cname + "pageNum : "+ pageNum +"
 			if(resultSet.next()) {
 				a = resultSet.getInt("maxpage");
 			}
-			
+			connection.close();
+
 		}catch (Exception e) {
 			e.printStackTrace();
 			// TODO: handle exception
 		}
 		
-		a= a/5 + 1;
-		
-		return a ;
+		m= a/5 + 1;
+		AdminExtra_Dto_kkg dto = new AdminExtra_Dto_kkg(m, a);
+		dtos.add(dto);
+		return dtos ;
 		
 	}//end of getUserCount 
 	

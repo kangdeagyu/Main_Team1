@@ -1,7 +1,9 @@
 
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%> 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"   %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
     
 <!DOCTYPE html>
 <html>
@@ -48,57 +50,41 @@
 
 <script type="text/javascript">
 			
-			/* 페이지가 시작했을때, 그래프에 그리는 첫 날짜를 시작 date로 잡고  마지막 날짜를 endDate로 잡는 함수*/
-			  var dailyDate = ${requestScope.dailyDate};
-			  var start = dailyDate[0];
-			  var end = dailyDate[dailyDate.length - 1];
-			  
-			  var page = ${requestScope.userList};
-			  var pn = page[0].pageNum;
-			
-				/*페이징을 위함. 화면이 시작했을때의 페이지 값을 저장.*/ 
-				
+
 				
 				/* 날짜 입력의 정규화를 위함 */
 			function checkDate(){
-				const regstartdate = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
-				const regenddate = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;				
+				const regstartdate = /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+				const regenddate = /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;	
 					
 				const formdate = document.date;
+				const startDate = formdate.startDate.value;
+				const endDate = formdate.endDate.value;
+				
 				
 				if(!regstartdate.test(startDate)){
 						alert("시작 날짜를 입력해 주세요.")
-						form.startDate.select()
-						return
+						formdate.startDate.select();
+						return;
 					}
 					
 				if(!regenddate.test(endDate)){
 						alert("마지막 날짜를 입력해 주세요")
-						form.endDate.select()
-						return
+						formdate.endDate.select();
+						return;
 					}
 				if (endDate < startDate) {
 				    alert("종료일은 시작일보다 뒷날짜여야 합니다.");
-				    form.endDate.select();
+				    formdate.endDate.select();
 				    return;
 				}
-
-	
-				
-				formdate.submit()
+ 
+				formdate.submit();
 
 			}
 
 
 			/* 페이징 처리를 위한 버튼 */
-			function getPage() {
-				const formpage = document.page;	
-
-
-				
-				formpage.submit()
-
-			}
 			
 			
 			/* 수정/삭제 버튼과, 결재내역 보는 버튼을 위 */
@@ -107,9 +93,7 @@
 				
 			}
 			/* 결재,주문내역 보기 : 이건 mvc 모델로 보내서 바꾸기 */
-
-			
-			
+		
 			
 			
 </script>
@@ -146,11 +130,11 @@
 					<h1 class="h2">회원관리</h1>
 					<div>
 					
-						<form action="AUserlist.do" name="date" method="get">
-							<input type="text" name ="startDate" id="startDate" placeholder="시작일">
-	 						<input type="text" name ="endDate" id="endDate" placeholder="종료일">
-	 						<input type="hidden" name ="pageNum" value="${pn}">
-	 						<input type="button" value="확인" onclick="checkDate()">
+						<form action="AUserlist.do" name="date" method="post">
+							<input type="text" name ="startDate" id= "startDate" placeholder="시작일" autocomplete="off">
+	 						<input type="text" name ="endDate" id="endDate" placeholder="종료일" autocomplete="off" >
+	 						<input type="hidden" name ="pageNum" value="${userList[0].pageNum}">
+ 	 						<input type="button"  value="확 인" onclick="checkDate()">
 						</form>
 						
 					</div>
@@ -184,11 +168,28 @@
 
 				<canvas class="my-4 w-100 chartjs-render-monitor" id="userChart" width="500" height="300" 
 						style="display: block; height: 275px; width: 652px;"></canvas>
-				<hr>
 				</div>
-	
+				<hr>
 				
-				<h2>회원 목록</h2>
+<%-- 검증을 위한 파트.	<div>
+				
+				<p>데이터 확인 하는 파트</p>
+				<p>저장된 페이지 번호 :  ${userList[0].pageNum}</p>
+				<p>저장된 시작 날 :${dateList[0]}</p>
+				
+				<p>저장된 마지말  : ${dateList[fn:length(dateList)-1]} </p>
+				<p>날짜 배열의 길이 :${fn:length(dateList)} </p>
+				
+				<hr>
+				
+				</div>
+--%>			
+				<div>
+					<h2>회원 목록  </h2>     
+				</div>
+				<div>
+					<span style="font-size: 5; text-align: right">총 회원 수: ${usernum}</span>
+				</div>
 				<div class="table-responsive">
 					<table class="table table-striped table-sm">
 						<thead>
@@ -231,10 +232,10 @@
 					<div align="center">
 						<form action="AUserlist.do" name="page" method="get">
 						<c:set var="count" value="${maxPage}" />
-							<input type="hidden" name="startDate" value="${start}">
-							<input type="hidden" name="endDate" value="${endDate}">
+							<input type="hidden" name="startDate" id="startDate" value="${dateList[0]}">
+							<input type="hidden" name="endDate" id="endDate" value="${dateList[fn:length(dateList)-1]}">
 						<c:forEach begin="1" end="${count}" var="i">
-							<input type="button" onclick="getPage()" name="pageNum" value="${i}"> &nbsp; 
+							<input type="submit" name="pageNum" value='${i}'>  &nbsp; 
 						</c:forEach>
 						</form>
 					</div>
@@ -247,8 +248,17 @@
 	<script>
 
 	    $(function() {
-	      $("#startDate").datepicker();
-	      $("#endDate").datepicker();
+	      $("#startDate").datepicker({
+	    	  dateFormat : "yy-mm-dd"
+	      });
+	      
+	      
+	      
+	      $("#endDate").datepicker({
+	    		  dateFormat : "yy-mm-dd"
+	    		  
+	      
+	      });
 	    });
     </script>
 	    

@@ -33,15 +33,17 @@ public class aUserListCommnad_kkg implements MCommand {
 		// String startDate ;
 		// String endDate;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat tempFormat = new SimpleDateFormat("MM/dd/yyyy");
+		SimpleDateFormat tempFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		Timestamp startday = null; 
 		Timestamp endday = null;
 		int pageNum;
-		try {System.out.println("command 들어간 pageNum 값 : "+request.getParameter("pageNum"));
-		}catch (Exception e) {
-			// TODO: handle exception
-		}
+try {
+System.out.println("command 들어간 pageNum 값 : "+request.getParameter("pageNum"));
+System.out.println("parameter에 들어간 startDate : " +request.getParameter("startDate"));
+}catch (Exception e) {
+// TODO: handle exception
+}
 		
 		if (request.getParameter("pageNum") == null ) {
 			
@@ -51,18 +53,26 @@ public class aUserListCommnad_kkg implements MCommand {
 			pageNum = Integer.parseInt((request.getParameter("pageNum")));
 			
 		}
-		System.out.println("커맨드에서 최종 입력된 페이지 번호 : " + pageNum);
+System.out.println("커맨드에서 최종 입력된 페이지 번호 : " + pageNum);
 		
 		
 		
 		
 		if(request.getParameter("startDate") == null) {
-			startday=Timestamp.valueOf(dateFormat.format(request.getAttribute("startDate")) + " 00:00:00");
-			endday=Timestamp.valueOf(dateFormat.format(request.getAttribute("endDate")) + " 00:00:00");
+						
+			startday=new Timestamp (((Date)request.getAttribute("startDate")).getTime());
+			endday=new Timestamp (((Date)request.getAttribute("endDate")).getTime());
+			startday.setHours(0);
+			startday.setMinutes(0);
+			startday.setSeconds(0);
+			endday.setHours(0);
+			endday.setMinutes(0);
+			endday.setSeconds(0);
+			
 		}else{	
 			try {
-				startday=new Timestamp (tempFormat.parse(request.getParameter("startDate")).getTime());
-				endday=new Timestamp (tempFormat.parse(request.getParameter("endDate")).getTime());
+				startday=new Timestamp (tempFormat.parse(request.getParameter("startDate") + " 00:00:00").getTime());
+				endday=new Timestamp (tempFormat.parse(request.getParameter("endDate")+ " 00:00:00").getTime());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -98,14 +108,23 @@ public class aUserListCommnad_kkg implements MCommand {
 	
 	System.out.println("userList 채우기 완료");
 	
-	int maxPage = dao.getUserCount();
+	ArrayList<AdminExtra_Dto_kkg> chnum = dao.getUserCount(); 
+	int maxPage = chnum.get(0).getMaxPage();
+	int usernum = chnum.get(0).getCustnum();
+	
+
+
 	
 	// request 셋팅하기
 	request.setAttribute("dailyDate", dateListStr);
 	request.setAttribute("dailyNS", dailyNSList);
 	request.setAttribute("userList", userList);
 	request.setAttribute("maxPage", maxPage);
+	request.setAttribute("usernum", usernum);
+	request.setAttribute("dateList", dateList);
+	
 
+	
 	System.out.println("request attribute 채우기 완료");
 	
 	
