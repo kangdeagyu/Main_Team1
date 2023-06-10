@@ -34,8 +34,9 @@ public class Kms_DetailWriteList_Dao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select * from forum where ftype = 2 and f_pid = ? order by fref desc,freforder";
-			preparedStatement = connection.prepareStatement(query);
+			String query = "select f.*,p.pname,c.cname from forum f,product p, customer c";
+			String query1 = " where p.pid = f.f_pid and c.cid = f.f_cid and ftype = 2 and f_pid = ? order by fref desc,freforder";
+			preparedStatement = connection.prepareStatement(query + query1);
 			preparedStatement.setInt(1, pid);
 			resultSet = preparedStatement.executeQuery();
 			
@@ -54,11 +55,13 @@ public class Kms_DetailWriteList_Dao {
 				Timestamp fdeletedate = resultSet.getTimestamp(12);
 				int fmotherid = resultSet.getInt(13);
 				int fanswernum = resultSet.getInt(14);
+				String pname = resultSet.getString(15);
+				String cname = resultSet.getString(16);
 				
 				
 				
-				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(fid, f_cid, f_aid, f_pid, ftype, 
-				fref, freforder, fstep, ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum);
+				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(fid, f_cid, f_aid, f_pid, ftype, fref,
+						freforder, fstep, ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum, pname, cname);
 				dtos.add(dto);
 				
 			
@@ -87,8 +90,9 @@ public class Kms_DetailWriteList_Dao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select * from forum where ftype = 1 and f_pid = ? order by fref desc,freforder";
-			preparedStatement = connection.prepareStatement(query);
+			String query = "select f.*,p.pname,c.cname from forum f,product p, customer c";
+			String query1 = " where p.pid = f.f_pid and c.cid = f.f_cid and ftype = 1 and f_pid = ? order by fref desc,freforder";
+			preparedStatement = connection.prepareStatement(query + query1);
 			preparedStatement.setInt(1, pid);
 			resultSet = preparedStatement.executeQuery();
 			
@@ -107,11 +111,13 @@ public class Kms_DetailWriteList_Dao {
 				Timestamp fdeletedate = resultSet.getTimestamp(12);
 				int fmotherid = resultSet.getInt(13);
 				int fanswernum = resultSet.getInt(14);
+				String pname = resultSet.getString(15);
+				String cname = resultSet.getString(16);
 				
 				
 				
-				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(fid, f_cid, f_aid, f_pid, ftype, 
-				fref, freforder, fstep, ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum);
+				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(fid, f_cid, f_aid, f_pid, ftype, fref, freforder, 
+						fstep, ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum, pname, cname);
 				dtos.add(dto);
 				
 			
