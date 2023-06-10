@@ -141,7 +141,7 @@ public class ChartDao_kkg {
 							//System.out.println("매출 : "+ dailySales);
 						AdminExtra_Dto_kkg dto = new AdminExtra_Dto_kkg (month, monthlySales,monthlyOrders);
 						dtos.add(dto);
-						
+						    
 					System.out.println("완료된 month : "+month);
 					System.out.println("완료된 월의 sale : "+ monthlySales);
 					i++;
@@ -153,12 +153,6 @@ public class ChartDao_kkg {
 
 						e.printStackTrace();
 					}
-		
-		
-		
-		
-		
-		
 		
 		
 		
@@ -198,6 +192,7 @@ public class ChartDao_kkg {
 			System.out.println(sql);
 			resultSet = preparedStatement.executeQuery();
 			
+			
 //			String sql_select2	= "select count(*) as NScount";
 //			String sql_from2 	= " from custoemr";
 //			String sql_where2	= " where cinsertdate < ?";
@@ -208,8 +203,8 @@ public class ChartDao_kkg {
 //			
 //			System.out.println(sql2);
 //			resultSet2 = preparedStatement.executeQuery();
-//			int customerint = resultSet2.getInt("NScount");			
-
+//			int customerint = resultSet2.getInt("NScount");		
+			
 			while(resultSet.next()) {
 			
 					//System.out.println("i값 : "+ i);
@@ -248,27 +243,39 @@ public class ChartDao_kkg {
 	
 	//adminuserlist.jsp 화면 하단의 유저 목록을 보여주기 위한 데이터 가져오기
 	
-	public ArrayList<AdminExtra_Dto_kkg> getUserList() {
+	public ArrayList<AdminExtra_Dto_kkg> getUserList(int pageNum) {
 		ArrayList<AdminExtra_Dto_kkg> userList = new ArrayList<>() ;
-
+		
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 
 		try {
 			connection = dataSource.getConnection();
-			String sql_select = "select  *, ROW_NUMBER() OVER (ORDER BY Date(cinsertdate)) AS No from customer;";
-
-			String sql = sql_select ;
+			String subsql_select = "select * from ( ";
+			String sql_select = "select  *, ROW_NUMBER() OVER (ORDER BY Date(cinsertdate)) AS No from customer ";
+			String sql_where = " where cdeletedate is null ";
+			String subsql_AS = " )as subquery where No <= ? and No > ? ";
+			
+			String sql = subsql_select+ sql_select +sql_where +subsql_AS;
+			
+			//String sql = 
+			//		"select * from (select *, Row_NUMBER() OVER (ORDER BY Date(cinsertdate)) as No from customer where cdeletedate is null ) ";
+			
 			preparedStatement = connection.prepareStatement(sql);
+			System.out.println("조건에 들어갈 5*pageNum : "+ pageNum*5);
+			preparedStatement.setInt(1, pageNum*5);
+			preparedStatement.setInt(2, (pageNum-1)*5);
+
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()) {
+				int pagenum = pageNum;
 				int seq = resultSet.getInt("No");
 				String cid = resultSet.getString("cid");
-				String cname = resultSet.getString("cid");
-				String cphone = resultSet.getString("cid");
-				String cbirthdate = resultSet.getString("cid");
+				String cname = resultSet.getString("cname");
+				String cphone = resultSet.getString("cphone");
+				String cbirthdate = resultSet.getString("cbirthdate");
 				String cgender = null;
 				
 				switch(resultSet.getInt("cgender")){
@@ -282,11 +289,14 @@ public class ChartDao_kkg {
 				}
 				
 				String caddress = "("+resultSet.getString("cpostnum")+") " + resultSet.getString("caddress1")+ resultSet.getString("caddress2");
-				Date cinsertdate  = new Date(resultSet.getTimestamp("cinsertate").getTime());
-				AdminExtra_Dto_kkg dto = new AdminExtra_Dto_kkg(seq, cid, cname, cphone, cbirthdate, cgender, caddress, cinsertdate);
+				Date cinsertdate  = new Date(resultSet.getTimestamp("cinsertdate").getTime());
+				
+System.out.println("dto에 셋팅된 유저 : "+cname + "pageNum : "+ pageNum +","+ pagenum);
+				AdminExtra_Dto_kkg dto = new AdminExtra_Dto_kkg(pagenum, seq, cid, cname, cphone, cbirthdate, cgender, caddress, cinsertdate);
 				userList.add(dto);
 			}
-			
+			connection.close();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO: handle exception
@@ -299,9 +309,43 @@ public class ChartDao_kkg {
 	}//getUserList 끝
 	
 	
+	public int getUserCount() {
+		
+		int a =0;
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		ResultSet resultSet2 = null;
+		
+		try {
+			connection = dataSource.getConnection();
+	
+			String sql_select = "select count(*) as maxpage from customer ";
+			String sql_where = " where cdeletedate is null ";
+			
+			String sql = sql_select +sql_where;
+			preparedStatement = connection.prepareStatement(sql);
+
+			resultSet = preparedStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				a = resultSet.getInt("maxpage");
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		
+		a= a/5 + 1;
+		
+		return a ;
+		
+	}//end of getUserCount 
 	
 	
 	
 	
 
-}
+}//end Game now

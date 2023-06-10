@@ -37,6 +37,23 @@ public class aUserListCommnad_kkg implements MCommand {
 
 		Timestamp startday = null; 
 		Timestamp endday = null;
+		int pageNum;
+		try {System.out.println("command 들어간 pageNum 값 : "+request.getParameter("pageNum"));
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		if (request.getParameter("pageNum") == null ) {
+			
+			pageNum = Integer.parseInt((request.getAttribute("pnum").toString()));
+			
+		}else {
+			pageNum = Integer.parseInt((request.getParameter("pageNum")));
+			
+		}
+		System.out.println("커맨드에서 최종 입력된 페이지 번호 : " + pageNum);
+		
+		
 		
 		
 		if(request.getParameter("startDate") == null) {
@@ -76,16 +93,20 @@ public class aUserListCommnad_kkg implements MCommand {
 	//그래프를 그리기 위한 작업 완료
 		
 	//회원목록을 가져오기 위한 작업.
-	//
 		
-	ArrayList<AdminExtra_Dto_kkg> userList = dao.getUserList();
-		
+	ArrayList<AdminExtra_Dto_kkg> userList = dao.getUserList(pageNum);
+	
+	System.out.println("userList 채우기 완료");
+	
+	int maxPage = dao.getUserCount();
 	
 	// request 셋팅하기
 	request.setAttribute("dailyDate", dateListStr);
 	request.setAttribute("dailyNS", dailyNSList);
 	request.setAttribute("userList", userList);
+	request.setAttribute("maxPage", maxPage);
 
+	System.out.println("request attribute 채우기 완료");
 	
 	
 	}// ************ end of execute

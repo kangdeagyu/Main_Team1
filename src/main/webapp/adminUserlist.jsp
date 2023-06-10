@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%> 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"   %>
@@ -46,15 +47,24 @@
 </head>
 
 <script type="text/javascript">
+			
+			/* 페이지가 시작했을때, 그래프에 그리는 첫 날짜를 시작 date로 잡고  마지막 날짜를 endDate로 잡는 함수*/
+			  var dailyDate = ${requestScope.dailyDate};
+			  var start = dailyDate[0];
+			  var end = dailyDate[dailyDate.length - 1];
+			  
+			  var page = ${requestScope.userList};
+			  var pn = page[0].pageNum;
+			
+				/*페이징을 위함. 화면이 시작했을때의 페이지 값을 저장.*/ 
+				
+				
 				/* 날짜 입력의 정규화를 위함 */
 			function checkDate(){
 				const regstartdate = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
 				const regenddate = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;				
 					
 				const formdate = document.date;
-				const startDate = formdate.startDate.value;
-				const endDate = formdate.endDate.value;
-				
 				
 				if(!regstartdate.test(startDate)){
 						alert("시작 날짜를 입력해 주세요.")
@@ -73,18 +83,33 @@
 				    return;
 				}
 
+	
 				
-					formdate.submit()
+				formdate.submit()
+
 			}
+
+
+			/* 페이징 처리를 위한 버튼 */
+			function getPage() {
+				const formpage = document.page;	
+
+
+				
+				formpage.submit()
+
+			}
+			
 			
 			/* 수정/삭제 버튼과, 결재내역 보는 버튼을 위 */
 			/* 수정/삭제 버튼 : 이건 팝업창 띄워서 수정하는 방식으로 구현하자.*/
 			function updateInfo(cid){
 				
-				
 			}
 			/* 결재,주문내역 보기 : 이건 mvc 모델로 보내서 바꾸기 */
 
+			
+			
 			
 			
 </script>
@@ -124,6 +149,7 @@
 						<form action="AUserlist.do" name="date" method="get">
 							<input type="text" name ="startDate" id="startDate" placeholder="시작일">
 	 						<input type="text" name ="endDate" id="endDate" placeholder="종료일">
+	 						<input type="hidden" name ="pageNum" value="${pn}">
 	 						<input type="button" value="확인" onclick="checkDate()">
 						</form>
 						
@@ -158,21 +184,22 @@
 
 				<canvas class="my-4 w-100 chartjs-render-monitor" id="userChart" width="500" height="300" 
 						style="display: block; height: 275px; width: 652px;"></canvas>
-
-
+				<hr>
 				</div>
+	
+				
 				<h2>회원 목록</h2>
 				<div class="table-responsive">
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
+								<th scope="col">page</th>
 								<th scope="col">#</th>
 								<th scope="col">이름</th>
 								<th scope="col">ID</th>
 								<th scope="col">생년월일</th>
 								<th scope="col">성별</th>
 								<th scope="col">주소</th>
-								<th scope="col">Email</th>
 								<th scope="col">연락처</th>
 								<th scope="col">가입일</th>
 								<th scope="col">정보 수정/삭제</th>
@@ -181,21 +208,11 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>이지은</td>
-								<td>IloveIU@naver.com</td>
-								<td>1993/05/16</td>
-								<td>여</td>
-								<td>서울시 강남구 역삼동 더조은 아카데미</td>
-								<td>010-7777-7777</td>
-								<td>2023/03/03</td>
-								<td><button name="updateThis">수정/삭제</button></td>
-								<td><button name="showOlist">결재/구매내역</button></td>
-							</tr>
+
 							
-							<c:forEach items="${request.userList}" var="customer">
+							<c:forEach items="${userList}" var="customer">
 								<tr>
+									<td>${customer.pageNum}</td>
 									<td>${customer.seq}</td>
 									<td>${customer.cname}</td>
 									<td>${customer.cid}</td>
@@ -204,17 +221,24 @@
 									<td>${customer.caddress}</td>
 									<td>${customer.cphone}</td>
 									<td>${customer.cinsertdate}</td>
-
 									<td><form  name="updateInfo"><button onclick="updateInfo(${customer.cid})">수정/삭제</button></form></td>
 									<td><form action="showOderList.do" name="showOlist"> <input type="hidden" name="cid" value="${customer.cid}"><input type="submit" value="구매내역" size="30"></form></td>
 								</tr>
-							
-							
-							
+
 							</c:forEach>
-						
 						</tbody>
 					</table>
+					<div align="center">
+						<form action="AUserlist.do" name="page" method="get">
+						<c:set var="count" value="${maxPage}" />
+							<input type="hidden" name="startDate" value="${start}">
+							<input type="hidden" name="endDate" value="${endDate}">
+						<c:forEach begin="1" end="${count}" var="i">
+							<input type="button" onclick="getPage()" name="pageNum" value="${i}"> &nbsp; 
+						</c:forEach>
+						</form>
+					</div>
+						
 				</div>
 			</main>
 		</div>
@@ -232,7 +256,17 @@
 	    var userContext = document.getElementById('userChart');
 		SingleBarChart(userContext, ${requestScope.dailyDate}, '신규가입자' ,${requestScope.dailyNS});  
     </script>
+    
+    
+    
+    
+	<script>
 
+
+	
+	
+	
+	</script>
 
 </body>
 </html>

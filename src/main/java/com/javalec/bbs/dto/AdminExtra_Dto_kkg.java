@@ -19,6 +19,7 @@ public class AdminExtra_Dto_kkg {
 	int ordercount;
 	String month;
 	
+	int pageNum;
 	int seq ;
 	String cid ;
 	String cname ;
@@ -28,6 +29,7 @@ public class AdminExtra_Dto_kkg {
 	String caddress ;
 	Date cinsertdate ;
 	
+	int maxPage;
 	
 	
 	//constructor
@@ -43,10 +45,24 @@ public class AdminExtra_Dto_kkg {
 	}
 
 
-	
-	public AdminExtra_Dto_kkg(int seq, String cid, String cname, String cphone, String cbirthdate, String cgender,
+
+
+
+
+	public AdminExtra_Dto_kkg(int maxPage) {
+		super();
+		this.maxPage = maxPage;
+	}
+
+
+
+
+
+
+	public AdminExtra_Dto_kkg(int pageNum, int seq, String cid, String cname, String cphone, String cbirthdate, String cgender,
 			String caddress, Date cinsertdate) {
 		super();
+		this.pageNum = pageNum;
 		this.seq = seq;
 		this.cid = cid;
 		this.cname = cname;
@@ -243,6 +259,33 @@ public class AdminExtra_Dto_kkg {
 	
 	
 	
+	public int getPageNum() {
+		return pageNum;
+	}
+
+
+
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
+	}
+
+
+
+
+
+
+	public int getMaxPage() {
+		return maxPage;
+	}
+
+
+
+
+
+
+	public void setMaxPage(int maxPage) {
+		this.maxPage = maxPage;
+	}
 	
 	
 	

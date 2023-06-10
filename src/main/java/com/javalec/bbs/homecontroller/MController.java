@@ -12,9 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.javalec.bbs.command.AProductSearchCommand2;
 import com.javalec.bbs.command.CartCommand;
+import com.javalec.bbs.command.CartOrderCommand;
 import com.javalec.bbs.command.CategoryPorductCommand;
 import com.javalec.bbs.command.DetailedCommand;
+import com.javalec.bbs.command.DetailsCommand;
 import com.javalec.bbs.command.HomePorductCommand;
 import com.javalec.bbs.command.IdCommand;
 import com.javalec.bbs.command.InsertCommand;
@@ -24,11 +27,15 @@ import com.javalec.bbs.command.Kms_CommentActionCommand;
 import com.javalec.bbs.command.Kms_CommentDeleteCommand;
 import com.javalec.bbs.command.Kms_ForumSearchCommand;
 import com.javalec.bbs.command.Kms_ForumViewCommand;
+import com.javalec.bbs.command.Kms_OrderingListCommand;
 import com.javalec.bbs.command.Kms_ReplyActionCommand;
 import com.javalec.bbs.command.Kms_WriteForumCommand;
 import com.javalec.bbs.command.Kms_WriteListCommand;
 import com.javalec.bbs.command.MCommand;
 import com.javalec.bbs.command.MypageCommand;
+import com.javalec.bbs.command.NoticeCommand;
+import com.javalec.bbs.command.OrderCommand;
+import com.javalec.bbs.command.OrderProductCommand;
 import com.javalec.bbs.command.PwCommand;
 import com.javalec.bbs.command.QnAList_Command_pjh;
 import com.javalec.bbs.command.RviewCommand;
@@ -44,7 +51,7 @@ import com.javalec.bbs.command.aReviewSearchCommand_pjh;
 import com.javalec.bbs.command.aReview_List_Command_pjh;
 import com.javalec.bbs.command.aUserListCommnad_kkg;
 import com.javalec.bbs.command.showOrderListCommand_kkg;
-
+ 
 /**
  * Servlet implementation class MController
  */
@@ -147,6 +154,24 @@ public class MController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "userCart.jsp";
 			break;
+		case("/cartorder.do"):
+			command = new CartOrderCommand();
+			command.execute(request, response);
+			viewPage = "OrderView.jsp";
+			break;
+		//구매 완료
+		case("/orderProduct.do"):
+			command = new OrderProductCommand();
+			command.execute(request, response);
+			session.removeAttribute("bid");
+			viewPage = (String) request.getAttribute("view");
+			break;
+		//구매 내역 페이지
+		case("/details.do"):
+			command = new DetailsCommand();
+			command.execute(request, response);
+			viewPage = "DetailsView.jsp";
+			break;
 
 		/* PART I 종료. 킹갓더제너럴 강대규팀장님 part 입니다. 일동 기립. 경례. 쉬어. */
 		// *************************************************************//
@@ -168,20 +193,24 @@ public class MController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "cart.do";
 			break;
+
+		case ("/notice.do"):
+			command = new NoticeCommand();
+			command.execute(request, response);
+			viewPage = "notice.jsp";
+			break;
+		case ("/order.do"):
+			command = new OrderCommand();
+			command.execute(request, response);
+			viewPage = "order.jsp";
+			break; 
 			
 
 		/* PART II 종료. 큐티보이 김종진뀨 part 입니다. 뀨 일동 say 뀨~. 쉬어. */
 		// *************************************************************//
 
 		/* PART III 시작. 스윗남자 박지환 서윗남 part 입니다. 일용할 스윗함에 고마움을 :). */
-		case("/APlist.do") :
-			command = new aProductListCommand_pjh();
-			command.execute(request, response);
-			viewPage = "Admin_ProductList_pjh.jsp";
-			break;
-				
-			//상품관리에서 상품등록하는 페이지로 이동	
-			case("/APinsert.do") :
+		case("/APinsert.do") :
 			viewPage = "Admin_ProductAdd_pjh.jsp";
 			break;
 			//상품등록 페이지에서 업로드 버튼
@@ -215,14 +244,9 @@ public class MController extends HttpServlet {
 			viewPage = "Admin_Review_List.jsp";
 			break;
 			case ("/productInformation.do"):		
-			command = new aProductSearchCommand_pjh();
+			command = new AProductSearchCommand2();
 			command.execute(request, response);
 			viewPage = "Admin_ProductList_pjh.jsp";
-			break;
-			case ("/AQnA.do"):		
-			command = new QnAList_Command_pjh();
-			command.execute(request, response);
-			viewPage = "Admin_QNA_List.jsp";
 			break;
 			case ("/noticewrite.do"):		
 			viewPage = "Admin_QnA_pjh.jsp";
@@ -242,6 +266,22 @@ public class MController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "Admin_Review_List.jsp";
 			break;
+			case ("/AForumView.do"):
+			command = new Kms_ForumViewCommand();
+			command.execute(request, response);
+			viewPage = "AForumView.jsp";
+			break;
+			case ("/Awritelist.do"):
+			command = new Kms_WriteListCommand();
+			command.execute(request, response);
+			viewPage = "pjh_WriteList.jsp";
+			break;
+			case ("/Aforumsearch.do"):
+			command = new Kms_ForumSearchCommand();
+			command.execute(request, response);
+			viewPage = "pjh_WriteList.jsp";
+			break;
+
 
 		/* PART III 종료. 스윗남자 박지환 서윗남 part 입니다. 일동 .일용할 스윗함에 고마움을 :) */
 		// *************************************************************//
@@ -291,7 +331,10 @@ public class MController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "ForumView.do?fid="+request.getParameter("page");
 			break;
-			
+		case ("/orderinglist.do"):
+			command = new Kms_OrderingListCommand();
+			command.execute(request, response);
+			viewPage = "Kms_OrderingList.jsp";break;	
 			
 			
 			
@@ -317,13 +360,19 @@ public class MController extends HttpServlet {
 			System.out.println("startDate 값 : " + request.getParameter("startDate"));
 			request.setAttribute("startDate", Date.valueOf(LocalDate.now().minusDays(7)));
 			request.setAttribute("endDate", Date.valueOf(LocalDate.now()));
+			request.setAttribute("pnum",1);
 			
 			command = new aUserListCommnad_kkg();
 			command.execute(request, response);
 			System.out.println("aUserListCommand_kkg 커맨드 실행 완료");
 			viewPage = "adminUserlist.jsp";
 			System.out.println("viewPage 입력되었음 : " + viewPage);
-
+			
+			request.removeAttribute("startDate");
+			request.removeAttribute("endDate");
+			request.removeAttribute("pnum");
+			
+			
 			break;
 			
 		case ("/showOrderList.do"):
