@@ -83,8 +83,8 @@ function deleteSelectedItems() {
 					<th>작성일</th>
 					<th>고객정보</th>
 					<th>상품</th>
-					<th>리뷰 상세 내용</th>
-					<th>리뷰 관리</th>
+					<th>리뷰 보기</th>
+					<th>리뷰 상세하게 보기</th>
 				</tr>
 				<c:forEach items="${reviewlist}" var="dto">
 					<tr>
@@ -98,9 +98,9 @@ function deleteSelectedItems() {
 						<td><a href="#" onclick="openModal2('${dto.fid}')">
 								${dto.ftitle} </a></td>
 						<td>
-							<form action="ForumView.do?fid=${dto.fid}" method="post">
+							<form action="AForumView.do?fid=${dto.fid}" method="post">
 								<input type="hidden" name=fid value="${dto.fid}"> <input
-									type="submit" name="action" value="관리">
+									type="submit" name="action" value="페이지로 이동">
 							</form>
 						</td>
 						<tr id="productInfo-${dto.fid}" style="display: none;">
@@ -158,7 +158,7 @@ function deleteSelectedItems() {
 	<div id="myModal" class="modal">
 	  <span class="close" onclick="closeModal()">&times;</span>
 	  <div id="modalContent"></div>
+	   <button onclick="closeModal()">확인</button>
 	</div>
-
 </body>
 </html>

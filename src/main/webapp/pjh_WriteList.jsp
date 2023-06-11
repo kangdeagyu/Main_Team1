@@ -140,9 +140,6 @@
         </form>
     </c:if>
     <c:if test="${ftype eq 2}">
-        <form action="pjh_WriteForum.jsp">
-            <input type="submit" value="QnA쓰기">
-        </form>
         <form action="Admin_QnA_pjh.jsp">
         	<input type="submit" value="공지사항 적기">
         </form>
@@ -184,7 +181,7 @@
                 <td>${dto.fid}</td>
                 <td>${dto.cname}</td>
                 <td>${dto.pname}</td>
-                <td><a href="AForumView.do?fid=${dto.fid}">${dto.ftitle}</a></td>
+                <td><a href="AForumView.do?fid=${dto.fid}&ftype=${ftype}">${dto.ftitle}</a></td>
                 <td>${dto.finsertdate}</td>
             	</tr>
         </c:forEach>

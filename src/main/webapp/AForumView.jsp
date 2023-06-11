@@ -47,14 +47,6 @@
     <title>리뷰 상세 보기</title>
     <script type="text/javascript">
         function confirmDelete(cid, form) {
-            var userCid = "${cid}"; // 로그인 사용자의 f_cid 값
-            var commentCid = form.elements["f_cid"].value;
-
-            if (userCid !== commentCid) {
-                // 삭제 권한이 없는 경우 경고 메시지 출력
-                alert("댓글 삭제 권한이 없습니다.");
-                return false;
-            }
 
             // 댓글 삭제 확인 메시지 표시
             var confirmed = confirm("정말로 댓글을 삭제하시겠습니까?");
@@ -125,7 +117,7 @@
 				            ${cdto.ftitle}
 				        </c:when>
 				        <c:otherwise>
-				            <span style="font-weight: lighter; margin-left: ${cdto.fstep * 30}px">ㄴ${cdto.ftitle}</span>
+				            <span style="font-weight: bold; margin-left: ${cdto.fstep * 30}px">ㄴ${cdto.ftitle}</span>
 				        </c:otherwise>
 				    </c:choose>
 					</td>
@@ -135,6 +127,7 @@
                         <c:if test="${cdto.fdeletedate eq null}">
                             <form action="ABigCommentWrite.do" method="post">
                                 <input type="text" name="ftitle" placeholder="댓글을 입력하세요.">
+                                <input type="hidden" name="ftype" value="${ftype}">
                                 <input type="hidden" name="page" value="${forumView.fid}">
                                 <input type="hidden" name="f_cid" value="${cid}">
                                 <input type="hidden" name="fid" value="${cdto.fid}">
@@ -151,6 +144,7 @@
                     <td>
                         <c:if test="${cdto.fdeletedate eq null}">
                             <form action="Acommentdelete.do" method="post" onsubmit="return confirmDelete('${cdto.f_cid}', this)">
+                            	<input type="hidden" name="ftype" value="${ftype}">
                                 <input type="hidden" name="page" value="${forumView.fid}">
                                 <input type="hidden" name="f_cid" value="${cdto.f_cid}">
                                 <input type="hidden" name="fid" value="${cdto.fid}">
@@ -167,19 +161,22 @@
     <form action="Acommentwrite.do" method="post">
         <input type="text" name="ftitle" style="width: 300px;" placeholder="댓글을 입력하세요.">
         <input type="hidden" name="fid" value="${forumView.fid}">
-        <input type="hidden" name="f_cid" value="${cid}">
+        <input type="hidden" name="f_cid" value="${forumView.f_cid}">
         <input type="hidden" name="f_pid" value="${forumView.f_pid}">
         <input type="submit" value="입력">
     </form>
 	</div>
 
-    <form action="pjh_WriteReply.jsp" method="post">
+    <form action="pjh_WriteReply.do" method="post">
+    	<input type="hidden" name="ftype" value="${ftype}">
         <input type="hidden" name="fid" value="${forumView.fid}">
         <input type="hidden" name="fref" value="${forumView.fref}">
         <input type="hidden" name="freforder" value="${forumView.freforder}">
         <input type="hidden" name="fstep" value="${forumView.fstep}">
         <input type="hidden" name="fmotherid" value="${forumView.fmotherid}">
         <input type="hidden" name="fanswernum" value="${forumView.fanswernum}">
+        <input type="hidden" name="f_pid" value="${forumView.f_pid}">
+        <input type="hidden" name="f_cid" value="${cid}">
         <input type="submit" value="답글 달기">
     </form>
     </div>
