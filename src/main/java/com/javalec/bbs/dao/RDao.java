@@ -163,7 +163,7 @@ public boolean PurchaseOrder(String cid, int pid,  int oqty, int oprice, String 
 		preparedStatement.setString(6, oaddress1);
 		preparedStatement.setString(7, oaddress2);
 		preparedStatement.setInt(8, 0);
-
+		
 		preparedStatement.executeUpdate();
 		
 		result = true;

@@ -84,7 +84,18 @@ function updateTotalAmount() { // 수량을 늘렸을 때 db에 남아있는 갯
 	  document.getElementById('total-amount').innerText = totalAmount;
 	  var quantity = document.getElementById("quantity").value;
 	}
+function updateQty() {
+	  var quantityField = document.getElementById('quantity');
+	  var cartLink = document.getElementById('cartLink');
+	  
+	  var quantity = parseInt(quantityField.value);
+	  
+	  var originalHref = cartLink.getAttribute('href');
+	  var updatedHref = originalHref.replace(/qty=\d+/, 'qty=' + quantity);
+	  cartLink.setAttribute('href', updatedHref);
+	}
 </script>
+
 <body>
 <div class="container">
   <table class="product-table">
@@ -120,19 +131,15 @@ function updateTotalAmount() { // 수량을 늘렸을 때 db에 남아있는 갯
  				 <td colspan="2" class="purchase-details" >
    					 <div class="money">
    						<span>총 구매 금액: </span>
-     					<span id="total-amount">${dto.pprice}</span>
+     					<span id="total-amount">${dto.pprice}</span><br><br><br><br><br><br>
+     					
+     						<a id="purchaseLink" class="nav-link" href="OrderView.do?pid=${dto.pid }&qty=1" onclick="updateQty()">구매하기</a>
+   						
+   						<a id="cartLink" class="nav-link" href="productcart.do?pid=${dto.pid}&qty=1" onclick="updateQty()">장바구니</a>
 					</div>
  				</td>
 			</tr>
 
-				<tr>
-  					<td colspan="4" class="form-button">
-   					 <form id="cartForm" action="order.do" method="get">
-    				  <input type="submit" name="WriteForum" value="구매하기">
-   						<a id="cartLink" class="nav-link" href="OrderView.do?pid=${dto.pid }&qty=1" onclick="updateQty()">구매하기</a>
-   						
-   						<a id="cartLink" class="nav-link" href="productcart.do?pid=${dto.pid}&qty=1" onclick="updateQty()">장바구니</a>
-   					 </form>
             </table>
           </td>
         </c:forEach>
@@ -221,21 +228,7 @@ function updateTotalAmount() { // 수량을 늘렸을 때 db에 남아있는 갯
          </c:otherwise>
 </c:choose>
 </table></div>
-<script>
-<script>
-function updateQty() {
-  var quantity = document.getElementById("quantity").value;
 
-  // 장바구니 링크 URL 가져오기
-  var cartLink = document.getElementById("cartLink").getAttribute("href");
-
-  // 수량 정보를 URL에 추가
-  var updatedCartLink = cartLink + "&qty=" + quantity;
-
-  // 장바구니 페이지로 이동
-  window.location.href = updatedCartLink;
-}
-</script>
 
 
 </body>
