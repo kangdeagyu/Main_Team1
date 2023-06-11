@@ -2,6 +2,8 @@ package com.javalec.bbs.dto;
 
 public class RDto {
 
+	
+	
 	int pid;
 	String pname;
     String pfilename;
@@ -22,6 +24,9 @@ public class RDto {
     String ncontent;
     String n_aid;
     String ninsertdate;
+    
+    
+    
     public RDto() {
 		// TODO Auto-generated constructor stub
 	}
@@ -185,7 +190,7 @@ public class RDto {
 	public String getPfilename() {
 		return pfilename;
 	}
-
+	
 
 
 	public void setPfilename(String pfilename) {

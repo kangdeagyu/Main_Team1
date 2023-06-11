@@ -47,7 +47,7 @@
             <a class="nav-link" href="PwChange.jsp">비밀번호 변경</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">나의 리뷰</a>
+            <a class="nav-link" href="myreview.do?cid=${cid}">나의 리뷰</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="orderinglist.do?cid=${cid }">주문 목록</a>

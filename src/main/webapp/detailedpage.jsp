@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -69,6 +70,21 @@ html {
 </style>
 
 </head>
+<script>
+function updateTotalAmount() { // 수량을 늘렸을 때 db에 남아있는 갯수만큼만 가능
+	  var quantity = parseInt(document.getElementById('quantity').value);
+	  var price = parseInt(document.getElementById('price').innerText);
+	  var maxQuantity = 30; // 최대 수량 설정
+	  if (quantity > maxQuantity) {
+	    quantity = maxQuantity; // 최대 수량을 초과하는 경우 최대 수량으로 설정
+	    document.getElementById('quantity').value = maxQuantity; // 수량 입력 필드에 최대 수량 설정
+	    alert('최대 수량을 초과할 수 없습니다.');
+	  }
+	  var totalAmount = quantity * price;
+	  document.getElementById('total-amount').innerText = totalAmount;
+	  var quantity = document.getElementById("quantity").value;
+	}
+</script>
 <body>
 <div class="container">
   <table class="product-table">
@@ -113,7 +129,7 @@ html {
   					<td colspan="4" class="form-button">
    					 <form id="cartForm" action="order.do" method="get">
     				  <input type="submit" name="WriteForum" value="구매하기">
-   						<a id="cartLink" class="nav-link" href="order.do?pid=${dto.pid}&qty=1" onclick="updateQty()">구매하기</a>
+   						<a id="cartLink" class="nav-link" href="OrderView.do?pid=${dto.pid }&qty=1" onclick="updateQty()">구매하기</a>
    						
    						<a id="cartLink" class="nav-link" href="productcart.do?pid=${dto.pid}&qty=1" onclick="updateQty()">장바구니</a>
    					 </form>
@@ -206,37 +222,19 @@ html {
 </c:choose>
 </table></div>
 <script>
-function updateQty() { 
-	  var quantity = document.getElementById("quantity").value;  // 수량 입력 필드의 값을 가져옵니다.
-	  var cartLink = document.getElementById("cartLink");  // 장바구니 링크 요소를 가져옵니다.
-	  var href = cartLink.getAttribute("href");  // 기존 href 값을 가져옵니다.
+<script>
+function updateQty() {
+  var quantity = document.getElementById("quantity").value;
 
-	  // 수량을 업데이트하여 새로운 href 값을 생성합니다.
-	  var newHref = href.replace(/qty=\d+/, "qty=" + quantity);
-	  cartLink.setAttribute("href", newHref);  // 장바구니 링크의 href 속성을 업데이트합니다.
-	}
-function updateTotalAmount() { // 수량을 늘렸을 때 db에 남아있는 갯수만큼만 가능
-	  var quantity = parseInt(document.getElementById('quantity').value);
-	  var price = parseInt(document.getElementById('price').innerText);
-	  var maxQuantity = 30; // 최대 수량 설정
-	  if (quantity > maxQuantity) {
-	    quantity = maxQuantity; // 최대 수량을 초과하는 경우 최대 수량으로 설정
-	    document.getElementById('quantity').value = maxQuantity; // 수량 입력 필드에 최대 수량 설정
-	    alert('최대 수량을 초과할 수 없습니다.');
-	  }
-	  var totalAmount = quantity * price;
-	  document.getElementById('total-amount').innerText = totalAmount;
-	}
-function updateQty() { // a태그에서 버튼형식을 바꾸는 펑
-	  var quantity = document.getElementById("qtyInput").value;  // 수량 입력 필드의 값을 가져옵니다.
-	  var form = document.getElementById("cartForm");  // 장바구니 폼 요소를 가져옵니다.
-	  var href = form.getAttribute("action");  // 기존 action 값을 가져옵니다.
+  // 장바구니 링크 URL 가져오기
+  var cartLink = document.getElementById("cartLink").getAttribute("href");
 
-	  // 수량을 업데이트하여 새로운 action 값을 생성합니다.
-	  var newAction = href.replace(/qty=\d+/, "qty=" + quantity);
-	  form.setAttribute("action", newAction);  // 장바구니 폼의 action 속성을 업데이트합니다.
-	  form.submit();  // 폼을 제출합니다.
-	}
+  // 수량 정보를 URL에 추가
+  var updatedCartLink = cartLink + "&qty=" + quantity;
+
+  // 장바구니 페이지로 이동
+  window.location.href = updatedCartLink;
+}
 </script>
 
 
