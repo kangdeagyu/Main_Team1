@@ -105,6 +105,11 @@ public class MController extends HttpServlet {
 		/* ***** PART I 시작. 킹갓더제너럴 5STAR 강대규팀장님 part 입니다. 일동 기립. 경례. 쉬어.***** */
 
 		case ("/home.do"):
+			session.removeAttribute("orderList");
+			session.removeAttribute("Memo");
+			session.removeAttribute("Payment");
+			session.removeAttribute("Cname");
+			session.removeAttribute("Cphone");
 			command = new HomePorductCommand();
 			command.execute(request, response);
 			viewPage = "home.jsp";
@@ -171,7 +176,6 @@ public class MController extends HttpServlet {
 			command = new DetailsCommand();
 			command.execute(request, response);
 			viewPage = "DetailsView.jsp";
-			break;
 
 		/* PART I 종료. 킹갓더제너럴 강대규팀장님 part 입니다. 일동 기립. 경례. 쉬어. */
 		// *************************************************************//
