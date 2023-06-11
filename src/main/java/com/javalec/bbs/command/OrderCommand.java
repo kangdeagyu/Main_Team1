@@ -49,7 +49,7 @@ public class OrderCommand implements MCommand {
 			request.setAttribute("view",  view);
 		}
 		
-		
+	
 //		RDao dao = new RDao();
 //		boolean result = dao.Ordering(ccid, ppid, oid, oqty, oprice, opostnum, oaddress1, oaddress2, odate);
 //		
