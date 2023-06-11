@@ -98,7 +98,7 @@ function deleteSelectedItems() {
 						<td><a href="#" onclick="openModal2('${dto.fid}')">
 								${dto.ftitle} </a></td>
 						<td>
-							<form action="AForumView.do?fid=${dto.fid}" method="post">
+							<form action="AForumView.do?fid=${dto.fid}&ftype=1" method="post">
 								<input type="hidden" name=fid value="${dto.fid}"> <input
 									type="submit" name="action" value="페이지로 이동">
 							</form>

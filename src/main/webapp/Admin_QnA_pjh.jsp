@@ -19,19 +19,10 @@
 	 	<div class="wrapper">
 <h3>공지사항</h3>
 <form action="ANoticeUpload.do" method="post" id="myForm">
-    <table>
-    	<tr>
-    	<td>카테고리</td>
-    		<td><select name="list" class="form-select" style="width:130px;height:32px;">
-        <option value="pname" selected="selected">서비스</option>
-        <option value="pcategory">공지사항</option>
-    			</select>
-    		</td>
-    	</tr>
-    
+    <table>    
         <tr>
-            <td>이름</td>
-            <td>${dto.id}</td>
+            <td>이름: </td>
+            <td>관리자</td>
         </tr>
        <!--  <tr>
             <td>공개여부</td>
@@ -58,7 +49,7 @@
             <input type="button" value="재작성" onclick="resetForm()">
 		</form>
 		
-		<form action="Awritelist.do?ftype=2" method="post">
+		<form action="Awritelist.do?ftype=${ftype}" method="post">
             <input type="submit" value="목록">
         </form>
          </div>

@@ -2,10 +2,15 @@ package com.javalec.bbs.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import com.javalec.bbs.dto.Admin_Product_Dto;
+import com.javalec.bbs.dto.Admin_WriteList_Dto;
 
 public class Pjh_WriteList_Dao {
 
@@ -69,6 +74,8 @@ public class Pjh_WriteList_Dao {
 		PreparedStatement preparedStatement1 = null;
 		PreparedStatement preparedStatement2 = null;
 		PreparedStatement preparedStatement3 = null;
+		PreparedStatement preparedStatement4 = null;
+		
 		int a = freforder + fanswernum;
 		try {
 			connection = dataSource.getConnection();
@@ -78,15 +85,15 @@ public class Pjh_WriteList_Dao {
 			preparedStatement.executeUpdate();
 			
 			String query2 = "insert into forum (f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, ftitle, fcontent, finsertdate, fmotherid, fanswernum)";
-			String query3 = " values ('dummy','admin', ?, 3 ,?, ? + 1, ? + 1,? ,? ,now(), 0, 0)";
+			String query3 = " values ('dummy','admin', ?, 3, ?, ? + 1, 0, ? ,? ,now(), ?, 0)";
 			preparedStatement1 = connection.prepareStatement(query2 + query3);
-//			preparedStatement1.setString(1, f_cid);
 			preparedStatement1.setInt(1, f_pid);
 			preparedStatement1.setInt(2, fref);
 			preparedStatement1.setInt(3, a);
-			preparedStatement1.setInt(4, fstep);
-			preparedStatement1.setString(5, ftitle);
-			preparedStatement1.setString(6, fcontent);
+//			preparedStatement1.setInt(4, fstep);
+			preparedStatement1.setString(4, ftitle);
+			preparedStatement1.setString(5, fcontent);
+			preparedStatement1.setInt(6, fid);
 			preparedStatement1.executeUpdate();
 				
 			String query4 = "update forum set fanswernum = fanswernum + 1 where fid = " + fid;
@@ -97,9 +104,9 @@ public class Pjh_WriteList_Dao {
 			preparedStatement3 = connection.prepareStatement(query5);
 			preparedStatement3.executeUpdate();
 			
-			String query6 = "update forum set fmoterhid =" + fid;			
-			preparedStatement3 = connection.prepareStatement(query5);
-			preparedStatement3.executeUpdate();
+//			String query6 = "update forum set fmoterhid =" + fid;			
+//			preparedStatement4 = connection.prepareStatement(query6);
+//			preparedStatement4.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -108,6 +115,7 @@ public class Pjh_WriteList_Dao {
 				if(preparedStatement1 != null) preparedStatement1.close();
 				if(preparedStatement2 != null) preparedStatement2.close();
 				if(preparedStatement3 != null) preparedStatement3.close();
+//				if(preparedStatement4 != null) preparedStatement4.close();
 				if(connection != null) connection.close();
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -171,7 +179,64 @@ public class Pjh_WriteList_Dao {
 		
 	} // 대댓글 
 	
+	public Admin_WriteList_Dto noticeView(int nid) {
+		Admin_WriteList_Dto dto= null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		 ResultSet resultSet = null;
+		try {
+			connection = dataSource.getConnection();
+			String query = "SELECT n_aid, ntitle, ncontent, ninsertdate FROM notice WHERE nid = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, nid);
+			resultSet = preparedStatement.executeQuery();
+	        
+	        if (resultSet.next()) {
+	            String n_aid = resultSet.getString("n_aid");
+	            String ntitle = resultSet.getString("ntitle");
+	            String ncontent = resultSet.getString("ncontent");
+	            Timestamp ninsertdate = resultSet.getTimestamp("ninsertdate");
+	            
+	            dto = new Admin_WriteList_Dto(n_aid, ntitle, ncontent, ninsertdate);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	    	try {
+				if(resultSet != null) resultSet.close();
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+	    }
+		return dto;
+	}
 	
+	public void modify(String ntitle, String ncontent, int nid) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		try {
+			connection = dataSource.getConnection();
+			String query = "update notice set ntitle=?, ncontent=?, ninsertdate=now() where nid= ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, ntitle);
+			preparedStatement.setString(2, ncontent);
+			preparedStatement.setInt(3, nid);
+			preparedStatement.executeUpdate();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        } finally {
+	            try {
+	                if (preparedStatement != null)
+	                    preparedStatement.close();
+	                if (connection != null)
+	                    connection.close();
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
 	
 	
 	

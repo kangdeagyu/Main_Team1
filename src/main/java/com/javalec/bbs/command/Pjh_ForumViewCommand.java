@@ -17,6 +17,7 @@ public class Pjh_ForumViewCommand implements MCommand {
 		// TODO Auto-generated method stub
 		int fid = Integer.parseInt(request.getParameter("fid"));
 		int ftype = Integer.parseInt(request.getParameter("ftype"));
+		System.out.println(fid);
 		System.out.println(ftype);
 		Kms_WriteList_Dao dao = new Kms_WriteList_Dao();
 		Kms_WriteList_Dto dto = dao.ForumView(fid);
@@ -28,6 +29,7 @@ public class Pjh_ForumViewCommand implements MCommand {
 		int listSize= dtos1.size();
 		request.setAttribute("ListSize", listSize);
 		request.setAttribute("ftype", ftype);
+		request.setAttribute("fid", fid);
 	}
 
 }

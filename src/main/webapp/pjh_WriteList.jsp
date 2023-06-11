@@ -135,12 +135,17 @@
     </c:if>
 
     <c:if test="${ftype eq 1}">
+    	<form action="AdminNoticeWrite.do">
+    		<input type="hidden" name="ftype" value="${ftype}">
+        	<input type="submit" value="공지사항 적기">
+        </form>
         <form action="pjh_WriteForum.jsp">
             <input type="submit" value="리뷰쓰기">
         </form>
     </c:if>
     <c:if test="${ftype eq 2}">
-        <form action="Admin_QnA_pjh.jsp">
+        <form action="AdminNoticeWrite.do">
+        	<input type="hidden" name="ftype" value="${ftype}">
         	<input type="submit" value="공지사항 적기">
         </form>
     </c:if>
@@ -172,7 +177,7 @@
         			<td>${noticedto.nid}</td>       
                     <td>관리자</td>
                     <td></td>
-                    <td><a href="">${noticedto.ntitle}</a></td>     
+                    <td><a href="ANoticeView.do?nid=${noticedto.nid}">${noticedto.ntitle}</a></td>     
                     <td>${noticedto.ninsertdate}</td>
         	</tr>
         	</c:forEach>

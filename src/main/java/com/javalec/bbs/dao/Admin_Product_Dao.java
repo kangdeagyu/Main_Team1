@@ -119,7 +119,7 @@ public class Admin_Product_Dao {
 		
 		try {
 			connection = datasource.getConnection();
-			String query1 = "select pfilename, pid, pprice, pname, pcategory from product";
+			String query1 = "select pfilename, pid, pprice, pname,pstock, pcategory from product";
 			String Where2 = " where pname like ? and pdeletedate IS NULL";
 			ps = connection.prepareStatement(query1 + Where2);
 			ps.setString(1, query);
@@ -130,11 +130,12 @@ public class Admin_Product_Dao {
 				int pid = rs.getInt(2);
 				int pprice = rs.getInt(3);
 				String pname = rs.getString(4);
-				String pcategory = Integer.toString(rs.getInt(5));
+				int pstock = rs.getInt(5);
+				String pcategory = Integer.toString(rs.getInt(6));
 
 				
 				
-				Admin_Product_Dto dto = new Admin_Product_Dto(pfilename, pname, pprice, pid, pcategory);
+				Admin_Product_Dto dto = new Admin_Product_Dto(pfilename, pname, pprice, pid, pstock, pcategory);
 				dtos.add(dto);
 			}
 		}catch(Exception e) {
