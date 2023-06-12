@@ -74,55 +74,53 @@ public class Pjh_WriteList_Dao {
 		PreparedStatement preparedStatement1 = null;
 		PreparedStatement preparedStatement2 = null;
 		PreparedStatement preparedStatement3 = null;
-		PreparedStatement preparedStatement4 = null;
 		
 		int a = freforder + fanswernum;
 		try {
 			connection = dataSource.getConnection();
-			String query = "update forum set freforder = freforder + 1 where freforder >=" + freforder + " + " + fanswernum + " + 1";
-			String query1 = " and fref = " + fref;
-			preparedStatement = connection.prepareStatement(query + query1);
+			String query = "UPDATE forum SET freforder = freforder + 1 WHERE freforder >= ? + ? + 1 AND fref = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, freforder);
+			preparedStatement.setInt(2, fanswernum);
+			preparedStatement.setInt(3, fref);
 			preparedStatement.executeUpdate();
 			
-			String query2 = "insert into forum (f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, ftitle, fcontent, finsertdate, fmotherid, fanswernum)";
-			String query3 = " values ('dummy','admin', ?, 3, ?, ? + 1, 0, ? ,? ,now(), ?, 0)";
+			String query2 = "INSERT INTO forum (f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, ftitle, fcontent, finsertdate, fmotherid, fanswernum)";
+			String query3 = " VALUES ('dummy','admin', ?, 3, ?, ? + 1, ?, ? ,? ,NOW(), ?, 0)";
 			preparedStatement1 = connection.prepareStatement(query2 + query3);
 			preparedStatement1.setInt(1, f_pid);
 			preparedStatement1.setInt(2, fref);
 			preparedStatement1.setInt(3, a);
-//			preparedStatement1.setInt(4, fstep);
-			preparedStatement1.setString(4, ftitle);
-			preparedStatement1.setString(5, fcontent);
-			preparedStatement1.setInt(6, fid);
+			preparedStatement1.setInt(4, fstep + 1); // fstep 값을 1 증가시킴
+			preparedStatement1.setString(5, ftitle);
+			preparedStatement1.setString(6, fcontent);
+			preparedStatement1.setInt(7, fid);
 			preparedStatement1.executeUpdate();
 				
-			String query4 = "update forum set fanswernum = fanswernum + 1 where fid = " + fid;
+			String query4 = "UPDATE forum SET fanswernum = fanswernum + 1 WHERE fid = ?";
 			preparedStatement2 = connection.prepareStatement(query4);
+			preparedStatement2.setInt(1, fid);
 			preparedStatement2.executeUpdate();
 			
-			String query5 = "update forum set fanswernum = fanswernum + 1 where fref =" + fref + " and freforder <" + freforder + " and fanswernum >= 1";
+			String query5 = "UPDATE forum SET fanswernum = fanswernum + 1 WHERE fref = ? AND freforder < ? AND fanswernum >= 1";
 			preparedStatement3 = connection.prepareStatement(query5);
+			preparedStatement3.setInt(1, fref);
+			preparedStatement3.setInt(2, freforder);
 			preparedStatement3.executeUpdate();
-			
-//			String query6 = "update forum set fmoterhid =" + fid;			
-//			preparedStatement4 = connection.prepareStatement(query6);
-//			preparedStatement4.executeUpdate();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			try {
-				if(preparedStatement != null) preparedStatement.close();
-				if(preparedStatement1 != null) preparedStatement1.close();
-				if(preparedStatement2 != null) preparedStatement2.close();
-				if(preparedStatement3 != null) preparedStatement3.close();
-//				if(preparedStatement4 != null) preparedStatement4.close();
-				if(connection != null) connection.close();
-			}catch(Exception e) {
+				if (preparedStatement != null) preparedStatement.close();
+				if (preparedStatement1 != null) preparedStatement1.close();
+				if (preparedStatement2 != null) preparedStatement2.close();
+				if (preparedStatement3 != null) preparedStatement3.close();
+				if (connection != null) connection.close();
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
-	} // 답글 
+}
 	
 	
 	public void bigCommentAction(int fid, String f_cid, int f_pid, int fref, int fstep, int freforder,
