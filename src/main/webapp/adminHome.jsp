@@ -64,7 +64,7 @@
 
 				<div class="array">
 					<div class="card shadw-lg"
-						style="width: 500px; height: 300px; background-color: #EEEEEE;">
+						style="width: 500px; height: 300px; background-color: #F7F7F7;">
 						<h5 class="card-title">월간 매출/판매 현황</h5>
 						<canvas id="SaleChart_month"></canvas>
 						<div class="card-body">
@@ -89,7 +89,7 @@
 
 				<div class="array">
 					<div class="card shadow-lg"
-						style="width: 500px; height: 300px; background-color: #EEEEEE;">
+						style="width: 500px; height: 300px; background-color: #F7F7F7;">
 						<h5 class="card-title">일일 매출/판매 현황</h5>
 						<canvas id="SaleChart_daily"></canvas>
 						<!-- <div class="card-body">
@@ -112,7 +112,7 @@
 
 				<div class="array">
 					<div class="card shadow-lg"
-						style="width: 500px; height: 300px; background-color: #EEEEEE;">
+						style="width: 500px; height: 300px; background-color: #F7F7F7;">
 						<h5 class="card-title">일일 신규 가입자수/탈퇴자수</h5>
 						<canvas id="NewScriberChart_daily"></canvas>
 						<div class="card-body">
@@ -120,10 +120,6 @@
 						</div>
 					</div>
 				</div>
-
-
-
-
 			</div>
 			<br />
 			<hr />

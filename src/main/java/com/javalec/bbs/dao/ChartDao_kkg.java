@@ -42,9 +42,7 @@ public class ChartDao_kkg {
 		ResultSet resultSet = null;
 		
 		Date startdate = new Date(startday.getTime()); 
-			System.out.println("시작 날짜 : "+startdate);
 		Date enddate = new Date(endday.getTime()); 
-			System.out.println("마지막 날짜 : " + enddate);
 		
 		
 		//가져오는 값들 int bid,  int sale, 
@@ -100,9 +98,7 @@ public class ChartDao_kkg {
 		
 
 		Date startdate = new Date(startday.getTime()); 
-			System.out.println("시작 날짜 : "+startdate);
 		Date enddate = new Date(endday.getTime()); 
-			System.out.println("마지막 날짜 : " + enddate);
 		
 		
 		
@@ -259,7 +255,6 @@ public class ChartDao_kkg {
 				String caddress = "("+resultSet.getString("cpostnum")+") " + resultSet.getString("caddress1")+ resultSet.getString("caddress2");
 				Date cinsertdate  = new Date(resultSet.getTimestamp("cinsertdate").getTime());
 				
-System.out.println("dto에 셋팅된 유저 : "+cname + "pageNum : "+ pageNum +","+ pagenum);
 				AdminExtra_Dto_kkg dto = new AdminExtra_Dto_kkg(pagenum, seq, cid, cname, cphone, cbirthdate, cgender, caddress, cinsertdate);
 				userList.add(dto);
 			}
@@ -364,9 +359,7 @@ System.out.println("dto에 셋팅된 유저 : "+cname + "pageNum : "+ pageNum +"
 		
 
 		Date startdate = new Date(startday.getTime()); 
-			System.out.println("시작 날짜 : "+startdate);
 		Date enddate = new Date(endday.getTime()); 
-			System.out.println("마지막 날짜 : " + enddate);
 		
 		return dtos;
 		

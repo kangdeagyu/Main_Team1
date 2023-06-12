@@ -98,6 +98,7 @@
 
 
 <body data-new-gr-c-s-check-loaded="14.1111.0 data-gr-ext-installed">
+
 	<div class="container_mk">
 		<div class="headbar">
 			<jsp:include page="admin_01_header.jsp" />
@@ -149,7 +150,7 @@
 				</div>
 
 
-				<div>
+ 				<div>
 					<p>일별 매출/주문 현황</p>
 					<canvas class="my-4 w-100 chartjs-render-monitor" id="dailychart"
 						width="700" height="400"
@@ -167,30 +168,30 @@
 				<div>
 					<p>기간내 카테고리별 매출 비교</p>
 					<canvas class="my-4 w-100 chartjs-render-monitor"
-						id="categotychart_sale" width="700" height="400"
+						id="categorychart_sale" width="700" height="400"
 						style="display: block; height: 275px; width: 400px;"></canvas>
 				</div>
 
 				<div>
 					<p>기간내 카테고리별 판매량 비교</p>
 					<canvas class="my-4 w-100 chartjs-render-monitor"
-						id="categotychar_order" width="700" height="400"
+						id="categorychart_order" width="700" height="400"
 						style="display: block; height: 275px; width: 400px;"></canvas>
-				</div>
+				</div> 
 
 				<div>
-					<p>기간내 남녀 매출 비율 비교</p>
+					<p>기간내 남녀 매출 비교</p>
 					<canvas class="my-4 w-100 chartjs-render-monitor" id="gender_sale"
-						width="700" height="400"
+						width="400" height="300"
 						style="display: block; height: 275px; width: 400px;"></canvas>
 				</div>
 
 				<div>
-					<p>기간내 남녀 주문량 비율 비교</p>
+					<p>기간내 남녀 주문량 비교</p>
 					<canvas class="my-4 w-100 chartjs-render-monitor" id="gender_order"
-						width="700" height="400"
+						width="400" height="300"
 						style="display: block; height: 275px; width: 400px;"></canvas>
-				</div>
+				</div> 
 
 <%-- 				<div>
 					<p>기간내 카테고리별 남녀 매출 현황</p>
@@ -204,14 +205,14 @@
 					<canvas class="my-4 w-100 chartjs-render-monitor"
 						id="categorygenderchart_order" width="400" height="300"
 						style="display: block; height: 275px; width: 400px;"></canvas>
-				</div> --%>
+				</div>  --%>
 
-				<div>
+ 				<div>
 					<p>기간내 판매량 Top 5</p>
 					<canvas class="my-4 w-100 chartjs-render-monitor"
 						id="orderTopChart" width="400" height="300"
 						style="display: block; height: 275px; width: 400px;"></canvas>
-				</div>
+				</div> 
 				<div>
 					<p>기간내 매출액 Top 5</p>
 					<canvas class="my-4 w-100 chartjs-render-monitor" id="saleTopChart"
@@ -256,7 +257,7 @@
 
 					<p>주문 탑 5 목록 : ${requestScope.maxPnameOrders}</p>
 					<p>주문 탑 5 주문량 : ${requestScope.maxOrders}</p>
-					<p>매출 탑 5 목록: ${requestScope.MaxPnameSales}</p>
+					<p>매출 탑 5 목록: ${requestScope.maxPnameSales}</p>
 					<p>매출 탑 5 매출액: ${requestScope.maxSales}</p>
 
 
@@ -274,22 +275,23 @@
 	
 	
 		<script>
-	    
-		DoubleLineChart(document.getElementById('dailychart'),${requestScope.dateList},'매출액',${requestScope.dailySales},'결재건',${requestScope.dailyOrders});  
-		DoubleLineChart(document.getElementById('monthlychart'), ${requestScope.monthList}, '매출액' ,${requestScope.monthlySales},'결재건',${requestScope.monthlyOrders});  
+	
+ 	 	DoubleLineChart(document.getElementById('dailychart'),${requestScope.dateList},'매출액',${requestScope.dailySales},'결재건',${requestScope.dailyOrders});  
+		DoubleLineChart(document.getElementById('monthlychart'), ${requestScope.monthList}, '매출액' ,${requestScope.monthlySales},'결재건',${requestScope.monthlyOrders});
     	PieChart("카테고리별 매출 비중 분석",document.getElementById('categorychart_sale'),${requestScope.categoryList},${requestScope.categorySales} );
-		SingleBarChart(document.getElementById('categorychart_order'),${requestScope.categoryList},'판매량',${requestScope.categoryOrders})		;
+		SingleBarChart(document.getElementById('categorychart_order'),${requestScope.categoryList},'판매량',${requestScope.categoryOrders})		;  
 		
 	/* 	DoublebarChart(document.getElementByUd('categorygenderchart_sale'),${requestScope.categoryGenderSales_male},${requestScope.categoryGenderSales_female});
 		DoublebarChart(document.getElementByUd('categorygenderchart_order'),${requestScope.categoryGenderOrder_male},${requestScope.categoryGenderOrder_female}); */
 		
-		
-    	PieChart("남녀 매출 비교",document.getElementById('gender_sale'),${requestScope.genderList},${requestScope.genderSales} );
+		/*function PieChart(Title, context, xlabel, ydatas_01) {*/
+
+     	PieChart("남녀 매출 비교",document.getElementById('gender_sale'),${requestScope.genderList},${requestScope.genderSales} );
     	PieChart("남녀 주문량 비교",document.getElementById('gender_order'),${requestScope.genderList},${requestScope.genderOrders} );
 
-		SingleBarChart(document.getElementById('orderTopChart'),${requestScope.maxPnameOrders},'판매량',${requestScope.MaxOrders})		;
-		SingleBarChart(document.getElementById('categorychart_order'),${requestScope.maxPnameSales},'매출액',${requestScope.maxSales})		;
-
+    	SingleBarChart(document.getElementById('orderTopChart'),${requestScope.maxPnameOrders},'판매량',${requestScope.maxOrders}); 
+		SingleBarChart(document.getElementById('saleTopChart'),${requestScope.maxPnameSales},'매출액',${requestScope.maxSales});
+		
 		
 		
 	</script>

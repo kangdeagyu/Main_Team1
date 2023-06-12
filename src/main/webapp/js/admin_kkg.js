@@ -16,7 +16,7 @@ function DoublebarChart(context, xlabel, ylabel_01, ylabel_02) {
 			},
 			{
 				label: "여",
-				fillcolor: "red",
+				backgroundcolor: "red",
 				data: ylabel_02
 
 			}
@@ -26,7 +26,7 @@ function DoublebarChart(context, xlabel, ylabel_01, ylabel_02) {
 
 	const config = {
 		type: 'bar',
-		data: datas,
+		data: datas
 
 
 
@@ -49,7 +49,7 @@ function SingleBarChart(context, xlabels, y01, ydatas_01) {
 			{
 				label: y01, /* 그래프(차트)의 제목이다.*/
 				fill: false,
-				backgroundColor: 'rgb(255, 0, 0)',
+				backgroundColor: ['#B4D9FF', '#007AFF', '#5856D6', '#34C759', '#FF2D55', '#FF9500', '#FFCC00', '#8E8E93', '#FF3B30', '#C69C6D'],
 				borderColor: 'rgb(255, 0, 0)',
 				data: ydatas_01,
 				yAxisID: 'y-axis-1'
@@ -59,13 +59,6 @@ function SingleBarChart(context, xlabels, y01, ydatas_01) {
 		] //dataset 끝
 	};
 
-	/* 차트 발생 코드에 넣을 값들을 하단에 몰아 넣는다면  여기에는 이 코드가 들어가야 한다.
-	
-	var context = document      
-	  .getElementById('myChart') 
-	  .getContext('2d');	
-	
-	 */
 
 	const config = {
 		type: 'bar',
@@ -80,9 +73,11 @@ function SingleBarChart(context, xlabels, y01, ydatas_01) {
 					}
 				},
 				y: {
+
 					grid: {
 						display: false
-					}
+					},
+
 
 				},
 				yAxes: [
@@ -90,9 +85,10 @@ function SingleBarChart(context, xlabels, y01, ydatas_01) {
 						id: 'y-axis-1',
 						position: 'left',
 						ticks: {
+							beginAtZero: true,
 							fontSize: 8,
 							fontColor: 'rgb(255,0,0)',
-							suggestedMax: 10
+							suggestedMax: 15
 						}
 					}
 
@@ -119,8 +115,8 @@ function SingleBarChart(context, xlabels, y01, ydatas_01) {
 			legend: {
 				display: true,
 				labels: {
-					fontSize: 8,
-					boxWidth: 5,// 범례의 글씨 크기 설정
+					fontSize: 12,
+					boxWidth: 10,// 범례의 글씨 크기 설정
 				},
 				elements: {
 					line: {
@@ -143,17 +139,22 @@ function SingleBarChart(context, xlabels, y01, ydatas_01) {
 
 
 function PieChart(Title, context, xlabel, ydatas_01) {
-
+	console.log('파이차트 들어왔어')
+	console.log(context)
+	console.log(xlabel)
+	console.log(ydatas_01)
 
 	const dataset = {
 		label: Title,
+		backgroundColor: ['#FF00FF', '#FF69B4', '#FFA500', '#FFD700', '#00FF00', '#00BFFF', '#FF1493', '#00CED1', '#FF7F50', '#FFFF00'],
+		/*		backgroundColor : ['#B4D9FF', '#007AFF', '#5856D6', '#34C759', '#FF2D55', '#FF9500', '#FFCC00', '#8E8E93', '#FF3B30', '#C69C6D'], */
 		data: ydatas_01
 
 	}
 
 	const labels = xlabel
 
-	const datas = { datasets: [dataset], lavels: labels }
+	const datas = { datasets: [dataset], labels: labels }
 
 
 
@@ -163,9 +164,9 @@ function PieChart(Title, context, xlabel, ydatas_01) {
 		data: datas, //데이터 셋 
 		options: {
 			responsive: true,
-			maintainAspectRatio: false, //true 하게 되면 캔버스 width,height에 따라 리사이징된다.
+			maintainAspectRatio: true, //true 하게 되면 캔버스 width,height에 따라 리사이징된다.
 			legend: {
-				position: 'top',
+				position: 'chartArea',
 				fontColor: 'black',
 				align: 'center',
 				display: true,
@@ -180,7 +181,8 @@ function PieChart(Title, context, xlabel, ydatas_01) {
 					fontColor: 'black',
 					fontSize: 15,
 					precision: 2
-				}
+				},
+
 
 			}
 		}
@@ -189,33 +191,6 @@ function PieChart(Title, context, xlabel, ydatas_01) {
 	const PieChart = new Chart(context, config);
 	return PieChart;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -407,6 +382,7 @@ function DoubleLineChart(context, xlabels, y01, ydatas_01, y02, ydatas_02) {
 						ticks: {
 							fontSize: 8,
 							fontColor: 'rgb(0,0,255)',
+							suggestedMax: 16,
 							/* max : 16 */
 						}
 					}
@@ -450,3 +426,18 @@ function DoubleLineChart(context, xlabels, y01, ydatas_01, y02, ydatas_02) {
 	const SaleChart_double = new Chart(context, config);
 	return SaleChart_double;
 }
+
+
+
+
+
+
+
+
+
+/* 색상을 임의로 지정하기 위해서 만드는 테이블 */
+
+
+
+
+

@@ -123,8 +123,8 @@ public class showOrderListCommand_kkg implements MCommand {
 		ArrayList<AdminExtra_Dto_kkg> genderDtos = chartdao.genderChart(startday, endday); // gender , categoryName ,
 																							// orders , sales
 		List<String> genderName = new ArrayList<>();
-		genderName.add("남자");
-		genderName.add("여자");
+		genderName.add("'남자'");
+		genderName.add("'여자'");
 		List<Integer> genderOrders = getOrders(genderDtos); // method 08
 		List<Integer> genderSales = getSales(genderDtos); // method 09
 
@@ -158,7 +158,7 @@ public class showOrderListCommand_kkg implements MCommand {
 		List<Integer> maxOrders = getOrders(MaxOrdersDtos);
 
 		List<String> MaxPnameSales = getPname(MaxSalesDtos);
-		List<Integer> maxSales = getSales(MaxSalesDtos);
+		List<Integer> maxSales = getOrders(MaxSalesDtos);
 
 		// 셋팅한값 어트리뷰트로 넘기기
 
@@ -184,7 +184,7 @@ public class showOrderListCommand_kkg implements MCommand {
 
 		request.setAttribute("maxPnameOrders", maxPnameOrders);
 		request.setAttribute("maxOrders", maxOrders);
-		request.setAttribute("MaxPnameSales", MaxPnameSales);
+		request.setAttribute("maxPnameSales", MaxPnameSales);
 		request.setAttribute("maxSales", maxSales);
 
 	} // end of execute
@@ -362,7 +362,7 @@ public class showOrderListCommand_kkg implements MCommand {
 
 				if (dtf.format(DB_date.toLocalDate()).equals(dtf.format(Real_date.toLocalDate()))) {
 
-					OrdercountList.add(ddrs.get(j).getSales()); // 날짜가 있으면
+					OrdercountList.add(ddrs.get(j).getOrdercount()); // 날짜가 있으면
 					j++;
 					k++;
 				}
@@ -409,7 +409,7 @@ public class showOrderListCommand_kkg implements MCommand {
 					orderCountList.add(0); // 날짜가 없으면 (같지 않으면) 0 더하기.
 					k++;
 				} else {
-					orderCountList.add(mdrs.get(j).getSales()); // 날짜가 있으면
+					orderCountList.add(mdrs.get(j).getOrdercount()); // 날짜가 있으면
 					j++;
 					k++;
 				}
@@ -430,7 +430,7 @@ public class showOrderListCommand_kkg implements MCommand {
 		List<String> categoryNames = new ArrayList<>();
 
 		for (int i = 0; i < dtos.size(); i++) {
-			categoryNames.add(dtos.get(i).getCategoryName());
+			categoryNames.add("'"+dtos.get(i).getCategoryName()+"'");
 
 		}
 
@@ -471,7 +471,7 @@ public class showOrderListCommand_kkg implements MCommand {
 		List<String> productName = new ArrayList<>();
 
 		for (int i = 0; i < dtos.size(); i++) {
-			productName.add(dtos.get(i).getPname());
+			productName.add("'" + dtos.get(i).getPname() + "'");
 
 		}
 
