@@ -45,7 +45,6 @@ public class ChartDao_kkg {
 			System.out.println("시작 날짜 : "+startdate);
 		Date enddate = new Date(endday.getTime()); 
 			System.out.println("마지막 날짜 : " + enddate);
-		long oneday = 24*60*60*1000;
 		
 		
 		//가져오는 값들 int bid,  int sale, 
@@ -53,31 +52,25 @@ public class ChartDao_kkg {
 			connection =dataSource.getConnection();
 			String sql_select = "select ROW_NUMBER() OVER (ORDER BY Date(odate)) AS No, sum(oprice) as sale, count(*) as ocount, Date(odate) as date ";
 			String sql_from =	" from ordering";
-			String sql_where = 	" where odate >= ? AND odate < ? group by date(odate);";
+			String sql_where = 	" where odate >= ? AND odate <= ? group by date(odate);";
 			String sql_group = "";
 			String sql = sql_select + sql_from + sql_where+sql_group;
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setTimestamp(1, startday);
 			preparedStatement.setTimestamp(2, endday);
 			
-			System.out.println(sql);
 			resultSet = preparedStatement.executeQuery();
 			int i = 0;
 			while(resultSet.next()) {
 				
-				long dayplus = oneday *i;
 					//System.out.println("i값 : "+ i);
 					//System.out.println("더하는 날짜 : "+oneday/(60*60*24*1000) );
 				int dailySales = resultSet.getInt("sale");
 				int dailyOrders = resultSet.getInt("ocount");
 				Date date = resultSet.getDate("date");
-					System.out.println("날짜 : " +date);
-					System.out.println("매출 : "+ dailySales);
 				AdminExtra_Dto_kkg dto = new AdminExtra_Dto_kkg (date, dailySales, dailyOrders);
 				dtos.add(dto);
 				
-			System.out.println("완료된 date : "+date);
-			System.out.println("완료된 날의 sale : "+ dailySales);
 			i++;
 			
 
@@ -110,7 +103,6 @@ public class ChartDao_kkg {
 			System.out.println("시작 날짜 : "+startdate);
 		Date enddate = new Date(endday.getTime()); 
 			System.out.println("마지막 날짜 : " + enddate);
-		long oneday = 24*60*60*1000;
 		
 		
 		
@@ -120,7 +112,7 @@ public class ChartDao_kkg {
 					connection =dataSource.getConnection();
 					String sql_select = "select ROW_NUMBER() OVER (ORDER BY Date_format(odate,'%Y-%m')) AS No, sum(oprice) as sale, count(*) as ocount, Date_format(odate,'%Y-%m') as month ";
 					String sql_from =	" from ordering";
-					String sql_where = 	" where odate >= ? AND odate < ? group by Date_format(odate,'%Y-%m')";
+					String sql_where = 	" where odate >= ? AND odate <= ? group by Date_format(odate,'%Y-%m')";
 					String sql_group = "";
 					String sql = sql_select + sql_from + sql_where+sql_group;
 					preparedStatement = connection.prepareStatement(sql);
@@ -132,7 +124,6 @@ public class ChartDao_kkg {
 					int i = 0;
 					while(resultSet.next()) {
 						
-						long dayplus = oneday *i;
 						int monthlySales = resultSet.getInt("sale");
 						int monthlyOrders = resultSet.getInt("ocount");
 						String month = resultSet.getString("month");
@@ -191,38 +182,15 @@ public class ChartDao_kkg {
 			preparedStatement.setTimestamp(1, startday);
 			System.out.println(sql);
 			resultSet = preparedStatement.executeQuery();
-			
-			
-//			String sql_select2	= "select count(*) as NScount";
-//			String sql_from2 	= " from custoemr";
-//			String sql_where2	= " where cinsertdate < ?";
-//			String sql_group2	= " ";
-//			String sql2 = sql_select2 + sql_from2 + sql_where2+sql_group2;
-//			preparedStatement = connection.prepareStatement(sql2);
-//			preparedStatement.setTimestamp(1, startday);
-//			
-//			System.out.println(sql2);
-//			resultSet2 = preparedStatement.executeQuery();
-//			int customerint = resultSet2.getInt("NScount");		
-			
+		
 			while(resultSet.next()) {
 			
-					//System.out.println("i값 : "+ i);
-					//System.out.println("더하는 날짜 : "+oneday/(60*60*24*1000) );
 				int dailyNS = resultSet.getInt("NScount");
 				
-//				customerint = customerint + dailyNS;
-				
-				
 				Date date = resultSet.getDate("date");
-					//System.out.println("날짜 : " +date);
-					//System.out.println("매출 : "+ dailySales);
 				AdminExtra_Dto_kkg dto = new AdminExtra_Dto_kkg (date, dailyNS);  //	dto 에는 오른쪽 명칭임. (Date date, int sales, int ordercount)
 				dtos.add(dto);
 				
-			System.out.println("완료된 date : "+date);
-			System.out.println("완료된 신규 가입자 : "+dailyNS);
-//			System.out.println("완료된 날의 회원수 : "+ customerint);
 		
 			
 
@@ -349,6 +317,295 @@ System.out.println("dto에 셋팅된 유저 : "+cname + "pageNum : "+ pageNum +"
 	
 	
 	
+	public ArrayList<AdminExtra_Dto_kkg> categoryChart(Timestamp startday, Timestamp endday){
+		ArrayList<AdminExtra_Dto_kkg> dtos= new ArrayList<AdminExtra_Dto_kkg>();
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		//가져오는 값들 int bid,  int sale, 
+		try {
+			connection =dataSource.getConnection();
+			String sql_select = "select ROW_NUMBER() OVER (ORDER BY cg.c_num) as No, cg.c_num,cg.c_name, sum(o.oqty) as orders, sum(o.oprice) as sales ";
+			String sql_from =	" from product as p , ordering as o, category as cg";
+			String sql_where = 	" where p.pcategory = cg.c_num and o.o_pid=p.pid and o.odate >= ? and o.odate <= ? ";
+			String sql_group =  " group by cg.c_num";
+			String sql = sql_select + sql_from + sql_where+sql_group;
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setTimestamp(1, startday);
+			preparedStatement.setTimestamp(2, endday);
+			System.out.println(sql);
+			resultSet = preparedStatement.executeQuery();
+		
+			while(resultSet.next()) {
+				int seq = resultSet.getInt("No");
+				int categoryId = resultSet.getInt("c_num");
+				String categoryName = resultSet.getString("c_name");
+				int orders = resultSet.getInt("orders");
+				int sales = resultSet.getInt("sales");
+				
+				
+				
+				AdminExtra_Dto_kkg dto = new AdminExtra_Dto_kkg (seq, categoryId, categoryName, orders, sales);  //	dto 에는 오른쪽 명칭임. (Date date, int sales, int ordercount)
+				dtos.add(dto);
+				
+		
+			
+
+			}
+			connection.close();
+		} catch (Exception e) {
+				// TODO: handle exception
+			System.out.println("실패");
+
+				e.printStackTrace();
+			}
+		
+
+		Date startdate = new Date(startday.getTime()); 
+			System.out.println("시작 날짜 : "+startdate);
+		Date enddate = new Date(endday.getTime()); 
+			System.out.println("마지막 날짜 : " + enddate);
+		
+		return dtos;
+		
+	}// end of categoryChart
+	
+	
+	
+	public ArrayList<AdminExtra_Dto_kkg> gendercategoryChart(Timestamp startday,Timestamp endday){
+		ArrayList<AdminExtra_Dto_kkg> dtos= new ArrayList<AdminExtra_Dto_kkg>();
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		//가져오는 값들 int bid,  int sale, 
+		try {
+			connection =dataSource.getConnection();
+			String sql_select = "select g.g_name, cg.c_name,  sum(o.oqty) as orders, sum(o.oprice) as sales ";
+			String sql_from =	" from customer as c, ordering as o , product as p, category as cg, gender as g ";
+			String sql_where = 	" where o.o_cid = c.cid and c.cgender = g.g_num and o.o_pid = p. pid and p.pcategory = cg.c_num and o.odate >= ? and o.odate <= ? ";
+			String sql_group =  " group by g.g_name, cg.c_num";
+			String sql = sql_select + sql_from + sql_where+sql_group;
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setTimestamp(1, startday);
+			preparedStatement.setTimestamp(2, endday);
+			System.out.println(sql);
+			resultSet = preparedStatement.executeQuery();
+		
+			while(resultSet.next()) {
+				String gender = resultSet.getString("g_name");
+				String categoryName = resultSet.getString("c_name");
+				int orders = resultSet.getInt("orders");
+				int sales = resultSet.getInt("sales");
+				
+				
+				
+				AdminExtra_Dto_kkg dto = new AdminExtra_Dto_kkg ( categoryName, gender, orders, sales);  //	dto 에는 오른쪽 명칭임. (Date date, int sales, int ordercount)
+				dtos.add(dto);
+				
+		
+			
+
+			}
+			connection.close();
+		} catch (Exception e) {
+				// TODO: handle exception
+			System.out.println("실패");
+
+				e.printStackTrace();
+			}
+		
+
+		Date startdate = new Date(startday.getTime()); 
+			System.out.println("시작 날짜 : "+startdate);
+		Date enddate = new Date(endday.getTime()); 
+			System.out.println("마지막 날짜 : " + enddate);
+		
+		return dtos;
+		
+		
+		
+	}//end of gendercategoryChart
+	
+	
+	public ArrayList<AdminExtra_Dto_kkg> genderChart(Timestamp startday,Timestamp endday){
+		ArrayList<AdminExtra_Dto_kkg> dtos= new ArrayList<AdminExtra_Dto_kkg>();
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		//가져오는 값들 int bid,  int sale, 
+		try {
+			connection =dataSource.getConnection();
+			String sql_select = "SELECT ROW_NUMBER() OVER (ORDER BY g.g_name) as No, g.g_name, SUM(o.oqty) AS orders, sum(o.oprice) AS sales ";
+			String sql_from =	" FROM customer AS c, ordering AS o, gender AS g";
+			String sql_where = 	" WHERE o.o_cid = c.cid AND c.cgender = g.g_num and o.odate >= ? and o.odate <= ? ";
+			String sql_group =  " GROUP BY g.g_name";
+			String sql = sql_select + sql_from + sql_where+sql_group;
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setTimestamp(1, startday);
+			preparedStatement.setTimestamp(2, endday);
+			System.out.println(sql);
+			resultSet = preparedStatement.executeQuery();
+		
+			while(resultSet.next()) {
+				int seq = resultSet.getInt("No");
+				String gender = resultSet.getString("g_name");
+				int orders = resultSet.getInt("orders");
+				int sales = resultSet.getInt("sales");
+				
+				
+				
+				AdminExtra_Dto_kkg dto = new AdminExtra_Dto_kkg (seq, gender, orders, sales);  //	dto 에는 오른쪽 명칭임. (Date date, int sales, int ordercount)
+				dtos.add(dto);
+				
+		
+			
+
+			}
+			connection.close();
+		} catch (Exception e) {
+				// TODO: handle exception
+			System.out.println("실패");
+
+				e.printStackTrace();
+			}
+		
+
+		Date startdate = new Date(startday.getTime()); 
+			System.out.println("시작 날짜 : "+startdate);
+		Date enddate = new Date(endday.getTime()); 
+			System.out.println("마지막 날짜 : " + enddate);
+		
+		return dtos;
+		
+		
+		
+	}//end of genderChart
+	
+	public ArrayList<AdminExtra_Dto_kkg> maxOrdersChart(Timestamp startday,Timestamp endday){
+		ArrayList<AdminExtra_Dto_kkg> dtos= new ArrayList<AdminExtra_Dto_kkg>();
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		//가져오는 값들 int bid,  int sale, 
+		try {
+			connection =dataSource.getConnection();
+			String sql_select = "Select p.pname, sum(o.oqty) as orders ";
+			String sql_from =	" from ordering as o, product as p ";
+			String sql_where = 	" where o.o_pid = p.pid and o.odate >= ? and o.odate <= ? ";
+			String sql_group =  " group by p.pname";
+			String sql_order =	" order by orders desc";
+			String sql_Limit =	" Limit 5";
+			String sql = sql_select + sql_from + sql_where+sql_group+sql_order+sql_Limit;
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setTimestamp(1, startday);
+			preparedStatement.setTimestamp(2, endday);
+			System.out.println(sql);
+			resultSet = preparedStatement.executeQuery();
+		
+			while(resultSet.next()) {
+				
+				String pname = resultSet.getString("pname");
+				int orders = resultSet.getInt("orders");
+				
+				
+				
+				
+				AdminExtra_Dto_kkg dto = new AdminExtra_Dto_kkg (pname, orders);  //	dto 에는 오른쪽 명칭임. (Date date, int sales, int ordercount)
+				dtos.add(dto);
+				
+		
+			
+
+			}
+			connection.close();
+		} catch (Exception e) {
+				// TODO: handle exception
+			System.out.println("실패");
+
+				e.printStackTrace();
+			}
+		
+
+		Date startdate = new Date(startday.getTime()); 
+			System.out.println("시작 날짜 : "+startdate);
+		Date enddate = new Date(endday.getTime()); 
+			System.out.println("마지막 날짜 : " + enddate);
+		
+		return dtos;
+		
+		
+		
+	}// end of maxOrdersChart 
 	
 
+	public ArrayList<AdminExtra_Dto_kkg> maxSalesChart(Timestamp startday,Timestamp endday){
+		ArrayList<AdminExtra_Dto_kkg> dtos= new ArrayList<AdminExtra_Dto_kkg>();
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		//가져오는 값들 int bid,  int sale, 
+		try {
+			connection =dataSource.getConnection();
+			String sql_select = "Select p.pname, sum(o.oprice) as sales ";
+			String sql_from =	" from ordering as o, product as p ";
+			String sql_where = 	" where o.o_pid = p.pid and o.odate >= ? and o.odate <= ? ";
+			String sql_group =  " group by p.pname";
+			String sql_order =	" order by sales desc";
+			String sql_Limit =	" Limit 5";
+			String sql = sql_select + sql_from + sql_where+sql_group+sql_order+sql_Limit;
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setTimestamp(1, startday);
+			preparedStatement.setTimestamp(2, endday);
+			System.out.println(sql);
+			resultSet = preparedStatement.executeQuery();
+		
+			while(resultSet.next()) {
+				
+				String pname = resultSet.getString("pname");
+				int sales = resultSet.getInt("sales");
+				
+				
+				
+				
+				AdminExtra_Dto_kkg dto = new AdminExtra_Dto_kkg (pname, sales);  //	dto 에는 오른쪽 명칭임. (Date date, int sales, int ordercount)
+				dtos.add(dto);
+				
+		
+			
+
+			}
+			connection.close();
+		} catch (Exception e) {
+				// TODO: handle exception
+			System.out.println("실패");
+
+				e.printStackTrace();
+			}
+		
+
+		Date startdate = new Date(startday.getTime()); 
+			System.out.println("시작 날짜 : "+startdate);
+		Date enddate = new Date(endday.getTime()); 
+			System.out.println("마지막 날짜 : " + enddate);
+		
+		return dtos;
+		
+		
+		
+	}// end of maxSalesChart
+	
+	
+	
+	
+	
 }//end Game now

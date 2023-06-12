@@ -36,8 +36,19 @@ import com.javalec.bbs.command.MypageCommand;
 import com.javalec.bbs.command.NoticeCommand;
 import com.javalec.bbs.command.OrderCommand;
 import com.javalec.bbs.command.OrderProductCommand;
+import com.javalec.bbs.command.Pjh_ANoticeModifyPage_Command;
+import com.javalec.bbs.command.Pjh_ANoticeModify_Command;
+import com.javalec.bbs.command.Pjh_ANoticeViewCommand;
+import com.javalec.bbs.command.Pjh_ANoticeWrite_Command;
+import com.javalec.bbs.command.Pjh_AWriteReply_Command;
+import com.javalec.bbs.command.Pjh_BigCommentActionCommand;
+import com.javalec.bbs.command.Pjh_CommentActionCommand;
+import com.javalec.bbs.command.Pjh_CommentDeleteCommand;
+import com.javalec.bbs.command.Pjh_ForumViewCommand;
+import com.javalec.bbs.command.Pjh_ReplyActionCommand;
 import com.javalec.bbs.command.PwCommand;
 import com.javalec.bbs.command.QnAList_Command_pjh;
+import com.javalec.bbs.command.ReviewCommand;
 import com.javalec.bbs.command.RviewCommand;
 import com.javalec.bbs.command.aDeleteProductCommand_pjh;
 import com.javalec.bbs.command.aDeleteReviewCommand_pjh;
@@ -187,26 +198,25 @@ public class MController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "detailedpage.jsp";
 			break;
-		case ("/list.do"):
-			command = new RviewCommand();
+		case ("/myreview.do"):
+			command = new ReviewCommand();
 			command.execute(request, response);
-			viewPage = "K_myreview.jsp";
+			viewPage = "myreview.jsp";
 			break;
 		case ("/productcart.do"):
 			command = new InsertCommand();
 			command.execute(request, response);
-			viewPage = "cart.do";
+			viewPage = (String) request.getAttribute("view");
 			break;
-
+		case ("/OrderView.do"):
+			command = new OrderCommand();
+			command.execute(request, response);
+			viewPage = (String) request.getAttribute("view");
+			break;
 		case ("/notice.do"):
 			command = new NoticeCommand();
 			command.execute(request, response);
 			viewPage = "notice.jsp";
-			break;
-		case ("/order.do"):
-			command = new OrderCommand();
-			command.execute(request, response);
-			viewPage = "order.jsp";
 			break; 
 			
 
@@ -214,13 +224,17 @@ public class MController extends HttpServlet {
 		// *************************************************************//
 
 		/* PART III 시작. 스윗남자 박지환 서윗남 part 입니다. 일용할 스윗함에 고마움을 :). */
-		case("/APinsert.do") :
+		case("/APlist.do") :
+			command = new aProductListCommand_pjh();
+			command.execute(request, response);
+			viewPage = "Admin_ProductList_pjh.jsp";
+			break;
+			case("/APinsert.do") :
 			viewPage = "Admin_ProductAdd_pjh.jsp";
 			break;
 			//상품등록 페이지에서 업로드 버튼
 			case("/AProductInsert.do") :
 			command = new aProductAddCommand_pjh();
-			
 			command.execute(request, response);
 			viewPage = "APlist.do";
 			break;
@@ -271,7 +285,7 @@ public class MController extends HttpServlet {
 			viewPage = "Admin_Review_List.jsp";
 			break;
 			case ("/AForumView.do"):
-			command = new Kms_ForumViewCommand();
+			command = new Pjh_ForumViewCommand();
 			command.execute(request, response);
 			viewPage = "AForumView.jsp";
 			break;
@@ -284,6 +298,51 @@ public class MController extends HttpServlet {
 			command = new Kms_ForumSearchCommand();
 			command.execute(request, response);
 			viewPage = "pjh_WriteList.jsp";
+			break;
+			case ("/Acommentwrite.do"):
+			command = new Pjh_CommentActionCommand();
+			command.execute(request, response);
+			viewPage = "AForumView.do";
+			break;
+			case ("/Acommentdelete.do"):
+			command = new Pjh_CommentDeleteCommand();
+			command.execute(request, response);
+			viewPage = "AForumView.do?fid="+request.getParameter("page");
+			break;
+			case ("/pjh_WriteReply.do"):
+			command = new Pjh_AWriteReply_Command();
+			command.execute(request, response);
+			viewPage = "pjh_WriteReply.jsp";
+			break;
+			case ("/ABigCommentWrite.do"):
+			command = new Pjh_BigCommentActionCommand();
+			command.execute(request, response);
+			viewPage = "AForumView.do?fid="+request.getParameter("page");
+			break;
+			case ("/Areplywrite.do"):
+			command = new Pjh_ReplyActionCommand();
+			command.execute(request, response);
+			viewPage = "AForumView.do?fid="+request.getParameter("page");
+			break;
+			case ("/ANoticeView.do"):
+			command = new Pjh_ANoticeViewCommand();
+			command.execute(request, response);
+			viewPage = "Pjh_notice.jsp";
+			break;
+			case ("/AnoticeModifyPage.do"):
+			command = new Pjh_ANoticeModifyPage_Command();
+			command.execute(request, response);
+			viewPage = "ANoticeModifyPage.jsp";
+			break;
+			case ("/AnoticeModify.do"):
+			command = new Pjh_ANoticeModify_Command();
+			command.execute(request, response);
+			viewPage = "ANoticeView.do?nid="+request.getParameter("nid");
+			break;
+			case ("/AdminNoticeWrite.do"):
+			command = new Pjh_ANoticeWrite_Command();
+			command.execute(request, response);
+			viewPage = "Admin_QnA_pjh.jsp";
 			break;
 
 
@@ -349,49 +408,43 @@ public class MController extends HttpServlet {
 		/* PART V 시작. 나 강경구 파트다. 돈트 터치 디스 에어리어. 디스 이즈 사유지. ㅋㅋㅋㅋㅋㅋㅋ */
 
 		case ("/adminHome.do"):
-			System.out.println("adminHome.do 로 들어옴");
-
 			command = new aHomeCommand_kkg();
 			command.execute(request, response);
-			System.out.println("adminCommand_kkg 실행완료");
-
 			viewPage = "adminHome.jsp";
-			System.out.println("viewPage 입력되었음");
 			break;
 
 		case ("/AUserlist.do"):
-			System.out.println("AuserLIst.do 들어옴");
-			System.out.println("startDate 값 : " + request.getParameter("startDate"));
 			request.setAttribute("startDate", Date.valueOf(LocalDate.now().minusDays(7)));
 			request.setAttribute("endDate", Date.valueOf(LocalDate.now()));
 			request.setAttribute("pnum",1);
 			
 			command = new aUserListCommnad_kkg();
 			command.execute(request, response);
-			System.out.println("aUserListCommand_kkg 커맨드 실행 완료");
 			viewPage = "adminUserlist.jsp";
-			System.out.println("viewPage 입력되었음 : " + viewPage);
 			
 			request.removeAttribute("startDate");
 			request.removeAttribute("endDate");
 			request.removeAttribute("pnum");
-			
-			
 			break;
 			
-		case ("/showOrderList.do"):
-			System.out.println("showOrderList.do 로 들어옴");
+		case("/Salemanage.do"):
+			request.setAttribute("startDate_chart", Date.valueOf(LocalDate.now().minusDays(30)));
+			request.setAttribute("endDate_chart", Date.valueOf(LocalDate.now()));
+			request.setAttribute("pnum",1);
 
 			command = new showOrderListCommand_kkg();
 			command.execute(request, response);
-			System.out.println("showOrderListCommand_kkg 실행완료");
-	
-			viewPage = "adminOrderList.jsp";
-			System.out.println("viewPage 입력되었음");
+			viewPage = "adminSalemanage.jsp";
 			
-			
-			
+			request.removeAttribute("startDate");
+			request.removeAttribute("endDate");
+			request.removeAttribute("pnum");
 			break;
+			
+			
+			
+			
+
 		
 
 		/* PART V 종료. 나 강경구 파트다. 돈트 터치 디스 에어리어. 디스 이즈 사유지. ㅋㅋㅋㅋㅋㅋㅋ */
@@ -399,7 +452,7 @@ public class MController extends HttpServlet {
 
 		}// switch 구문 끝
 
-		System.out.println(viewPage + "로 이동합니다..");
+		System.out.println(viewPage + "로 이동합니다.");
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 	}

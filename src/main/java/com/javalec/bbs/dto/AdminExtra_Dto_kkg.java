@@ -16,7 +16,7 @@ public class AdminExtra_Dto_kkg {
 	Timestamp timestamp ;
 	int sales ;
 	Date date;
-	int ordercount;
+	int ordercount; //주문횟
 	String month;
 	
 	int pageNum;
@@ -32,6 +32,14 @@ public class AdminExtra_Dto_kkg {
 	int maxPage;
 	int custnum;
 	
+	
+	int categoryId;
+	String categoryName;
+	int orders; // 판매량
+	
+	
+	String gender;
+	String pname;
 	//constructor
 	
 	
@@ -43,6 +51,110 @@ public class AdminExtra_Dto_kkg {
 		this.date = date;
 		this.sales = sales;
 	}
+
+
+
+
+	
+	
+
+
+
+
+
+
+
+	public AdminExtra_Dto_kkg(String pname, int orders) {
+		super();
+		this.pname = pname;
+		this.orders = orders;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public int getOrders() {
+		return orders;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setOrders(int orders) {
+		this.orders = orders;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public AdminExtra_Dto_kkg(String categoryName, String gender, int orders, int sales) {
+		super();
+		this.categoryName = categoryName;
+		this.gender = gender;
+		this.orders = orders;
+		this.sales = sales;
+	}
+
+
+
+	public AdminExtra_Dto_kkg(int seq, String gender, int orders, int sales) {
+		super();
+		this.seq = seq;
+		this.gender = gender;
+		this.orders = orders;
+		this.sales = sales;
+	}
+
+
+
+
+
+
+
+
+
+	public AdminExtra_Dto_kkg(int seq, int categoryId, String categoryName, int orders, int sales) {
+		super();
+		this.seq = seq;
+		this.categoryId = categoryId;
+		this.categoryName = categoryName;
+		this.orders = orders;
+		this.sales = sales;
+	}
+
+
+
+
+
+
+
 
 
 
@@ -306,7 +418,118 @@ public class AdminExtra_Dto_kkg {
 		this.custnum = custnum;
 	}
 	
-	
+	public int getCategoryId() {
+		return categoryId;
+	}
+
+
+
+
+
+
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
+	}
+
+
+
+
+
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+
+
+
+
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+
+
+
+
+
+	public int getorders() {
+		return orders;
+	}
+
+
+
+
+
+
+	public void setorders(int orders) {
+		this.orders = orders;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public String getGender() {
+		return gender;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public String getPname() {
+		return pname;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
 	
 	
 	

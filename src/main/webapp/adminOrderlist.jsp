@@ -113,7 +113,6 @@
 
 <!--  ************* Headbar && Sidebar 종료 ************* -->
 
-
 	<div class="container-fluid">
 		<div class="row" style="margin-left : 70px; padding : 10px">
 			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -127,12 +126,14 @@
 				</div>
 				<div
 					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="h2">회원관리</h1>
+					<h1 class="h2">	매출/결재 관리</h1>
 					<div>
 					
 						<form action="AUserlist.do" name="date" method="post">
 							<input type="text" name ="startDate" id= "startDate" placeholder="시작일" autocomplete="off">
 	 						<input type="text" name ="endDate" id="endDate" placeholder="종료일" autocomplete="off" >
+	 						<input type="text">
+	 						
 	 						<input type="hidden" name ="pageNum" value="${userList[0].pageNum}">
  	 						<input type="button"  value="확 인" onclick="checkDate()">
 						</form>
@@ -269,6 +270,14 @@
     
     
     
+    
+	<script>
+
+
+	
+	
+	
+	</script>
 
 </body>
 </html>

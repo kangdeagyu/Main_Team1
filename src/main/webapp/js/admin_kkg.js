@@ -3,8 +3,44 @@
  */
 
 
+function DoublebarChart(context, xlabel, ylabel_01, ylabel_02) {
+
+	const datas = {
+		labels: xlabel,
+		datasets: [
+			{
+				label: "남",
+				backgroundcolor: "blue",
+				data: ylabel_01
+
+			},
+			{
+				label: "여",
+				fillcolor: "red",
+				data: ylabel_02
+
+			}
+		]
+
+	}
+
+	const config = {
+		type: 'bar',
+		data: datas,
+
+
+
+
+	}
+
+	const barChart_double = new Chart(context, config);
+	return barChart_double;
+}
+
+
+
 // 한개의 데이터를 한개의 바차트로 보여주는 함수.
-function SingleBarChart(context, xlabels, y01 ,ydatas_01) {
+function SingleBarChart(context, xlabels, y01, ydatas_01) {
 
 	const datas = {
 		labels: xlabels, /* x축을 선언하는 파트. - 위에서 선언한 labels 로 대체할 수 있다.*/
@@ -38,16 +74,16 @@ function SingleBarChart(context, xlabels, y01 ,ydatas_01) {
 			maintainAspectRatio: false, /*  가로세로 비율 무시하기*/
 
 			scales: {
-				x:{
-					grid:{
-						display : false
-					}	
+				x: {
+					grid: {
+						display: false
+					}
 				},
-				y:{
-					grid:{
-						display : false
-					}	
-					
+				y: {
+					grid: {
+						display: false
+					}
+
 				},
 				yAxes: [
 					{
@@ -56,7 +92,7 @@ function SingleBarChart(context, xlabels, y01 ,ydatas_01) {
 						ticks: {
 							fontSize: 8,
 							fontColor: 'rgb(255,0,0)',
-							suggestedMax : 10
+							suggestedMax: 10
 						}
 					}
 
@@ -97,11 +133,78 @@ function SingleBarChart(context, xlabels, y01 ,ydatas_01) {
 		}//option 끝
 	};//config 끝
 
-	const LineChart_single = new Chart(context, config);
-	return LineChart_single;
+	const barChart_single = new Chart(context, config);
+	return barChart_single;
 
 
 }
+
+
+
+
+function PieChart(Title, context, xlabel, ydatas_01) {
+
+
+	const dataset = {
+		label: Title,
+		data: ydatas_01
+
+	}
+
+	const labels = xlabel
+
+	const datas = { datasets: [dataset], lavels: labels }
+
+
+
+
+	const config = {
+		type: 'pie',
+		data: datas, //데이터 셋 
+		options: {
+			responsive: true,
+			maintainAspectRatio: false, //true 하게 되면 캔버스 width,height에 따라 리사이징된다.
+			legend: {
+				position: 'top',
+				fontColor: 'black',
+				align: 'center',
+				display: true,
+				fullWidth: true,
+				labels: {
+					fontColor: 'rgb(0, 0, 0)'
+				}
+			},
+			plugins: {
+				labels: {//두번째 script태그를 설정하면 각 항목에다가 원하는 데이터 라벨링을 할 수 있다.
+					render: 'value',
+					fontColor: 'black',
+					fontSize: 15,
+					precision: 2
+				}
+
+			}
+		}
+	}
+
+	const PieChart = new Chart(context, config);
+	return PieChart;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -154,16 +257,16 @@ function SingleLineChart(context, xlabels, y01, ydatas_01) {
 			maintainAspectRatio: false, /*  가로세로 비율 무시하기*/
 
 			scales: {
-				x:{
-					grid:{
-						display : false
-					}	
+				x: {
+					grid: {
+						display: false
+					}
 				},
-				y:{
-					grid:{
-						display : false
-					}	
-					
+				y: {
+					grid: {
+						display: false
+					}
+
 				},
 				yAxes: [
 					{
@@ -220,13 +323,8 @@ function SingleLineChart(context, xlabels, y01, ydatas_01) {
 }
 
 // 두개 데이터차트를 한 화면에 보여주는 함수.
-function DoubleLineChart(context, xlabels, y01 ,ydatas_01, y02, ydatas_02) {
-	console.log('doubleLineChart 입력');
+function DoubleLineChart(context, xlabels, y01, ydatas_01, y02, ydatas_02) {
 
-	console.log(context);
-	console.log(xlabels);
-	console.log(ydatas_01);
-	console.log(ydatas_02);
 
 
 
@@ -240,7 +338,7 @@ function DoubleLineChart(context, xlabels, y01 ,ydatas_01, y02, ydatas_02) {
 
 		datasets: [ /* 그려질 그래프의 정보를 입력하는 부분이다. 그래프의 배경색, 테두리색, data 값들이 입력된다. */
 			{
-				label:y01, /* 그래프(차트)의 제목이다.*/
+				label: y01, /* 그래프(차트)의 제목이다.*/
 				fill: false,
 				backgroundColor: 'rgb(255, 0, 0)',
 				borderColor: 'rgb(255, 0, 0)',
@@ -282,16 +380,16 @@ function DoubleLineChart(context, xlabels, y01 ,ydatas_01, y02, ydatas_02) {
 			maintainAspectRatio: false, /*  가로세로 비율 무시하기*/
 
 			scales: {
-				x:{
-					grid:{
-						display : false,
-					}	
+				x: {
+					grid: {
+						display: false,
+					}
 				},
-				y:{
-					grid:{
-						display : false,
-					}	
-					
+				y: {
+					grid: {
+						display: false,
+					}
+
 				},
 				yAxes: [
 					{

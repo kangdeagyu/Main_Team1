@@ -27,7 +27,7 @@ public class aUserListCommnad_kkg implements MCommand {
 
 		
 		
-		//상단의 그래프를 가져오기 위한 작업
+		//상단의 그래프를 가져오기 위한 작업 /페이지 번호 확정 작업
 		
 		// x축 (날짜) 리스트 만들기.
 		// String startDate ;
@@ -80,7 +80,7 @@ System.out.println("커맨드에서 최종 입력된 페이지 번호 : " + page
 			
 		}
 
-		// String 배열로 바꿀거임.
+		// String 배열로 바꿀거임. chart.js 에는 string 배열로 들어가야됨.
 		List<Date> dateList = getDateList(startday, endday); // method01. Timestamp 2개로 List<DATE> 만들어오기.
 		List<String> dateListStr = new ArrayList<>();
 		List<Integer> dailyNSList = new ArrayList<>();
@@ -116,12 +116,12 @@ System.out.println("커맨드에서 최종 입력된 페이지 번호 : " + page
 
 	
 	// request 셋팅하기
-	request.setAttribute("dailyDate", dateListStr);
-	request.setAttribute("dailyNS", dailyNSList);
-	request.setAttribute("userList", userList);
-	request.setAttribute("maxPage", maxPage);
-	request.setAttribute("usernum", usernum);
-	request.setAttribute("dateList", dateList);
+	request.setAttribute("dailyDate", dateListStr); // 차트에삽입하기 위한 문자열배열 형태의 어트리뷰트
+	request.setAttribute("dailyNS", dailyNSList); //신규 가입자수 데이
+	request.setAttribute("userList", userList); // 하단표에 출력될 유저리스트 목록
+	request.setAttribute("maxPage", maxPage); // 회원수에 다른 최대 페이지 번호
+	request.setAttribute("usernum", usernum); // 최대 회원수
+	request.setAttribute("dateList", dateList); // 날짜를 문자열 형식이 아닌 데이터 형식으로 저장하기위한 DATE 배열의 어트리뷰트
 	
 
 	
