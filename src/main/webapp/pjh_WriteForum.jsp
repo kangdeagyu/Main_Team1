@@ -33,6 +33,7 @@
 	 	<div class="wrapper">
 <h1>리뷰 작성</h1>
 <form action="Aforumwrite.do" method="post" onsubmit="return validateForumWriteForm()">
+			<input type="hidden" name="f_cid" value="${cid }">
     <table>
         <tr>
             <td>제목</td>
@@ -40,11 +41,11 @@
         </tr>
         <tr>
             <td>작성자</td>
-            <td><input type="text" name="f_cid" value="admin" readonly="readonly"></td>
+            <td><input type="text" name="cname" value="${param.cname }" readonly="readonly"></td>
         </tr>
         <tr>
             <td>상품코드</td>
-            <td><input type="text" name="f_pid" value="1" readonly="readonly"></td>
+            <td><input type="text" name="f_pid" value="${param.f_pid}" readonly="readonly"></td>
         </tr>
         <tr>
             <td colspan="2">내용</td>

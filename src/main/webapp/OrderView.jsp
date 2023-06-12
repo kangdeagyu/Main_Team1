@@ -10,16 +10,19 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <style>
 
+	.table-container {
+	  display: flex;
+	  justify-content: center;
+	  align-items: flex-start;
+	}
 
 
     td {
         text-align: left;
-        padding: 10px;
+        padding: 30px;
     }
 
-    td:first-child {
-        text-align: left;
-    }
+
 
 
 </style>
@@ -31,95 +34,92 @@
 <body>
 	
 
-<div>
-	<h3>주문 상품 정보</h3>
-	<table>
-		<c:forEach items="${orderList}" var="dto" varStatus="status">
-			  <tr>
-			   	 <td>
-			    	<img src="${dto.pfilename}" style="width: 100px; height: 100px; margin-bottom: 10px;" alt="..." />
-			    </td>
-			    <td>${dto.pname}<br/>
-			    	${dto.pcontent} - ${dto.bqty}개<br/>
-			    	<fmt:formatNumber value="${dto.price * dto.bqty}" pattern="#,##0원" />
-			    </td>
-			  </tr>
-		</c:forEach> 	
-    </table><br/>
+<div class="container">
+<div class="row">
+
+  <div class="col-md-6">
+    <h3>구매 상품</h3>
+    <table style="margin-bottom: 20px;" border="1">
+      <c:forEach items="${orderList}" var="dto" varStatus="status">
+        <tr>
+          <td>
+            <img src="${dto.pfilename}" style="width: 100px; height: 100px; margin-bottom: 10px;" alt="..." />
+          </td>
+          <td style="width: 75%">${dto.pname}<br/>
+            ${dto.pcontent} - ${dto.bqty}개<br/>
+            <fmt:formatNumber value="${dto.price * dto.bqty}" pattern="#,##0원" />
+          </td>
+        </tr>
+      </c:forEach> 	
+    </table>
+   </div>
+
+
+   <div class="col-md-6">
+    <form action="orderProduct.do" name="orderForm" id="orderForm" method="post" onsubmit="return check()">
+      <h3>주문자 정보</h3>
+      <c:forEach items="${list}" var="dto">
+        <c:set var="name" value="${dto.cname }"></c:set>
+        <c:set var="phone" value="${dto.cphone }"></c:set>
+        <c:set var="id" value="${dto.cid }"></c:set>
+        <c:set var="postnum" value="${dto.cpostnum  }"></c:set>
+        <c:set var="address1" value="${dto.caddress1 }"></c:set>
+        <c:set var="address2" value="${dto.caddress2}"></c:set>
+        <input type="checkbox" id="sameInfoCheckbox" name="user"> 주문자 정보와 동일<br/>
+        <div id="additionalInfo">
+          <input type="text" class="form-control" name="cname" id="cname" size="20" value="${dto.cname }" placeholder="이름"><br/>
+          <input type="text" class="form-control" name="cphone" id="cphone" size="20" value="${dto.cphone }" placeholder="전화번호" ><br/>
+          <input type="email" class="form-control" name="cid" id="cid" size="42" value="${dto.cid }" placeholder="아이디(이메일)" readonly><br/>
+          <input type="text"  class="form-control" name="cpostnum" id="sample6_postcode" placeholder="우편번호" value="${dto.cpostnum }" readonly>
+          <input type="button" class="form-control" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br/>
+          <input type="text"  class="form-control" name="caddress1" id="sample6_address" placeholder="주소" value="${dto.caddress1 }" readonly><br>
+          <input type="text"  class="form-control" name="caddress2" id="sample6_detailAddress" placeholder="상세주소" value="${dto.caddress2 }"><br/>
+          <input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
+        </div>
+        <br>
+        배송메모<br>
+        <select name="memo" class="form-control">
+          <option>배송메모를 선택해주세요.</option>		
+          <option>배송 전에 미리 연락 바랍니다.</option>		
+          <option>부재시 경비실에 맡겨주세요.</option>		
+          <option>부재시 전화나 문자를 남겨주세요.</option>		
+          <option>직접입력</option>		
+        </select>
+      </c:forEach>
+      <br/><br/>
+      <h3>주문 요약</h3>
+      <c:set var="totalprice" value="0"></c:set>
+      <c:forEach items="${orderList}" var="dto" varStatus="status">	
+        <input type="hidden" name="pid[]" value="${dto.pid }">
+        <input type="hidden" name="qty[]" value="${dto.bqty }">
+        <input type="hidden" name="price[]" value="${dto.price }">
+        <c:set var="subtotal" value="${dto.price * dto.bqty}"></c:set>
+        <c:set var="totalprice" value="${totalprice + subtotal}"></c:set>
+      </c:forEach>
+		  <div class="form-group">
+		    <label for="productPrice">상품가격 :</label>
+		    <input type="text" class="form-control" value="<fmt:formatNumber value='${totalprice}' pattern='#,##0원' />" readonly>
+		  </div>
+		  <div class="form-group">
+		    <label for="deliveryFee">배송비 :</label>
+		    <input type="text" class="form-control" value="<fmt:formatNumber value='${totalprice >= 150000 ? 0 : 3000}' pattern='#,##0원' />" readonly>
+		  </div>
+		  <div class="form-group">
+		    <label for="totalAmount">총 주문 금액 :</label>
+		    <input type="text" class="form-control" value="<fmt:formatNumber value='${totalprice + (totalprice >= 150000 ? 0 : 3000)}' pattern='#,##0원' />" readonly>
+		  </div>
+      <br/>
+      <h3>결제수단</h3>
+      <input type="radio" name="payment" checked="checked" value="신용카드"> 신용카드 
+      <input type="radio" name="payment" value="무통장입금" > 무통장입금 
+      <input type="radio" name="payment" value="카카오페이" > 카카오페이 
+      <input type="radio" name="payment" value="삼성페이" > 삼성페이 
+      <br/><br/>
+      <input type="submit" class="form-control" value="구매하기">
+    </form>
+  </div>
+  </div>
 </div>
-	
-
-<br/>
-
-	<h3>주문자 정보</h3>
-	<form action="orderProduct.do" name="orderForm" id="orderForm" method="post" onsubmit="return check()">
-	<c:forEach items="${list}" var="dto" >
-			<c:set var="name" value="${dto.cname }"></c:set>
-			<c:set var="phone" value="${dto.cphone }"></c:set>
-			<c:set var="id" value="${dto.cid }"></c:set>
-			<c:set var="postnum" value="${dto.cpostnum  }"></c:set>
-			<c:set var="address1" value="${dto.caddress1 }"></c:set>
-			<c:set var="address2" value="${dto.caddress2}"></c:set>
-			<input type="checkbox" id="sameInfoCheckbox" name="user"> 주문자 정보와 동일<br/>
-		<div id="additionalInfo">
-		    <input type="text" class="form-control" name="cname" id="cname" size="20" value="${dto.cname }" placeholder="이름"><br/>
-		    <input type="text" class="form-control" name="cphone" id="cphone" size="20" value="${dto.cphone }" placeholder="전화번호" ><br/>
-		    <input type="email" class="form-control" name="cid" id="cid" size="42" value="${dto.cid }" placeholder="아이디(이메일)" readonly><br/>
-		    <input type="text"  class="form-control" name="cpostnum" id="sample6_postcode" placeholder="우편번호" value="${dto.cpostnum }" readonly>
-			<input type="button" class="form-control" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br/>
-
-			<input type="text"  class="form-control" name="caddress1" id="sample6_address" placeholder="주소" value="${dto.caddress1 }" readonly><br>
-			<input type="text"  class="form-control" name="caddress2" id="sample6_detailAddress" placeholder="상세주소" value="${dto.caddress2 }"><br/>
-			<input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
-		</div>
-		<br><br>
-		
-		배송메모<br>
-		<select name="memo">
-			<option>배송메모를 선택해주세요.</option>		
-			<option>배송 전에 미리 연락 바랍니다.</option>		
-			<option>부재시 경비실에 맡겨주세요.</option>		
-			<option>부재시 전화나 문자를 남겨주세요.</option>		
-			<option>직접입력</option>		
-		</select>
-	
-	</c:forEach>
-	
-<br/><br/>
-
-	<h3>주문 요약</h3>
-	<c:set var="totalprice" value="0"></c:set>
-	<c:forEach items="${orderList}" var="dto" varStatus="status">	
-		<input type="hidden" name="pid[]" value="${dto.pid }">
-		<input type="hidden" name="qty[]" value="${dto.bqty }">
-		<input type="hidden" name="price[]" value="${dto.price }">
-	  	<c:set var="subtotal" value="${dto.price * dto.bqty}"></c:set>
-	  	<c:set var="totalprice" value="${totalprice + subtotal}"></c:set>
-	</c:forEach>
-			<table>
-				<tr>
-				    <td>상품가격 :</td>
-				    <td><fmt:formatNumber value="${totalprice}" pattern="#,##0원" /></td>
-				</tr>
-				<tr>
-				    <td>배송비 :</td>
-				    <td><fmt:formatNumber value="${totalprice >= 150000 ? 0 : 3000}" pattern="#,##0원" /></td>
-				</tr>
-				<tr>
-				    <td>총 주문 금액 :</td>
-				    <td><fmt:formatNumber value="${(totalprice) + (totalprice >= 150000 ? 0 : 3000)}" pattern="#,##0원" /></td>
-				</tr>
-			</table>
-<br/><br/>
-
-	<h3>결제수단</h3>
-	<input type="radio" name="payment" checked="checked" value="신용카드">신용카드
-	<input type="radio" name="payment" value="무통장입금" >무통장입금
-	<input type="radio" name="payment" value="카카오페이" >카카오페이
-	<input type="radio" name="payment" value="삼성페이" >삼성페이
-
-	<input type="submit" value="구매하기">
-	</form>
 
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

@@ -15,11 +15,13 @@
 	 	<div class="wrapper">
 <h1>답글 작성</h1>
 <form action="Areplywrite.do" method="post">
-<input type="hidden" name="fid" value="3">
+<input type="hidden" name="page" value="${page}">
+<input type="hidden" name="ftype" value="${ftype}">
+<input type="hidden" name="fid" value="${fid}">
 <input type="hidden" name="fref" value="3">
 <input type="hidden" name="freforder" value="0">
 <input type="hidden" name="fstep" value="0">
-<input type="hidden" name="fmotherid" value="3">
+<input type="hidden" name="fmotherid" value="${fid}">
 <input type="hidden" name="fanswernum" value="0">
     <table>
         <tr>
@@ -28,11 +30,11 @@
         </tr>
         <tr>
             <td>작성자</td>
-            <td><input type="text" name="f_cid" value="admin" readonly="readonly"></td>
+            <td><input type="text" name="f_cid" value="관리자" readonly="readonly"></td>
         </tr>
         <tr>
             <td>상품코드</td>
-            <td><input type="text" name="f_pid" value="1" readonly="readonly"></td>
+            <td><input type="text" name="f_pid" value="${pid}" readonly="readonly"></td>
         </tr>
         <tr>
             <td colspan="2">내용</td>
@@ -41,6 +43,9 @@
     <textarea name="fcontent" cols="35" rows="10"></textarea>
     <br/>
     <input type="submit" value="답글달기">
+</form>
+<form action="AForumView.do?fid=${fid}&ftype=${ftype}" method="post">
+<input type="submit" value="취소">
 </form>
 </div>
 </body>

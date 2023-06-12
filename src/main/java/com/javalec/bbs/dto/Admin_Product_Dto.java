@@ -56,6 +56,15 @@ public class Admin_Product_Dto {
 			this.c_name = c_name;
 		}
 		
+		public Admin_Product_Dto(String pfilename, String pname, int pprice, int pid, int pstock, String c_name) {
+			super();
+			this.pfilename = pfilename;
+			this.pname = pname;
+			this.pprice = pprice;
+			this.pid = pid;
+			this.pstock = pstock;
+			this.c_name = c_name;
+		}
 		
 		
 		
