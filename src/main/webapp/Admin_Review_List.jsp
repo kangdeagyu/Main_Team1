@@ -16,6 +16,9 @@
 <title>리뷰 목록</title>
 <script src="js/modal.js"></script>
 <script>
+var fidList = '${fidList}'.split(',');
+var pidList = '${pidList}'.split(',');
+
 function selectAll() {
     var checkboxes = document.getElementsByName('selectedItems');
     var selectAllCheckbox = document.getElementById('selectAllCheckbox');
@@ -59,9 +62,68 @@ function deleteSelectedItems() {
 
     return false; // 폼 제출 중지
 }
+
+function openCommentModal() {
+    var checkboxes = document.getElementsByName('selectedItems');
+    var selectedItems = [];
+    var selectedPids = [];
+
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            selectedItems.push(checkboxes[i].value);
+            selectedPids.push(checkboxes[i].dataset.pid);
+        }
+    }
+
+    if (selectedItems.length === 0) {
+        alert('댓글을 작성할 상품을 선택해주세요.');
+        return;
+    }
+
+    var modalContent = document.getElementById('commentModalContent');
+    var modal = document.getElementById('commentModal');
+
+    // 선택된 fid들을 모달창 내부의 숨은 필드에 설정
+    var fidInput = modalContent.querySelector('input[name="fidList"]');
+    fidInput.value = selectedItems.join(',');
+
+    // 선택된 f_pid들을 모달창 내부의 숨은 필드에 설정
+    var pidInput = modalContent.querySelector('input[name="pidList"]');
+    pidInput.value = selectedPids.join(',');
+
+    // 모달창을 보여줌
+    modal.style.display = 'block';
+}
+
+function closeCommentModal() {
+    var modalContent = document.getElementById('commentModalContent');
+    var modal = document.getElementById('commentModal');
+
+    // 모달창 내부의 숨은 필드를 제거
+    modalContent.innerHTML = '';
+
+    // 모달창을 닫음
+    modal.style.display = 'none';
+}
+
 </script>
 </head>
 <body>
+
+<div id="commentModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeCommentModal()">&times;</span>
+        <div id="commentModalContent">
+            <!-- 텍스트 입력 폼 및 저장 버튼 -->
+            <form action="Acheckcommentwrite.do" method="post">
+                 <input type="hidden" name="fidList" value="${fidList}">
+        		 <input type="hidden" name="pidList" value="${pidList}">
+                <textarea name="content" rows="4" cols="50"></textarea>
+                <input type="submit" value="저장">
+            </form>
+        </div>
+    </div>
+</div>
 	<div class="sidebar">
 		<jsp:include page="admin_01_sidebar.jsp" />
 	</div>
@@ -76,84 +138,83 @@ function deleteSelectedItems() {
 		</form> -->
 		 <input type="checkbox" id="selectAllCheckbox" onchange="selectAll()">
 			<input type="button" value="삭제" onclick="deleteSelectedItems()">
-			<input type="button" value="댓글" onclick="">
-			<table border=1>
-				<tr>
-					<th></th>
-					<th>ID</th>
-					<th>작성일</th>
-					<th>고객정보</th>
-					<th>상품</th>
-					<th>리뷰 보기</th>
-					<th>리뷰 상세하게 보기</th>
-				</tr>
-				<c:forEach items="${reviewlist}" var="dto">
-					<tr>
-						<td><input type="checkbox" name="selectedItems" value="${dto.fid}"></td>
-						<td>${dto.fid}</td>
-						<td>${dto.finsertdate}</td>
-						<td>${dto.cname}</td>
-						<td><a href="#" onclick="openModal('${dto.fid}')"> <img
-								src="${dto.pfilename}" alt="Product Image" width="100" />
-						</a></td>
-						<td><a href="#" onclick="openModal2('${dto.fid}')">
-								${dto.ftitle} </a></td>
-						<td>
-							<form action="AForumView.do?fid=${dto.fid}&ftype=1" method="post">
-								<input type="hidden" name=fid value="${dto.fid}"> <input
-									type="submit" name="action" value="페이지로 이동">
-							</form>
-						</td>
-						<tr id="productInfo-${dto.fid}" style="display: none;">
-					    <td colspan="7">
-					        <h3>제품 정보</h3>
-					        <p>주요정보</p>
-					        <p>상품사진</p> 
-					        <a href="productInformation.do?query=${dto.pname}">
-					            <img src="${dto.pfilename}" alt="Product Image" width="100" />
-					        </a>
-					        <table border="1">
-					            <tr>
-					                <td>상품번호</td>
-					                <td>${dto.f_pid}</td>
-					                <td>상품가격</td>
-					                <td>${dto.pprice}</td>
-					            </tr>
-					            <tr>
-					                <td>종류</td>
-					                <td>${dto.categoryName}</td>
-					                <td>모델명</td>
-					                <td>${dto.pname}</td>
-					            </tr>
-					        </table>
-					        <p>상세 설명</p>
-					        <p>${dto.pcontent}</p>
-					    </td>
-					</tr>
-
-					<tr id="reviewInfo-${dto.fid}" style="display: none;">
-						<td colspan="4">
-							<h3>리뷰</h3>
-							<table border="1">
-								<tr>
-									<td>작성자</td>
-									<td>${dto.cname}</td>
-								</tr>
-								<tr>
-									<td>제목</td>
-									<td>${dto.ftitle}</td>
-								</tr>
-								<tr>
-									<td>작성일</td>
-									<td>${dto.finsertdate}</td>
-								</tr>
-								<tr>
-									<td>내용</td>
-									<td>${dto.fcontent}</td>
-								</tr>
-							</table>
-				</c:forEach>
-			</table>
+			<input type="button" value="댓글" onclick="openCommentModal()">
+			<table border="1">
+    <tr>
+        <th></th>
+        <th>ID</th>
+        <th>작성일</th>
+        <th>고객정보</th>
+        <th>상품</th>
+        <th>리뷰 보기</th>
+        <th>리뷰 상세하게 보기</th>
+    </tr>
+  <c:forEach items="${reviewlist}" var="dto">
+    <tr>
+        <td><input type="checkbox" name="selectedItems" value="${dto.fid}" data-pid="${dto.f_pid}"></td>
+        <td>${dto.fid}</td>
+        <td>${dto.finsertdate}</td>
+        <td>${dto.cname}</td>
+        <td><a href="#" onclick="openModal('${dto.fid}')"> <img src="${dto.pfilename}" alt="Product Image" width="100" /></a></td>
+        <td><a href="#" onclick="openModal2('${dto.fid}')">${dto.ftitle}</a></td>
+        <td>
+            <form action="AForumView.do?fid=${dto.fid}&ftype=1" method="post">
+                <input type="hidden" name="fid" value="${dto.fid}">
+                <input type="submit" name="action" value="페이지로 이동">
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="7">
+            <div id="productInfo-${dto.fid}" style="display: none;">
+                <h3>제품 정보</h3>
+                <p>주요정보</p>
+                <p>상품사진</p>
+                <a href="productInformation.do?query=${dto.pname}">
+                    <img src="${dto.pfilename}" alt="Product Image" width="100" />
+                </a>
+                <table border="1">
+                    <tr>
+                        <td>상품번호</td>
+                        <td>${dto.f_pid}</td>
+                        <td>상품가격</td>
+                        <td>${dto.pprice}</td>
+                    </tr>
+                    <tr>
+                        <td>종류</td>
+                        <td>${dto.categoryName}</td>
+                        <td>모델명</td>
+                        <td>${dto.pname}</td>
+                    </tr>
+                </table>
+                <p>상세 설명</p>
+                <p>${dto.pcontent}</p>
+            </div>
+            <div id="reviewInfo-${dto.fid}" style="display: none;">
+                <h3>리뷰</h3>
+                <table border="1">
+                    <tr>
+                        <td>작성자</td>
+                        <td>${dto.cname}</td>
+                    </tr>
+                    <tr>
+                        <td>제목</td>
+                        <td>${dto.ftitle}</td>
+                    </tr>
+                    <tr>
+                        <td>작성일</td>
+                        <td>${dto.finsertdate}</td>
+                    </tr>
+                    <tr>
+                        <td>내용</td>
+                        <td>${dto.fcontent}</td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</c:forEach>
+</table>
 	</div>
 
 	<div id="myModal" class="modal">

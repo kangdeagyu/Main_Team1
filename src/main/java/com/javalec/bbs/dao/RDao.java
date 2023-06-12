@@ -11,6 +11,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import com.javalec.bbs.dto.MyreviewDto;
+import com.javalec.bbs.dto.PurchaseOrderDto;
 import com.javalec.bbs.dto.RDto;
 
 public class RDao {
@@ -146,84 +147,90 @@ public boolean InsertCart(String cid, int pid, int qty) {
 	return result;
 }
 //데이터베이스 구매 목록입력
-public boolean PurchaseOrder(String cid, int pid,  int oqty, int oprice, String opostnum, String oaddress1, String oaddress2) {
+public ArrayList<PurchaseOrderDto> orderList(int ppid, int bbqty){
+	ArrayList<PurchaseOrderDto> dtos = new ArrayList<PurchaseOrderDto>();
 	Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    boolean result = false;
-    try {
-        connection = dataSource.getConnection();
-        String query = "INSERT INTO ordering (customer_cid, product_pid, oqty, oprice, opostnum, oaddress1, oaddress2, odelivery, odate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, now())";
+	PreparedStatement preparedStatement = null;
+	ResultSet resultSet = null;
 
-        preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, cid);
-		preparedStatement.setInt(2, pid);
-		preparedStatement.setInt(3, oqty);
-		preparedStatement.setInt(4, oprice);
-		preparedStatement.setString(5, opostnum);
-		preparedStatement.setString(6, oaddress1);
-		preparedStatement.setString(7, oaddress2);
-		preparedStatement.setInt(8, 0);
+	try {
+		connection = dataSource.getConnection(); // sql 연결
+		String query = "select pid, pfilename, pname, pprice, pcontent from product where pid = ?";
+		preparedStatement = connection.prepareStatement(query);
+		preparedStatement.setInt(1, ppid);
 		
-		preparedStatement.executeUpdate();
-		
-		result = true;
+		resultSet = preparedStatement.executeQuery();
 
-	
+		while(resultSet.next()) {
+			int pid = resultSet.getInt("pid");
+			String filename = resultSet.getString("pfilename");
+			String pname = resultSet.getString("pname");
+			String pcontent = resultSet.getString("pcontent");
+			int price = resultSet.getInt("pprice");
+			int bqty = bbqty;
+			String pfilename = "image/" + filename; 
+			PurchaseOrderDto dto = new PurchaseOrderDto(pid, pfilename, pname, pcontent, price, bqty);
+			dtos.add(dto);
+			
+		}
 	}catch (Exception e) {
 		e.printStackTrace();
-	} finally {
-	    try {
-	        if (preparedStatement != null) preparedStatement.close();
-	        if (connection != null) connection.close();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+	}finally {
+		try {
+			if(resultSet != null) resultSet.close();
+			if(preparedStatement != null) preparedStatement.close();
+			if(connection != null) connection.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
 
-    return result;
-}
-//구매하기 데이터 베이스에 저장하기 입력하기
+	return dtos;
 
-//구매 상품 오더링에 담기
-//public boolean Ordering(String ccid, int ppid, String oid, String oqty, String oprice, String opostnum, String oaddress1, String oaddress2, String odate){
-//	Connection connection = null;
-//	PreparedStatement preparedStatement = null;
-//	boolean result = false;
-//	
-//	try {
-//		connection = dataSource.getConnection(); // sql 연결
-//		String query = "INSERT INTO oredering (oid, oqty, oprice, opostnum, oaddress1, oaddress2, odate) values (?, ?, ?, ?, ?, ?, ?, ?,?)";
-//				       		
-//		preparedStatement = connection.prepareStatement(query);
-//		preparedStatement.setString(1, ccid);
-//		preparedStatement.setInt(2, ppid);
-//		preparedStatement.setString(3, oid);
-//		preparedStatement.setString(4, oqty);
-//		preparedStatement.setString(5, oprice);
-//		preparedStatement.setString(6, opostnum);
-//		preparedStatement.setString(7, oaddress1);
-//		preparedStatement.setString(8, oaddress2);
-//		preparedStatement.setString(9, odate);
-//		
-//		preparedStatement.executeUpdate();
-//	
-//		result = true;
-//
-//	
-//	}catch (Exception e) {
-//		e.printStackTrace();
-//	}finally {
-//		try {
-//			if(preparedStatement != null) preparedStatement.close();
-//			if(connection != null) connection.close();
-//		}catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-//	
-//	return result;
-//}
+	}
+
+public ArrayList<PurchaseOrderDto> list(String ccid){
+	ArrayList<PurchaseOrderDto> dtos2 = new ArrayList<PurchaseOrderDto>();
+	Connection connection = null;
+	PreparedStatement preparedStatement = null;
+	ResultSet resultSet = null;
+
+	try {
+		connection = dataSource.getConnection(); // sql 연결
+		String query = "select cid, cname, cphone, cpostnum, caddress1, caddress2 from customer where cid = ?";
+		preparedStatement = connection.prepareStatement(query);
+		preparedStatement.setString(1, ccid);
+		resultSet = preparedStatement.executeQuery();
+
+		while(resultSet.next()) {
+			String cid = resultSet.getString("cid");
+			String cname = resultSet.getString("cname");
+			String cphone = resultSet.getString("cphone");
+			String cpostnum = resultSet.getString("cpostnum");
+			String caddress1 = resultSet.getString("caddress1");
+			String caddress2 = resultSet.getString("caddress2");
+			
+			PurchaseOrderDto dto = new PurchaseOrderDto(cid, cname, cphone, cpostnum, caddress1, caddress2);
+			dtos2.add(dto);
+		}
+	}catch (Exception e) {
+		e.printStackTrace();
+	}finally {
+		try {
+			if(resultSet != null) resultSet.close();
+			if(preparedStatement != null) preparedStatement.close();
+			if(connection != null) connection.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	System.out.println("ccid: " + ccid);
+
+	return dtos2;
+
+	}
+
+
 
 //마이 페이지 나의 리뷰 데이터 가져오기
 public ArrayList<MyreviewDto> Myreview(String cid){
@@ -231,12 +238,11 @@ public ArrayList<MyreviewDto> Myreview(String cid){
 	Connection connection = null;
 	PreparedStatement preparedStatement = null;
 	ResultSet resultSet = null;
-	
 	try {
 		connection = dataSource.getConnection();
 		String query = "select f.*, p.pfilename, p.pname, c.cname"
 				+ " from forum f, product p, customer c";
-		String query2 = " where p.pid = f.fid and c.cid = f.f_cid and ftype = 1 and f.f_cid = ? order by fref desc, freforder";
+		String query2 = " where p.pid = f.f_pid and c.cid = f.f_cid and ftype = 1 and f.f_cid = ? order by fref desc, freforder";
 		
 		preparedStatement = connection.prepareStatement(query + query2);
 		preparedStatement.setString(1, cid);
@@ -256,14 +262,13 @@ public ArrayList<MyreviewDto> Myreview(String cid){
 			Timestamp finsertdate = resultSet.getTimestamp(11);
 			Timestamp fdeletedate = resultSet.getTimestamp(12);
 			int fmotherid = resultSet.getInt(13);
-			int fanswernum = resultSet.getInt(14);
-			String pfilename = resultSet.getString(15);
-			String pname = resultSet.getString(16);
-			String cname = resultSet.getString(17);
+			String pfilename = resultSet.getString(14);
+			String pname = resultSet.getString(15);
+			String cname = resultSet.getString(16);
 				
 			String ppfilename = "image/" + pfilename;
 			MyreviewDto dto = new MyreviewDto(fid, f_cid, f_aid, f_pid, ftype, 
-			fref, freforder, fstep, ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum, ppfilename, pname, cname);
+			fref, freforder, fstep, ftitle, fcontent, finsertdate, fdeletedate, fmotherid, ppfilename, pname, cname);
 			dtos.add(dto);
 			
 		

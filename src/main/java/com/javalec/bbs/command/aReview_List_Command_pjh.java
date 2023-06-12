@@ -22,7 +22,6 @@ int total = 0;
 		request.setCharacterEncoding("utf-8");
 		Admin_Review_Dao dao = new Admin_Review_Dao();
 		ArrayList<Admin_Review_Dto>dtos = dao.list();
-		
 		String uploadPath = "image/";
 		for (Admin_Review_Dto dto : dtos) {
 			String fileName = dto.getPfilename();
@@ -41,7 +40,6 @@ int total = 0;
 		request.setAttribute("reviewlist", dtos);
 		request.setAttribute("total", total);
 	}
-		
 		private String getCategoryName(int pcategory) {
 	        String categoryName = "";
 	        switch (pcategory) {

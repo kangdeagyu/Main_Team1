@@ -1,72 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ include file="header.jsp" %>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <style>
-
-body, html {
-  height: 100%;
+.nav-linktwo {
+  display: inline-block;
+  padding: 15px 150px;
+  background-color: black;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 10px;
 }
-
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-.product-table {
-  display: flex;
-  align-items: center;
-  align-items: flex-start; /* 좌측 정렬 */
-}
-
-.product-image {
-  margin-right: 200px; /* 이미지와 정보 사이의 간격 조정 */
-}
-
-.form-button {
- color: #666666;
-width: 170px;
-padding: 10px 10px 10px;
-position: absolute;
-font-size: 50pt;
-margin-top: 10px;
-letter-spacing: -1px;
-}
-
-.form-button input[type="submit"] {
-  padding: 10px 30px; /* 버튼의 패딩을 조정 */
-  width: 150px; /* 버튼의 너비를 조정 */
-  justify-content: center;
-}
-
-.money {
-  display: flex;
-  justify-content: flex-end;
-  
-}
- /* 하단페이지 */
- .detailTab{
-   text-align: center;
-  margin: 0 auto;
-}
-html {
-  scroll-behavior: smooth;
-}
-.nav-link {
-  background: none;
-  border: none;
-  padding: 0;
-  font: inherit;
-  color: inherit;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
+.nav-linkthere{
+ display: inline-block;
+  padding: 15px 150px;
+  background-color: black;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 10px;
+  }
 </style>
 
 </head>
@@ -87,16 +42,27 @@ function updateTotalAmount() { // 수량을 늘렸을 때 db에 남아있는 갯
 function updateQty() {
 	  var quantityField = document.getElementById('quantity');
 	  var cartLink = document.getElementById('cartLink');
+	  var purchaseLink = document.getElementById('purchaseLink');
 	  
 	  var quantity = parseInt(quantityField.value);
 	  
-	  var originalHref = cartLink.getAttribute('href');
-	  var updatedHref = originalHref.replace(/qty=\d+/, 'qty=' + quantity);
-	  cartLink.setAttribute('href', updatedHref);
+	  var originalCartHref = cartLink.getAttribute('href');
+	  var updatedCartHref = originalCartHref.replace(/qty=\d+/, 'qty=' + quantity);
+	  cartLink.setAttribute('href', updatedCartHref);
+	  
+	  var originalPurchaseHref = purchaseLink.getAttribute('href');
+	  var updatedPurchaseHref = originalPurchaseHref.replace(/qty=\d+/, 'qty=' + quantity);
+	  purchaseLink.setAttribute('href', updatedPurchaseHref);
 	}
+
+productImage.innerHTML = '<img src="' + randomProduct.image + '" alt="' + randomProduct.name + '">';
+productName.textContent = randomProduct.name;
+productDescription.textContent = randomProduct.description;
+
 </script>
 
 <body>
+
 <div class="container">
   <table class="product-table">
     <thead>
@@ -105,8 +71,11 @@ function updateQty() {
           <td class="product-image">
             <img alt="상품 이미지" style="width: 500px; height: 500px;" src="${dto.pfilename}">
           </td>
-          <td>
-            <table>
+          
+         
+       
+          <td class="product-info">
+          <table class="product-info-table">
               <tr>
               	<th>상품 이름</th>
               	<td>${dto.pname}</td>
@@ -126,16 +95,17 @@ function updateQty() {
  						 <input type="hidden" name="pid" value="${dto.pid}">
  						 <input type="number" id="quantity" value="1" min="1" max="${dto.pstock}" onchange="updateTotalAmount()">
 				</form>
-   
+       
+   	
   			   <tr>
  				 <td colspan="2" class="purchase-details" >
    					 <div class="money">
    						<span>총 구매 금액: </span>
-     					<span id="total-amount">${dto.pprice}</span><br><br><br><br><br><br>
+     					<span id="total-amount">${dto.pprice}</span><br><br><br>
      					
-     						<a id="purchaseLink" class="nav-link" href="OrderView.do?pid=${dto.pid }&qty=1" onclick="updateQty()">구매하기</a>
+     						<a id="purchaseLink" class="nav-linkthere" href="OrderView.do?pid=${dto.pid }&qty=1" onclick="updateQty()" >구매하기</a><br>
    						
-   						<a id="cartLink" class="nav-link" href="productcart.do?pid=${dto.pid}&qty=1" onclick="updateQty()">장바구니</a>
+   						<a id="cartLink" class="nav-linktwo" href="productcart.do?pid=${dto.pid}&qty=1" onclick="updateQty()">장바구니</a>
 					</div>
  				</td>
 			</tr>
@@ -147,20 +117,23 @@ function updateQty() {
     </thead>
   </table>
 </div>
+<div id="productImageContainer">
+  <img id="productImage" src="image/so1.jpg" style="width: 100px; height: 100px;" alt="제품 사진">
+  <img id="productImage" src="image/so2.jpg" style="width: 100px; height: 100px;" alt="제품 사진">
+  <img id="productImage" src="image/so3.jpg" style="width: 100px; height: 100px;" alt="제품 사진">
+  <img id="productImage" src="image/so4.png" style="width: 100px; height: 100px;" alt="제품 사진">
+</div>
+
 
  <div class="detailTab">
           <a href="#detailGoodsInfo" class="active">DETAIL PRODUCT</a>
          <a href="#detailReview">REVIEW BOARD</a>
           <a href="#detailQna">Q&amp;A BOARD</a>                   
           </div>
-       <!--    <div style="padding-top: 10px; ">      
+       <div style="padding-top: 10px; ">      
           <table border="0" cellpadding="0" cellspacing="0" width="100%">
-          <tr><td align="center"><img src="/상품 상세페이지에 들어가는 첫 이미지!!" align="absmiddle" border="0" /></td></tr>
-          </table></div> -->
-
-<div>
- <img src="image/dog.png" alt="제품 이미지">
-</div>
+          <tr><td align="center"><img src="image/dog.png" align="absmiddle" border="0" /></td></tr>
+          </table></div> 
 
 
 
@@ -230,7 +203,7 @@ function updateQty() {
 </table></div>
 
 
-
+<%@ include file="bottom.jsp" %>
 </body>
 
 </html>

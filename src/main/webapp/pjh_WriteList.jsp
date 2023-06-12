@@ -178,7 +178,10 @@
                     <td>관리자</td>
                     <td></td>
                     <td><a href="ANoticeView.do?nid=${noticedto.nid}&ftype=${ftype}">${noticedto.ntitle}</a></td>     
-                    <td>${noticedto.ninsertdate}</td>
+                    <td>${noticedto.ninsertdate}
+                    <form action ="AdeleteNotice.do?nid=${noticedto.nid}&ftype=${ftype}" method="post">
+                    <input type="submit" value="삭제">
+                    </form></td>
         	</tr>
         	</c:forEach>
             <c:forEach items="${RList}" var="dto" varStatus="status">
@@ -187,7 +190,10 @@
                 <td>${dto.cname}</td>
                 <td>${dto.pname}</td>
                 <td><a href="AForumView.do?fid=${dto.fid}&ftype=${ftype}">${dto.ftitle}</a></td>
-                <td>${dto.finsertdate}</td>
+                <td>${dto.finsertdate}
+                 <form action ="deleteRevieworQnA.do?fid=${dto.fid}&ftype=${ftype}" method="post">
+                 <input type="submit" value="삭제">
+                 </form></td>
             	</tr>
         </c:forEach>
         </tbody>

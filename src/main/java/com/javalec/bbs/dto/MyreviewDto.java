@@ -17,8 +17,7 @@ public class MyreviewDto {
 	Timestamp finsertdate;
 	Timestamp fdeletedate;	
 	int fmotherid;
-	int fanswernum;
-	String pfilename;
+	String ppfilename;
 	String pname;
 	String cname;
 	
@@ -28,7 +27,7 @@ public class MyreviewDto {
 	
 	public MyreviewDto(int fid, String f_cid, String f_aid, int f_pid, int ftype, int fref, int freforder, int fstep,
 			String ftitle, String fcontent, Timestamp finsertdate, Timestamp fdeletedate, int fmotherid,
-			int fanswernum, String pfilename, String pname, String cname) {
+			String ppfilename, String pname, String cname) {
 		super();
 		this.fid = fid;
 		this.f_cid = f_cid;
@@ -43,8 +42,7 @@ public class MyreviewDto {
 		this.finsertdate = finsertdate;
 		this.fdeletedate = fdeletedate;
 		this.fmotherid = fmotherid;
-		this.fanswernum = fanswernum;
-		this.pfilename = pfilename;
+		this.ppfilename = ppfilename;
 		this.pname = pname;
 		this.cname = cname;
 	}
@@ -65,14 +63,6 @@ public class MyreviewDto {
 
 	public void setCname(String cname) {
 		this.cname = cname;
-	}
-
-	public String getFilename() {
-		return pfilename;
-	}
-
-	public void setFilename(String filename) {
-		this.pfilename = filename;
 	}
 
 	public int getFid() {
@@ -110,18 +100,21 @@ public class MyreviewDto {
 	}
 
 
-
 	public int getF_pid() {
 		return f_pid;
 	}
-
-
 
 	public void setF_pid(int f_pid) {
 		this.f_pid = f_pid;
 	}
 
+	public String getPpfilename() {
+		return ppfilename;
+	}
 
+	public void setPpfilename(String ppfilename) {
+		this.ppfilename = ppfilename;
+	}
 
 	public int getFtype() {
 		return ftype;
@@ -231,14 +224,4 @@ public class MyreviewDto {
 
 
 
-	public int getFanswernum() {
-		return fanswernum;
-	}
-
-
-
-	public void setFanswernum(int fanswernum) {
-		this.fanswernum = fanswernum;
-	}
-	
 }

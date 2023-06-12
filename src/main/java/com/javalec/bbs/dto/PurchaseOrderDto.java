@@ -2,132 +2,168 @@ package com.javalec.bbs.dto;
 
 public class PurchaseOrderDto {
 
+	int pid;
+	String pfilename;
+	String pname;
+	String pcontent;
+	int price;
+	int bqty;
 	
-    String oid;
-    String cname;
-    String cphone;
-    String caddress1;
-    String caddress2;
-    String cpostnum;
-    String pname;
-    String pfilename;
-    String pcontent;
-    int pid;
-    int pstock;
-    int pprice;
-    
-
+	String cid;
+	String cname;
+	String cphone;
+	String cpostnum;
+	String caddress1;
+	String caddress2;
+	
+	
     public PurchaseOrderDto() {
 		// TODO Auto-generated constructor stub
 	}
-    
-    
 
-	public PurchaseOrderDto(String oid, String cname, String cphone, String caddress1, String caddress2, String cpostnum,
-			String pname, String pfilename, String pcontent, int pid, int pstock, int pprice) {
+
+	public PurchaseOrderDto(int pid, String pfilename, String pname, String pcontent, int price, int bqty) {
 		super();
-		this.oid = oid;
-		this.cname = cname;
-		this.cphone = cphone;
-		this.caddress1 = caddress1;
-		this.caddress2 = caddress2;
-		this.cpostnum = cpostnum;
-		this.pname = pname;
-		this.pfilename = pfilename;
-		this.pcontent = pcontent;
 		this.pid = pid;
-		this.pstock = pstock;
+		this.pfilename = pfilename;
+		this.pname = pname;
+		this.pcontent = pcontent;
+		this.bqty = bqty;
+		this.price = price;
+		
 	}
 
 
-
-	public String getOid() {
-		return oid;
-	}
-
-	public void setOid(String oid) {
-		this.oid = oid;
-	}
-
-	public String getCname() {
-		return cname;
-	}
-
-	public void setCname(String cname) {
+	public PurchaseOrderDto(String cid, String cname, String cphone, String cpostnum, String caddress1,
+			String caddress2) {
+		super();
+		this.cid = cid;
 		this.cname = cname;
-	}
-
-	public String getPhone() {
-		return cphone;
-	}
-
-	public void setPhone(String cphone) {
 		this.cphone = cphone;
-	}
-
-	public String getAddress1() {
-		return caddress1;
-	}
-
-	public void setAddress1(String caddress1) {
+		this.cpostnum = cpostnum;
 		this.caddress1 = caddress1;
-	}
-
-	public String getAddress2() {
-		return caddress2;
-	}
-
-	public void setAddress2(String caddress2) {
 		this.caddress2 = caddress2;
 	}
 
-	public String getPostnum() {
-		return cpostnum;
+
+	public int getPrice() {
+		return price;
 	}
 
-	public void setPostnum(String cpostnum) {
-		this.cpostnum = cpostnum;
+
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
-	public String getPname() {
-		return pname;
-	}
-
-	public void setPname(String pname) {
-		this.pname = pname;
-	}
-
-	public String getPfilename() {
-		return pfilename;
-	}
-
-	public void setPfilename(String pfilename) {
-		this.pfilename = pfilename;
-	}
-
-	public String getPcontent() {
-		return pcontent;
-	}
-
-	public void setPcontent(String pcontent) {
-		this.pcontent = pcontent;
-	}
 
 	public int getPid() {
 		return pid;
 	}
 
+
 	public void setPid(int pid) {
 		this.pid = pid;
 	}
 
-	public int getPstock() {
-		return pstock;
+
+	public String getPfilename() {
+		return pfilename;
 	}
 
-	public void setPstock(int pstock) {
-		this.pstock = pstock;
+
+	public void setPfilename(String pfilename) {
+		this.pfilename = pfilename;
+	}
+
+
+	public String getPname() {
+		return pname;
+	}
+
+
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+
+
+	public String getPcontent() {
+		return pcontent;
+	}
+
+
+	public void setPcontent(String pcontent) {
+		this.pcontent = pcontent;
+	}
+
+	public int getBqty() {
+		return bqty;
+	}
+
+
+	public void setBqty(int bqty) {
+		this.bqty = bqty;
+	}
+
+
+	public String getCid() {
+		return cid;
+	}
+
+
+	public void setCid(String cid) {
+		this.cid = cid;
+	}
+
+
+	public String getCname() {
+		return cname;
+	}
+
+
+	public void setCname(String cname) {
+		this.cname = cname;
+	}
+
+
+	public String getCphone() {
+		return cphone;
+	}
+
+
+	public void setCphone(String cphone) {
+		this.cphone = cphone;
+	}
+
+
+	public String getCpostnum() {
+		return cpostnum;
+	}
+
+
+	public void setCpostnum(String cpostnum) {
+		this.cpostnum = cpostnum;
+	}
+
+
+	public String getCaddress1() {
+		return caddress1;
+	}
+
+
+	public void setCaddress1(String caddress1) {
+		this.caddress1 = caddress1;
+	}
+
+
+	public String getCaddress2() {
+		return caddress2;
+	}
+
+
+	public void setCaddress2(String caddress2) {
+		this.caddress2 = caddress2;
 	}
     
     
 }
+

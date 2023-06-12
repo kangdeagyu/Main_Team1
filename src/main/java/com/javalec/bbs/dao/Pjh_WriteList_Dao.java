@@ -238,6 +238,67 @@ public class Pjh_WriteList_Dao {
 	        }
 	    }
 	
+	public void delete(String nid) {
+	    if (nid == null) {
+	        // pid 배열이 null인 경우 처리
+	        System.out.println("No products selected for deletion.");
+	        return;
+	    }
+	    Connection connection = null;
+	    PreparedStatement deleteInboundStatement = null;
+	    PreparedStatement preparedStatement = null;
+	    try {
+	        connection = dataSource.getConnection();
+	        // Delete from product table
+	        String deletedateInsert= "update notice set ndeletedate= now() where nid = ?";
+	        preparedStatement = connection.prepareStatement(deletedateInsert);
+	            preparedStatement.setInt(1, Integer.parseInt(nid));
+	            preparedStatement.executeUpdate();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (deleteInboundStatement != null)
+	                deleteInboundStatement.close();
+	            if (preparedStatement != null)
+	                preparedStatement.close();
+	            if (connection != null)
+	                connection.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+	
+	public void checkcommentAction(int f_pid, String ftitle, int fid) {
+		Connection connection = null;
+		PreparedStatement preparedStatement1 = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query2 = "insert into forum (f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, ftitle, fcontent, finsertdate, fmotherid, fanswernum)";
+			String query3 = " select 'dummy','admin', ?, 3 , max(fref) + 1, 0, 0, ?, ?, now(),?,0 from forum";
+			preparedStatement1 = connection.prepareStatement(query2 + query3);
+			preparedStatement1.setInt(1, f_pid);
+			preparedStatement1.setString(2, ftitle);
+			preparedStatement1.setString(3, ftitle);
+			preparedStatement1.setInt(4, fid);
+			preparedStatement1.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(preparedStatement1 != null) preparedStatement1.close();
+				if(connection != null) connection.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	} // 댓글 
+	
+	
 	
 	
 	

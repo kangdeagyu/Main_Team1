@@ -26,6 +26,9 @@ ${noticeview.ncontent}<br/>
 <input type="hidden" name="ncontent" value="${noticeview.ncontent}">
 <input type="submit" value="수정">
 </form>
+<form action="AdeleteNotice.do?nid=${nid}&ftype=${ftype}" method="post">
+<input type="submit" value="삭제">
+</form>
 <form action="Awritelist.do?ftype=${ftype}" method="post">
 <input type="submit" value="목록">
 </form>

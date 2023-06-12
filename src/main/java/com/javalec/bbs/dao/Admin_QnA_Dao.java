@@ -166,7 +166,7 @@ public class Admin_QnA_Dao {
 			try {
 				connection = datasource.getConnection();
 				String query = "SELECT nid, ntitle, ncontent, ninsertdate";
-				String query1 = " FROM notice";
+				String query1 = " FROM notice where ndeletedate IS NULL";
 				preparedStatement = connection.prepareStatement(query+query1);
 				resultSet = preparedStatement.executeQuery();
 				while (resultSet.next()) {

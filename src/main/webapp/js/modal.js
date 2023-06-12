@@ -1,37 +1,34 @@
 
 // 모달 열기
 function openModal(fid) {
-	hideAllInfos();
-  var productInfo = document.getElementById("productInfo-" + fid);
-  var modalContent = document.getElementById("modalContent");
-	
-  // 모달 창에 제품 정보를 표시
-  modalContent.innerHTML = productInfo.innerHTML;
-  // 스크롤 막기
-  document.body.style.overflow = "hidden";
-  // 모달 창 열기
-  var modal = document.getElementById("myModal");
-  modal.style.display = "flex"; // display 속성을 flex로 변경
-  modal.style.alignItems = "center"; // 수직 가운데 정렬
-  modal.style.justifyContent = "center"; // 수평 가운데 정렬
+	var modalContent = document.getElementById("modalContent");
+    var productInfo = document.getElementById("info-" + fid);
+
+    // 모달 창에 제품 정보를 표시
+    modalContent.innerHTML = productInfo.innerHTML;
+    // 스크롤 막기
+    document.body.style.overflow = "hidden";
+    // 모달 창 열기
+    var modal = document.getElementById("myModal");
+    modal.style.display = "flex"; // display 속성을 flex로 변경
+    modal.style.alignItems = "center"; // 수직 가운데 정렬
+    modal.style.justifyContent = "center"; // 수평 가운데 정렬
 }
 
 function openModal2(fid) {
-	hideAllInfos();
-  var productInfo = document.getElementById("reviewInfo-" + fid);
-  var modalContent = document.getElementById("modalContent");
+	var modalContent = document.getElementById("modalContent");
+    var reviewInfo = document.getElementById("info-" + fid);
 
-  // 모달 창에 제품 정보를 표시
-  modalContent.innerHTML = productInfo.innerHTML;
-  // 스크롤 막기
-  document.body.style.overflow = "hidden";
-  // 모달 창 열기
-  var modal = document.getElementById("myModal");
-  modal.style.display = "flex";
-  modal.style.alignItems = "center";
-  modal.style.justifyContent = "center";
+    // 모달 창에 리뷰 정보를 표시
+    modalContent.innerHTML = reviewInfo.innerHTML;
+    // 스크롤 막기
+    document.body.style.overflow = "hidden";
+    // 모달 창 열기
+    var modal = document.getElementById("myModal");
+    modal.style.display = "flex";
+    modal.style.alignItems = "center";
+    modal.style.justifyContent = "center";
 }
-    
 function closeModal() {
   var modal = document.getElementById("myModal");
   // 스크롤 허용하기
