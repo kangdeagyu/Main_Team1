@@ -367,7 +367,7 @@ DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		
 		
 		
-	}   // -------------------------method04. DailyOrder 저장하기 getDailyOrderList 끝-------------------------------------------
+	}   // -------------------------method04. 월별 리스트 만들 끝-------------------------------------------
 	
 	
 	
