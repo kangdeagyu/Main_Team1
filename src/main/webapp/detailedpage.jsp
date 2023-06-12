@@ -117,13 +117,79 @@ productDescription.textContent = randomProduct.description;
     </thead>
   </table>
 </div>
+<p>추천상품</p>
 <div id="productImageContainer">
-  <img id="productImage" src="image/so1.jpg" style="width: 100px; height: 100px;" alt="제품 사진">
-  <img id="productImage" src="image/so2.jpg" style="width: 100px; height: 100px;" alt="제품 사진">
-  <img id="productImage" src="image/so3.jpg" style="width: 100px; height: 100px;" alt="제품 사진">
-  <img id="productImage" src="image/so4.png" style="width: 100px; height: 100px;" alt="제품 사진">
+  <img class="productImage" style="width: 200px; height: 200px;" alt="제품 사진">
+  <img class="productImage" style="width: 200px; height: 200px;" alt="제품 사진">
+  <img class="productImage" style="width: 200px; height: 200px;" alt="제품 사진">
+  <img class="productImage" style="width: 200px; height: 200px;" alt="제품 사진">
+  <img class="productImage" style="width: 200px; height: 200px;" alt="제품 사진">
+  <img class="productImage" style="width: 200px; height: 200px;" alt="제품 사진">
 </div>
 
+<script>
+// 이미지 파일의 배열을 생성합니다.
+var imageFiles = [
+	"image/조명06.png",
+	"image/조명07.png",
+	"image/조명08.png",
+	"image/조명09.png",
+  "image/조명01.png",
+  "image/조명02.png",
+  "image/조명03.png",
+  "image/조명04.png",
+  "image/조명05.png"
+];
+
+
+
+var selectedProductImage =  "image/조명05.jpg";
+imageFiles = imageFiles.filter(function(image) {
+  return image !== selectedProductImage;
+});
+function changeImages() {
+  var productImages = document.getElementsByClassName("productImage");
+  
+  // 이미지를 중복되지 않도록 선택하기 위해 이미지 파일의 복사본을 생성합니다.
+  var remainingImages = imageFiles.slice();
+  
+  // 각 이미지 요소에 대해 반복하여 랜덤한 이미지를 설정합니다.
+  for (var i = 0; i < productImages.length; i++) {
+    // 남은 이미지 파일 중에서 랜덤하게 인덱스를 선택합니다.
+    var randomIndex = Math.floor(Math.random() * remainingImages.length);
+    
+    // 선택된 이미지 파일을 가져와 이미지 요소에 설정합니다.
+    var randomImage = remainingImages[randomIndex];
+    productImages[i].setAttribute("src", randomImage);
+    
+    // 이미 사용한 이미지를 복사본에서 제거합니다.
+    remainingImages.splice(randomIndex, 1);
+    
+    // 남은 이미지가 없을 경우, 다시 모든 이미지 파일을 복사본에 추가합니다.
+    if (remainingImages.length === 0) {
+      remainingImages = imageFiles.slice();
+      var selectedProductImage = "image/조명05.jpg";
+      var productImages = document.getElementsByClassName("productImage");
+
+      for (var i = 0; i < productImages.length; i++) {
+        var image = productImages[i].getAttribute("src");
+
+        if (image !== selectedProductImage) {
+          var randomIndex = Math.floor(Math.random() * imageFiles.length);
+          var randomImage = imageFiles[randomIndex];
+          productImages[i].setAttribute("src", randomImage);
+          imageFiles.splice(randomIndex, 1);
+        } else {
+          productImages[i].remove(); // 선택된 상품 이미지를 삭제합니다.
+        }
+      }
+    }
+  }
+}
+
+// 페이지 로드 시 이미지를 초기화합니다.
+window.onload = changeImages;
+</script>
 
  <div class="detailTab">
           <a href="#detailGoodsInfo" class="active">DETAIL PRODUCT</a>
@@ -132,6 +198,9 @@ productDescription.textContent = randomProduct.description;
           </div>
        <div style="padding-top: 10px; ">      
           <table border="0" cellpadding="0" cellspacing="0" width="100%">
+          <tr><td align="center"><img src="image/dog.png" align="absmiddle" border="0" /></td></tr>
+          <tr><td align="center"><img src="image/dog.png" align="absmiddle" border="0" /></td></tr>
+          <tr><td align="center"><img src="image/dog.png" align="absmiddle" border="0" /></td></tr>
           <tr><td align="center"><img src="image/dog.png" align="absmiddle" border="0" /></td></tr>
           </table></div> 
 
