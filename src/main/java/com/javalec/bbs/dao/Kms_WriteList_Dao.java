@@ -35,7 +35,7 @@ public class Kms_WriteList_Dao {
 		try {
 			connection = dataSource.getConnection();
 			String query = "select f.*,p.pname,c.cname from forum f,product p, customer c";
-			String query1 = " where p.pid = f.f_pid and c.cid = f.f_cid and ftype = ? order by fref desc,freforder";
+			String query1 = " where p.pid = f.f_pid and c.cid = f.f_cid and ftype = ? AND f.fdeletedate IS NULL order by fref desc,freforder";
 			preparedStatement = connection.prepareStatement(query + query1);
 			preparedStatement.setInt(1, Ftype);
 			resultSet = preparedStatement.executeQuery();
