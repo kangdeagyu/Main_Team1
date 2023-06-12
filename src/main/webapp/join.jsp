@@ -41,6 +41,11 @@
 						<input type="button" value="중복확인" name="emailcheak" onclick="checkDuplicate()">
 				</div> 
 				</c:if>
+				<div id="verificationDiv" style="display: none;">
+ 					<input type="text" class="form-control" name="verificationCodeCk" id="verificationCodeCk" placeholder="인증번호">
+ 					<input type="button" value="인증번호확인" name="codeCheck" onclick="checkVerification()">
+
+				</div>
 				<label>비밀번호</label>
 					<input type="password" class="form-control" name="cpassword" id="cpassword" placeholder="비밀번호">
 					<input type="password" class="form-control" name="passwordcheak" id="passwordcheak" placeholder="비밀번호 확인">
@@ -67,7 +72,7 @@
 					<input type="text" class="form-control" name="caddress2" id="sample6_detailAddress" placeholder="상세주소">
 					<input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
 				<label>생년월일</label>
-					<input type="date" class="form-control" min="1930-01-01" max="2050-12-31" name="cbirth"><br/>
+					<input type="date" class="form-control" name="myDate" id="myDateInput"><br/>
 					<button class="w-100 btn btn-lg btn-primary" type="submit" onclick="checkForm(event)" >회원가입</button>
 			
 			</form>
@@ -77,6 +82,29 @@
 <%@ include file="bottom.jsp" %>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
+<!-- 오늘 날짜까지만 선택할수 있다 -->
+<script type="text/javascript">
+
+	const today = new Date();
+	const year = today.getFullYear();
+	let month = today.getMonth() + 1;
+	let day = today.getDate();
+	
+	month = month < 10 ? '0' + month : month;
+	day = day < 10 ? '0' + day : day;
+	
+	const maxDate = `${year}-${month}-${day}`;
+	const dateInput = document.getElementById("myDateInput");
+	
+	dateInput.addEventListener("input", function() {
+	  const selectedDate = new Date(this.value);
+	  if (selectedDate > today) {
+		alert("현재일 이후 날짜는 선택하실수 없습니다.")
+	    this.value = maxDate;
+	  }
+	});
+
+</script>
 
 <!-- 비밀번호 체크  -->
 <script>
@@ -180,17 +208,80 @@
 	      } else {
 	    	  alert("사용 가능한 이메일입니다.");
 	    	  isEmailChecked = true;
+	    	  AuthenticationNum()
+	    	  document.getElementById("verificationDiv").style.display = "block";
 	      }
 	    }
 	  };
 	  xhr.send("email=" + encodeURIComponent(email)); // 이메일 값을 요청에 포함시킵니다
 	  
 	}
-	</script>
-	<script type="text/javascript">
-<!-- 정규식 검사 -->
-
 	
+	var verificationCode = null
+	function AuthenticationNum(){
+		const form = document.join
+		const email = form.cid.value
+
+		  // Ajax 요청을 보냅니다
+		  var xhr = new XMLHttpRequest();
+		  xhr.open("POST", "join.nu", true); // 중복 체크를 수행할 URL을 지정합니다
+		  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		  xhr.onreadystatechange = function() {
+		    if (xhr.readyState === XMLHttpRequest.DONE) {
+		      if (xhr.status === 200) {
+		        alert("인증번호가 발송 되었습니다.");
+		      } else {
+		        alert("이메일 인증 오류");
+		        form.cid.select();
+		      }
+		    }
+		  };
+		  
+		  // POST 파라미터를 생성하여 전송합니다
+		  verificationCode = generateVerificationCode();
+		  var params = "email=" + encodeURIComponent(email)
+		    + "&sendCode=" + verificationCode;
+		  
+		  xhr.send(params);
+		
+	}
+	
+
+	function generateVerificationCode() {
+		  const codeLength = 6; // 인증 번호의 길이
+		  let verificationCode = '';
+
+		  for (let i = 0; i < codeLength; i++) {
+		    verificationCode += Math.floor(Math.random() * 10); // 0부터 9까지의 랜덤한 숫자를 추가합니다.
+		  }
+
+		  return verificationCode;
+	}
+	
+</script>
+<!-- 인증번호 확인  -->	
+<script type="text/javascript">
+
+var verificationCodeCheck = false
+function checkVerification(){
+	const form = document.join
+	const usercode = form.verificationCodeCk.value
+	const code = verificationCode
+	
+	if(usercode != code){
+		alert("인증번호가 일치하지 않습니다. 다시 입력해 주세요")
+	}else{
+		alert("인증번호가 일치합니다.")
+		verificationCodeCheck = true;
+	}
+	
+}
+
+
+</script>	
+	
+<!-- 정규식 검사 -->
+<script type="text/javascript">	
 function checkForm(event) {
 	event.preventDefault();
 	const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -233,6 +324,10 @@ function checkForm(event) {
 		    alert("이메일 중복 체크를 해주세요.");
 		    return false;		  
 	
+	  }
+	  if(!verificationCodeCheck){
+		    alert("인증번호를 입력해주세요");
+		    return false;	
 	  }
 
 	  // 비밀번호 입력값 검사
