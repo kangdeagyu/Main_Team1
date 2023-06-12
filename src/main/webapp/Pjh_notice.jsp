@@ -18,13 +18,16 @@ ${noticeview.n_aid}<br/>
 ${noticeview.ninsertdate}<br/>
 ${noticeview.ncontent}<br/>
 <form action="AnoticeModifyPage.do" method="post">
-
+<input type="hidden" name="ftype" value="${ftype}">
 <input type="hidden" name="nid" value="${nid}">
 <input type="hidden" name="n_aid" value="${noticeview.n_aid}">
 <input type="hidden" name="ntitle" value="${noticeview.ntitle}">
 <input type="hidden" name="ninsertdate" value="${noticeview.ninsertdate}">
 <input type="hidden" name="ncontent" value="${noticeview.ncontent}">
 <input type="submit" value="수정">
+</form>
+<form action="Awritelist.do?ftype=${ftype}" method="post">
+<input type="submit" value="목록">
 </form>
 </div>
 </body>

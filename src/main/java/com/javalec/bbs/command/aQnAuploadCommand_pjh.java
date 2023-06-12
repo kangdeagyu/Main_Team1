@@ -18,15 +18,15 @@ public class aQnAuploadCommand_pjh implements MCommand {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
+		int ftype= Integer.parseInt(request.getParameter("ftype"));
 	    String list = request.getParameter("list");
 	    String[] openornot = request.getParameterValues("openornot");
 	    String title = request.getParameter("title");
 	    String content = request.getParameter("content");
-		int ftype=1;
 		String f_aid = "admin";
 	    //int dao = new Admin_QnA_Dao().saveNotice(title, content);
 	    int daos = new Admin_QnA_Dao().saveNotice(title, content);
-		
+		request.setAttribute("ftype", ftype);
 		
 		
 		/*

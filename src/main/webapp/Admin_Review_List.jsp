@@ -67,15 +67,16 @@ function deleteSelectedItems() {
 	</div>
 	<div class="wrapper">
 		<h3>리뷰 목록</h3>
-		<form action="reviewQuery.do" method="post">
+		<!-- <form action="reviewQuery.do" method="post">
 			<select name="list" class="form-select">
 				<option value="pname" selected="selected">상품명</option>
 				<option value="pcategory">카테고리</option>
 			</select> <input type="text" name="query"> <input type="submit"
 				name="action" value="검색">
-		</form>
+		</form> -->
 		 <input type="checkbox" id="selectAllCheckbox" onchange="selectAll()">
 			<input type="button" value="삭제" onclick="deleteSelectedItems()">
+			<input type="button" value="댓글" onclick="">
 			<table border=1>
 				<tr>
 					<th></th>

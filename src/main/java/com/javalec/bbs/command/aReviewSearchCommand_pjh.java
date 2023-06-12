@@ -9,8 +9,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.javalec.bbs.dao.Admin_Product_Dao;
-import com.javalec.bbs.dto.Admin_Product_Dto;
+import com.javalec.bbs.dao.Admin_Review_Dao;
+import com.javalec.bbs.dto.Admin_Review_Dto;
 
 public class aReviewSearchCommand_pjh implements MCommand {
 
@@ -44,11 +44,11 @@ public class aReviewSearchCommand_pjh implements MCommand {
 		    }
 		    
 		    String uploadPath = "image/";
-		    Admin_Product_Dao dao = new Admin_Product_Dao();
-		    ArrayList<Admin_Product_Dto> dtos = dao.search1(list, pcategory);
+		    Admin_Review_Dao dao = new Admin_Review_Dao();
+		    ArrayList<Admin_Review_Dto> dtos = dao.searchlist(list, pcategory);
 		    
-		    for (Admin_Product_Dto dto : dtos) {
-		        String category = dto.getC_name();
+		    for (Admin_Review_Dto dto : dtos) {
+		        String category = dto.getCname();
 		        String c_name;
 		        switch (category) {
 		            case "0":
@@ -64,24 +64,24 @@ public class aReviewSearchCommand_pjh implements MCommand {
 		                c_name = "";
 		                break;
 		        }
-		        dto.setC_name(c_name);
+		        dto.setCname(c_name);
 		        
 		        String fileName = dto.getPfilename();
 		        String imagePath = uploadPath + fileName;
 		        dto.setPfilename(imagePath);
 		        int price = dto.getPprice();
-		        System.out.println(dto.getC_name());
+		        System.out.println(dto.getCname());
 		    }
 		    
-		    request.setAttribute("list", dtos);
+		    request.setAttribute("reviewlist", dtos);
 		} else if (list.equals("pname")) {
 		    // pname에 대한 처리를 진행합니다.
 		    String uploadPath = "image/";
-		    Admin_Product_Dao dao = new Admin_Product_Dao();
-		    ArrayList<Admin_Product_Dto> dtos = dao.search1(list, query);
+		    Admin_Review_Dao dao = new Admin_Review_Dao();
+		    ArrayList<Admin_Review_Dto> dtos = dao.searchlist(list, query);
 		    
-		    for (Admin_Product_Dto dto : dtos) {
-		        String category = dto.getC_name();
+		    for (Admin_Review_Dto dto : dtos) {
+		        String category = dto.getCname();
 		        String c_name;
 		        switch (category) {
 		            case "0":
@@ -97,16 +97,16 @@ public class aReviewSearchCommand_pjh implements MCommand {
 		                c_name = "";
 		                break;
 		        }
-		        dto.setC_name(c_name);
+		        dto.setCname(c_name);
 		        
 		        String fileName = dto.getPfilename();
 		        String imagePath = uploadPath + fileName;
 		        dto.setPfilename(imagePath);
 		        int price = dto.getPprice();
-		        System.out.println(dto.getC_name());
+		        System.out.println(dto.getCname());
 		    }
 		    
-		    request.setAttribute("list", dtos);
+		    request.setAttribute("reviewlist", dtos);
 		}
 	    }
 	}

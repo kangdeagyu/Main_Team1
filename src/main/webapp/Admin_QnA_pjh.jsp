@@ -32,7 +32,9 @@
         </tr> -->
         <tr>
             <td>제목</td>
-            <td><input type="text" name="title"></td>
+            <td><input type="text" name="title">
+            	<input type="hidden" name="ftype" value="${ftype}">
+            </td>
         </tr>
         <tr>
             <td>내용</td>

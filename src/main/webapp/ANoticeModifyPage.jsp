@@ -20,6 +20,7 @@
                         <td>제목</td>
          				<td>
          				<input type="hidden" name="nid" value="${nid}">
+         				<input type="hidden" name="ftype" value="${ftype}">
          				<input type="text" name="ntitle" value="${ntitle}"></td>
          			</tr>
          			<tr>
@@ -39,7 +40,7 @@
                 </table>
                 <input type="submit" value="저장">
             </form>
-            <form action="ANoticeView.do?nid=${nid}" method="post">
+            <form action="ANoticeView.do?nid=${nid}&ftype=${ftype}" method="post">
             <input type="submit" value="취소">
             </form>
             </div>

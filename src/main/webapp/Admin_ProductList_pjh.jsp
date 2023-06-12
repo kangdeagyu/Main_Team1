@@ -220,7 +220,7 @@
                     </tr>
                 </table>
                 <p>상세 설명</p>
-                <p><textarea id="editPcontent" name="pcontent"></textarea></p>
+                <p><textarea id="editPcontent" id="editPcontent" name="pcontent"></textarea></p>
                 <input type="button" name="action" value="저장" onclick="saveChanges()">
             </form>
             <span class="close" onclick="closeModal()">&times;</span>

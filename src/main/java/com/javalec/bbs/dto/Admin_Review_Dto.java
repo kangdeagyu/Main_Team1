@@ -37,6 +37,21 @@ public class Admin_Review_Dto {
 	
 
 
+	public Admin_Review_Dto(int fid, String f_cid, int f_pid, Timestamp finsertdate, String cname, String pname, String pfilename, int pprice, String fcontent, String ftitle, String pcontent, int pcategory) {
+		super();
+		this.fid = fid;
+		this.f_cid = f_cid;
+		this.f_pid=f_pid;
+		this.finsertdate = finsertdate;
+		this.cname = cname;
+		this.pname = pname;
+		this.pfilename = pfilename;
+		this.pprice = pprice;
+		this.fcontent=fcontent;
+		this.ftitle=ftitle;
+		this.pcontent=pcontent;
+		this.pcategory=pcategory;
+	}
 	public Admin_Review_Dto(int fid, int f_pid, Timestamp finsertdate, String cname, String pname, String pfilename, int pprice, String fcontent, String ftitle, String pcontent, int pcategory) {
 		super();
 		this.fid = fid;

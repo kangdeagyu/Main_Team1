@@ -160,6 +160,7 @@
     <div class="center-align">
     <form action="Acommentwrite.do" method="post">
         <input type="text" name="ftitle" style="width: 300px;" placeholder="댓글을 입력하세요.">
+        <input type="hidden" name="ftype" value="${ftype}">
         <input type="hidden" name="fid" value="${forumView.fid}">
         <input type="hidden" name="f_cid" value="${forumView.f_cid}">
         <input type="hidden" name="f_pid" value="${forumView.f_pid}">
@@ -167,7 +168,7 @@
     </form>
 	</div>
 
-    <form action="pjh_WriteReply.do" method="post">
+    <%-- <form action="pjh_WriteReply.do" method="post">
     	<input type="hidden" name="ftype" value="${ftype}">
         <input type="hidden" name="fid" value="${forumView.fid}">
         <input type="hidden" name="fref" value="${forumView.fref}">
@@ -178,6 +179,9 @@
         <input type="hidden" name="f_pid" value="${forumView.f_pid}">
         <input type="hidden" name="f_cid" value="${cid}">
         <input type="submit" value="답글 달기">
+    </form> --%>
+    <form action="Awritelist.do?ftype=${ftype}" method="post">
+        <input type="submit" value="목록">
     </form>
     </div>
 </body>
