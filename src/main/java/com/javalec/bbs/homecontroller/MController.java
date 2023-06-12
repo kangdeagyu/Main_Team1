@@ -49,7 +49,6 @@ import com.javalec.bbs.command.Pjh_ReplyActionCommand;
 import com.javalec.bbs.command.PwCommand;
 import com.javalec.bbs.command.QnAList_Command_pjh;
 import com.javalec.bbs.command.ReviewCommand;
-import com.javalec.bbs.command.RviewCommand;
 import com.javalec.bbs.command.aDeleteProductCommand_pjh;
 import com.javalec.bbs.command.aDeleteReviewCommand_pjh;
 import com.javalec.bbs.command.aHomeCommand_kkg;
