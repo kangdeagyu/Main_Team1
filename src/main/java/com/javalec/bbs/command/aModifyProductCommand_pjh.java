@@ -18,7 +18,7 @@ public class aModifyProductCommand_pjh implements MCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         // TODO Auto-generated method stub
-    	String directory = "/Volumes/Data/jihwan/Main_Team1/src/main/webapp/image/";
+    	String directory = request.getServletContext().getRealPath("/image/");
         int maxSize = 1024 * 1024 * 100;
         String encoding = "UTF-8";
         request.setCharacterEncoding("utf-8");

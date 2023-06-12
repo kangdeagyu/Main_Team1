@@ -177,7 +177,7 @@
         			<td>${noticedto.nid}</td>       
                     <td>관리자</td>
                     <td></td>
-                    <td><a href="ANoticeView.do?nid=${noticedto.nid}">${noticedto.ntitle}</a></td>     
+                    <td><a href="ANoticeView.do?nid=${noticedto.nid}&ftype=${ftype}">${noticedto.ntitle}</a></td>     
                     <td>${noticedto.ninsertdate}</td>
         	</tr>
         	</c:forEach>

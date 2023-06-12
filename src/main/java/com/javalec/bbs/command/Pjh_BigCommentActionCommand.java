@@ -27,8 +27,7 @@ public class Pjh_BigCommentActionCommand implements MCommand {
 		String fcontent = request.getParameter("fcontent");	
 		int fmotherid = Integer.parseInt(request.getParameter("fmotherid"));
 		int fanswernum = Integer.parseInt(request.getParameter("fanswernum"));
-		
-		
+		request.setAttribute("ftype", ftype);
 		Pjh_WriteList_Dao dao = new Pjh_WriteList_Dao();
 		dao.bigCommentAction(fid, f_cid, f_pid, fref, fstep, freforder, ftitle, fcontent, fmotherid, fanswernum);
 	}

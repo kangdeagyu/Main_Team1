@@ -78,7 +78,7 @@ public class Admin_Product_Dao {
 		
 		try {
 			connection = datasource.getConnection();
-			String query1 = "select pfilename, pid, pprice, pname, pcategory from product";
+			String query1 = "select pfilename, pid, pprice, pname, pcategory, pcontent, pstock from product";
 			String Where2 = " where " + list + " like ? and pdeletedate IS NULL";
 			ps = connection.prepareStatement(query1 + Where2);
 			ps.setString(1, "%" + query + "%");
@@ -90,10 +90,11 @@ public class Admin_Product_Dao {
 				int pprice = rs.getInt(3);
 				String pname = rs.getString(4);
 				String pcategory = Integer.toString(rs.getInt(5));
-
+				String pcontent = rs.getString(6);
+				int pstock = rs.getInt(7);
 				
 				
-				Admin_Product_Dto dto = new Admin_Product_Dto(pfilename, pname, pprice, pid, pcategory);
+				Admin_Product_Dto dto = new Admin_Product_Dto(pfilename, pname, pprice, pid, pstock, pcontent, pcategory);
 				dtos.add(dto);
 			}
 		}catch(Exception e) {
@@ -119,7 +120,7 @@ public class Admin_Product_Dao {
 		
 		try {
 			connection = datasource.getConnection();
-			String query1 = "select pfilename, pid, pprice, pname,pstock, pcategory from product";
+			String query1 = "select pfilename, pid, pprice, pname,pstock, pcategory, pcontent from product";
 			String Where2 = " where pname like ? and pdeletedate IS NULL";
 			ps = connection.prepareStatement(query1 + Where2);
 			ps.setString(1, query);
@@ -132,10 +133,10 @@ public class Admin_Product_Dao {
 				String pname = rs.getString(4);
 				int pstock = rs.getInt(5);
 				String pcategory = Integer.toString(rs.getInt(6));
-
+				String pcontent = rs.getString(7);
 				
 				
-				Admin_Product_Dto dto = new Admin_Product_Dto(pfilename, pname, pprice, pid, pstock, pcategory);
+				Admin_Product_Dto dto = new Admin_Product_Dto(pfilename, pname, pprice, pid, pstock, pcontent, pcategory);
 				dtos.add(dto);
 			}
 		}catch(Exception e) {
