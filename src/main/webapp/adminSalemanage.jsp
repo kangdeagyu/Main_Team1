@@ -48,7 +48,6 @@
 <link rel="stylesheet"
 	href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
 
-</head>
 
 <script type="text/javascript">
 			
@@ -87,32 +86,31 @@
 
 
 			/* 페이징 처리를 위한 버튼 */
-			
-		
-		
-			
+					
 			
 </script>
 
+<!-- 여기서부터 복사하시면 됩니다~~~~~~~~~!!!! -->
+
+<jsp:include page="admin_01_header.jsp" />
 
 
+</head>
 
-<body data-new-gr-c-s-check-loaded="14.1111.0 data-gr-ext-installed">
-
-	<div class="container_mk">
-		<div class="headbar">
-			<jsp:include page="admin_01_header.jsp" />
-		</div>
-		<div class="sidebar">
-			<jsp:include page="admin_01_sidebar.jsp" />
-		</div>
-	</div>
-
-	<!--  ************* Headbar && Sidebar 종료 ************* -->
+<body>
 
 	<div class="container-fluid">
-		<div class="row" style="margin-left: 70px; padding: 10px">
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+		<div class="row">
+			<div class="col-md-2">
+				<jsp:include page="admin_01_sidebar.jsp" />
+			</div>
+
+			<div class="col-md-10" style="margin-left: 15%;">
+				<main class="ms-sm-auto px-md-4">
+
+					<!-- 요기서부터 본문 내용 입력하면 됩니다아~~!!!!!  하단에  </div> 및 </main> 자리 맞춰서 넣는거만 기억하면 됩니다.-->
+
+	
 				<div class="chartjs-size-monitor">
 					<div class="chartjs-size-monitor-expand">
 						<div class=""></div>
@@ -271,7 +269,7 @@
 			</main>
 		</div>
 	</div>
-	
+	</div>
 	
 	
 		<script>
