@@ -27,9 +27,15 @@ public class aProductAddCommand_pjh implements MCommand {
         MultipartRequest multipartRequest = new MultipartRequest(request, directory, maxSize, encoding, new DefaultFileRenamePolicy());
         
         String fileName = multipartRequest.getOriginalFileName("file");
+        String fileName1 = multipartRequest.getOriginalFileName("file1");
+        String fileName2 = multipartRequest.getOriginalFileName("file2");
         String fileRealName = multipartRequest.getFilesystemName("file");
+        String fileRealName1 = multipartRequest.getFilesystemName("file1");
+        String fileRealName2 = multipartRequest.getFilesystemName("file2");
         String filepath1="../webapp/imag/";
         String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
+        String extension1 = fileName1.substring(fileName1.lastIndexOf(".")+1);
+        String extension2 = fileName2.substring(fileName2.lastIndexOf(".")+1);
         String pname = multipartRequest.getParameter("pname");
         String pcategory = multipartRequest.getParameter("pcategory");
         String pstock = multipartRequest.getParameter("pstock");
@@ -51,9 +57,10 @@ public class aProductAddCommand_pjh implements MCommand {
              String timeStamp = now.format(formatter);
 
              String newFileName = timeStamp + "." + extension;
-
+             String newFileName1 = timeStamp + "." + extension1;
+             String newFileName2 = timeStamp + "." + extension2;
              String filePath = directory + newFileName; // 파일 경로 생성
-             int result = new Admin_Product_Dao().saveProduct(pname, pprice, pstock, pcontent, pcategory, newFileName, fileRealName, filePath);
+             int result = new Admin_Product_Dao().saveProduct(pname, pprice, pstock, pcontent, pcategory, newFileName, newFileName1, newFileName2);
              if (result == -1) {
                  System.out.println("업로드에 실패했습니다.");
              } else {
@@ -63,9 +70,13 @@ public class aProductAddCommand_pjh implements MCommand {
                  request.setAttribute("filepath1", filepath1);
                  
                  String updatedFileName = new Admin_Product_Dao().getUpdatedFileName();
-
+                 String updateContentFileName1 = new Admin_Product_Dao().getUpdatedContentFileName1();
+                 String updateContentFileName2 = new Admin_Product_Dao().getUpdatedContentFileName2();
+                 
                  // 파일 이름 변경 실행
                  renameImageFile(directory, fileRealName, updatedFileName);
+                 renameImageFile(directory, fileRealName1, updateContentFileName1);
+                 renameImageFile(directory, fileRealName2, updateContentFileName2);
              }
          }
      }

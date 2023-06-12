@@ -100,20 +100,30 @@
         function saveChanges() {
             var form = document.getElementById('editForm');
             var fileInput = document.getElementById('pfilename');
+            var fileInput1 = document.getElementById('pcontentfilename1');
+            var fileInput2 = document.getElementById('pcontentfilename2');
 
             // 파일이 선택되었는지 확인
-            if (fileInput.files.length > 0) {
-                // 선택된 파일 가져오기
-                var file = fileInput.files[0];
-
-                // 새로운 파일 이름 생성
-                var newFileName = generateNewFileName(product.pid, file.name);
-
+            if (fileInput.files.length > 0 || fileInput1.files.length > 0 || fileInput2.files.length > 0) {
                 // FormData 객체 생성
                 var formData = new FormData(form);
 
-                // 새로운 이름으로 파일을 FormData에 추가
-                formData.append('pfilename', file, newFileName);
+                // 선택된 파일들을 FormData에 추가
+                if (fileInput.files.length > 0) {
+                    var file = fileInput.files[0];
+                    var newFileName = generateNewFileName(product.pid, file.name);
+                    formData.append('pfilename', file, newFileName);
+                }
+                if (fileInput1.files.length > 0) {
+                    var file1 = fileInput1.files[0];
+                    var newFileName1 = generateNewFileName(product.pid, file1.name);
+                    formData.append('pcontentfilename1', file1, newFileName1);
+                }
+                if (fileInput2.files.length > 0) {
+                    var file2 = fileInput2.files[0];
+                    var newFileName2 = generateNewFileName(product.pid, file2.name);
+                    formData.append('pcontentfilename2', file2, newFileName2);
+                }
 
                 // AJAX를 사용하여 파일 업로드 및 폼 데이터 전송
                 var xhr = new XMLHttpRequest();
@@ -143,12 +153,26 @@
             modal.style.display = 'none';
         }
     </script>
+<!-- 여기서부터 복사하시면 됩니다~~~~~~~~~!!!! -->
+
+<jsp:include page="admin_01_header.jsp" />
+
+
 </head>
+
 <body>
-    <div class="sidebar">
-        <jsp:include page="admin_01_sidebar.jsp" />
-    </div>
-    <div class="wrapper">
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-2">
+				<jsp:include page="admin_01_sidebar.jsp" />
+			</div>
+
+			<div class="col-md-10" style="margin-left: 15%;">
+				<main class="ms-sm-auto px-md-4">
+
+					<!-- 요기서부터 본문 내용 입력하면 됩니다아~~!!!!!  하단에  </div> 및 </main> 자리 맞춰서 넣는거만 기억하면 됩니다.-->
+
         <h3>상품 리스트</h3>
         <form action="productQuery.do" method="post">
             <select name="list" class="form-select">
@@ -221,10 +245,15 @@
                 </table>
                 <p>상세 설명</p>
                 <p><textarea id="editPcontent" id="editPcontent" name="pcontent"></textarea></p>
+                <p><input type="file" id="pcontentfilename1" name="pcontentfilename1"></p>
+                <p><input type="file" id="pcontentfilename2" name="pcontentfilename2"></p>
                 <input type="button" name="action" value="저장" onclick="saveChanges()">
             </form>
             <span class="close" onclick="closeModal()">&times;</span>
         </div>
+    </div>
+    </main>
+    </div>
     </div>
 </body>
 </html>

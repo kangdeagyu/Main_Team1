@@ -6,26 +6,32 @@
 	<link href="css/admin_kkg.css" rel="stylesheet">
   <meta http-equiv="Content-Type" content="text/html;" charset="UTF-8">
     <title>상품 추가하기</title>
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<!-- 여기서부터 복사하시면 됩니다~~~~~~~~~!!!! -->
 
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script> 
+<jsp:include page="admin_01_header.jsp" />
+
+
 </head>
+
 <body>
-	<div class="sidebar">
-		<jsp:include page="admin_01_sidebar.jsp" />
-	</div>
-	<div class="wrapper">
-	
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-2">
+				<jsp:include page="admin_01_sidebar.jsp" />
+			</div>
+
+			<div class="col-md-10" style="margin-left: 15%;">
+				<main class="ms-sm-auto px-md-4">
+
+					<!-- 요기서부터 본문 내용 입력하면 됩니다아~~!!!!!  하단에  </div> 및 </main> 자리 맞춰서 넣는거만 기억하면 됩니다.-->
+
 		<h3>상품 추가하기</h3>
 		<form action="AProductInsert.do" method="post"
 			enctype="multipart/form-data">
 			<table>
 				<tr>
 					<th>상품 설정</th>
-					<th>상세 설명</th>
 				</tr>
 				<tr>
 					<td>이름</td>
@@ -58,42 +64,20 @@
 				<tr>
 					<td><input type="text" name="pstock"></td>
 				</tr>
+				<tr>
+				<td>상세 설명</td>
+				</tr>
+				<tr>
+				<td><textarea id="content" name="pcontent"></textarea></td>
+				<td><input type="file" name="file1"><br/>
+					<input type="file" name="file2"></td>
+				</tr>
 			</table>
-			<textarea id="content" name="pcontent"></textarea>
-			<script type="text/javascript">
-$(document).ready(function() {
-    $('#content').summernote({
-        width: 1200,
-    	height: 500,
-        minHeight : null,
-        maxHeight : null,
-        tabsize : 2,
-        lang : "ko-KR",
-        toolbar : [
-        	['fontsize',['fontsize']],
-        	['style', ['fontname']],
-        	['color', ['forecolor', 'backcolor']],
-        	['para', ['ul','ol','paragraph']],
-        	['height', ['height']],
-        	['table',['table']],
-        	['insert',['link','video']],
-        	['view',['fullscreen','codeview','help']],
-        ],
-        fontNames : ['맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체'],
-        fontSizes : ['8','9','10','11','12','14','16','18','20','22','24','28','30','36'],
-   		
-        callbacks: {
-        	onImageUpload : function(files, editor, welEditable){
-        		sendFile(files[0], this);
-        	}
-        }
-    });
-});
-</script>
 			<input type="submit" value="업로드">
-
-
-
 		</form>
+		</main>
+		</div>
+		</div>
+		</div>
 </body>
 </html>

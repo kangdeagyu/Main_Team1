@@ -14,7 +14,8 @@ public class Admin_Product_Dto {
 		Timestamp pdeletedate;
 		String c_name;
 		int pstock;
-		
+		String pcontentfilename1;
+		String pcontentfilename2;
 		
 		
 		
@@ -36,7 +37,7 @@ public class Admin_Product_Dto {
 		}
 		
 
-		public Admin_Product_Dto(String pfilename, String pname, int pprice, int pid, int pstock, String pcontent, String c_name) {
+		public Admin_Product_Dto(String pfilename, String pname, int pprice, int pid, int pstock, String pcontent, String pcontentfilename1, String pcontentfilename2, String c_name) {
 			super();
 			this.pfilename = pfilename;
 			this.pname = pname;
@@ -44,6 +45,8 @@ public class Admin_Product_Dto {
 			this.pid = pid;
 			this.pstock = pstock;
 			this.pcontent = pcontent;
+			this.pcontentfilename1 = pcontentfilename1;
+			this.pcontentfilename2 = pcontentfilename2;
 			this.c_name = c_name;
 		}
 		
@@ -204,6 +207,26 @@ public class Admin_Product_Dto {
 
 		public void setPstock(int pstock) {
 			this.pstock = pstock;
+		}
+
+
+		public String getPcontentfilename1() {
+			return pcontentfilename1;
+		}
+
+
+		public void setPcontentfilename1(String pcontentfilename1) {
+			this.pcontentfilename1 = pcontentfilename1;
+		}
+
+
+		public String getPcontentfilename2() {
+			return pcontentfilename2;
+		}
+
+
+		public void setPcontentfilename2(String pcontentfilename2) {
+			this.pcontentfilename2 = pcontentfilename2;
 		}
 
 		
