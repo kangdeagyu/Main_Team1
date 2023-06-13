@@ -107,9 +107,25 @@ function closeCommentModal() {
 }
 
 </script>
+<!-- 여기서부터 복사하시면 됩니다~~~~~~~~~!!!! -->
+
+<jsp:include page="admin_01_header.jsp" />
+
+
 </head>
+
 <body>
 
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-2">
+				<jsp:include page="admin_01_sidebar.jsp" />
+			</div>
+
+			<div class="col-md-10" style="margin-left: 15%;">
+				<main class="ms-sm-auto px-md-4">
+
+					<!-- 요기서부터 본문 내용 입력하면 됩니다아~~!!!!!  하단에  </div> 및 </main> 자리 맞춰서 넣는거만 기억하면 됩니다.-->
 <div id="commentModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeCommentModal()">&times;</span>
@@ -124,18 +140,8 @@ function closeCommentModal() {
         </div>
     </div>
 </div>
-	<div class="sidebar">
-		<jsp:include page="admin_01_sidebar.jsp" />
-	</div>
-	<div class="wrapper">
+
 		<h3>리뷰 목록</h3>
-		<!-- <form action="reviewQuery.do" method="post">
-			<select name="list" class="form-select">
-				<option value="pname" selected="selected">상품명</option>
-				<option value="pcategory">카테고리</option>
-			</select> <input type="text" name="query"> <input type="submit"
-				name="action" value="검색">
-		</form> -->
 		 <input type="checkbox" id="selectAllCheckbox" onchange="selectAll()">
 			<input type="button" value="삭제" onclick="deleteSelectedItems()">
 			<input type="button" value="댓글" onclick="openCommentModal()">
@@ -221,6 +227,9 @@ function closeCommentModal() {
 	  <span class="close" onclick="closeModal()">&times;</span>
 	  <div id="modalContent"></div>
 	   <button onclick="closeModal()">확인</button>
+	</div>
+	</main>
+	</div>
 	</div>
 </body>
 </html>

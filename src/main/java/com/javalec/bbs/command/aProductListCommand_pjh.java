@@ -28,6 +28,8 @@ public class aProductListCommand_pjh implements MCommand {
 			String imagePath = uploadPath + fileName;
 			dto.setPfilename(imagePath);
 			String pfilename = dto.getPfilename();
+			String pcontentfilename1 =dto.getPcontentfilename1();
+			String pcontentfilename2 =dto.getPcontentfilename2();
 			int price = dto.getPprice();
 			total += price;
 		}		
