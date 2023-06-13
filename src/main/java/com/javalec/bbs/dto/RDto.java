@@ -7,6 +7,8 @@ public class RDto {
 	int pid;
 	String pname;
     String pfilename;
+    String pcontentfilename1;
+    String pcontentfilename2;
     String pcontent;
     int pprice;
     
@@ -64,11 +66,13 @@ public class RDto {
 	
 
 	
-	public RDto(int pid, String pname,String pfilename, String pcontent, int pprice, int pstock) {
+	public RDto(int pid, String pname, String pfilename, String pcontentfilename1, String pcontentfilename2,  String pcontent, int pprice, int pstock) {
 		super();
 		this.pid = pid;
 		this.pname = pname;
 		this.pfilename = pfilename;
+		this.pcontentfilename1 = pcontentfilename1;
+		this.pcontentfilename2 = pcontentfilename2;
 		this.pcontent = pcontent;
 		this.pprice = pprice;
 		this.pstock = pstock;
@@ -79,6 +83,30 @@ public class RDto {
 	
 	}
 	
+	public String getPcontentfilename1() {
+		return pcontentfilename1;
+	}
+
+
+
+	public void setPcontentfilename1(String pcontentfilename1) {
+		this.pcontentfilename1 = pcontentfilename1;
+	}
+
+
+
+	public String getPcontentfilename2() {
+		return pcontentfilename2;
+	}
+
+
+
+	public void setPcontentfilename2(String pcontentfilename2) {
+		this.pcontentfilename2 = pcontentfilename2;
+	}
+
+
+
 	public String getNtitle() {
 		return ntitle;
 	}

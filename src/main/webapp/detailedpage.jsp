@@ -6,22 +6,29 @@
 <html lang="ko">
 <head>
 <style>
+
 .nav-linktwo {
   display: inline-block;
-  padding: 15px 150px;
+  padding: 15px 200px;
   background-color: black;
+  margin-right: 20px;
   color: #fff;
   text-decoration: none;
   border-radius: 10px;
+  margin-bottom: 20px;
+  
 }
 .nav-linkthere{
  display: inline-block;
-  padding: 15px 150px;
+  padding: 15px 200px;
   background-color: black;
+  margin-right: 20px;
   color: #fff;
   text-decoration: none;
   border-radius: 10px;
+  margin-bottom: 20px;
   }
+
 </style>
 
 </head>
@@ -75,7 +82,7 @@ productDescription.textContent = randomProduct.description;
          
        
           <td class="product-info">
-          <table class="product-info-table">
+          <table class="product-info-table" style="margin-left: 150px; margin-right: 0;">
               <tr>
               	<th>상품 이름</th>
               	<td>${dto.pname}</td>
@@ -103,7 +110,7 @@ productDescription.textContent = randomProduct.description;
    						<span>총 구매 금액: </span>
      					<span id="total-amount">${dto.pprice}</span><br><br><br>
      					
-     						<a id="purchaseLink" class="nav-linkthere" href="OrderView.do?pid=${dto.pid }&qty=1" onclick="updateQty()" >구매하기</a><br>
+     						<a id="purchaseLink" class="nav-linkthere" href="OrderView.do?pid=${dto.pid }&qty=1" onclick="updateQty()" >구매하기</a>
    						
    						<a id="cartLink" class="nav-linktwo" href="productcart.do?pid=${dto.pid}&qty=1" onclick="updateQty()">장바구니</a>
 					</div>
@@ -134,11 +141,11 @@ var imageFiles = [
 	"image/조명07.png",
 	"image/조명08.png",
 	"image/조명09.png",
-  "image/조명01.png",
-  "image/조명02.png",
-  "image/조명03.png",
-  "image/조명04.png",
-  "image/조명05.png"
+	"image/조명01.png",
+	"image/조명02.png",
+	"image/조명03.png",
+	"image/조명04.png",
+	"image/조명05.png"
 ];
 
 
@@ -192,17 +199,22 @@ window.onload = changeImages;
 </script>
 
  <div class="detailTab">
-          <a href="#detailGoodsInfo" class="active">DETAIL PRODUCT</a>
-         <a href="#detailReview">REVIEW BOARD</a>
-          <a href="#detailQna">Q&amp;A BOARD</a>                   
-          </div>
-       <div style="padding-top: 10px; ">      
-          <table border="0" cellpadding="0" cellspacing="0" width="100%">
-          <tr><td align="center"><img src="image/dog.png" align="absmiddle" border="0" /></td></tr>
-          <tr><td align="center"><img src="image/dog.png" align="absmiddle" border="0" /></td></tr>
-          <tr><td align="center"><img src="image/dog.png" align="absmiddle" border="0" /></td></tr>
-          <tr><td align="center"><img src="image/dog.png" align="absmiddle" border="0" /></td></tr>
-          </table></div> 
+  <a href="#detailGoodsInfo" class="active">DETAIL PRODUCT</a>
+  <a href="#detailReview">REVIEW BOARD</a>
+  <a href="#detailQna">Q&amp;A BOARD</a>                   
+</div>
+<div style="padding-top: 10px;">
+ <c:forEach items="${DetailedProduct}" var="dto">
+  <table border="0">
+    <tr>
+      <td align="center">
+        <img src="${dto.pcontentfilename1}" style="width: 500px; height: 500px;" align="absmiddle">
+        <img src="${dto.pcontentfilename2}">
+      </td>
+    </tr>
+  </table>
+  </c:forEach>
+</div>
 
 
 

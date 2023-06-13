@@ -38,7 +38,7 @@ public ArrayList<RDto> DetailedProduct(int ppid){
 
 try {
 	connection = dataSource.getConnection(); // sql 연결
-	String query = "select pid, pname, pfilename, pcontent, pprice, pstock from product where pid = ?";
+	String query = "select pid, pname, pfilename, pcontentfilename1, pcontentfilename2, pcontent, pprice, pstock from product where pid = ?";
 	preparedStatement = connection.prepareStatement(query);
 	preparedStatement.setInt(1, ppid);
 	resultSet = preparedStatement.executeQuery();
@@ -47,12 +47,16 @@ try {
 		int pid = resultSet.getInt("pid");
 		String pname = resultSet.getString("pname");
 		String filename = resultSet.getString("pfilename");
+		String contentfilename1 = resultSet.getString("pcontentfilename1");
+		String contentfilename2 = resultSet.getString("pcontentfilename2");
 		String pcontent = resultSet.getString("pcontent");
 		int pprice = resultSet.getInt("pprice");
 		int pstock = resultSet.getInt("pstock");
 		
 		String pfilename = "image/" + filename; 	
-		RDto dto = new RDto(pid, pname, pfilename, pcontent, pprice, pstock);
+		String pcontentfilename1 = "image/" + contentfilename1; 	
+		String pcontentfilename2 = "image/" + contentfilename2; 	
+		RDto dto = new RDto(pid, pname, pfilename, pcontentfilename1, pcontentfilename2, pcontent, pprice, pstock);
 		dtos.add(dto);
 		
 	}
