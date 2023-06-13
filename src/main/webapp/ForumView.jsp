@@ -248,7 +248,7 @@
         <ul class="pagination float--right" id="pages">
         </ul>
     </div>
-    <form action="Kms_WriteReply.jsp" method="post">
+    <%-- <form action="Kms_WriteReply.jsp" method="post">
         <input type="hidden" name="fid" value="${forumView.fid}">
         <input type="hidden" name="fref" value="${forumView.fref}">
         <input type="hidden" name="freforder" value="${forumView.freforder}">
@@ -256,7 +256,7 @@
         <input type="hidden" name="fmotherid" value="${forumView.fmotherid}">
         <input type="hidden" name="fanswernum" value="${forumView.fanswernum}">
         <input type="submit" value="답글 달기">
-    </form>
+    </form> --%>
     <%@ include file="bottom.jsp" %>
 </body>
 </html>

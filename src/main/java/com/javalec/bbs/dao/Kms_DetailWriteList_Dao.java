@@ -49,19 +49,20 @@ public class Kms_DetailWriteList_Dao {
 				int fref = resultSet.getInt(6);
 				int freforder = resultSet.getInt(7);
 				int fstep = resultSet.getInt(8);
-				String ftitle = resultSet.getString(9);
-				String fcontent = resultSet.getString(10);
-				Timestamp finsertdate = resultSet.getTimestamp(11);
-				Timestamp fdeletedate = resultSet.getTimestamp(12);
-				int fmotherid = resultSet.getInt(13);
-				int fanswernum = resultSet.getInt(14);
-				String pname = resultSet.getString(15);
-				String cname = resultSet.getString(16);
+				int fsteporder = resultSet.getInt(9);
+				String ftitle = resultSet.getString(10);
+				String fcontent = resultSet.getString(11);
+				Timestamp finsertdate = resultSet.getTimestamp(12);
+				Timestamp fdeletedate = resultSet.getTimestamp(13);
+				int fmotherid = resultSet.getInt(14);
+				int fanswernum = resultSet.getInt(15);
+				String pname = resultSet.getString(16);
+				String cname = resultSet.getString(17);
 				
 				
 				
-				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(fid, f_cid, f_aid, f_pid, ftype, fref,
-						freforder, fstep, ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum, pname, cname);
+				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(fid, f_cid, f_aid, f_pid, ftype, fref, freforder,
+						fstep, ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum, fsteporder, pname, cname);
 				dtos.add(dto);
 				
 			
@@ -105,20 +106,22 @@ public class Kms_DetailWriteList_Dao {
 				int fref = resultSet.getInt(6);
 				int freforder = resultSet.getInt(7);
 				int fstep = resultSet.getInt(8);
-				String ftitle = resultSet.getString(9);
-				String fcontent = resultSet.getString(10);
-				Timestamp finsertdate = resultSet.getTimestamp(11);
-				Timestamp fdeletedate = resultSet.getTimestamp(12);
-				int fmotherid = resultSet.getInt(13);
-				int fanswernum = resultSet.getInt(14);
-				String pname = resultSet.getString(15);
-				String cname = resultSet.getString(16);
+				int fsteporder = resultSet.getInt(9);
+				String ftitle = resultSet.getString(10);
+				String fcontent = resultSet.getString(11);
+				Timestamp finsertdate = resultSet.getTimestamp(12);
+				Timestamp fdeletedate = resultSet.getTimestamp(13);
+				int fmotherid = resultSet.getInt(14);
+				int fanswernum = resultSet.getInt(15);
+				String pname = resultSet.getString(16);
+				String cname = resultSet.getString(17);
 				
 				
 				
-				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(fid, f_cid, f_aid, f_pid, ftype, fref, freforder, 
-						fstep, ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum, pname, cname);
+				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(fid, f_cid, f_aid, f_pid, ftype, fref, freforder,
+						fstep, ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum, fsteporder, pname, cname);
 				dtos.add(dto);
+				
 				
 			
 				}

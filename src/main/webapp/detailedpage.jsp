@@ -209,7 +209,7 @@ window.onload = changeImages;
     <tr>
       <td align="center">
         <img src="${dto.pcontentfilename1}" style="width: 500px; height: 500px;" align="absmiddle">
-        <img src="${dto.pcontentfilename2}">
+        <%-- <img src="${dto.pcontentfilename2}"> --%>
       </td>
     </tr>
   </table>
@@ -283,6 +283,14 @@ window.onload = changeImages;
 </c:choose>
 </table></div>
 
+<c:forEach items="${DetailedProduct}" var="dto">
+<form action="Kms_QnAWrite.jsp" method="get">
+<input type="submit" value="질문작성하기">
+<input type="hidden" name="cid" value="${cid }">
+<input type="hidden" name="pid" value="${param.pid}">
+<input type="hidden" name="pname" value="${dto.pname}">
+</form>
+</c:forEach>
 
 <%@ include file="bottom.jsp" %>
 </body>

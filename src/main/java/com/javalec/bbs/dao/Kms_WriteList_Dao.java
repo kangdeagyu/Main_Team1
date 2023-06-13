@@ -224,7 +224,7 @@ public class Kms_WriteList_Dao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select f.*, c.cname from forum f, customer c where f.f_cid = c.cid and ftype = 3 and fref = ? order by fref desc,freforder,fsteporder,fstep";
+			String query = "select f.*, c.cname from forum f, customer c where f.f_cid = c.cid and ftype = 3 and fmotherid = ? order by fref desc,freforder,fsteporder,fstep";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, fid);
 			resultSet = preparedStatement.executeQuery();
@@ -581,5 +581,36 @@ public class Kms_WriteList_Dao {
 	            e.printStackTrace();
 	        }
 	    }
+	}
+	
+	public void QnAWriteAction(String f_cid, int f_pid,String ftitle, String fcontent) {
+		Connection connection = null;
+		PreparedStatement preparedStatement1 = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query2 = "insert into forum (f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, fsteporder, ftitle, fcontent, finsertdate, fmotherid, fanswernum)";
+			String query3 = " select ?,'admin', ?, 2 , max(fref) + 1,0, 0, 0,?,?,now(),0,0 from forum";
+			preparedStatement1 = connection.prepareStatement(query2 + query3);
+			preparedStatement1.setString(1, f_cid);
+			preparedStatement1.setInt(2, f_pid);
+			preparedStatement1.setString(3, ftitle);
+			preparedStatement1.setString(4, fcontent);
+			
+			
+			preparedStatement1.executeUpdate();
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(preparedStatement1 != null) preparedStatement1.close();
+				if(connection != null) connection.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 }
