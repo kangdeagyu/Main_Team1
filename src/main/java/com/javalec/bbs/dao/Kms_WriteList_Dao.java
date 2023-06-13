@@ -36,7 +36,7 @@ public class Kms_WriteList_Dao {
 		try {
 			connection = dataSource.getConnection();
 			String query = "select f.*,p.pname,c.cname from forum f,product p, customer c";
-			String query1 = " where p.pid = f.f_pid and c.cid = f.f_cid and ftype = ? order by fref desc,freforder";
+			String query1 = " where p.pid = f.f_pid and c.cid = f.f_cid and ftype = ? and fdeletedate is null order by fref desc,freforder";
 			preparedStatement = connection.prepareStatement(query + query1);
 			preparedStatement.setInt(1, Ftype);
 			resultSet = preparedStatement.executeQuery();
@@ -90,8 +90,8 @@ public class Kms_WriteList_Dao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query2 = "insert into forum (f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, ftitle, fcontent, finsertdate, fmotherid, fanswernum)";
-			String query3 = " select ?,'admin', ?, 1 , max(fref) + 1, 0, 0,?,?,now(),0,0 from forum";
+			String query2 = "insert into forum (f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, fsteporder,ftitle, fcontent, finsertdate, fmotherid, fanswernum)";
+			String query3 = " select ?,'admin', ?, 1 , max(fref) + 1, 0,0, 0,?,?,now(),0,0 from forum";
 			preparedStatement1 = connection.prepareStatement(query2 + query3);
 			preparedStatement1.setString(1, f_cid);
 			preparedStatement1.setInt(2, f_pid);
@@ -513,7 +513,7 @@ public class Kms_WriteList_Dao {
 		try {
 			connection = dataSource.getConnection();
 			String query = "select f.*, p.pname,c.cname from forum f, product p, customer c";
-			String Where2 = " where p.pid = f.f_pid and c.cid = f.f_cid and ftype =" + Ftype + " and p.pname like ? order by fref desc, freforder";
+			String Where2 = " where p.pid = f.f_pid and c.cid = f.f_cid and ftype =" + Ftype + " and fdeletedate = null p.pname like ? order by fref desc, freforder";
 			ps = connection.prepareStatement(query + Where2);
 			ps.setString(1, "%" + content + "%");
 			rs = ps.executeQuery();
@@ -527,20 +527,20 @@ public class Kms_WriteList_Dao {
 				int fref = rs.getInt(6);
 				int freforder = rs.getInt(7);
 				int fstep = rs.getInt(8);
-				String ftitle = rs.getString(9);
-				String fcontent = rs.getString(10);
-				Timestamp finsertdate = rs.getTimestamp(11);
-				Timestamp fdeletedate = rs.getTimestamp(12);
-				int fmotherid = rs.getInt(13);
-				int fanswernum = rs.getInt(14);
-				String pname = rs.getString(15);
-				String cname = rs.getString(16);
+				int fsteporder = rs.getInt(9);
+				String ftitle = rs.getString(10);
+				String fcontent = rs.getString(11);
+				Timestamp finsertdate = rs.getTimestamp(12);
+				Timestamp fdeletedate = rs.getTimestamp(13);
+				int fmotherid = rs.getInt(14);
+				int fanswernum = rs.getInt(15);
+				String pname = rs.getString(16);
+				String cname = rs.getString(17);
 
 				
 				
-				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(f_id, f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, ftitle,
-						fcontent, finsertdate, fdeletedate, fmotherid, fanswernum, pname, cname);
-				dtos.add(dto);
+				Kms_WriteList_Dto dto = new Kms_WriteList_Dto(f_id, f_cid, f_aid, f_pid, ftype, fref, 
+						freforder, fstep, ftitle, fcontent, finsertdate, fdeletedate, fmotherid, fanswernum, fsteporder, pname, cname);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

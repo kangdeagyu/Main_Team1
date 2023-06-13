@@ -19,10 +19,13 @@ public class Kms_WriteListCommand implements MCommand {
 		// TODO Auto-generated method stub
 		
 		int Ftype = Integer.parseInt(request.getParameter("ftype"));
+		
 		Kms_WriteList_Dao dao = new Kms_WriteList_Dao();
 		ArrayList<Kms_WriteList_Dto> dtos = dao.list(Ftype);
+		
 		Admin_QnA_Dao daos = new Admin_QnA_Dao();
 		ArrayList<Admin_QnA_Dto> dtos2 = daos.Noticelist();
+		
 		int listSize= dtos.size();
 		request.setAttribute("ftype", Ftype);
 		request.setAttribute("RList", dtos);

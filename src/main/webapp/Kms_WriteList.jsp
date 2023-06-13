@@ -130,7 +130,7 @@
         <h1>QnA 게시판</h1>
     </c:if>
 
-    <c:if test="${ftype eq 1}">
+    <%-- <c:if test="${ftype eq 1}">
         <form action="Kms_WriteForum.jsp">
             <input type="submit" value="리뷰쓰기">
         </form>
@@ -139,7 +139,7 @@
         <form action="Kms_WriteForum.jsp">
             <input type="submit" value="QnA쓰기">
         </form>
-    </c:if>
+    </c:if> --%>
 
     <div style="text-align: right;">
         <form action="Aforumsearch.do" method="post">
@@ -166,8 +166,9 @@
         	<c:forEach items="${noticelist}" var="noticedto" varStatus="status">
         	<tr>
         			<td>${noticedto.nid}</td>       
-                    <td><a href="">${noticedto.ntitle}</a></td>     
                     <td>관리자</td>     
+                    <td>공지사항</td>     
+                    <td><a href="">${noticedto.ntitle}</a></td>     
                     <td>${noticedto.ninsertdate}</td>
         	</tr>
         	</c:forEach>
