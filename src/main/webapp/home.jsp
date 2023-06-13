@@ -62,14 +62,14 @@
 	  </div>
 	  <div class="carousel-inner">
 	    <div class="carousel-item active" >	    	
-	      <img src="image/so1.jpg" class="image" alt="...">
+	      <img src="image/room1.jpg" class="image" alt="...">
 	    </div>
 	  
 	    <div class="carousel-item">
-	      <img src="image/so2.jpg" class="image" alt="...">
+	      <img src="image/room2.jpg" class="image" alt="...">
 	    </div>
 	    <div class="carousel-item">
-	      <img src="image/so3.jpg" class="image" alt="...">   
+	      <img src="image/room4.jpg" class="image" alt="...">   
 	    </div>
 	  </div>
 	  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -87,7 +87,11 @@
 <!-- 상품을 관리 -->
 
  <div class="container">
- <label>전체 상품</label>
+ <label>전체 상품</label><br/>
+ 		<form action="search.do" method="post">
+		 	<input type="search" name="search">
+		 	<input type="submit" value="검색" >
+		 </form>
    	<div class="row my-2">
   	  <c:forEach items="${list }" var="dto">
 	  	  <div class="col-md-4 text-center">
@@ -103,10 +107,13 @@
 
 </main>
 
+
+
+
 <!-- 하단  -->
 <%@ include file="bottom.jsp" %>
 
-</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
       
 </body>
