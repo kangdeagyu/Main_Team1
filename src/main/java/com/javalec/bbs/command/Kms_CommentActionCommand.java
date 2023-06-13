@@ -17,10 +17,11 @@ public class Kms_CommentActionCommand implements MCommand {
 		int f_pid = Integer.parseInt(request.getParameter("f_pid"));
 		String ftitle = request.getParameter("ftitle");
 		int fid = Integer.parseInt(request.getParameter("fid"));
+		int fsteporder = Integer.parseInt(request.getParameter("fsteporder"));
 		
 		
 		Kms_WriteList_Dao dao = new Kms_WriteList_Dao();
-		dao.commentAction(f_cid, f_pid, ftitle, fid);
+		dao.commentAction(f_cid, f_pid, ftitle, fid,fsteporder);
 	}
 
 }
