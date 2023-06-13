@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.javalec.bbs.dao.Kms_WriteList_Dao;
 
-public class Kms_CommentActionCommand implements MCommand {
+public class Kms_OrderingUpdateCommand implements MCommand {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -16,13 +16,11 @@ public class Kms_CommentActionCommand implements MCommand {
 		String f_cid = request.getParameter("f_cid");
 		int f_pid = Integer.parseInt(request.getParameter("f_pid"));
 		String ftitle = request.getParameter("ftitle");
-		int fid = Integer.parseInt(request.getParameter("fid"));
-		int fsteporder = Integer.parseInt(request.getParameter("fsteporder"));
-		
+		String fcontent = request.getParameter("fcontent");	
+		int oid = Integer.parseInt(request.getParameter("oid"));
 		
 		Kms_WriteList_Dao dao = new Kms_WriteList_Dao();
-		dao.commentAction(f_cid, f_pid, ftitle, fid,fsteporder);
-		
+		dao.orderingUpdate(oid);
 	}
 
 }

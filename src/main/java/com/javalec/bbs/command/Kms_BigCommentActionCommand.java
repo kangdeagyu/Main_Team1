@@ -16,6 +16,7 @@ public class Kms_BigCommentActionCommand implements MCommand {
 		
 		int page = Integer.parseInt(request.getParameter("page"));
 		int fid = Integer.parseInt(request.getParameter("fid"));
+		System.out.println(fid);
 		String f_cid = request.getParameter("f_cid");
 		int f_pid = Integer.parseInt(request.getParameter("f_pid"));
 		int fref = Integer.parseInt(request.getParameter("fref"));
@@ -30,6 +31,7 @@ public class Kms_BigCommentActionCommand implements MCommand {
 		
 		Kms_WriteList_Dao dao = new Kms_WriteList_Dao();
 		dao.bigCommentAction(fid, f_cid, f_pid, fref, fstep, freforder, ftitle, fcontent, fmotherid, fanswernum,fsteporder);
+		
 	}
 
 }

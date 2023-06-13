@@ -20,11 +20,9 @@ public class Kms_WriteList_Dto {
 	int fanswernum;
 	int fsteporder;
 	
-	
 	String pname;
 	
 	String cname;
-	
 	int totalFanswernum;
 	
 	public Kms_WriteList_Dto() {
@@ -32,16 +30,6 @@ public class Kms_WriteList_Dto {
 	}
 	
 	
-
-
-
-
-	public Kms_WriteList_Dto(int totalFanswernum) {
-		super();
-		this.totalFanswernum = totalFanswernum;
-	}
-
-
 
 
 
@@ -69,6 +57,53 @@ public class Kms_WriteList_Dto {
 	}
 
 
+
+	public Kms_WriteList_Dto(int fid, String f_cid, String f_aid, int f_pid, int ftype, int fref, int freforder,
+			int fstep, String ftitle, String fcontent, Timestamp finsertdate, Timestamp fdeletedate, int fmotherid,
+			int fanswernum, String cname) {
+		super();
+		this.fid = fid;
+		this.f_cid = f_cid;
+		this.f_aid = f_aid;
+		this.f_pid = f_pid;
+		this.ftype = ftype;
+		this.fref = fref;
+		this.freforder = freforder;
+		this.fstep = fstep;
+		this.ftitle = ftitle;
+		this.fcontent = fcontent;
+		this.finsertdate = finsertdate;
+		this.fdeletedate = fdeletedate;
+		this.fmotherid = fmotherid;
+		this.fanswernum = fanswernum;
+		this.cname = cname;
+	}
+
+
+
+	public Kms_WriteList_Dto(int fid,String f_cid, int f_pid, String ftitle, String fcontent, Timestamp finsertdate) {
+		super();
+		this.fid = fid;
+		this.f_cid = f_cid;
+		this.f_pid = f_pid;
+		this.ftitle = ftitle;
+		this.fcontent = fcontent;
+		this.finsertdate = finsertdate;
+	}
+
+
+
+	public Kms_WriteList_Dto(String f_cid, String ftitle, Timestamp finsertdate) {
+		super();
+		this.f_cid = f_cid;
+		this.ftitle = ftitle;
+		this.finsertdate = finsertdate;
+	}
+
+	public Kms_WriteList_Dto(int totalFanswernum) {
+		super();
+		this.totalFanswernum = totalFanswernum;
+	}
 
 	public Kms_WriteList_Dto(int fid, String f_cid, String f_aid, int f_pid, int ftype, int fref, int freforder,
 			int fstep, String ftitle, String fcontent, Timestamp finsertdate, Timestamp fdeletedate, int fmotherid,
@@ -120,56 +155,6 @@ public class Kms_WriteList_Dto {
 		this.fsteporder = fsteporder;
 	}
 
-
-
-	public Kms_WriteList_Dto(int fid, String f_cid, String f_aid, int f_pid, int ftype, int fref, int freforder,
-			int fstep, String ftitle, String fcontent, Timestamp finsertdate, Timestamp fdeletedate, int fmotherid,
-			int fanswernum, String cname) {
-		super();
-		this.fid = fid;
-		this.f_cid = f_cid;
-		this.f_aid = f_aid;
-		this.f_pid = f_pid;
-		this.ftype = ftype;
-		this.fref = fref;
-		this.freforder = freforder;
-		this.fstep = fstep;
-		this.ftitle = ftitle;
-		this.fcontent = fcontent;
-		this.finsertdate = finsertdate;
-		this.fdeletedate = fdeletedate;
-		this.fmotherid = fmotherid;
-		this.fanswernum = fanswernum;
-		this.cname = cname;
-	}
-
-
-
-
-
-
-	public Kms_WriteList_Dto(int fid,String f_cid, int f_pid, String ftitle, String fcontent, Timestamp finsertdate) {
-		super();
-		this.fid = fid;
-		this.f_cid = f_cid;
-		this.f_pid = f_pid;
-		this.ftitle = ftitle;
-		this.fcontent = fcontent;
-		this.finsertdate = finsertdate;
-	}
-
-
-
-	public Kms_WriteList_Dto(String f_cid, String ftitle, Timestamp finsertdate) {
-		super();
-		this.f_cid = f_cid;
-		this.ftitle = ftitle;
-		this.finsertdate = finsertdate;
-	}
-
-
-
-
 	public int getFsteporder() {
 		return fsteporder;
 	}
@@ -200,9 +185,6 @@ public class Kms_WriteList_Dto {
 	public void setTotalFanswernum(int totalFanswernum) {
 		this.totalFanswernum = totalFanswernum;
 	}
-
-
-
 
 
 

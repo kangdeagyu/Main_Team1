@@ -556,5 +556,30 @@ public class Kms_WriteList_Dao {
 		
 		return dtos;
 	} // list 출력
+	
+	public void orderingUpdate(int oid) {
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+	    
+	    try {
+	        connection = dataSource.getConnection();
+	        String query = "update ordering set odelivery = 3 where oid = " + oid;
+	        preparedStatement = connection.prepareStatement(query);
+	        
+	        
+	        preparedStatement.executeUpdate();
+	            
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (preparedStatement != null)
+	                preparedStatement.close();
+	            if (connection != null)
+	                connection.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
 }
-

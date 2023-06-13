@@ -20,6 +20,7 @@ public class Kms_WriteForumCommand implements MCommand {
 		
 		Kms_WriteList_Dao dao = new Kms_WriteList_Dao();
 		dao.forumAction(f_cid, f_pid, ftitle, fcontent);
+	
 	}
 
 }

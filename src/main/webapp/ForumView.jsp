@@ -204,7 +204,7 @@
                     <td>
                         <c:if test="${cdto.fdeletedate eq null}">
                             <form action="BigCommentWrite.do" method="post">
-                                <input type="text" name="ftitle" placeholder="댓글을 입력하세요.">                                                       
+                                <input type="text" name="ftitle" placeholder="댓글을 입력하세요.">
                                 <input type="hidden" name="page" value="${forumView.fid}">
                                 <input type="hidden" name="f_cid" value="${cid}">
                                 <input type="hidden" name="fid" value="${cdto.fid}">

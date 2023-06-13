@@ -84,15 +84,22 @@
 		          	<c:otherwise>알 수 없음</c:otherwise>
 		        </c:choose></td>
 		        <td>
-				    <c:if test="${dto.odelivery == 2}">
-				        <form action="Kms_WriteForum.jsp">
-						    <input type="hidden" name="f_pid" value="${dto.product_pid}">
-						    <input type="hidden" name="pname" value="${dto.pname}">
-						    <input type="hidden" name="cname" value="${dto.cname}">
-						    <input type="submit" value="리뷰쓰기">
-						</form>
-
-				    </c:if>
+		        	<c:choose>
+			        <c:when test="${dto.odelivery == 3}">
+			            작성완료
+			        </c:when>
+			        <c:otherwise>
+            <c:if test="${dto.odelivery == 2}">
+                <form action="Kms_ReviewWriteForum.do">
+                    <input type="hidden" name="oid" value="${dto.oid}">
+                    <input type="hidden" name="f_pid" value="${dto.product_pid}">
+                    <input type="hidden" name="pname" value="${dto.pname}">
+                    <input type="hidden" name="cname" value="${dto.cname}">
+                    <input type="submit" value="리뷰쓰기">
+                </form>
+            </c:if>
+        			</c:otherwise>
+    				</c:choose>
 				</td>
 			  </tr>
 		</c:forEach>
