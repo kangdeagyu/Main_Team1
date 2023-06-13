@@ -81,7 +81,8 @@
           			<c:when test="${dto.odelivery == 0}">배송 전</c:when>
           			<c:when test="${dto.odelivery == 1}">배송 중</c:when>
 		          	<c:when test="${dto.odelivery == 2}">배송 완료</c:when>
-		          	<c:otherwise>알 수 없음</c:otherwise>
+		          	<c:when test="${dto.odelivery == 3}">배송 완료</c:when>
+		          	<c:otherwise>작성완료</c:otherwise>
 		        </c:choose></td>
 		        <td>
 		        	<c:choose>
