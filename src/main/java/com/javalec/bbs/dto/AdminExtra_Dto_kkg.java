@@ -38,6 +38,9 @@ public class AdminExtra_Dto_kkg {
 	int orders; // 판매량
 	
 	
+	int pid;
+	int pstock;
+	
 	String gender;
 	String pname;
 	//constructor
@@ -64,6 +67,27 @@ public class AdminExtra_Dto_kkg {
 
 
 
+	public AdminExtra_Dto_kkg(int seq, int categoryId, int pid, String pname, int pstock) {
+		super();
+		this.seq = seq;
+		this.categoryId = categoryId;
+		this.pid = pid;
+		this.pname = pname;
+		this.pstock = pstock;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 	public AdminExtra_Dto_kkg(String pname, int orders) {
 		super();
 		this.pname = pname;
@@ -80,27 +104,6 @@ public class AdminExtra_Dto_kkg {
 
 
 
-
-
-	public int getOrders() {
-		return orders;
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-	public void setOrders(int orders) {
-		this.orders = orders;
-	}
 
 
 
@@ -511,6 +514,38 @@ public class AdminExtra_Dto_kkg {
 
 
 
+	public int getPid() {
+		return pid;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setPid(int pid) {
+		this.pid = pid;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 	public String getPname() {
 		return pname;
 	}
@@ -531,7 +566,60 @@ public class AdminExtra_Dto_kkg {
 		this.pname = pname;
 	}
 	
-	
+
+	public int getOrders() {
+		return orders;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setOrders(int orders) {
+		this.orders = orders;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public int getPstock() {
+		return pstock;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setPstock(int pstock) {
+		this.pstock = pstock;
+	}
+
+
 	
 	
 	

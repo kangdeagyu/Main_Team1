@@ -2,7 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <!DOCTYPE html>
@@ -107,11 +108,11 @@
 
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-2">
+			<div class="col-md-1">
 				<jsp:include page="admin_01_sidebar.jsp" />
 			</div>
 
-			<div class="col-md-10" style="margin-left : 15%; ">
+			<div class="col-md-10" style="margin-left: 12%; margin-top: 30px;">
 				<main class="ms-sm-auto px-md-4">
 				
 <!-- 요기서부터 본문 내용 입력하면 됩니다아~~!!!!!  하단에  </div> 및 </main> 자리 맞춰서 넣는거만 기억하면 됩니다.-->
@@ -124,11 +125,14 @@
 						<div>
 							<form action="AUserlist.do" name="date" method="post">
 								<input type="text" name="startDate" id="startDate"
-									placeholder="시작일" autocomplete="off"> <input
-									type="text" name="endDate" id="endDate" placeholder="종료일"
-									autocomplete="off"> <input type="hidden" name="pageNum"
-									value="${userList[0].pageNum}"> <input type="button"
-									value="확 인" onclick="checkDate()">
+									placeholder="시작일" autocomplete="off"> 
+									
+									<input type="text" name="endDate" id="endDate" placeholder="종료일"
+									autocomplete="off"> 
+									
+									<input type="hidden" name="pageNum" value="${userList[0].pageNum}"> 
+									
+									<input type="button" value="확 인" onclick="checkDate()">
 							</form>
 
 						</div>
@@ -136,20 +140,14 @@
 
 						<div class="btn-toolbar mb-2 mb-md-0">
 							<div class="btn-group me-2">
-								<button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-								<button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+	
 							</div>
+
+
+							<form action=""></form>
+		
 							<button type="button"
 								class="btn btn-sm btn-outline-secondary dropdown-toggle">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-									viewBox="0 0 24 24" fill="none" stroke="currentColor"
-									stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-									class="feather feather-calendar align-text-bottom"
-									aria-hidden="true">
-								<rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-								<line x1="16" y1="2" x2="16" y2="6"></line>
-								<line x1="8" y1="2" x2="8" y2="6"></line>
-								<line x1="3" y1="10" x2="21" y2="10"></line></svg>
 								This week
 							</button>
 						</div>
@@ -246,7 +244,7 @@
 
 			</div>
 		</div>
-</div>
+
 		<script>
 
 	    $(function() {

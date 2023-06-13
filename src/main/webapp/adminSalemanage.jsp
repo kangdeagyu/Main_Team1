@@ -101,178 +101,222 @@
 
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-2">
+			<div class="col-md-1">
 				<jsp:include page="admin_01_sidebar.jsp" />
 			</div>
 
-			<div class="col-md-10" style="margin-left: 15%;">
+			<div class="col-md-10" style="margin-left: 12%; margin-top: 30px;">
 				<main class="ms-sm-auto px-md-4">
-
 					<!-- 요기서부터 본문 내용 입력하면 됩니다아~~!!!!!  하단에  </div> 및 </main> 자리 맞춰서 넣는거만 기억하면 됩니다.-->
 
-	
-				<div class="chartjs-size-monitor">
-					<div class="chartjs-size-monitor-expand">
-						<div class=""></div>
-					</div>
-					<div class="chartjs-size-monitor-shrink">
-						<div class=""></div>
-					</div>
-				</div>
-				<div
-					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="h2">매출/결재 관리</h1>
-					<div>
-
-						<form action="Salemanage.do" name="date" method="post">
-							<input type="text" name="startDate" id="startDate"
-								placeholder="시작일" autocomplete="off"> <input type="text"
-								name="endDate" id="endDate" placeholder="종료일" autocomplete="off">
-							<input type="button" value="확 인" onclick="checkDate()">
-						</form>
-
-					</div>
 
 
-					<div class="btn-toolbar mb-2 mb-md-0">
-						<div class="btn-group me-2">
-							<button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-							<button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+					<div
+						class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+						<h1 class="h2">매출/결재 관리</h1>
+
+
+						<div>
+
+							<form action="Salemanage.do" name="date" method="post">
+								<input type="text" name="startDate" id="startDate"
+									placeholder="시작일" autocomplete="off"> <input
+									type="text" name="endDate" id="endDate" placeholder="종료일"
+									autocomplete="off"> <input type="button" value="확 인"
+									onclick="checkDate()">
+							</form>
+
 						</div>
-						<button type="button"
-							class="btn btn-sm btn-outline-secondary dropdown-toggle">
 
-							This week</button>
+
+						<div class="btn-toolbar mb-2 mb-md-0">
+							<div class="btn-group me-2"></div>
+							<button type="button"
+								class="btn btn-sm btn-outline-secondary dropdown-toggle">
+
+								This week</button>
+						</div>
+						<!-- 여기까지가 버튼 과 관련된 부분 이아래가 그래프다 -->
 					</div>
-					<!-- 여기까지가 버튼 과 관련된 부분 이아래가 그래프다 -->
-				</div>
+
+					<div class="content">
+						<div class="array">
+							<div class="card shadw-lg"
+								style="width: 500px; height: 500px; background-color: #F7F7F7; margin-bottom: 10px">
+								<h5 class="card-title">일별 매출/주문 현황</h5>
+								<canvas id="dailychart"></canvas>
+								<div class="card-body">
+									<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+								</div>
+							</div>
+						</div>
+						<div class="array">
 
 
- 				<div>
-					<p>일별 매출/주문 현황</p>
-					<canvas class="my-4 w-100 chartjs-render-monitor" id="dailychart"
-						width="700" height="400"
-						style="display: block; width: 400px; height: 275px;"></canvas>
-				</div>
+							<div class="card shadw-lg"
+								style="width: 500px; height: 500px; background-color: #F7F7F7; margin-bottom: 10px">
+								<h5 class="card-title">월별 매출/주문 현황</h5>
+								<canvas id="monthlychart"></canvas>
+								<div class="card-body">
+									<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="content">
+						<div class="array">
+							<div class="card shadw-lg"
+								style="width: 500px; height: 500px; background-color: #F7F7F7; display: flex; justify-content: center; align-items: center; margin-bottom: 10px">
+								<h5 class="card-title">기간내 카테고리별 매출 비교</h5>
+								<div style="width: 70%; height: 70%;">
+									<canvas id="categorychart_sale"></canvas>
+								</div>
+
+								<div class="card-body">
+									<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+								</div>
+							</div>
+						</div>
+						<div class="array">
+
+							<div class="card shadw-lg"
+								style="width: 500px; height: 500px; background-color: #F7F7F7; margin-bottom: 10px">
+								<h5 class="card-title">기간내 카테고리별 판매량 비교</h5>
+								<canvas id="categorychart_order"></canvas>
+								<div class="card-body">
+									<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="content">
+						<div class="array">
+							<div class="card shadw-lg"
+								style="width: 500px; height: 500px; background-color: #F7F7F7; display: flex; justify-content: center; align-items: center; margin-bottom: 10px">
+								<h5 class="card-title">기간내 남녀 매출 비교</h5>
+								<div style="width: 70%; height: 70%;">
+									<canvas id="gender_sale"></canvas>
+								</div>
+								<div class="card-body">
+									<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+								</div>
+							</div>
+						</div>
+						<div class="array">
+							<div class="card shadw-lg"
+								style="width: 500px; height: 500px; background-color: #F7F7F7; display: flex; justify-content: center; align-items: center; margin-bottom: 10px">
+								<h5 class="card-title">기간내 남녀 주문량 비교</h5>
+								<div style="width: 70%; height: 70%;">
+									<canvas id="gender_order"></canvas>
+								</div>
+								<div class="card-body">
+									<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+								</div>
+							</div>
+						</div>
+					</div>
 
 
-				<div>
-					<p>월별 매출/주문 현황</p>
-					<canvas class="my-4 w-100 chartjs-render-monitor" id="monthlychart"
-						width="700" height="400"
-						style="display: block; width: 400px; height: 275px;"></canvas>
-				</div>
 
-				<div>
-					<p>기간내 카테고리별 매출 비교</p>
-					<canvas class="my-4 w-100 chartjs-render-monitor"
-						id="categorychart_sale" width="700" height="400"
-						style="display: block; height: 275px; width: 400px;"></canvas>
-				</div>
 
-				<div>
-					<p>기간내 카테고리별 판매량 비교</p>
-					<canvas class="my-4 w-100 chartjs-render-monitor"
-						id="categorychart_order" width="700" height="400"
-						style="display: block; height: 275px; width: 400px;"></canvas>
-				</div> 
-
-				<div>
-					<p>기간내 남녀 매출 비교</p>
-					<canvas class="my-4 w-100 chartjs-render-monitor" id="gender_sale"
-						width="400" height="300"
-						style="display: block; height: 275px; width: 400px;"></canvas>
-				</div>
-
-				<div>
-					<p>기간내 남녀 주문량 비교</p>
-					<canvas class="my-4 w-100 chartjs-render-monitor" id="gender_order"
-						width="400" height="300"
-						style="display: block; height: 275px; width: 400px;"></canvas>
-				</div> 
-
-<%-- 				<div>
+					<%-- 				<div>
 					<p>기간내 카테고리별 남녀 매출 현황</p>
 					<canvas class="my-4 w-100 chartjs-render-monitor"
 						id="categorygenderchart_sale" width="700" height="400"
-						style="display: block; height: 275px; width: 400px;"></canvas>
+						style="display: block; height: 275px; width: 500px;"></canvas>
 				</div>
 
 				<div>
 					<p>기간내 카테고리별 남녀 주문량 현황</p>
 					<canvas class="my-4 w-100 chartjs-render-monitor"
 						id="categorygenderchart_order" width="400" height="300"
-						style="display: block; height: 275px; width: 400px;"></canvas>
+						style="display: block; height: 275px; width: 500px;"></canvas>
 				</div>  --%>
 
- 				<div>
-					<p>기간내 판매량 Top 5</p>
-					<canvas class="my-4 w-100 chartjs-render-monitor"
-						id="orderTopChart" width="400" height="300"
-						style="display: block; height: 275px; width: 400px;"></canvas>
-				</div> 
-				<div>
-					<p>기간내 매출액 Top 5</p>
-					<canvas class="my-4 w-100 chartjs-render-monitor" id="saleTopChart"
-						width="400" height="300"
-						style="display: block; height: 275px; width: 400px;"></canvas>
-				</div>
+					<div class="content">
+					
+						<div class="array">
+							<div class="card shadw-lg"
+								style="width: 500px; height: 500px; background-color: #F7F7F7; margin-bottom: 10px">
+								<h5 class="card-title">기간내 판매량 Top 5</h5>
+								<canvas id="orderTopChart"></canvas>
+								<div class="card-body">
+									<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+								</div>
+							</div>
+						</div>
+						<div class="array">
 
 
-				<hr>
-
-				<div>
-
-					<p>데이터 확인 하는 파트</p>
-					<p>시작 날 :${dateList[0]}</p>
-					<p>마지말 : ${dateList[fn:length(dateList)-1]}</p>
-					<p>시작 달 : ${monthList[0]}</p>
-					<p>마지막 달 : ${monthList[fn:length(monthList)-1]}</p>
-					<br />
-					<p>대상 날짜 : ${requestScope.dateList}</p>
-					<p>일일매출 : ${requestScope.dailySales}</p>
-					<p>월 매출 : ${requestScope.monthlySales}</p>
-					<p>일 주문 : ${requestScope.dailyOrders}</p>
-					<p>월 주문 : ${requestScope.monthlyOrders}</p>
-					<br />
-					<p>카테고리리스트 : ${requestScope.categoryList}</p>
-					<p>카테고리 매출 : ${requestScope.categorySales}</p>
-					<p>카테고리 주문 : ${requestScope.categoryOrders}</p>
-					<br />
-
-					<p>성별 리스트 : ${requestScope.genderList}</p>
-					<p>성별 매출 : ${requestScope.genderSales}</p>
-					<p>성별 주문 : ${requestScope.genderOrders}</p>
-
-					<br />
-
-<%-- 					<p>남성 카테고리 매출 : ${requestScope.categoryGDSales_male}</p>
-					<p>남성 카테고리 주문 : ${requestScope.categoryGDOrders_male}</p>
-					<p>여성 카테고리 매출: ${requestScope.categoryGDSales_female}</p>
-					<p>여성 카테고리 주문: ${requestScope.categoryGDOrders_female}</p>
- --%>
-					<br />
-
-					<p>주문 탑 5 목록 : ${requestScope.maxPnameOrders}</p>
-					<p>주문 탑 5 주문량 : ${requestScope.maxOrders}</p>
-					<p>매출 탑 5 목록: ${requestScope.maxPnameSales}</p>
-					<p>매출 탑 5 매출액: ${requestScope.maxSales}</p>
+							<div class="card shadw-lg"
+								style="width: 500px; height: 500px; background-color: #F7F7F7; margin-bottom: 10px">
+								<h5 class="card-title">기간내 매출액 Top 5</h5>
+								<canvas id="saleTopChart"></canvas>
+								<div class="card-body">
+									<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+								</div>
+							</div>
+						</div>
+					</div>
 
 
 
 					<hr>
 
-				</div>
+					<div>
+
+						<p>데이터 확인 하는 파트</p>
+						<p>시작 날 :${dateList[0]}</p>
+						<p>마지말 : ${dateList[fn:length(dateList)-1]}</p>
+						<p>시작 달 : ${monthList[0]}</p>
+						<p>마지막 달 : ${monthList[fn:length(monthList)-1]}</p>
+						<br />
+						<p>대상 날짜 : ${requestScope.dateList}</p>
+						<p>일일매출 : ${requestScope.dailySales}</p>
+						<p>월 매출 : ${requestScope.monthlySales}</p>
+						<p>일 주문 : ${requestScope.dailyOrders}</p>
+						<p>월 주문 : ${requestScope.monthlyOrders}</p>
+						<br />
+						<p>카테고리리스트 : ${requestScope.categoryList}</p>
+						<p>카테고리 매출 : ${requestScope.categorySales}</p>
+						<p>카테고리 주문 : ${requestScope.categoryOrders}</p>
+						<br />
+
+						<p>성별 리스트 : ${requestScope.genderList}</p>
+						<p>성별 매출 : ${requestScope.genderSales}</p>
+						<p>성별 주문 : ${requestScope.genderOrders}</p>
+
+						<br />
+
+						<%-- 					<p>남성 카테고리 매출 : ${requestScope.categoryGDSales_male}</p>
+					<p>남성 카테고리 주문 : ${requestScope.categoryGDOrders_male}</p>
+					<p>여성 카테고리 매출: ${requestScope.categoryGDSales_female}</p>
+					<p>여성 카테고리 주문: ${requestScope.categoryGDOrders_female}</p>
+ --%>
+						<br />
+
+						<p>주문 탑 5 목록 : ${requestScope.maxPnameOrders}</p>
+						<p>주문 탑 5 주문량 : ${requestScope.maxOrders}</p>
+						<p>매출 탑 5 목록: ${requestScope.maxPnameSales}</p>
+						<p>매출 탑 5 매출액: ${requestScope.maxSales}</p>
 
 
 
-			</main>
+						<hr>
+
+					</div>
+
+
+
+				</main>
+			</div>
 		</div>
 	</div>
-	</div>
-	
-	
-		<script>
+
+
+	<script>
 	
  	 	DoubleLineChart(document.getElementById('dailychart'),${requestScope.dateList},'매출액',${requestScope.dailySales},'결재건',${requestScope.dailyOrders});  
 		DoubleLineChart(document.getElementById('monthlychart'), ${requestScope.monthList}, '매출액' ,${requestScope.monthlySales},'결재건',${requestScope.monthlyOrders});

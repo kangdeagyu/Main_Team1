@@ -50,7 +50,7 @@ function SingleBarChart(context, xlabels, y01, ydatas_01) {
 				label: y01, /* 그래프(차트)의 제목이다.*/
 				fill: false,
 				backgroundColor: ['#B4D9FF', '#007AFF', '#5856D6', '#34C759', '#FF2D55', '#FF9500', '#FFCC00', '#8E8E93', '#FF3B30', '#C69C6D'],
-				borderColor: 'rgb(255, 0, 0)',
+				borderColor: ['#B4D9FF', '#007AFF', '#5856D6', '#34C759', '#FF2D55', '#FF9500', '#FFCC00', '#8E8E93', '#FF3B30', '#C69C6D'],
 				data: ydatas_01,
 				yAxisID: 'y-axis-1'
 
@@ -113,7 +113,7 @@ function SingleBarChart(context, xlabels, y01, ydatas_01) {
 			},//layout 끝
 
 			legend: {
-				display: true,
+				display: false,
 				labels: {
 					fontSize: 12,
 					boxWidth: 10,// 범례의 글씨 크기 설정
@@ -166,7 +166,7 @@ function PieChart(Title, context, xlabel, ydatas_01) {
 			responsive: true,
 			maintainAspectRatio: true, //true 하게 되면 캔버스 width,height에 따라 리사이징된다.
 			legend: {
-				position: 'chartArea',
+				
 				fontColor: 'black',
 				align: 'center',
 				display: true,
@@ -182,6 +182,12 @@ function PieChart(Title, context, xlabel, ydatas_01) {
 					fontSize: 15,
 					precision: 2
 				},
+				        datalabels: {
+                    formatter: function (value, context) {
+                        return Math.round(value / context.chart.getDatasetMeta(0).total * 100) + "%";
+                   },
+                    }
+
 
 
 			}
@@ -277,8 +283,8 @@ function SingleLineChart(context, xlabels, y01, ydatas_01) {
 			legend: {
 				display: true,
 				labels: {
-					fontSize: 8,
-					boxWidth: 5,// 범례의 글씨 크기 설정
+					fontSize: 20,
+					boxWidth: 15,// 범례의 글씨 크기 설정
 				},
 				elements: {
 					line: {
@@ -371,8 +377,10 @@ function DoubleLineChart(context, xlabels, y01, ydatas_01, y02, ydatas_02) {
 						id: 'y-axis-1',
 						position: 'left',
 						ticks: {
+							beginAtZero: true,
 							fontSize: 8,
 							fontColor: 'rgb(255,0,0)',
+							
 							/* max : 1600000 */
 						}
 					},
@@ -380,6 +388,8 @@ function DoubleLineChart(context, xlabels, y01, ydatas_01, y02, ydatas_02) {
 						id: 'y-axis-2',
 						position: 'right',
 						ticks: {
+							beginAtZero: true,
+							
 							fontSize: 8,
 							fontColor: 'rgb(0,0,255)',
 							suggestedMax: 16,
@@ -409,8 +419,8 @@ function DoubleLineChart(context, xlabels, y01, ydatas_01, y02, ydatas_02) {
 			legend: {
 				display: true,
 				labels: {
-					fontSize: 8,
-					boxWidth: 5,// 범례의 글씨 크기 설정
+					fontSize: 20,
+					boxWidth: 15,// 범례의 글씨 크기 설정
 				},
 				elements: {
 					line: {

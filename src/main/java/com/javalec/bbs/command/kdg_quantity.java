@@ -41,7 +41,7 @@ public class kdg_quantity extends HttpServlet {
 	}
 	
 	private void actionjn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		// 수량변경
 		request.setCharacterEncoding("utf-8");
 		int pid = Integer.parseInt(request.getParameter("pid"));
 		int qty = Integer.parseInt(request.getParameter("qty"));

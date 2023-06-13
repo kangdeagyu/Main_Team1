@@ -18,16 +18,30 @@ public class Kms_WriteList_Dto {
 	Timestamp fdeletedate;	
 	int fmotherid;
 	int fanswernum;
+	int fsteporder;
+	
 	
 	String pname;
 	
 	String cname;
+	
+	int totalFanswernum;
 	
 	public Kms_WriteList_Dto() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	
+
+
+
+
+	public Kms_WriteList_Dto(int totalFanswernum) {
+		super();
+		this.totalFanswernum = totalFanswernum;
+	}
+
+
 
 
 
@@ -58,6 +72,58 @@ public class Kms_WriteList_Dto {
 
 	public Kms_WriteList_Dto(int fid, String f_cid, String f_aid, int f_pid, int ftype, int fref, int freforder,
 			int fstep, String ftitle, String fcontent, Timestamp finsertdate, Timestamp fdeletedate, int fmotherid,
+			int fanswernum, int fsteporder, String pname, String cname) {
+		super();
+		this.fid = fid;
+		this.f_cid = f_cid;
+		this.f_aid = f_aid;
+		this.f_pid = f_pid;
+		this.ftype = ftype;
+		this.fref = fref;
+		this.freforder = freforder;
+		this.fstep = fstep;
+		this.ftitle = ftitle;
+		this.fcontent = fcontent;
+		this.finsertdate = finsertdate;
+		this.fdeletedate = fdeletedate;
+		this.fmotherid = fmotherid;
+		this.fanswernum = fanswernum;
+		this.fsteporder = fsteporder;
+		this.pname = pname;
+		this.cname = cname;
+	}
+
+
+
+
+
+
+	public Kms_WriteList_Dto(int fid, String f_cid, String f_aid, int f_pid, int ftype, int fref, int freforder,
+			int fstep, String ftitle, String fcontent, Timestamp finsertdate, Timestamp fdeletedate, int fmotherid,
+			int fanswernum, String cname, int fsteporder) {
+		super();
+		this.fid = fid;
+		this.f_cid = f_cid;
+		this.f_aid = f_aid;
+		this.f_pid = f_pid;
+		this.ftype = ftype;
+		this.fref = fref;
+		this.freforder = freforder;
+		this.fstep = fstep;
+		this.ftitle = ftitle;
+		this.fcontent = fcontent;
+		this.finsertdate = finsertdate;
+		this.fdeletedate = fdeletedate;
+		this.fmotherid = fmotherid;
+		this.fanswernum = fanswernum;
+		this.cname = cname;
+		this.fsteporder = fsteporder;
+	}
+
+
+
+	public Kms_WriteList_Dto(int fid, String f_cid, String f_aid, int f_pid, int ftype, int fref, int freforder,
+			int fstep, String ftitle, String fcontent, Timestamp finsertdate, Timestamp fdeletedate, int fmotherid,
 			int fanswernum, String cname) {
 		super();
 		this.fid = fid;
@@ -79,6 +145,9 @@ public class Kms_WriteList_Dto {
 
 
 
+
+
+
 	public Kms_WriteList_Dto(int fid,String f_cid, int f_pid, String ftitle, String fcontent, Timestamp finsertdate) {
 		super();
 		this.fid = fid;
@@ -97,6 +166,42 @@ public class Kms_WriteList_Dto {
 		this.ftitle = ftitle;
 		this.finsertdate = finsertdate;
 	}
+
+
+
+
+	public int getFsteporder() {
+		return fsteporder;
+	}
+
+
+
+
+
+
+	public void setFsteporder(int fsteporder) {
+		this.fsteporder = fsteporder;
+	}
+
+
+
+
+
+
+	public int getTotalFanswernum() {
+		return totalFanswernum;
+	}
+
+
+
+
+
+
+	public void setTotalFanswernum(int totalFanswernum) {
+		this.totalFanswernum = totalFanswernum;
+	}
+
+
 
 
 

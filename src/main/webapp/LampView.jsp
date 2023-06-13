@@ -29,7 +29,7 @@
    	<div class="row my-2">
   	  <c:forEach items="${list }" var="dto">
 	  	  <div class="col-md-4 text-center">
-		  	  <a class="nav-link" href="#">
+		  	  <a class="nav-link" href="detailedpage.do?pid=${dto.pid }">
 					<img src="${dto.pfilename }" style="width: 400px; height: 400px; margin-bottom: 10px;"  alt="..."><br/>
 				   	 <p class="text-dark" style="margin: 0;">${dto.pname }</p>
 				   	 <p class="text-dark" style="margin: 0;"><fmt:formatNumber value="${dto.pprice}" pattern="#,##0원" /></p>
