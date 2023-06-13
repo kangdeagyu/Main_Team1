@@ -84,7 +84,7 @@ public class Admin_Dao_kkg {
 	}
 	
 	
-	public ArrayList<Admin_Order_Dto_kkg> getOrderlist(String customerid){
+	public ArrayList<Admin_Order_Dto_kkg> getOrderlist(String customerid, Timestamp startDate, Timestamp endDate){
 		 ArrayList<Admin_Order_Dto_kkg> dtos = new ArrayList<>();
 			
 			
@@ -103,14 +103,21 @@ public class Admin_Dao_kkg {
 				
 				if(customerid.equals("1")) {
 					
-					sql_where = 	" where p.pid = o.o_pid and c.cid=o.o_cid";
+					sql_where = 	" where p.pid = o.o_pid and c.cid=o.o_cid and o.odate >= ? and o.odate <= ? ";
+
 					String sql = sql_select + sql_from + sql_where+sql_group;
 					preparedStatement = connection.prepareStatement(sql);
+					
+					preparedStatement.setTimestamp(1, startDate);
+					preparedStatement.setTimestamp(2, endDate);
+					
 				}else {
-					sql_where = 	" where p.pid = o.o_pid and c.cid=o.o_cid and c.cid = ?";
+					sql_where = 	" where p.pid = o.o_pid and c.cid=o.o_cid and o.odate >= ? and o.odate <= ? and c.cid = ?";
 					String sql = sql_select + sql_from + sql_where+sql_group;
 					preparedStatement = connection.prepareStatement(sql);
-					preparedStatement.setString(1, customerid);
+					preparedStatement.setTimestamp(1, startDate);
+					preparedStatement.setTimestamp(2, endDate);
+					preparedStatement.setString(3, customerid);
 				}
 				
 

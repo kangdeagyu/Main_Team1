@@ -408,11 +408,17 @@ public class MController extends HttpServlet {
 			viewPage = "Kms_WriteList.jsp";
 			break;
 			
-		case ("/BigCommentWrite.do"):
-			command = new Kms_BigCommentActionCommand();
-			command.execute(request, response);
-			viewPage = "ForumView.do?fid="+request.getParameter("page");
-			break;
+		case "/BigCommentWrite.do":
+		    if ("0".equals(request.getParameter("freforder"))) {
+		        command = new Kms_BigCommentActionCommand1();
+		        command.execute(request, response);
+			    viewPage = "ForumView.do?fid=" + request.getParameter("page");
+		    } else {
+		        command = new Kms_BigCommentActionCommand();
+		        command.execute(request, response);
+		        viewPage = "ForumView.do?fid=" + request.getParameter("page");
+		    }
+		    break;
 		case ("/commentdelete.do"):
 			command = new Kms_CommentDeleteCommand();
 			command.execute(request, response);

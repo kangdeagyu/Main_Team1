@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,6 +39,62 @@
 <link href="css/bootstrap-utilities.rtl.min.css" rel="stylesheet">
 
 <link rel="stylesheet" type="text/css" href="aQnA_style.css">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+        <script type="text/javascript">
+    				/* 날짜 입력의 정규화를 위함 */
+			function checkDate(){
+				const regstartdate = /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+				const regenddate = /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;	
+					
+				const formdate = document.date;
+				const startDate = formdate.startDate.value;
+				const endDate = formdate.endDate.value;
+				
+				
+				if(!regstartdate.test(startDate)){
+						alert("시작 날짜를 입력해 주세요.")
+						formdate.startDate.select();
+						return;
+					}
+					
+				if(!regenddate.test(endDate)){
+						alert("마지막 날짜를 입력해 주세요")
+						formdate.endDate.select();
+						return;
+					}
+				if (endDate < startDate) {
+				    alert("종료일은 시작일보다 뒷날짜여야 합니다.");
+				    formdate.endDate.select();
+				    return;
+				}
+ 
+				formdate.submit();
+
+			}
+    
+			 </script>
+			 
+			 
+<script>
+
+	    $(function() {
+	      $("#startDate").datepicker({
+	    	  dateFormat : "yy-mm-dd"
+	      });
+	      
+	      
+	      
+	      $("#endDate").datepicker({
+	    		  dateFormat : "yy-mm-dd"
+	      });
+	    });
+    </script>
+			 
+
+
 <script>
         // 전체 데이터 개수
         var totalData = ${ListSize};
@@ -52,7 +108,7 @@
 
         // 특정 페이지 번호에 해당하는 데이터를 가져오는 함수
         function GetTarget(pageNumber) {
-            var dataPerPage = 10;
+            var dataPerPage = 20;
             var startIndex = (pageNumber - 1) * dataPerPage;
             var endIndex = startIndex + dataPerPage;
 
@@ -65,8 +121,8 @@
 
         // 페이지네이션 링크 생성 함수
         function paging(totalData, currentPage) {
-            var dataPerPage = 10;
-            var pageCount = 10;
+            var dataPerPage = 20;
+            var pageCount = 20;
 
             var totalPage = Math.ceil(totalData / dataPerPage);
             var pageGroup = Math.ceil(currentPage / pageCount);
@@ -109,7 +165,41 @@
         $(document).ready(function() {
             GetTarget(1); // 초기 페이지를 1로 설정
         });
-    </script>
+   
+    
+        
+        
+        
+        function thisweek(){
+        	
+        	 // 오늘 날짜를 구합니다.
+        	  var currentDate = new Date();
+
+        	  // 1주일 전 날짜를 구하기 위해 JavaScript의 Date 메소드를 사용합니다.
+        	  var startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 7);
+
+        	  // startDate와 endDate 변수를 문자열로 변환합니다.
+        	  var startDateStr = startDate.toISOString().slice(0, 10);
+        	  var endDateStr = currentDate.toISOString().slice(0, 10);
+			  var cid = '<%=request.getAttribute("customerId") %>' 
+        	  // adminorder.do로 전송할 URL을 생성합니다.
+        	  var url = "Ordermanage.do?startDate=" + startDateStr + "&endDate=" + endDateStr + "&customerId="+cid;
+
+        	  // 페이지 이동을 위해 location.href를 사용합니다.
+        	  location.href = url;
+        	
+        }
+        
+        </script>
+        
+        
+        
+
+
+
+
+
+
 <!-- 여기서부터 복사하시면 됩니다~~~~~~~~~!!!! -->
 
 <jsp:include page="admin_01_header.jsp" />
@@ -137,11 +227,12 @@
 
 						<div>
 
-							<form action="Salemanage.do" name="date" method="post">
-								<input type="text" name="startDate" id="startDate"
-									placeholder="시작일" autocomplete="off"> <input
-									type="text" name="endDate" id="endDate" placeholder="종료일"
-									autocomplete="off"> <input type="button" value="확 인"
+							<form action="Ordermanage.do" name="date" method="post">
+							
+								<input type="hidden" name="customerId" value="${customerId}"> 
+								<input type="text" name="startDate" id="startDate" placeholder="시작일" autocomplete="off"> 
+								<input type="text" name="endDate" id="endDate" placeholder="종료일" autocomplete="off">
+								<input type="button" value="확 인"
 									onclick="checkDate()">
 							</form>
 
@@ -150,10 +241,13 @@
 
 						<div class="btn-toolbar mb-2 mb-md-0">
 							<div class="btn-group me-2"></div>
-							<button type="button"
-								class="btn btn-sm btn-outline-secondary dropdown-toggle">
 
+							<button type="button"
+								class="btn btn-sm btn-outline-secondary dropdown-toggle" onclick="thisWeek()">
+							
 								This week</button>
+								
+
 						</div>
 					</div>
 
@@ -164,15 +258,17 @@
 						<table class="table table-striped table-sm">
 							<thead class="thead-light">
 								<tr>
-									<th scope="col">No</th>
-									<th scope="col">주문번호</th>
-									<th scope="col">제품</th>
-									<th scope="col">수량</th>
-									<th scope="col">결재금액</th>
-									<th scope="col">고객아이디</th>
-									<th scope="col">고객이름</th>
-									<th scope="col">주소</th>
-									<th scope="col">연락처</th>
+									<th scope="col"style="text-align: center">No.
+									</th>
+									<th scope="col"style="text-align: center">주문번호</th>
+									<th scope="col"style="text-align: center">제품</th>
+									<th scope="col"style="text-align: center">수량</th>
+									<th scope="col"style="text-align: center">결재금액</th>
+									<th scope="col"style="text-align: center">고객아이디</th>
+									<th scope="col"style="text-align: center">고객이름</th>
+									<th scope="col"style="text-align: center">주소</th>
+									<th scope="col"style="text-align: center">연락처</th>
+									<th scope="col"style="text-align: center">회원결재내</th>
 									<!-- <th scope="col">정보 수정/삭제</th> -->
 
 								</tr>
@@ -182,15 +278,24 @@
 
 								<c:forEach items="${orderList}" var="order" varStatus="status">
 									<tr class="data-row hidden-row" id="dataRow${status.index}">
-										<td>${order.seq}</td>
-										<td>${order.oid}</td>
-										<td>${order.pname}</td>
-										<td>${order.oqty}</td>
-										<td>${order.oprice}</td>
-										<td>${order.cid}</td>
-										<td>${order.cname}</td>
-										<td>${order.caddress}</td>
-										<td>${order.cphone}</td>
+										<td style="text-align: center">${order.seq}</td>
+										<td style="text-align: center">${order.oid}</td>
+										<td style="text-align: center">${order.pname}</td>
+										<td style="text-align: center">${order.oqty}</td>
+										<td style="text-align: center">${order.oprice}</td>
+										<td style="text-align: center">${order.cid}</td>
+										<td style="text-align: center">${order.cname}</td>
+										<td style="text-align: center">${order.caddress}</td>
+										<td style="text-align: center">${order.cphone}</td>
+										
+										<td>
+										<form action="Ordermanage.do">
+										<input type="hidden" name="startDate" value="${startDate}">
+										<input type="hidden" name="endDate" value="${endDate}">
+										<input type="hidden" name="customerId" value="${order.cid}">
+										<input type="submit" value="결재내역">
+										</form>
+										</td>
 
 									</tr>
 
@@ -201,24 +306,15 @@
 							<ul class="pagination float--right" id="pages">
 							</ul>
 						</div>
-  			<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 					</div>
-
-
-
-
-
-
-
-
-
-
-
 
 				</main>
 			</div>
 		</div>
 	</div>
+	
+	
+	
 
 
 </body>

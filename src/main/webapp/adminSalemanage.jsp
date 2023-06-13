@@ -85,7 +85,7 @@
 			}
 
 
-			/* 페이징 처리를 위한 버튼 */
+
 					
 			
 </script>
@@ -132,7 +132,7 @@
 						<div class="btn-toolbar mb-2 mb-md-0">
 							<div class="btn-group me-2"></div>
 							<button type="button"
-								class="btn btn-sm btn-outline-secondary dropdown-toggle">
+								class="btn btn-sm btn-outline-secondary dropdown-toggle" onclick="thisWeek()">
 
 								This week</button>
 						</div>
@@ -355,7 +355,28 @@
 	    });
     </script>
 
+	<script>
+	
+    function thisweek(){
+    	
+   	 // 오늘 날짜를 구합니다.
+   	  var currentDate = new Date();
 
+   	  // 1주일 전 날짜를 구하기 위해 JavaScript의 Date 메소드를 사용합니다.
+   	  var startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 7);
+
+   	  // startDate와 endDate 변수를 문자열로 변환합니다.
+   	  var startDateStr = startDate.toISOString().slice(0, 10);
+   	  var endDateStr = currentDate.toISOString().slice(0, 10);
+		 
+   	  // adminorder.do로 전송할 URL을 생성합니다.
+   	  var url = "Salemanage.do?startDate=" + startDateStr + "&endDate=" + endDateStr;
+
+   	  // 페이지 이동을 위해 location.href를 사용합니다.
+   	  location.href = url;
+   	
+   }
+	</script>
 
 
 
