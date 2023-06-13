@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.javalec.bbs.command.ADeleteReviewCommand2_pjh;
 import com.javalec.bbs.command.AProductSearchCommand2;
 import com.javalec.bbs.command.AdminOrdermanageCommand_kkg;
 import com.javalec.bbs.command.CartCommand;
@@ -37,12 +38,14 @@ import com.javalec.bbs.command.MypageCommand;
 import com.javalec.bbs.command.NoticeCommand;
 import com.javalec.bbs.command.OrderCommand;
 import com.javalec.bbs.command.OrderProductCommand;
+import com.javalec.bbs.command.Pjh_ANoticeDelete_Command;
 import com.javalec.bbs.command.Pjh_ANoticeModifyPage_Command;
 import com.javalec.bbs.command.Pjh_ANoticeModify_Command;
 import com.javalec.bbs.command.Pjh_ANoticeViewCommand;
 import com.javalec.bbs.command.Pjh_ANoticeWrite_Command;
 import com.javalec.bbs.command.Pjh_AWriteReply_Command;
 import com.javalec.bbs.command.Pjh_BigCommentActionCommand;
+import com.javalec.bbs.command.Pjh_CheckCommentActionCommand;
 import com.javalec.bbs.command.Pjh_CommentActionCommand;
 import com.javalec.bbs.command.Pjh_CommentDeleteCommand;
 import com.javalec.bbs.command.Pjh_ForumViewCommand;
@@ -187,6 +190,12 @@ public class MController extends HttpServlet {
 			command = new DetailsCommand();
 			command.execute(request, response);
 			viewPage = "DetailsView.jsp";
+			
+		case("/search.do"):
+			command = new searchCommdand();
+			command.execute(request, response);
+			viewPage = "searchView.jsp";
+			break;
 
 		/* PART I 종료. 킹갓더제너럴 강대규팀장님 part 입니다. 일동 기립. 경례. 쉬어. */
 		// *************************************************************//
@@ -211,7 +220,7 @@ public class MController extends HttpServlet {
 		case ("/OrderView.do"):
 			command = new OrderCommand();
 			command.execute(request, response);
-			viewPage = (String) request.getAttribute("view");
+			viewPage = "OrderView.jsp";
 			break;
 		case ("/notice.do"):
 			command = new NoticeCommand();
@@ -344,7 +353,21 @@ public class MController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "Admin_QnA_pjh.jsp";
 			break;
-
+			case ("/AdeleteNotice.do"):
+			command = new Pjh_ANoticeDelete_Command();
+			command.execute(request, response);
+			viewPage = "Awritelist.do?ftype="+request.getParameter("ftype");
+			break;
+			case ("/deleteRevieworQnA.do"):		
+			command = new ADeleteReviewCommand2_pjh();
+			command.execute(request, response);
+			viewPage = "Awritelist.do?ftype="+request.getParameter("ftype");
+			break;
+			case ("/Acheckcommentwrite.do"):
+			command = new Pjh_CheckCommentActionCommand();
+			command.execute(request, response);
+			viewPage = "AReviewList.do";
+			break;
 
 		/* PART III 종료. 스윗남자 박지환 서윗남 part 입니다. 일동 .일용할 스윗함에 고마움을 :) */
 		// *************************************************************//
