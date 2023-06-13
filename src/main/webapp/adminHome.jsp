@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
 <!DOCTYPE html>
@@ -49,11 +51,11 @@
 
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-2">
+			<div class="col-md-1">
 				<jsp:include page="admin_01_sidebar.jsp" />
 			</div>
 
-			<div class="col-md-10" style="margin-left: 15%;">
+			<div class="col-md-10" style="margin-left: 12%; margin-top: 30px;">
 				<main class="ms-sm-auto px-md-4">
 
 					<!-- 요기서부터 본문 내용 입력하면 됩니다아~~!!!!!  하단에  </div> 및 </main> 자리 맞춰서 넣는거만 기억하면 됩니다.-->
@@ -122,13 +124,44 @@
 										</div>
 									</div>
 								</div>
+								
+								
+								<div class="array">
+									<div class="card shadow-lg"
+										style="width: 500px; height: 300px; background-color: #F7F7F7; ">
+										
+										<h5 class="card-title" >재고 부족 제품</h5>
+										
+										<table style="margin-left: 20px">
+										<tr>
+										<th>No.</th><th>분류</th><th>제품번호</th><th>제품</th><th>재고</th>
+										</tr>
+									<c:forEach items="${OutofStocks}" var="product">
+										<tr>
+										<td>${product.seq}</td>
+										<td>${product.categoryId}</td>
+										<td>${product.pid}</td>
+										<td>${product.pname}</td>
+										<td>${product.pstock}</td>
+										</tr>
+									</c:forEach>
+
+
+								</table>
+										<div class="card-body">
+											<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+										</div>
+									</div>
+								</div>
+								
+								
 							</div>
 							<br />
 							<hr />
 							<br />
 
 
-							<div>
+<%-- 							<div>
 								<p>받아온 data 검증하기 위한 파트</p>
 								<p>
 									날짜 :${requestScope.dailyDate} <input type="hidden"
@@ -159,7 +192,7 @@
 									매출 :${requestScope.monthlySale} <input type="hidden"
 										id="MonthlySale" value="${requestScope.monthlySale}">
 								</p>
-							</div>
+							</div> --%>
 
 
 				</main>

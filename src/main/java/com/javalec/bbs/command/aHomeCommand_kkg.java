@@ -11,6 +11,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.javalec.bbs.dao.Admin_Dao_kkg;
 import com.javalec.bbs.dao.ChartDao_kkg;
 import com.javalec.bbs.dto.AdminExtra_Dto_kkg;
 
@@ -111,22 +112,16 @@ public class aHomeCommand_kkg implements MCommand {
         List<Integer> dailyNSList = getDailySaleList(dateList, DNrs); //method02. dailySale 랑 같이써도 상관 없음.
         //추후에 탈퇴자 내용포함 시킬 것.
         
-        
-        
-        
-        
-        
- 
-        
-        
+
         
         //  *************** 회원수 현황을 위한 데이터 가져오기************** 
         
         //시작일 기준 가입일자가 시작일 이전인 수를 카운 
 
         
-        
-        
+        Admin_Dao_kkg dao_stocks = new Admin_Dao_kkg(); 
+        ArrayList<AdminExtra_Dto_kkg> stocks = dao_stocks.getOutStocks();
+        		
         
         
         
@@ -157,7 +152,7 @@ public class aHomeCommand_kkg implements MCommand {
         //신규가입자 daily
         request.setAttribute("dailyNS", dailyNSList);
         
-        
+        request.setAttribute("OutofStocks", stocks);
         
         
         

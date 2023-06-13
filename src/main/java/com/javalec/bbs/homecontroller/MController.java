@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.javalec.bbs.command.AProductSearchCommand2;
+import com.javalec.bbs.command.AdminOrdermanageCommand_kkg;
 import com.javalec.bbs.command.CartCommand;
 import com.javalec.bbs.command.CartOrderCommand;
 import com.javalec.bbs.command.CategoryPorductCommand;
@@ -440,6 +441,15 @@ public class MController extends HttpServlet {
 			request.removeAttribute("pnum");
 			break;
 			
+		case("/Ordermanage.do"):
+		
+		
+		command = new AdminOrdermanageCommand_kkg();
+		command.execute(request, response);
+		viewPage = "adminOrder.jsp";
+		
+
+		break;
 			
 			
 			
