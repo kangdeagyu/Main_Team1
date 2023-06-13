@@ -152,6 +152,7 @@
                                 <input type="hidden" name="freforder" value="${cdto.freforder}">
                                 <input type="hidden" name="fmotherid" value="${cdto.fmotherid}">
                                 <input type="hidden" name="fanswernum" value="${cdto.fanswernum}">
+                                <input type="hidden" name="fanswernum" value="${cdto.fsteporder}">
                                 <input type="submit" id="replyButton_${cdto.f_cid}" value="입력">
                             </form>
                         </c:if>

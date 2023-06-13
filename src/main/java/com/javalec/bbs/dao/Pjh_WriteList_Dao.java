@@ -193,18 +193,18 @@ public class Pjh_WriteList_Dao {
 	        preparedStatement.executeUpdate();
 
 	        String query2 = "INSERT INTO forum (f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, fsteporder, ftitle, fcontent, finsertdate, fmotherid, fanswernum)";
-	        String query3 = " values (?, 'admin', ?, 3, ?, ?, ? + 1, ? + ? + 1, ?, ?, now(), ?, 0)";
+	        String query3 = " values ('dummy', 'admin', ?, 3, ?, ?, ? + 1, ? + ? + 1, ?, ?, now(), ?, 0)";
 	        preparedStatement1 = connection.prepareStatement(query2 + query3);
-	        preparedStatement1.setString(1, "'dummy'");
-	        preparedStatement1.setInt(2, f_pid);
-	        preparedStatement1.setInt(3, fref);
-	        preparedStatement1.setInt(4, freforder);
-	        preparedStatement1.setInt(5, fstep);
-	        preparedStatement1.setInt(6, fsteporder);
-	        preparedStatement1.setInt(7, a);
-	        preparedStatement1.setString(8, ftitle);
-	        preparedStatement1.setString(9, fcontent);
-	        preparedStatement1.setInt(10, fmotherid);
+//	        preparedStatement1.setString(1, f_cid);
+	        preparedStatement1.setInt(1, f_pid);
+	        preparedStatement1.setInt(2, fref);
+	        preparedStatement1.setInt(3, freforder);
+	        preparedStatement1.setInt(4, fstep);
+	        preparedStatement1.setInt(5, fsteporder);
+	        preparedStatement1.setInt(6, a);
+	        preparedStatement1.setString(7, ftitle);
+	        preparedStatement1.setString(8, fcontent);
+	        preparedStatement1.setInt(9, fmotherid);
 	        preparedStatement1.executeUpdate();
 
 	        String query4 = "update forum set fanswernum = fanswernum + 1 where fid = ?";
@@ -240,6 +240,59 @@ public class Pjh_WriteList_Dao {
 	    }
 	    return writeListDto;
 	}
+	
+	public void bigCommentAction1(int fid, String f_cid, int f_pid, int fref, int fstep, int freforder,
+			String ftitle, String fcontent, int fmotherid, int fanswernum,int fsteporder) {
+		Connection connection = null;
+		
+		PreparedStatement preparedStatement1 = null;
+		PreparedStatement preparedStatement2 = null;
+		
+		try {
+			connection = dataSource.getConnection();
+
+			
+
+			String query2 = "INSERT INTO forum (f_cid, f_aid, f_pid, ftype, fref, freforder, fstep, fsteporder,ftitle, fcontent, finsertdate, fmotherid, fanswernum)";
+			String query3 = " values ('dummy','admin', ?, 3 ,?, ? + ? + 1 ,1,1 ,?, ? ,now(), ?, 0)";
+			preparedStatement1 = connection.prepareStatement(query2 + query3);
+//			preparedStatement1.setString(1, f_cid);
+			preparedStatement1.setInt(1, f_pid);
+			preparedStatement1.setInt(2, fref);
+			preparedStatement1.setInt(3, freforder);
+			preparedStatement1.setInt(4, fanswernum);
+			preparedStatement1.setString(5, ftitle);
+			preparedStatement1.setString(6, ftitle);
+			preparedStatement1.setInt(7, fmotherid); // 대댓글 입력하기
+			
+			
+			
+			preparedStatement1.executeUpdate();
+			
+			String query4 = "update forum set fanswernum = fanswernum + 1 where fid =" + fid;
+			preparedStatement2 = connection.prepareStatement(query4);
+			preparedStatement2.executeUpdate(); // 다음 대댓글을 위한 작업1
+			
+//			String query5 = "update forum set fanswernum = fanswernum - 1 where fref =" + fref + " and freforder <=" + freforder + " and fstep > 0 and fstep <=" + fstep;
+//			preparedStatement3 = connection.prepareStatement(query5);
+//			preparedStatement3.executeUpdate(); // 다음 대댓글을 위한 작업2
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				
+				if(preparedStatement1 != null) preparedStatement1.close();
+				if(preparedStatement2 != null) preparedStatement2.close();
+				
+				if(connection != null) connection.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	} // 대댓글 
+	
+	
 	
 	public Admin_WriteList_Dto noticeView(int nid) {
 		Admin_WriteList_Dto dto= null;
