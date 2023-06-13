@@ -63,9 +63,9 @@
 			  <li class="nav-item">
 			 	 <c:set var="ftype" value="${param.ftype}" />
 			    <a class="nav-link" href="writelist.do?ftype=2"><p class="text-dark">Q&A</p></a>
-			 <li class="nav-item">
+			 <!-- <li class="nav-item">
 			  <a class="nav-link" href="notice.do?"><p class="text-dark">공지사항</p></a>
-			  </li>
+			  </li> -->
 		
 		</ul>
 		
