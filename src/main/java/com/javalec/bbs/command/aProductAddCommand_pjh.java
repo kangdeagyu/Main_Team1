@@ -42,10 +42,6 @@ public class aProductAddCommand_pjh implements MCommand {
         String pprice = multipartRequest.getParameter("pprice");
         String pcontent = multipartRequest.getParameter("pcontent");
         pcontent = pcontent.replaceAll("<p>", "").replaceAll("</p>", "");
-        System.out.println(pname);
-        System.out.println(pstock);
-        System.out.println(pprice);
-        System.out.println(pcontent);
 
         if (!fileName.endsWith(".png") && !fileName.endsWith(".jpg") && !fileName.endsWith(".jpeg")) {
             File file = new File(directory + fileRealName);
@@ -84,6 +80,7 @@ public class aProductAddCommand_pjh implements MCommand {
      public void renameImageFile(String directory, String oldFileName, String newFileName) {
          File oldFile = new File(directory, oldFileName);
          File newFile = new File(directory, newFileName);
+         System.out.println(directory);
          boolean success = oldFile.renameTo(newFile);
          if (success) {
              System.out.println("이미지 파일 이름 변경 완료");
