@@ -445,7 +445,7 @@ public class Kms_WriteList_Dao {
 			preparedStatement1.setInt(5, fanswernum);
 			preparedStatement1.setString(6, ftitle);
 			preparedStatement1.setString(7, ftitle);
-			preparedStatement1.setInt(8, fid); // 대댓글 입력하기
+			preparedStatement1.setInt(8, fmotherid); // 대댓글 입력하기
 			
 			
 			

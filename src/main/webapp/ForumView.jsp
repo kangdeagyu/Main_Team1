@@ -147,7 +147,6 @@
     </script>
 </head>
 <body>
-    <h2>리뷰 상세 보기</h2>
     <table>
         <tr>
             <td style="width: 100px;"><strong>제목:</strong></td>
