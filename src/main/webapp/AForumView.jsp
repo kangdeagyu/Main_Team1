@@ -142,12 +142,13 @@
                             <form action="ABigCommentWrite.do" method="post">
                                 <input type="text" name="ftitle" placeholder="댓글을 입력하세요.">
                                 <input type="hidden" name="ftype" value="${ftype}">
-                                <input type="hidden" name="page" value="${forumView.fid}">
+                               <input type="hidden" name="page" value="${forumView.fid}">
                                 <input type="hidden" name="f_cid" value="${cid}">
                                 <input type="hidden" name="fid" value="${cdto.fid}">
                                 <input type="hidden" name="f_pid" value="${cdto.f_pid}">
                                 <input type="hidden" name="fref" value="${cdto.fref}">
                                 <input type="hidden" name="fstep" value="${cdto.fstep}">
+                                <input type="hidden" name="fsteporder" value="${cdto.fsteporder}">
                                 <input type="hidden" name="freforder" value="${cdto.freforder}">
                                 <input type="hidden" name="fmotherid" value="${cdto.fmotherid}">
                                 <input type="hidden" name="fanswernum" value="${cdto.fanswernum}">
@@ -175,8 +176,9 @@
     <form action="Acommentwrite.do" method="post">
         <input type="text" name="ftitle" style="width: 300px;" placeholder="댓글을 입력하세요.">
         <input type="hidden" name="ftype" value="${ftype}">
+       <input type="hidden" name="fsteporder" value="${forumView.fsteporder}">
         <input type="hidden" name="fid" value="${forumView.fid}">
-        <input type="hidden" name="f_cid" value="${forumView.f_cid}">
+        <input type="hidden" name="f_cid" value="${cid}">
         <input type="hidden" name="f_pid" value="${forumView.f_pid}">
         <input type="submit" value="입력">
     </form>

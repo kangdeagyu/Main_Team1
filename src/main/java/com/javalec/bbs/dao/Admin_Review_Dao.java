@@ -112,38 +112,33 @@ public class Admin_Review_Dao {
 	}
 	
 	public void delete2(String fid) {
-	    if (fid == null) {
-	        // pid 배열이 null인 경우 처리
-	        System.out.println("No products selected for deletion.");
-	        return;
-	    }
-	    Connection connection = null;
-	    PreparedStatement deleteInboundStatement = null;
-	    PreparedStatement preparedStatement = null;
-	    try {
-	        connection = datasource.getConnection();
-	        // Delete from product table
-	        String deleteProductQuery = "delete from product where fid = ?";
-	        String deletedateInsert= "update forum set fdeletedate= now() where fid = ?";
-	        preparedStatement = connection.prepareStatement(deletedateInsert);
-	            preparedStatement.setInt(1, Integer.parseInt(fid));
-	            preparedStatement.executeUpdate();
-	        
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    } finally {
-	        try {
-	            if (deleteInboundStatement != null)
-	                deleteInboundStatement.close();
-	            if (preparedStatement != null)
-	                preparedStatement.close();
-	            if (connection != null)
-	                connection.close();
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	    }
-	}
+		  Connection connection = null;
+		    PreparedStatement preparedStatement = null;
+		    
+		    try {
+		        connection = datasource.getConnection();
+		        String query = "UPDATE forum SET fdeletedate = CURRENT_TIMESTAMP, ftitle = '삭제된 댓글입니다'";
+		        String query1 = " WHERE fid = ?";
+		        preparedStatement = connection.prepareStatement(query + query1);
+		        
+		        // fid 파라미터 설정
+		        preparedStatement.setInt(1, Integer.parseInt(fid));
+		        
+		        preparedStatement.executeUpdate();
+		            
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    } finally {
+		        try {
+		            if (preparedStatement != null)
+		                preparedStatement.close();
+		            if (connection != null)
+		                connection.close();
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		    }
+		}
 	
 	
 	public ArrayList<Admin_Review_Dto> searchlist(String list, String query) {

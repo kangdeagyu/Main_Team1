@@ -13,6 +13,7 @@
     <link href="css/modifymodal.css" rel="stylesheet">
     <meta http-equiv="Content-Type" content="text/html;" charset="UTF-8">
     <title>상품 리스트</title>
+    
     <script>
         function selectAll() {
             var checkboxes = document.getElementsByName('selectedItems');
