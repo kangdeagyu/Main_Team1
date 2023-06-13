@@ -367,7 +367,49 @@ public class Admin_Product_Dao {
 	    return null;
 	}
 	
-	
+	public String getModifyFileName(int pid) {
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+	    ResultSet resultSet = null;
+
+	    try {
+	        connection = datasource.getConnection();
+	        String query = "SELECT pfilename FROM product WHERE pid = ?";
+	        preparedStatement = connection.prepareStatement(query);
+	        preparedStatement.setInt(1, pid);
+	        resultSet = preparedStatement.executeQuery();
+
+	        if (resultSet.next()) {
+	            return resultSet.getString("pfilename");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        // 리소스 해제 코드
+	        if (resultSet != null) {
+	            try {
+	                resultSet.close();
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        if (preparedStatement != null) {
+	            try {
+	                preparedStatement.close();
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        if (connection != null) {
+	            try {
+	                connection.close();
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
+	    return null;
+	}
 	
 	
 	 private int getProductId(String pname) {
@@ -468,6 +510,8 @@ public class Admin_Product_Dao {
 	                inboundStatement.executeUpdate();
 	                inboundStatement.close();
 	            }
+			 String updatedFileName = pfilename;
+			 
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        } finally {

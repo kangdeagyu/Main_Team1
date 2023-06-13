@@ -18,7 +18,9 @@ public class aModifyProductCommand_pjh implements MCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         // TODO Auto-generated method stub
-    	String directory = request.getServletContext().getRealPath("/image/");
+//		String directory = "/Volumes/Data/jihwan/Main_Team1/src/main/webapp/image/";
+		String directory = request.getServletContext().getRealPath("/image/");
+		System.out.println(directory);
         int maxSize = 1024 * 1024 * 100;
         String encoding = "UTF-8";
         request.setCharacterEncoding("utf-8");
@@ -55,8 +57,8 @@ public class aModifyProductCommand_pjh implements MCommand {
             String timeStamp = now.format(formatter);
 
             newFileName = pid + "_" + timeStamp + "." + extension;
-            newContentFileName1 = "content1_" + pid + "_" + timeStamp + "." +extension1;
-            newContentFileName2 = "content2_" + pid + "_" + timeStamp + "." +extension2;
+            newContentFileName1 = "content1_" + pid + "_" + timeStamp +extension1;
+            newContentFileName2 = "content2_" + pid + "_" + timeStamp +extension2;
             File newFile = new File(directory, newFileName);
             File newContentFile1 = new File(directory, newContentFileName1);
             File newContentFile2 = new File(directory, newContentFileName2);
@@ -97,12 +99,13 @@ public class aModifyProductCommand_pjh implements MCommand {
         // DAO 객체 생성 및 수정 메소드 호출
         Admin_Product_Dao dao = new Admin_Product_Dao();
         dao.modify(pid, pname, fileName, pcontent, contentfileName1, contentfileName2, pstock, pprice);
-        
-        String updatedFileName = new Admin_Product_Dao().getUpdatedFileName();
+        String updatedFileName = new Admin_Product_Dao().getModifyFileName(pid);
         String updateContentFileName1 = new Admin_Product_Dao().getUpdatedContentFileName1();
         String updateContentFileName2 = new Admin_Product_Dao().getUpdatedContentFileName2();
         
         renameImageFile(directory, fileName, updatedFileName);
+        System.out.println(fileName);
+        System.out.println(updatedFileName);
         renameImageFile(directory, contentfileName1, updateContentFileName1);
         renameImageFile(directory, contentfileName2, updateContentFileName2);
     }
