@@ -35,8 +35,8 @@
 
         // 페이지네이션 링크 생성 함수
         function paging(totalData, currentPage) {
-            var dataPerPage = 30;
-            var pageCount = 30;
+            var dataPerPage = 10;
+            var pageCount = 10;
 
             var totalPage = Math.ceil(totalData / dataPerPage);
             var pageGroup = Math.ceil(currentPage / pageCount);
