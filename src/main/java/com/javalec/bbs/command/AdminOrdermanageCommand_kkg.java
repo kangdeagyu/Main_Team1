@@ -35,10 +35,10 @@ public class AdminOrdermanageCommand_kkg implements MCommand {
 		
 		ArrayList<Admin_Order_Dto_kkg> dtos = dao.getOrderlist(cid);
 		
-		
+		int ListSize = dtos.size();
 		
 		request.setAttribute("orderList", dtos);
-		
+		request.setAttribute("ListSize", ListSize);
 		
 	}
 
