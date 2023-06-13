@@ -75,7 +75,7 @@
 			    		&nbsp;&nbsp;&nbsp;&nbsp;<img src="${dto.pfilename}" style="width: 100px; height: 100px; margin-bottom: 10px;" alt="..." />
 			    		&nbsp;&nbsp;&nbsp;&nbsp;${dto.pname}&nbsp;&nbsp;&nbsp;&nbsp;${dto.pcontent}
 			    		<input type="hidden" name="selectedItems[]" value="${dto.bid }"></td>
-			    <td>${dto.bqty}</td>
+			    <td>${dto.bqty}<br/><input type="hidden" value="${dto.pid }"> <button type="button" data-bs-toggle="modal" data-bs-target="#memberModal" onclick="chack1()">수량 변경 </button></td>
 			    <td><fmt:formatNumber value="${dto.pprice * dto.bqty}" pattern="#,##0원" /></td>
 			    <c:if test="${status.index == 0}">
 			      	<td rowspan="${listSize}">배송료<br/>3,000원</td>
@@ -127,7 +127,21 @@
 </form>    
 </main>
 
-
+<!-- 모달  -->
+		<div class="modal" id="memberModal">
+		  <div class="modal-dialog modal-dialog-centered">
+		    <div class="modal-content">
+		      <div class="modal-body text-center">
+		        <h5 class="modal-title fw-bold">상품 수량 변경</h5><br/>
+					<input type="number">
+		      </div>
+		      <div class="modal-footer border-0">
+		        <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">취소</button>
+		        <button type="button" class="btn btn-danger rounded-pill" onclick="qtyChange()">수량변경</button>
+		      </div>
+    		</div>
+  		  </div>
+		</div>
 
 <script>
 var totalprice = 0;
@@ -206,7 +220,7 @@ function calculateTotalPrice() {
 	      selectedBids.push(bid);
 	      totalprice += price;
 	
-	      if (totalprice > 150000) {
+	      if (totalprice >= 150000) {
 	        deliveryFee = 0;
 	        totaldelivery = totalprice;
 	      } else {
@@ -303,10 +317,42 @@ function sendOrder() {
 	  }
 }
 
+var clickpid = null
+function chack1(){
+	  var button = event.target; // 클릭된 버튼 요소를 참조
+	  var row = button.closest("tr");
+	  clickpid = row.querySelector("td:nth-child(2) input[type='hidden']").value;
 
+}
+	
+	
+function qtyChange(){
+	  var input = document.querySelector("#memberModal input[type='number']");
 
+	  var quantity = input.value; 
+	 
+ 	  var xhr = new XMLHttpRequest();
+	  xhr.open("POST", "qtych.change", true);
+	  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	  xhr.onreadystatechange = function() {
+	    if (xhr.readyState === XMLHttpRequest.DONE) {
+	      if (xhr.status === 200) {
+	        alert("수량이 변경되었습니다.");
+	        window.location.href = "cart.do";
+	      } else {
+	        alert("수량변경오류");
+	      }
+	    }
+	  };
+	  
+	  // POST 파라미터를 생성하여 전송합니다
+	  var params = "qty=" + quantity
+	  + "&pid=" + clickpid;
+	  xhr.send(params); 
+	  
+	
 
-
+}
 
 
 </script>

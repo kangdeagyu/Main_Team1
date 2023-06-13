@@ -8,15 +8,26 @@
      
      <link href="css/admin_kkg.css" rel="stylesheet">
 
+<!-- 여기서부터 복사하시면 됩니다~~~~~~~~~!!!! -->
+
+<jsp:include page="admin_01_header.jsp" />
+
+
 </head>
+
 <body>
 
-		<div class="sidebar">
-			<jsp:include page="admin_01_sidebar.jsp" />
-	 	</div>
-	 	
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-2">
+				<jsp:include page="admin_01_sidebar.jsp" />
+			</div>
 
-	 	<div class="wrapper">
+			<div class="col-md-10" style="margin-left: 15%;">
+				<main class="ms-sm-auto px-md-4">
+
+					<!-- 요기서부터 본문 내용 입력하면 됩니다아~~!!!!!  하단에  </div> 및 </main> 자리 맞춰서 넣는거만 기억하면 됩니다.-->
+
 <h3>공지사항</h3>
 <form action="ANoticeUpload.do" method="post" id="myForm">
     <table>    
@@ -61,7 +72,8 @@
 			document.getElementById("myForm").reset();
 		}
 	</script>
-
-
+</main>
+</div>
+</div>
 </body>
 </html>

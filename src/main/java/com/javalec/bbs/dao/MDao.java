@@ -722,7 +722,46 @@ public class MDao {
 		
 	}
 	
-	
+	//수량 변경
+	public boolean qtyChange(int cpid, int qqty) {
+		boolean result = false;
+		
+		Connection connection = null;
+		PreparedStatement ps = null;
+
+		
+		try {
+			connection = dataSource.getConnection(); // sql 연결
+			String query = "update basket set bqty = ? where b_pid = ?";
+			ps = connection.prepareStatement(query);
+		    ps.setInt(1, qqty);
+		    ps.setInt(2, cpid);
+		    
+		    int rowsUpsated = ps.executeUpdate();
+		      
+		      if (rowsUpsated > 0) {
+		            result = true; // 변경 작업이 성공한 경우
+		        }
+		      
+			
+
+		}catch (Exception e) {
+			e.printStackTrace();
+		
+		}finally {
+			try {
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+	  }
+		return result;		
+		
+		
+		
+	}
 	
 	
 	

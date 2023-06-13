@@ -40,7 +40,7 @@ public class Admin_Product_Dao {
 	    ResultSet resultSet = null;
 	    try {
 	        connection = datasource.getConnection();
-	        String query = "SELECT p.pfilename, p.pname, p.pprice, p.pid, pstock, pcontent, c.c_name ";
+	        String query = "SELECT p.pfilename, p.pname, p.pprice, p.pid, pstock, pcontent, pcontentfilename1, pcontentfilename2, c.c_name ";
 	        String query1 = "FROM product p JOIN category c ON p.pcategory = c.c_num WHERE p.pdeletedate IS NULL";
 	        preparedStatement = connection.prepareStatement(query + query1);
 	        resultSet = preparedStatement.executeQuery();
@@ -51,8 +51,10 @@ public class Admin_Product_Dao {
 	            int pid = resultSet.getInt(4);
 	            int pstock = resultSet.getInt(5);
 	            String pcontent = resultSet.getString(6);
-	            String c_name = resultSet.getString(7);
-	            Admin_Product_Dto dto = new Admin_Product_Dto(pfilename, pname, pprice, pid, pstock, pcontent, c_name);
+	            String pcontentfilename1 = resultSet.getString(7);
+	            String pcontentfilename2 = resultSet.getString(8);
+	            String c_name = resultSet.getString(9);
+	            Admin_Product_Dto dto = new Admin_Product_Dto(pfilename, pname, pprice, pid, pstock, pcontent, pcontentfilename1, pcontentfilename2, c_name);
 	            dtos.add(dto);
 	        }
 	    } catch (Exception e) {
@@ -78,7 +80,7 @@ public class Admin_Product_Dao {
 		
 		try {
 			connection = datasource.getConnection();
-			String query1 = "select pfilename, pid, pprice, pname, pcategory, pcontent, pstock from product";
+			String query1 = "select pfilename, pid, pprice, pname, pcategory, pcontent, pstock, pcontentfilename1, pcontentfilename2 from product";
 			String Where2 = " where " + list + " like ? and pdeletedate IS NULL";
 			ps = connection.prepareStatement(query1 + Where2);
 			ps.setString(1, "%" + query + "%");
@@ -92,9 +94,11 @@ public class Admin_Product_Dao {
 				String pcategory = Integer.toString(rs.getInt(5));
 				String pcontent = rs.getString(6);
 				int pstock = rs.getInt(7);
+				String pcontentfilename1=rs.getString(8);
+				String pcontentfilename2=rs.getString(9);
 				
 				
-				Admin_Product_Dto dto = new Admin_Product_Dto(pfilename, pname, pprice, pid, pstock, pcontent, pcategory);
+				Admin_Product_Dto dto = new Admin_Product_Dto(pfilename, pname, pprice, pid, pstock, pcontent, pcontentfilename1, pcontentfilename2, pcategory);
 				dtos.add(dto);
 			}
 		}catch(Exception e) {
@@ -120,7 +124,7 @@ public class Admin_Product_Dao {
 		
 		try {
 			connection = datasource.getConnection();
-			String query1 = "select pfilename, pid, pprice, pname,pstock, pcategory, pcontent from product";
+			String query1 = "select pfilename, pid, pprice, pname,pstock, pcategory, pcontent, pcontentfilename1, pcontentfilename2 from product";
 			String Where2 = " where pname like ? and pdeletedate IS NULL";
 			ps = connection.prepareStatement(query1 + Where2);
 			ps.setString(1, query);
@@ -134,9 +138,10 @@ public class Admin_Product_Dao {
 				int pstock = rs.getInt(5);
 				String pcategory = Integer.toString(rs.getInt(6));
 				String pcontent = rs.getString(7);
+				String pcontentfilename1 = rs.getString(8);
+				String pcontentfilename2 = rs.getString(9);
 				
-				
-				Admin_Product_Dto dto = new Admin_Product_Dto(pfilename, pname, pprice, pid, pstock, pcontent, pcategory);
+				Admin_Product_Dto dto = new Admin_Product_Dto(pfilename, pname, pprice, pid, pstock, pcontent, pcontentfilename1, pcontentfilename2, pcategory);
 				dtos.add(dto);
 			}
 		}catch(Exception e) {
@@ -166,13 +171,13 @@ public class Admin_Product_Dao {
 	
 	
 	
-	public int saveProduct(String pname, String pprice, String pstock, String pcontent, String pcategory, String newFileName, String fileRealName, String filepath) {
+	public int saveProduct(String pname, String pprice, String pstock, String pcontent, String pcategory, String newFileName, String newFileName1, String newFileName2) {
 	    Connection connection = null;
 	    PreparedStatement preparedStatement = null;
 
 	    try {
 	        connection = datasource.getConnection();
-	        String query = "INSERT INTO product (pname, pprice, pstock, pfilename, pcategory, pcontent, pinsertdate) VALUES (?, ?, ?, ?, ?, ?, now())";
+	        String query = "INSERT INTO product (pname, pprice, pstock, pfilename, pcategory, pcontent, pcontentfilename1, pcontentfilename2, pinsertdate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, now())";
 	        String query2 = "INSERT INTO make (product_pid, admin_aid, mdate) VALUES (?, 'admin', now())";
 
 	        preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -182,6 +187,8 @@ public class Admin_Product_Dao {
 	        preparedStatement.setString(4, newFileName);
 	        preparedStatement.setString(5, pcategory);
 	        preparedStatement.setString(6, pcontent);
+	        preparedStatement.setString(7, newFileName1);
+	        preparedStatement.setString(8, newFileName2);
 	        preparedStatement.executeUpdate();
 
 	        ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
@@ -194,12 +201,15 @@ public class Admin_Product_Dao {
 
 	        // pfilename에 pid를 포함한 새로운 파일 이름 생성
 	        String newFileNameWithPid = pid + "_" + newFileName;
-
+	        String newFileNameWithPid1 = "content1_"+pid + "_" + newFileName1;
+	        String newFileNameWithPid2 = "content2_"+pid + "_" + newFileName2;
 	        // 파일 이름 업데이트
-	        String updateQuery = "UPDATE product SET pfilename = ? WHERE pid = ?";
+	        String updateQuery = "UPDATE product SET pfilename = ?, pcontentfilename1=?, pcontentfilename2=? WHERE pid = ?";
 	        preparedStatement = connection.prepareStatement(updateQuery);
 	        preparedStatement.setString(1, newFileNameWithPid);
-	        preparedStatement.setInt(2, pid);
+	        preparedStatement.setString(2, newFileNameWithPid1);
+	        preparedStatement.setString(3, newFileNameWithPid2);
+	        preparedStatement.setInt(4, pid);
 	        preparedStatement.executeUpdate();
 
 	        // make 테이블에 데이터 추가
@@ -271,7 +281,91 @@ public class Admin_Product_Dao {
 	    return null;
 	}
 	
+	public String getUpdatedContentFileName1() {
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+	    ResultSet resultSet = null;
+
+	    try {
+	        connection = datasource.getConnection();
+	        String query = "SELECT pcontentfilename1 FROM product ORDER BY pid DESC LIMIT 1";
+	        preparedStatement = connection.prepareStatement(query);
+	        resultSet = preparedStatement.executeQuery();
+
+	        if (resultSet.next()) {
+	            return resultSet.getString("pcontentfilename1");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        // 리소스 해제 코드
+	        if (resultSet != null) {
+	            try {
+	                resultSet.close();
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        if (preparedStatement != null) {
+	            try {
+	                preparedStatement.close();
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        if (connection != null) {
+	            try {
+	                connection.close();
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
+	    return null;
+	}
 	
+	public String getUpdatedContentFileName2() {
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+	    ResultSet resultSet = null;
+
+	    try {
+	        connection = datasource.getConnection();
+	        String query = "SELECT pcontentfilename2 FROM product ORDER BY pid DESC LIMIT 1";
+	        preparedStatement = connection.prepareStatement(query);
+	        resultSet = preparedStatement.executeQuery();
+
+	        if (resultSet.next()) {
+	            return resultSet.getString("pcontentfilename2");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        // 리소스 해제 코드
+	        if (resultSet != null) {
+	            try {
+	                resultSet.close();
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        if (preparedStatement != null) {
+	            try {
+	                preparedStatement.close();
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        if (connection != null) {
+	            try {
+	                connection.close();
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
+	    return null;
+	}
 	
 	
 	
@@ -345,20 +439,22 @@ public class Admin_Product_Dao {
 	    }
 	}
 	
-	public void modify(int pid, String pname, String pfilename, String pcontent, int pstock, int pprice) {
+	public void modify(int pid, String pname, String pfilename, String pcontent, String pcontentfilename1, String pcontentfilename2, int pstock, int pprice) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		int existingPstock = getProductStock(pid);
 		try {
 			connection = datasource.getConnection();
-			String query = "update product set pname=?, pfilename=?, pcontent=?, pstock=?, pprice=? where pid= ?";
+			String query = "update product set pname=?, pfilename=?, pcontent=?, pcontentfilename1=?, pcontentfilename2=?, pstock=?, pprice=? where pid= ?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, pname);
 			preparedStatement.setString(2, pfilename);
 			preparedStatement.setString(3, pcontent);
-			preparedStatement.setInt(4, pstock);
-			preparedStatement.setInt(5, pprice);
-			preparedStatement.setInt(6, pid);
+			preparedStatement.setString(4, pcontentfilename1);
+			preparedStatement.setString(5, pcontentfilename2);
+			preparedStatement.setInt(6, pstock);
+			preparedStatement.setInt(7, pprice);
+			preparedStatement.setInt(8, pid);
 			preparedStatement.executeUpdate();
 			 if (pstock != existingPstock) {
 	                // inbound 정보 저장
