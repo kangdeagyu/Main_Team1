@@ -25,6 +25,7 @@ import com.javalec.bbs.command.IdCommand;
 import com.javalec.bbs.command.InsertCommand;
 import com.javalec.bbs.command.JoinCommand;
 import com.javalec.bbs.command.Kms_BigCommentActionCommand;
+import com.javalec.bbs.command.Kms_BigCommentActionCommand1;
 import com.javalec.bbs.command.Kms_CommentActionCommand;
 import com.javalec.bbs.command.Kms_CommentDeleteCommand;
 import com.javalec.bbs.command.Kms_ForumSearchCommand;

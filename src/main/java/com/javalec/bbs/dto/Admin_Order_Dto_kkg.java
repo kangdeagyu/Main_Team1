@@ -1,5 +1,7 @@
 package com.javalec.bbs.dto;
 
+import java.sql.Timestamp;
+
 public class Admin_Order_Dto_kkg {
 
 	
@@ -17,7 +19,7 @@ public class Admin_Order_Dto_kkg {
 	String caddress;
 	String cphone;
 	
-	
+	Timestamp odate;
 	
 	
 	
@@ -25,7 +27,7 @@ public class Admin_Order_Dto_kkg {
 	
 	
 	public Admin_Order_Dto_kkg(int seq, int oid, int pid, String pname, int oqty, int oprice, String cid, String cname,
-			String caddress, String cphone) {
+			String caddress, String cphone, Timestamp odate) {
 		super();
 		this.seq = seq;
 		this.oid = oid;
@@ -37,6 +39,7 @@ public class Admin_Order_Dto_kkg {
 		this.cname = cname;
 		this.caddress = caddress;
 		this.cphone = cphone;
+		this.odate = odate;
 	}
 
 
@@ -257,6 +260,28 @@ public class Admin_Order_Dto_kkg {
 
 	public void setSeq(int seq) {
 		this.seq = seq;
+	}
+
+
+
+
+
+
+
+
+	public Timestamp getOdate() {
+		return odate;
+	}
+
+
+
+
+
+
+
+
+	public void setOdate(Timestamp odate) {
+		this.odate = odate;
 	}
 	
 	

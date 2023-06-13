@@ -268,7 +268,8 @@
 									<th scope="col"style="text-align: center">고객이름</th>
 									<th scope="col"style="text-align: center">주소</th>
 									<th scope="col"style="text-align: center">연락처</th>
-									<th scope="col"style="text-align: center">회원결재내</th>
+									<th scope="col"style="text-align: center">결재일</th>
+									<th scope="col"style="text-align: center">결재내역</th>
 									<!-- <th scope="col">정보 수정/삭제</th> -->
 
 								</tr>
@@ -287,6 +288,7 @@
 										<td style="text-align: center">${order.cname}</td>
 										<td style="text-align: center">${order.caddress}</td>
 										<td style="text-align: center">${order.cphone}</td>
+										<td style="text-align: center">${order.odate}</td>
 										
 										<td>
 										<form action="Ordermanage.do">

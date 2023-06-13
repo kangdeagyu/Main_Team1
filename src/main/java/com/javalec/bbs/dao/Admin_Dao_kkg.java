@@ -95,7 +95,7 @@ public class Admin_Dao_kkg {
 			
 			try {
 				connection =dataSource.getConnection();
-				String sql_select = "select Row_Number() Over (Order by o.odate) as No, o.oid, o.o_pid, p.pname, o.oqty, o.oprice, o.o_cid, c.cname, CONCAT(c.cpostnum,' ', c.caddress1, c.caddress2) as caddress, c.cphone ";
+				String sql_select = "select Row_Number() Over (Order by o.odate) as No, o.oid, o.o_pid, p.pname, o.oqty, o.oprice, o.o_cid, c.cname, CONCAT(c.cpostnum,' ', c.caddress1, c.caddress2) as caddress, c.cphone, o.odate ";
 				String sql_from	 =	" from product as p, ordering as o, customer as c";
 				
 				String sql_group = "";
@@ -137,12 +137,12 @@ public class Admin_Dao_kkg {
 					String cname =resultSet.getString("cname");
 					String caddress =resultSet.getString("caddress");
 					String cphone =resultSet.getString("cphone");
-					
+					Timestamp odate = resultSet.getTimestamp("odate");
 					
 					
 
 					
-					Admin_Order_Dto_kkg dto = new Admin_Order_Dto_kkg (seq, oid, pid, pname, oqty,oprice,cid,cname,caddress,cphone);
+					Admin_Order_Dto_kkg dto = new Admin_Order_Dto_kkg (seq, oid, pid, pname, oqty,oprice,cid,cname,caddress,cphone,odate);
 					dtos.add(dto);
 					
 				i++;
