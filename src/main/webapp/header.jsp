@@ -86,12 +86,12 @@
 			</c:if>
 			<li class="nav-item">	<!-- 마이 페이지 이동 -->
 			    <a class="nav-link" href="mypageview.do" onclick="return userCheck()">
-			   	 <img src="image/so5.png" alt="" width="30" height="24">
+			   	 <img src="image/so04.png" alt="" width="30" height="24">
 			    </a>
 		    </li>
 			<li class="nav-item">	<!-- 장바구니 이동 -->
 			    <a class="nav-link" href="cart.do" onclick="return userCheck()">
-			   	 <img src="image/so10.png" alt="" width="30" height="24">
+			   	 <img src="image/so9.png" alt="" width="30" height="24">
 			    </a>
 		    </li>
 		</ul>

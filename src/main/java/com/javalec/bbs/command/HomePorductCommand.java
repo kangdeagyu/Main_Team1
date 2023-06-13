@@ -15,7 +15,7 @@ public class HomePorductCommand implements MCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+		request.setCharacterEncoding("utf-8");
 		HomeDao dao = new HomeDao();
 		ArrayList<HomeDto> list = dao.list();
 		

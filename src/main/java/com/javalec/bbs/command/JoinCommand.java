@@ -10,6 +10,7 @@ public class JoinCommand implements MCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
+		
 		String cid = request.getParameter("cid");
 		String cpassword = request.getParameter("cpassword");
 		String cname = request.getParameter("cname");

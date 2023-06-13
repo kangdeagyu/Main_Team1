@@ -72,7 +72,7 @@
 					<input type="text" class="form-control" name="caddress2" id="sample6_detailAddress" placeholder="상세주소">
 					<input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
 				<label>생년월일</label>
-					<input type="date" class="form-control" name="myDate" id="myDateInput"><br/>
+					<input type="date" class="form-control" name="cbirth" id="myDateInput"><br/>
 					<button class="w-100 btn btn-lg btn-primary" type="submit" onclick="checkForm(event)" >회원가입</button>
 			
 			</form>
