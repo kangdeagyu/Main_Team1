@@ -91,7 +91,7 @@
 			        </c:when>
 			        <c:otherwise>
             <c:if test="${dto.odelivery == 2}">
-                <form action="Kms_ReviewWriteForum.do">
+                <form action="ReviewWriteForum.do">
                     <input type="hidden" name="oid" value="${dto.oid}">
                     <input type="hidden" name="f_pid" value="${dto.product_pid}">
                     <input type="hidden" name="pname" value="${dto.pname}">

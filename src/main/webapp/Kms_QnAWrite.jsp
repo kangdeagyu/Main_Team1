@@ -28,7 +28,6 @@
 <body>
 <h1>QnA 작성</h1>
 <form action="QnAforumwrite.do" method="post" onsubmit="return validateForumWriteForm()">
-		<input type="hidden" name="f_cid" value="${cid }">
 		<input type="hidden" name="f_pid" value="${param.pid }">
     <table>
         <tr>
